@@ -13,6 +13,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 DATA = HERE / "data"
 OUT = HERE.parent / "NIKKE-PVP-解隊助手.html"
+INDEX = HERE.parent / "index.html"
 RAW = "https://raw.githubusercontent.com/williamchong/nikke-arena-planner/master/app/data/"
 FILES = ["characters.json", "templates.json"]
 
@@ -44,7 +45,8 @@ def build():
                 .replace("__TEMPLATES__", dump(tpls))
                 .replace("__DATA_DATE__", ver))
     OUT.write_text(html, encoding="utf-8")
-    print(f"已產生 {OUT}（{OUT.stat().st_size:,} bytes，{len(chars)} 名角色，{len(tpls)} 個模板，資料日期 {ver}）")
+    INDEX.write_text(html, encoding="utf-8")  # GitHub Pages 用的同內容副本
+    print(f"已產生 {OUT} 與 {INDEX.name}（{OUT.stat().st_size:,} bytes，{len(chars)} 名角色，{len(tpls)} 個模板，資料日期 {ver}）")
 
 
 if __name__ == "__main__":
