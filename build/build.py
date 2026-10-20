@@ -41,8 +41,11 @@ def build():
     ver = json.loads(ver_file.read_text(encoding="utf-8"))["fetched"] if ver_file.exists() else datetime.date.today().isoformat()
     html = (HERE / "template.html").read_text(encoding="utf-8")
     dump = lambda o: json.dumps(o, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+    refs_file = HERE.parent / "references.json"
+    refs = json.loads(refs_file.read_text(encoding="utf-8")) if refs_file.exists() else {"updated": "", "items": []}
     html = (html.replace("__CHARACTERS__", dump(chars))
                 .replace("__TEMPLATES__", dump(tpls))
+                .replace("__REFERENCES__", dump(refs))
                 .replace("__DATA_DATE__", ver))
     OUT.write_text(html, encoding="utf-8")
     INDEX.write_text(html, encoding="utf-8")  # GitHub Pages 用的同內容副本

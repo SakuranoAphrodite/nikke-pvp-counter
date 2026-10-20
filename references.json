@@ -1,0 +1,86 @@
+{
+ "updated": "2026-10-20",
+ "_說明": "參考對局與資料。欄位：title 標題、url 連結、source 來源、kind 影片/攻略/討論/對局、enemy 對手體系 id（見 templates.json 的 archetype）、my 我方體系 id、units 對手關鍵角色 id（命中兩個以上就會顯示）、result win/loss（自己打過的對局才填）、note 一句話說明、date 日期。",
+ "items": [
+  {
+   "title": "Prydwen：PvP Arena Mechanics（目標順序、充能倍率、嘲諷、無敵與不屈）",
+   "url": "https://www.prydwen.gg/nikke/guides/pvp-mechanics",
+   "source": "Prydwen", "kind": "攻略",
+   "enemy": [], "my": [], "units": [],
+   "note": "工具內角色機制規則的主要出處",
+   "date": "2024"
+  },
+  {
+   "title": "Prydwen：Meta Teams and Archetypes，2RL 紅蓮核爆的解法段落",
+   "url": "https://www.prydwen.gg/nikke/guides/pvp-sp-arena-teams",
+   "source": "Prydwen", "kind": "攻略",
+   "enemy": ["scarlet-nuke"], "my": ["noah-stall", "alice-carry", "blanc-indom"], "units": [],
+   "note": "諾伊斯擋第一波後諾雅開盾（2.5RL 全 RL 隊）；2RL 諾雅愛麗絲或布蘭兒不屈愛麗絲也能贏",
+   "date": "2024"
+  },
+  {
+   "title": "Prydwen：Meta Teams and Archetypes，3RL 紅蓮豺狼的解法段落",
+   "url": "https://www.prydwen.gg/nikke/guides/pvp-sp-arena-teams",
+   "source": "Prydwen", "kind": "攻略",
+   "enemy": ["scarlet-nuke"], "my": ["rosanna-counter", "alice-revive"], "units": ["scarlet", "jackal"],
+   "note": "羅珊娜 S1 升到 4 級驅散豺狼連結（諾伊斯 羅珊娜 夏日阿妮斯 餅乾 豺狼，九成勝率）；長髮公主復活愛麗絲的 Super-Alice 隊",
+   "date": "2024"
+  },
+  {
+   "title": "Prydwen：Meta Teams and Archetypes，餅乾持久隊的解法段落",
+   "url": "https://www.prydwen.gg/nikke/guides/pvp-sp-arena-teams",
+   "source": "Prydwen", "kind": "攻略",
+   "enemy": ["noah-stall", "sanis-stall", "alice-carry"], "my": ["scarlet-nuke", "blanc-indom"], "units": ["biscuit"],
+   "note": "夏日阿妮斯、普麗瓦蒂、梅登都被紅蓮豺狼硬剋；愛麗絲版被 P1 防禦者＋餅乾擋下",
+   "date": "2024"
+  },
+  {
+   "title": "Prydwen：Meta Teams and Archetypes，復活隊的解法段落",
+   "url": "https://www.prydwen.gg/nikke/guides/pvp-sp-arena-teams",
+   "source": "Prydwen", "kind": "攻略",
+   "enemy": ["alice-revive"], "my": ["scarlet-nuke", "noah-stall"], "units": ["rapunzel", "alice"],
+   "note": "紅蓮先狙掉長髮公主就穩贏；對 AOE 核爆型復活隊用諾雅擋",
+   "date": "2024"
+  },
+  {
+   "title": "Keripo：Champion Arena NA S3 隊伍展示",
+   "url": "https://www.youtube.com/watch?v=FaVUCw0BB5s",
+   "source": "YouTube", "kind": "影片",
+   "enemy": [], "my": [], "units": [],
+   "note": "冠軍競技場第三季五隊配置：紅蓮、夏日阿妮斯、灰姑娘、霰彈羅珊娜等體系",
+   "date": "2025"
+  },
+  {
+   "title": "巴哈：PVP 競技場組隊思路與隊伍分享（灰姑娘版）",
+   "url": "https://forum.gamer.com.tw/C.php?bsn=36390&snA=8237",
+   "source": "巴哈姆特", "kind": "討論",
+   "enemy": [], "my": [], "units": [],
+   "note": "台港澳服玩家長期更新的組隊與對局討論串",
+   "date": "2025"
+  },
+  {
+   "title": "巴哈：競技場如何組隊、分析陣容（含充能表）",
+   "url": "https://forum.gamer.com.tw/C.php?bsn=36390&snA=11696",
+   "source": "巴哈姆特", "kind": "攻略",
+   "enemy": [], "my": [], "units": [],
+   "note": "站位、爆裂順序與速度判斷的中文說明",
+   "date": "2024"
+  },
+  {
+   "title": "巴哈：妮姬競技場集中討論串",
+   "url": "https://forum.gamer.com.tw/C.php?bsn=36390&snA=7131",
+   "source": "巴哈姆特", "kind": "討論",
+   "enemy": [], "my": [], "units": [],
+   "note": "規則、疑問、隊伍分享",
+   "date": "2024"
+  },
+  {
+   "title": "233乐园：2026 年 6 月 PVP 競技場配隊攻略",
+   "url": "https://www.233leyuan.com/post-detail/2069994974744829952",
+   "source": "233乐园", "kind": "攻略",
+   "enemy": [], "my": [], "units": [],
+   "note": "簡中；含強度分級與核爆隊、霰彈隊配法",
+   "date": "2026-06"
+  }
+ ]
+}
