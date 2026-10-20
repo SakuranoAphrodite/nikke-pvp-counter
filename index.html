@@ -173,6 +173,10 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px;border-t
       <button class="btn" id="btnImport">匯入 JSON</button>
       <input type="file" id="fileImport" accept="application/json" style="display:none">
     </div>
+    <div class="row" style="margin-top:8px">
+      <button class="btn" id="btnRemoteRoster">從 GitHub 載入角色庫</button>
+      <span class="muted" id="remoteRosterStatus">線上版會自動讀取倉庫根目錄的 roster.json（匯出 JSON 後把檔案放進倉庫並推送即可）。</span>
+    </div>
     <div class="filters" id="rosterFilters"></div>
     <div class="rostergrid" id="rosterGrid"></div>
   </div>
@@ -209,6 +213,12 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px;border-t
     </ul>
     <h3>資料來源與授權</h3>
     <p class="muted">角色資料、充能數值與隊伍模板取自開源專案 <a href="https://github.com/williamchong/nikke-arena-planner" target="_blank">NIKKE Arena Planner</a>（MIT 授權），其數據又整理自 nikke.gg、Prydwen 與左猫猫的充能計算表。繁中譯名以該資料集的台港澳服譯名為準。解法規則與威脅標籤為本工具自行整理，僅供參考。本工具為非官方粉絲工具，與 Shift Up、Level Infinite 無關。</p>
+    <h3>讓線上版自動載入我的角色庫</h3>
+    <ul class="tips">
+      <li>在「我的角色庫」按「匯出 JSON」，會下載一個 <code>roster.json</code>。</li>
+      <li>把它放到專案根目錄（和 index.html 同層）並推送到 GitHub。</li>
+      <li>之後在任何裝置打開線上版，角色庫會自動載入這份檔案；如果你在該裝置上手動改過角色庫，就不會自動覆蓋，可按「從 GitHub 載入角色庫」手動同步。</li>
+    </ul>
     <h3>新角色出來怎麼辦</h3>
     <ul class="tips">
       <li>每天第一次打開本頁時，如果有網路，會自動向上游專案抓最新的角色與模板資料並暫存在瀏覽器；頁首會顯示目前用的是「內建」「快取」還是「線上」資料，也可以按「檢查更新」手動抓。</li>
@@ -558,7 +568,7 @@ function renderRoster(){
   for(const c of list){
     const d=document.createElement('div'); d.className='pick'+(owned.has(c.id)?' owned':'');
     d.innerHTML=`<b>${owned.has(c.id)?'✔ ':''}${esc(c.name['zh-TW'])}</b><span class="en">${esc(c.name.en)}</span><div>${burstBadge(c.burst)}${elBadge(c.element)}<span class="badge">${c.weapon}</span>${tierBadge(c.pvpTier)}</div>`;
-    d.onclick=()=>{ if(owned.has(c.id)) owned.delete(c.id); else owned.add(c.id); save(); renderRoster(); updateOwnedCount(); renderSolve(); };
+    d.onclick=()=>{ if(owned.has(c.id)) owned.delete(c.id); else owned.add(c.id); LS.set('followRemote',false); save(); renderRoster(); updateOwnedCount(); renderSolve(); };
     el.appendChild(d);
   }
   updateOwnedCount();
@@ -689,11 +699,11 @@ $('#pickerClose').onclick=closePicker; $('#picker').addEventListener('click',e=>
 $('#pickerSearch').addEventListener('input',renderPicker);
 $('#pickerSearch').addEventListener('keydown',e=>{ if(e.key==='Enter'){ const l=pickerCandidates(); const team=pickerTarget.team==='enemy'?enemy:mine; const first=l.find(c=>!team.includes(c.id)); if(first){ team[pickerTarget.idx]=first.id; save(); closePicker(); refresh(); } } if(e.key==='Escape') closePicker(); });
 $('#rosterSearch').addEventListener('input',renderRoster);
-$('#btnOwnAll').onclick=()=>{ if(confirm('把全部角色標成擁有？')){ owned=new Set(CHARACTERS.map(c=>c.id)); save(); renderRoster(); renderSolve(); } };
-$('#btnOwnNone').onclick=()=>{ if(confirm('清空角色庫？')){ owned=new Set(); save(); renderRoster(); renderSolve(); } };
-$('#btnExport').onclick=()=>{ const blob=new Blob([JSON.stringify({owned:[...owned],history},null,1)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='nikke-pvp-roster.json'; a.click(); };
+$('#btnOwnAll').onclick=()=>{ if(confirm('把全部角色標成擁有？')){ owned=new Set(CHARACTERS.map(c=>c.id)); LS.set('followRemote',false); save(); renderRoster(); renderSolve(); } };
+$('#btnOwnNone').onclick=()=>{ if(confirm('清空角色庫？')){ owned=new Set(); LS.set('followRemote',false); save(); renderRoster(); renderSolve(); } };
+$('#btnExport').onclick=()=>{ const blob=new Blob([JSON.stringify({exported:new Date().toISOString().slice(0,10),owned:[...owned],history},null,1)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='roster.json'; a.click(); };
 $('#btnImport').onclick=()=>$('#fileImport').click();
-$('#fileImport').onchange=e=>{ const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=()=>{ try{ const d=JSON.parse(r.result); if(Array.isArray(d.owned)) owned=new Set(d.owned.filter(i=>byId[i])); if(Array.isArray(d.history)) history=d.history; save(); renderRoster(); renderSolve(); alert('已匯入 '+owned.size+' 名角色'); }catch(err){ alert('讀取失敗：'+err.message); } }; r.readAsText(f); e.target.value=''; };
+$('#fileImport').onchange=e=>{ const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=()=>{ try{ const d=JSON.parse(r.result); if(Array.isArray(d.owned)) owned=new Set(d.owned.filter(i=>byId[i])); if(Array.isArray(d.history)) history=d.history; LS.set('followRemote',false); save(); renderRoster(); renderSolve(); alert('已匯入 '+owned.size+' 名角色'); }catch(err){ alert('讀取失敗：'+err.message); } }; r.readAsText(f); e.target.value=''; };
 
 /* ====================== 資料自動更新 ====================== */
 function setDataStatus(text,cls){ const el=$('#dataStatus'); el.textContent=text; el.style.color=cls==='ok'?'var(--good)':cls==='bad'?'var(--warn)':''; }
@@ -724,6 +734,27 @@ async function checkOnlineData(manual){
   const today=new Date().toISOString().slice(0,10);
   if(navigator.onLine&&LS.get('lastCheck','')!==today) setTimeout(()=>checkOnlineData(false),300);
 })();
+
+/* ====================== 倉庫內的 roster.json ====================== */
+function setRemoteStatus(t){ $('#remoteRosterStatus').textContent=t; }
+async function loadRemoteRoster(manual){
+  if(!/^https?:$/.test(location.protocol)){ if(manual) setRemoteStatus('本機檔案模式無法讀取 roster.json，請用線上版或匯入 JSON。'); return; }
+  try{
+    const r=await fetch('roster.json',{cache:'no-store'}); if(!r.ok) throw new Error('HTTP '+r.status);
+    const d=await r.json(); const ids=(d.owned||[]).filter(i=>byId[i]);
+    if(!ids.length) throw new Error('roster.json 沒有角色');
+    const same=ids.length===owned.size&&ids.every(i=>owned.has(i));
+    const follow=LS.get('followRemote',false); // 只有空角色庫或上次就是從倉庫載入的才自動覆蓋
+    if(manual||owned.size===0||(follow&&!same)){
+      owned=new Set(ids); if(Array.isArray(d.history)&&d.history.length&&!history.length) history=d.history;
+      LS.set('followRemote',true); save(); renderRoster(); updateOwnedCount(); renderSolve();
+      setRemoteStatus(`已從倉庫的 roster.json 載入 ${ids.length} 名角色${d.exported?'（匯出日期 '+d.exported+'）':''}。`);
+    } else if(same) setRemoteStatus(`角色庫與倉庫的 roster.json 一致（${ids.length} 名）。`);
+    else setRemoteStatus(`本機角色庫已手動修改，未套用倉庫的 roster.json（${ids.length} 名）；按「從 GitHub 載入角色庫」可覆蓋成倉庫版本。`);
+  }catch(e){ if(manual) setRemoteStatus('讀取 roster.json 失敗：'+e.message); }
+}
+$('#btnRemoteRoster').onclick=()=>{ if(owned.size&&!confirm('這會用倉庫的 roster.json 覆蓋目前的角色庫，確定？')) return; loadRemoteRoster(true); };
+loadRemoteRoster(false);
 
 updateOwnedCount(); refresh();
 </script>
