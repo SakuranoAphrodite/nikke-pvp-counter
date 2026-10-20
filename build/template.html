@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NIKKE 競技場解隊助手</title>
+<style>
+:root{
+  --bg:#0f1117;--panel:#171a23;--panel2:#1f2330;--line:#2b3040;--text:#e8eaf0;--muted:#9aa3b5;
+  --accent:#7c6cff;--accent2:#4fc3f7;--good:#3ddc84;--warn:#ffb347;--bad:#ff5c7a;
+  --fire:#ff6b4a;--water:#4fa3ff;--wind:#49d17d;--electric:#b37cff;--iron:#f2b84b;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:"Noto Sans TC","Microsoft JhengHei","PingFang TC",system-ui,sans-serif;font-size:15px;line-height:1.5}
+a{color:var(--accent2)}
+header{position:sticky;top:0;z-index:5;background:linear-gradient(180deg,#141722,#0f1117);border-bottom:1px solid var(--line);padding:10px 16px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+header h1{font-size:18px;margin:0;letter-spacing:.5px}
+header h1 small{color:var(--muted);font-weight:400;font-size:12px;margin-left:8px}
+nav{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
+nav button,.seg button{background:var(--panel2);border:1px solid var(--line);color:var(--text);padding:6px 12px;border-radius:8px;cursor:pointer;font-size:14px}
+nav button.active,.seg button.active{background:var(--accent);border-color:var(--accent);color:#fff}
+main{max-width:1200px;margin:0 auto;padding:16px}
+.tab{display:none}.tab.active{display:block}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:900px){.grid2{grid-template-columns:1fr}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:16px}
+.card h2{font-size:16px;margin:0 0 10px;display:flex;align-items:center;gap:8px}
+.card h3{font-size:14px;margin:12px 0 6px;color:var(--accent2)}
+.muted{color:var(--muted);font-size:13px}
+.slots{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+@media(max-width:600px){.slots{grid-template-columns:repeat(5,1fr);gap:4px}}
+.slot{background:var(--panel2);border:1px dashed var(--line);border-radius:10px;min-height:92px;padding:6px;cursor:pointer;text-align:center;position:relative;transition:border-color .15s}
+.slot:hover{border-color:var(--accent)}
+.slot.filled{border-style:solid}
+.slot .pos{position:absolute;top:4px;left:6px;font-size:11px;color:var(--muted)}
+.slot .x{position:absolute;top:2px;right:6px;font-size:14px;color:var(--muted);display:none}
+.slot.filled:hover .x{display:block}
+.slot .nm{font-size:13px;font-weight:600;margin-top:16px;word-break:break-all;line-height:1.25}
+.slot .en{font-size:10px;color:var(--muted);word-break:break-all}
+.slot .add{color:var(--muted);font-size:13px;margin-top:28px}
+.badge{display:inline-block;font-size:11px;padding:1px 6px;border-radius:6px;background:#2b3040;color:#dfe3ee;margin:1px 2px;vertical-align:middle;white-space:nowrap}
+.badge.b1{background:#2d5fa8}.badge.b2{background:#a8732d}.badge.b3{background:#a83a3a}.badge.bL{background:#6b3aa8}
+.badge.fire{background:var(--fire);color:#111}.badge.water{background:var(--water);color:#111}.badge.wind{background:var(--wind);color:#111}.badge.electric{background:var(--electric);color:#111}.badge.iron{background:var(--iron);color:#111}
+.badge.tier{background:#3a3f52}.badge.tier.SSS{background:#ff4d6d;color:#fff}.badge.tier.SS{background:#ff8c42;color:#111}.badge.tier.S{background:#ffd166;color:#111}.badge.tier.A{background:#7bd389;color:#111}
+.badge.tag{background:#2c3a5c;color:#cfe0ff}
+.badge.good{background:#1f5f3f;color:#bff5d6}.badge.warn{background:#6b4a14;color:#ffe2b0}.badge.bad{background:#6b1f32;color:#ffc9d4}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.btn{background:var(--panel2);border:1px solid var(--line);color:var(--text);padding:6px 12px;border-radius:8px;cursor:pointer;font-size:13px}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.danger{border-color:var(--bad);color:var(--bad)}
+input[type=text],textarea{background:#0f121a;border:1px solid var(--line);color:var(--text);border-radius:8px;padding:8px 10px;font-size:14px;width:100%}
+.speed{font-size:28px;font-weight:800;letter-spacing:1px}
+.speed.f2RL,.speed.f5SG{color:var(--bad)}.speed.f3RL{color:var(--warn)}.speed.f7SG{color:#ffd166}.speed.f4RL,.speed.f5RL{color:var(--good)}
+.bar{height:10px;background:#0f121a;border-radius:6px;overflow:hidden;border:1px solid var(--line)}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.tierrow{display:grid;grid-template-columns:52px 1fr 70px;gap:8px;align-items:center;font-size:12px;margin:3px 0}
+.chain{display:flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:13px}
+.chain .arrow{color:var(--muted)}
+.chain .who{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:4px 8px}
+ul.tips{padding-left:18px;margin:6px 0}
+ul.tips li{margin:5px 0}
+.threat{display:grid;grid-template-columns:40px 1fr;gap:8px;padding:6px 0;border-bottom:1px solid var(--line);font-size:13px}
+.threat:last-child{border-bottom:none}
+.threat .p{color:var(--muted);font-weight:700}
+.team{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:10px 0}
+.team .hd{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:6px}
+.team .hd b{font-size:15px}
+.team .members{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:6px 0}
+.team .m{background:#0f121a;border:1px solid var(--line);border-radius:8px;padding:5px 4px;text-align:center;font-size:12px;min-height:58px}
+.team .m .pos{color:var(--muted);font-size:10px}
+.team .m.req{border-color:var(--accent)}
+.team .m.sub{border-color:var(--warn);border-style:dashed}
+.team .m.miss{border-color:var(--bad);border-style:dashed;color:var(--bad)}
+.team .why{font-size:13px;color:#cfd5e3}
+.team .alt{font-size:12px;color:var(--muted)}
+.score{margin-left:auto;font-size:12px;color:var(--muted)}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;z-index:20;align-items:flex-start;justify-content:center;padding:30px 10px;overflow:auto}
+.modal.open{display:flex}
+.modal .box{background:var(--panel);border:1px solid var(--line);border-radius:14px;width:min(960px,100%);padding:14px;max-height:90vh;display:flex;flex-direction:column}
+.modal .list{overflow:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px;margin-top:10px}
+.pick{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:6px;cursor:pointer;font-size:12px;line-height:1.3}
+.pick:hover{border-color:var(--accent)}
+.pick.owned{border-color:var(--good)}
+.pick.dis{opacity:.35;cursor:not-allowed}
+.pick b{display:block;font-size:13px}
+.pick .en{color:var(--muted);font-size:10px}
+.filters{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.filters button{font-size:12px;padding:3px 8px}
+.rostergrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px;margin-top:10px}
+.hist{display:flex;flex-wrap:wrap;gap:6px}
+.hist button{font-size:12px}
+.verdict{font-size:18px;font-weight:700;margin:6px 0}
+.verdict.good{color:var(--good)}.verdict.bad{color:var(--bad)}.verdict.warn{color:var(--warn)}
+details summary{cursor:pointer;color:var(--accent2);font-size:13px}
+kbd{background:#2b3040;border-radius:4px;padding:0 5px;font-size:12px}
+table{border-collapse:collapse;width:100%;font-size:13px}
+td,th{border-bottom:1px solid var(--line);padding:5px 6px;text-align:left;vertical-align:top}
+footer{color:var(--muted);font-size:12px;text-align:center;padding:20px;border-top:1px solid var(--line);margin-top:20px}
+</style>
+</head>
+<body>
+<header>
+  <h1>NIKKE 競技場解隊助手 <small>台港澳服／國際服資料 · <span id="dataStatus">資料版本 __DATA_DATE__</span> <button class="btn" id="btnCheckData" style="padding:1px 8px;font-size:11px">檢查更新</button></small></h1>
+  <div class="seg" id="modeSeg">
+    <button data-mode="attack" class="active" title="我去打別人的防守隊">我方進攻</button>
+    <button data-mode="defense" title="我在排防守隊，對方是進攻隊">我方防守</button>
+  </div>
+  <nav>
+    <button data-tab="solve" class="active">解隊</button>
+    <button data-tab="roster">我的角色庫 <span id="ownedCount" class="badge"></span></button>
+    <button data-tab="help">說明</button>
+  </nav>
+</header>
+
+<main>
+<!-- ============ 解隊 ============ -->
+<section class="tab active" id="tab-solve">
+  <div class="card">
+    <h2>① 對方隊伍 <span class="muted">（照遊戲裡 P1→P5 的順序填）</span></h2>
+    <div class="slots" id="enemySlots"></div>
+    <div class="row" style="margin-top:10px">
+      <input type="text" id="quickEnemy" placeholder="快速輸入：用空格或逗號隔開 5 個名字，例如「紅蓮 豺狼 布蘭兒 桑迪 特蕾娜」，按 Enter" style="flex:1;min-width:260px">
+      <button class="btn" id="btnQuickEnemy">套用</button>
+      <button class="btn" id="btnSaveEnemy">存到歷史</button>
+      <button class="btn danger" id="btnClearEnemy">清空</button>
+    </div>
+    <div class="hist" id="enemyHistory" style="margin-top:8px"></div>
+  </div>
+
+  <div class="grid2">
+    <div class="card" id="analysisCard">
+      <h2>② 對方分析</h2>
+      <div id="analysis" class="muted">填滿 5 個角色後自動分析。</div>
+    </div>
+    <div class="card">
+      <h2>③ 解法建議</h2>
+      <div id="counters" class="muted">填滿 5 個角色後自動產生。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>④ 用我的角色庫組反制隊 <span class="muted" id="rosterNote"></span></h2>
+    <div class="row" style="margin-bottom:8px">
+      <label><input type="checkbox" id="chkOnlyOwned" checked> 只用我擁有的角色</label>
+      <label><input type="checkbox" id="chkAllowSub" checked> 模板缺角時允許同爆裂段替補</label>
+      <span class="muted">結果依「是否克制對方原型 → 速度 → 模板強度」排序</span>
+    </div>
+    <div id="builtTeams" class="muted">填滿對方隊伍後自動產生。</div>
+  </div>
+
+  <div class="card">
+    <h2>⑤ 自己排一隊試算 <span class="muted">（可從上面的建議「帶入」再微調）</span></h2>
+    <div class="slots" id="mySlots"></div>
+    <div class="row" style="margin-top:10px">
+      <input type="text" id="quickMy" placeholder="快速輸入 5 個名字，按 Enter" style="flex:1;min-width:260px">
+      <button class="btn" id="btnQuickMy">套用</button>
+      <button class="btn danger" id="btnClearMy">清空</button>
+    </div>
+    <div id="myEval" class="muted" style="margin-top:10px">排好 5 人後自動評估對戰。</div>
+  </div>
+</section>
+
+<!-- ============ 角色庫 ============ -->
+<section class="tab" id="tab-roster">
+  <div class="card">
+    <h2>我的角色庫 <span class="muted">點角色切換「擁有」，存在瀏覽器本機，不會上傳</span></h2>
+    <div class="row">
+      <input type="text" id="rosterSearch" placeholder="搜尋（中文／英文／日文）" style="max-width:320px">
+      <button class="btn" id="btnOwnAll">全部擁有</button>
+      <button class="btn danger" id="btnOwnNone">全部清除</button>
+      <button class="btn" id="btnExport">匯出 JSON</button>
+      <button class="btn" id="btnImport">匯入 JSON</button>
+      <input type="file" id="fileImport" accept="application/json" style="display:none">
+    </div>
+    <div class="filters" id="rosterFilters"></div>
+    <div class="rostergrid" id="rosterGrid"></div>
+  </div>
+</section>
+
+<!-- ============ 說明 ============ -->
+<section class="tab" id="tab-help">
+  <div class="card">
+    <h2>怎麼用</h2>
+    <ol>
+      <li>到「我的角色庫」把你有的角色點成「擁有」（只需做一次，會記住）。</li>
+      <li>回「解隊」，照對方防守隊 P1→P5 的順序填入 5 個角色（可以直接在快速輸入框打中文名）。</li>
+      <li>看「對方分析」：速度階、爆裂鏈順序、屬於哪種體系、關鍵威脅。</li>
+      <li>看「解法建議」與「組反制隊」：工具會從你的角色庫挑出能克制對方體系、速度又夠的隊伍。</li>
+      <li>想自己調整，就在「自己排一隊試算」排 5 人，會直接告訴你快慢與互剋關係。</li>
+    </ol>
+    <h3>速度階怎麼看</h3>
+    <table>
+      <tr><th>速度階</th><th>意思</th><th>約略時間</th></tr>
+      <tr><td>2RL</td><td>兩輪火箭筒就開全爆裂，極快，幾乎只有豺狼＋彈匣式 RL 做得到</td><td>約 2.5 秒</td></tr>
+      <tr><td>5SG</td><td>等於 2.5RL，很快，通常靠彈匣式霰彈槍</td><td>約 3.0 秒</td></tr>
+      <tr><td>3RL</td><td>主流基準，大部分對局夠用</td><td>約 3.5 秒</td></tr>
+      <tr><td>7SG</td><td>等於 3.5RL，開始會被快隊壓</td><td>約 4.0 秒</td></tr>
+      <tr><td>4RL / 5RL</td><td>慢，要靠坦克、無敵、復活撐到自己爆裂</td><td>4.5 秒以上</td></tr>
+    </table>
+    <h3>幾個關鍵規則</h3>
+    <ul class="tips">
+      <li>競技場是全自動戰鬥，不能手動選目標；你能控制的只有「帶誰、站哪、多快」。</li>
+      <li>爆裂鏈一定要有 B1、B2、B3 各一（小紅帽的 Λ 可以補任何一段），缺一段就永遠開不了全爆裂。</li>
+      <li>同一段爆裂由「位置編號最小」的那位先開，所以排位順序會改變實際開爆裂的人。</li>
+      <li>P1 與 P5 承受最多攻擊、P3 與 P4 最安全：坦克放 P1/P5，主 C 放 P3/P4。</li>
+      <li>戰力低於對方 84.6% 會吃到屬性懲罰，差太多時陣容再對也打不贏。</li>
+      <li>充能數值是以「對方不動（防守 AI）」的理論值估算，實戰會因掩體、射偏、目標切換而有誤差，把它當作相對快慢的參考。</li>
+    </ul>
+    <h3>資料來源與授權</h3>
+    <p class="muted">角色資料、充能數值與隊伍模板取自開源專案 <a href="https://github.com/williamchong/nikke-arena-planner" target="_blank">NIKKE Arena Planner</a>（MIT 授權），其數據又整理自 nikke.gg、Prydwen 與左猫猫的充能計算表。繁中譯名以該資料集的台港澳服譯名為準。解法規則與威脅標籤為本工具自行整理，僅供參考。本工具為非官方粉絲工具，與 Shift Up、Level Infinite 無關。</p>
+    <h3>新角色出來怎麼辦</h3>
+    <ul class="tips">
+      <li>每天第一次打開本頁時，如果有網路，會自動向上游專案抓最新的角色與模板資料並暫存在瀏覽器；頁首會顯示目前用的是「內建」「快取」還是「線上」資料，也可以按「檢查更新」手動抓。</li>
+      <li>想把新資料固定寫進這個檔案（離線也有），雙擊資料夾裡的 <code>更新資料.bat</code>，或執行 <code>python build\build.py --update</code>。</li>
+      <li>新角色的爆裂速度與模板由上游更新；本工具的威脅標籤與解法規則需要手動補，缺標籤的角色會顯示為「一般角色」，不影響速度計算。</li>
+    </ul>
+  </div>
+</section>
+</main>
+
+<footer>NIKKE 競技場解隊助手 · 本機離線版 · 資料版本 __DATA_DATE__</footer>
+
+<!-- 選角 modal -->
+<div class="modal" id="picker">
+  <div class="box">
+    <div class="row">
+      <b id="pickerTitle">選擇角色</b>
+      <input type="text" id="pickerSearch" placeholder="輸入中文／英文／日文名稱" style="flex:1;min-width:200px">
+      <button class="btn" id="pickerClose">關閉</button>
+    </div>
+    <div class="filters" id="pickerFilters"></div>
+    <div class="list" id="pickerList"></div>
+  </div>
+</div>
+
+<script>
+/* ====================== 資料 ====================== */
+let CHARACTERS = __CHARACTERS__;
+let TEMPLATES  = __TEMPLATES__;
+const BUILTIN_DATE = '__DATA_DATE__';
+const DATA_RAW = 'https://raw.githubusercontent.com/williamchong/nikke-arena-planner/master/app/data/';
+
+/* ====================== 知識層（本工具自行整理） ====================== */
+// 關鍵角色的 PVP 功能標籤與一句話說明
+const UNIT_TAGS = {
+  'scarlet':                ['AOE核爆','反擊高射速'],
+  'scarlet-black-shadow':   ['AOE核爆'],
+  'maiden-ice-rose':        ['AOE核爆','充能電池'],
+  'harran':                 ['AOE核爆'],
+  'ada':                    ['AOE核爆'],
+  '2b':                     ['AOE核爆'],
+  'neon-vision-eye':        ['AOE核爆'],
+  'helm-treasure':          ['爆裂主C','充能電池'],
+  'liberalio':              ['爆裂主C','充能電池'],
+  'ein':                    ['爆裂主C'],
+  'emilia':                 ['持續爆裂輸出','充能電池'],
+  'alice':                  ['單體爆裂','穿坦'],
+  'rapi-red-hood':          ['單體爆裂'],
+  'red-hood':               ['單體爆裂','Λ萬用爆裂'],
+  'cinderella':             ['單體爆裂'],
+  'vesti-tactical-upgrade': ['爆裂主C','自回復'],
+  'eunhwa-tactical-upgrade':['爆裂前擊殺'],
+  'emma':                   ['治療','爆裂前擊殺'],
+  'anis-sparkling-summer':  ['雙目標','無視嘲諷'],
+  'rosanna':                ['驅散','雙目標'],
+  'rosanna-treasure':       ['驅散','雙目標'],
+  'nayuta':                 ['爆裂主C'],
+  'snow-white-heavy-arms':  ['單體爆裂'],
+  'laplace-ultimate-hero':  ['爆裂主C'],
+  'milk-blooming-bunny':    ['爆裂主C'],
+  'privaty-treasure':       ['全體暈眩','AOE核爆'],
+  'privaty':                ['全體暈眩'],
+  'maiden':                 ['全體嘲諷','霰彈集火'],
+  'jackal':                 ['最快充能','連結分攤'],
+  'centi':                  ['充能電池'],
+  'centi-treasure':         ['充能電池'],
+  'trina':                  ['充能電池'],
+  'anis-star':              ['充能電池','坦克'],
+  'anis':                   ['充能電池'],
+  'bay-treasure':           ['傷害分攤','充能電池'],
+  'bay':                    ['傷害分攤','充能電池'],
+  'noah':                   ['全隊無敵'],
+  'noise':                  ['嘲諷','最大HP','治療'],
+  'biscuit':                ['防禦者免疫'],
+  'blanc':                  ['不屈','減傷'],
+  'rapunzel':               ['復活','治療'],
+  'anne-miracle-fairy':     ['復活','增傷'],
+  'little-mermaid':         ['暈眩','打斷爆裂鏈'],
+  'moran-treasure':         ['坦克','減傷','自復活'],
+  'moran':                  ['坦克','減傷'],
+  'nero':                   ['減傷疊加','治療'],
+  'crown':                  ['護盾','增傷'],
+  'mast-romantic-maid':     ['增傷','輔助'],
+  'anchor-innocent-maid':   ['增傷','輔助'],
+  'takina':                 ['輔助'],
+  'tia':                    ['嘲諷','掩體治療'],
+  'ludmilla':               ['坦克'],
+  'makima':                 ['嘲諷','承傷坦'],
+  'folkwang':               ['不屈'],
+  'drake':                  ['霰彈集火'],'drake-treasure':['霰彈集火'],'isabel':['霰彈集火'],'neve':['霰彈集火'],'noir':['霰彈集火'],
+  'soda-twinkling-bunny':   ['霰彈集火'],'dorothy-serendipity':['霰彈集火'],'brid-silent-track':['霰彈集火'],'soline-frost-ticket':['霰彈集火'],
+  'naga':                   ['輔助'],'rouge':['輔助'],'poli-treasure':['減傷'],
+};
+const ARCH_NAME = {
+  'moran-system':'牡丹珍藏坦牆體系','blanc-indom':'布蘭兒不屈體系','noah-stall':'諾雅＋餅乾持久戰','scarlet-nuke':'紅蓮核爆隊',
+  'moran-scarlet':'牡丹＋紅蓮混合','alice-carry':'愛麗絲主C','sanis-stall':'夏日阿妮斯持久戰','mermaid-disrupt':'小美人魚暈眩干擾',
+  'helm-carry':'海倫珍藏主C','rosanna-counter':'羅珊娜驅散反制','rapi-rh':'拉毗小紅帽主C','vesti-tu':'貝斯蒂戰術升級主C',
+  'nayuta-carry':'娜由塔主C','alice-revive':'愛麗絲復活隊','cinderella-carry':'灰姑娘主C','cat-team':'貓隊（尼羅＋牡丹）',
+  'tactical-trio':'戰術三人組（爆裂前擊殺）','sg-burst':'霰彈集火隊','anis-star-system':'超級巨星阿妮斯＋尼恩','privaty-stun':'普麗瓦蒂暈眩鎖','share-wall':'豺狼＋貝伊分攤牆'
+};
+// 耗血持久型原型：慢一點也可以接受
+const STALL_ARCH = new Set(['noah-stall','moran-system','cat-team','share-wall','blanc-indom','sanis-stall','alice-revive','anis-star-system']);
+
+// 針對對方特徵的解法規則（繁中）。when(ctx) 回傳 true 時顯示。
+const RULES = [
+  {id:'nochain', when:c=>!c.chain.valid, level:'good', title:'對方爆裂鏈不完整', text:c=>`對方缺 ${c.chain.missing.join('、')}，永遠開不了全爆裂。隨便一隊 3RL 以上的核爆隊先手就能打，不用想太多。`},
+  {id:'fast', when:c=>['2RL','5SG'].includes(c.speed.tier), level:'bad', title:c=>`對方很快（${c.speed.tier}）`, text:c=>`正面搶速很難。改用「扛第一波」的體系：諾雅全隊無敵、諾伊斯嘲諷＋最大 HP、牡丹珍藏坦牆、豺狼＋貝伊珍藏雙層分攤，或長髮公主復活隊；扛過第一波後對方爆裂進入冷卻，你再開全爆裂反打。`},
+  {id:'slow', when:c=>['4RL','5RL'].includes(c.speed.tier), level:'good', title:c=>`對方很慢（${c.speed.tier}）`, text:c=>`直接帶 3RL 以上的核爆隊先手即可，紅蓮＋豺狼 2RL 幾乎必勝；注意對方有沒有復活或無敵角再決定要不要多帶一個輸出。`},
+  {id:'scarlet', when:c=>c.has('scarlet','scarlet-black-shadow'), level:'bad', title:'對方有紅蓮系核爆', text:c=>`紅蓮爆裂是全體斬擊、無視護盾。解法：諾雅（爆裂時全隊無敵）或諾伊斯（嘲諷＋最大 HP）扛第一波、牡丹珍藏坦、布蘭兒不屈，或直接比她快一階。另外紅蓮 S2 會對高射速武器反擊，<b>不要帶 SG／SMG／MG</b> 去打紅蓮隊。`},
+  {id:'jackal', when:c=>c.has('jackal'), level:'warn', title:'對方有豺狼', text:c=>`豺狼的連結會把受到的傷害分攤到全隊，而且連結對象被打時豺狼會回充。解法：羅珊娜（含珍藏）S1 驅散連結；用 RL／SR 低射速武器，少用 SG／SMG／MG 餵她充能。`},
+  {id:'noah', when:c=>c.has('noah'), level:'warn', title:'對方有諾雅', text:c=>`諾雅開爆裂時全隊無敵，一波核爆打不穿。解法：拖到無敵結束再打第二輪（持久戰：夏日阿妮斯、超級巨星阿妮斯體系），用戰術三人組在對方爆裂前就打死人，或羅珊娜驅散。速度相近時這招對你最有利。`},
+  {id:'blanc', when:c=>c.has('blanc'), level:'warn', title:'對方有布蘭兒（不屈）', text:c=>`不屈期間隊友不會死，核爆打完對方還站著。解法：羅珊娜驅散不屈、小美人魚暈眩打斷她的爆裂、或諾雅持久耗過不屈時間再打。`},
+  {id:'moran', when:c=>c.has('moran-treasure'), level:'warn', title:'對方有牡丹珍藏坦牆', text:c=>`牡丹珍藏承傷＋減傷＋自復活，${c.has('nero')?'再加尼羅的減傷疊加，接近全免傷，':''}單靠一波核爆打不死。解法：霰彈集火在爆裂前打死關鍵角、戰術三人組、夏日阿妮斯雙目標無視嘲諷、愛麗絲單體穿坦。`},
+  {id:'mermaid', when:c=>c.has('little-mermaid'), level:'warn', title:'對方有小美人魚', text:c=>`她的暈眩會打斷你的爆裂鏈。解法：比她快（2RL）在她動作前開爆裂，或用牡丹珍藏／諾雅持久體系抗干擾。`},
+  {id:'revive', when:c=>c.has('rapunzel','anne-miracle-fairy'), level:'warn', title:'對方有復活', text:c=>`一波打死主 C 會被拉起來。需要第二輪傷害，或把隊伍調整成持久戰；AOE 核爆比單體更能一次清掉輔助。`},
+  {id:'rosanna', when:c=>c.has('rosanna','rosanna-treasure'), level:'warn', title:'對方有羅珊娜（驅散）', text:c=>`她會驅散你的增益、不屈與豺狼連結，別靠布蘭兒不屈或豺狼分攤取勝；牡丹珍藏坦牆體系可以克她。`},
+  {id:'sg', when:c=>c.weaponCount('SG')>=2, level:'warn', title:'對方是霰彈集火隊', text:c=>`充能快，爆裂前就能把 P1／P5 打死。解法：紅蓮 S2 反擊高射速、諾雅無敵、布蘭兒不屈；脆皮不要放 P1／P5。`},
+  {id:'sanis', when:c=>c.has('anis-sparkling-summer'), level:'warn', title:'對方有夏日阿妮斯', text:c=>`她同時打兩個目標而且無視嘲諷，持久戰很強。解法：紅蓮核爆（她撐不過紅蓮 S2 反擊）、布蘭兒不屈、貝斯蒂戰術升級主 C。`},
+  {id:'st', when:c=>c.has('alice','rapi-red-hood','cinderella','snow-white-heavy-arms'), level:'warn', title:'對方有單體爆裂主C', text:c=>`會秒掉最高攻擊力的目標。解法：餅乾＋防禦者免疫、牡丹珍藏坦、長髮公主復活；或乾脆比她快。`},
+  {id:'stun', when:c=>c.has('privaty-treasure','privaty')&&c.has('maiden'), level:'warn', title:'對方是全體嘲諷＋暈眩鎖', text:c=>`梅登全體嘲諷讓普麗瓦蒂的暈眩命中全隊，打斷你的爆裂鏈。解法：比對方快，或諾雅／牡丹珍藏持久。`},
+  {id:'share', when:c=>c.has('jackal')&&c.has('bay-treasure','bay'), level:'warn', title:'對方是雙層分攤牆', text:c=>`豺狼＋貝伊兩層分攤，你的第一波會被平均攤掉。解法：諾雅持久或小美人魚暈眩，不要期待一波秒人。`},
+];
+
+/* ====================== 計算核心 ====================== */
+const TIERS=['2RL','5SG','3RL','7SG','4RL','5RL'];
+const CYCLES={'1RL':1,'2RL':2,'3SG':1.5,'5SG':2.5,'3RL':3,'7SG':3.5,'4RL':4,'5RL':5};
+const TIER_SEC={'2RL':2.5,'5SG':3.0,'3RL':3.5,'7SG':4.0,'4RL':4.5,'5RL':5.5};
+const TIER_RANK={'SSS':8,'SS':7,'S':6,'A':5,'B':4,'C':3,'D':2,'E':1,'F':0};
+const EL_ZH={fire:'燃燒',water:'水冷',wind:'風壓',electric:'電擊',iron:'鐵甲'};
+const ROLE_ZH={attacker:'火力',supporter:'支援',defender:'防禦'};
+let byId=Object.fromEntries(CHARACTERS.map(c=>[c.id,c]));
+const nameOf=id=>byId[id]?byId[id].name['zh-TW']:id;
+let dataInfo={source:'內建',date:BUILTIN_DATE};
+function applyData(chars,tpls,info){ CHARACTERS=chars; TEMPLATES=tpls; byId=Object.fromEntries(chars.map(c=>[c.id,c])); dataInfo=info; }
+
+function speedOf(ids,mode){
+  const chars=ids.map(i=>byId[i]).filter(Boolean);
+  const totals={};
+  for(const t of ['1RL',...TIERS]) totals[t]=chars.reduce((s,c)=>s+(c.burstGen[mode][t]||0),0);
+  let tier='5RL', reached=false;
+  for(const t of TIERS){ if(totals[t]>=1){tier=t;reached=true;break;} }
+  return {tier,totals,reached,cycles:CYCLES[tier],sec:TIER_SEC[tier]};
+}
+function chainOf(ids){
+  const chars=ids.map((id,i)=>({c:byId[id],pos:i+1})).filter(x=>x.c);
+  const has={I:false,II:false,III:false}; let lambda=false;
+  chars.forEach(x=>{ if(x.c.burst==='Λ') lambda=true; else if(has[x.c.burst]!==undefined) has[x.c.burst]=true; });
+  const missing=['I','II','III'].filter(b=>!has[b]);
+  const valid = lambda || missing.length===0;
+  const used=new Set();
+  const find=b=>{ const cand=chars.filter(x=>!used.has(x.pos)&&(x.c.burst===b||x.c.burst==='Λ')); const exact=cand.filter(x=>x.c.burst===b); const r=(exact.length?exact:cand)[0]||null; if(r) used.add(r.pos); return r; };
+  const b1=find('I'),b2=find('II'),b3=find('III');
+  return {valid,missing:missing.map(m=>'B'+({I:1,II:2,III:3})[m]),b1,b2,b3};
+}
+function detectArchetypes(ids){
+  const set=new Set(ids); const out={};
+  for(const t of TEMPLATES){
+    if(!t.required.every(r=>set.has(r))) continue;
+    let flexHits=0; for(const f of t.flex){ if(f.options.some(o=>set.has(o)&&!t.required.includes(o))) flexHits++; }
+    const score=t.required.length*2+flexHits;
+    if(!out[t.archetype]||out[t.archetype].score<score) out[t.archetype]={arch:t.archetype,tpl:t,score,flexHits};
+  }
+  return Object.values(out).sort((a,b)=>b.score-a.score);
+}
+function heuristicArchetypes(ids){
+  const tags=ids.flatMap(i=>UNIT_TAGS[i]||[]); const r=[];
+  const ws=ids.map(i=>byId[i]&&byId[i].weapon);
+  if(tags.includes('AOE核爆')) r.push('核爆型（AOE 爆裂）');
+  if(tags.includes('單體爆裂')) r.push('單體主C型');
+  if(ws.filter(w=>w==='SG').length>=2) r.push('霰彈集火型');
+  if(tags.some(t=>['全隊無敵','坦克','不屈','復活','防禦者免疫'].includes(t))) r.push('持久／坦克型');
+  if(tags.some(t=>['暈眩','全體暈眩','打斷爆裂鏈'].includes(t))) r.push('干擾型');
+  return r;
+}
+function ctxOf(ids,mode){
+  const set=new Set(ids);
+  return {ids,set,speed:speedOf(ids,mode),chain:chainOf(ids),
+    has:(...a)=>a.some(x=>set.has(x)),
+    weaponCount:w=>ids.filter(i=>byId[i]&&byId[i].weapon===w).length};
+}
+
+/* 用角色庫填模板 */
+function fillTemplate(t,ownedSet,allowSub,exclude){
+  const slots=new Array(5).fill(null), kind=new Array(5).fill('req');
+  const flexIdx=t.flex.map(f=>f.slot);
+  const reqIdx=[0,1,2,3,4].filter(i=>!flexIdx.includes(i));
+  const used=new Set(); let missing=[];
+  t.required.forEach((r,i)=>{ if(ownedSet&&!ownedSet.has(r)) missing.push(r); slots[reqIdx[i]]=r; used.add(r); });
+  if(missing.length) return {tpl:t,ok:false,missing,slots,kind};
+  const alts={};
+  for(const f of t.flex){
+    const opts=f.options.filter(o=>byId[o]&&!used.has(o)&&(!ownedSet||ownedSet.has(o)));
+    if(opts.length){ slots[f.slot]=opts[0]; kind[f.slot]='flex'; used.add(opts[0]); alts[f.slot]=opts.slice(1,4); }
+    else if(allowSub){
+      const need=t.burstSlots[f.slot];
+      const pool=CHARACTERS.filter(c=>!used.has(c.id)&&(!ownedSet||ownedSet.has(c.id))&&(c.burst===need||c.burst==='Λ')&&!(exclude&&exclude.has(c.id)))
+        .sort((a,b)=>(TIER_RANK[b.pvpTier]||0)-(TIER_RANK[a.pvpTier]||0)||b.burstGen.attack['3RL']-a.burstGen.attack['3RL']);
+      if(pool.length){ slots[f.slot]=pool[0].id; kind[f.slot]='sub'; used.add(pool[0].id); alts[f.slot]=pool.slice(1,4).map(c=>c.id); }
+      else { kind[f.slot]='miss'; }
+    } else { kind[f.slot]='miss'; }
+  }
+  const ok=slots.every(Boolean);
+  return {tpl:t,ok,slots,kind,alts,missing:[]};
+}
+
+function buildCounters(enemyIds,mode,ownedSet,allowSub){
+  const myMode = mode; // 我方模式：attack 或 defense
+  const enemyMode = mode==='attack'?'defense':'attack';
+  const eArch=detectArchetypes(enemyIds); const eArchIds=new Set(eArch.map(a=>a.arch));
+  const eSpeed=speedOf(enemyIds,enemyMode); const eChain=chainOf(enemyIds);
+  const results=[];
+  for(const t of TEMPLATES){
+    if(t.mode!=='both'&&t.mode!==myMode) continue;
+    const f=fillTemplate(t,ownedSet,allowSub,null);
+    if(!f.ok) continue;
+    const sp=speedOf(f.slots,myMode); const ch=chainOf(f.slots);
+    if(!ch.valid) continue;
+    let score=({1:300,2:200,3:100})[t.priority]||0; const why=[]; const warn=[];
+    const countersEnemy=[...eArchIds].filter(a=>t.counters.includes(a)||(TEMPLATES.find(x=>x.archetype===a)||{counteredBy:[]}).counteredBy.includes(t.archetype)||eArch.some(e=>e.arch===a&&e.tpl.counteredBy.includes(t.archetype)));
+    const counteredByEnemy=[...eArchIds].filter(a=>t.counteredBy.includes(a)||eArch.some(e=>e.arch===a&&e.tpl.counters.includes(t.archetype)));
+    if(countersEnemy.length){ score+=400*countersEnemy.length; why.push('克制對方的「'+countersEnemy.map(a=>ARCH_NAME[a]||a).join('」「')+'」'); }
+    if(counteredByEnemy.length){ score-=300*counteredByEnemy.length; warn.push('會被對方的「'+counteredByEnemy.map(a=>ARCH_NAME[a]||a).join('」「')+'」克制'); }
+    const dc=eSpeed.cycles-sp.cycles;
+    if(!eChain.valid){ score+=200; why.push('對方爆裂鏈不完整，先手必勝'); }
+    else if(dc>0){ score+=150; why.push(`速度 ${sp.tier} 比對方 ${eSpeed.tier} 快，先開爆裂`); }
+    else if(dc===0){ score+=40; why.push(`速度 ${sp.tier} 與對方同階，結果不穩，靠體系壓制`); }
+    else { score+= STALL_ARCH.has(t.archetype)? -40 : -140; warn.push(`速度 ${sp.tier} 比對方 ${eSpeed.tier} 慢`+(STALL_ARCH.has(t.archetype)?'（持久體系可接受，但要扛得住第一波）':'，會被先手')); }
+    const subs=f.kind.filter(k=>k==='sub').length; if(subs){ score-=60*subs; warn.push(`${subs} 格為非模板替補`); }
+    // 紅蓮反擊檢查
+    if(['scarlet','scarlet-black-shadow'].some(x=>enemyIds.includes(x))){ const hi=f.slots.filter(i=>['SG','SMG','MG'].includes(byId[i].weapon)); if(hi.length){ score-=80*hi.length; warn.push('帶了高射速武器（'+hi.map(nameOf).join('、')+'）會被紅蓮 S2 反擊'); } }
+    if(enemyIds.includes('jackal')){ const hi=f.slots.filter(i=>['SG','SMG','MG'].includes(byId[i].weapon)); if(hi.length){ score-=30*hi.length; warn.push('高射速武器會餵對方豺狼充能'); } }
+    if(enemyIds.some(i=>['rosanna','rosanna-treasure'].includes(i))&&f.slots.some(i=>['blanc','jackal','folkwang'].includes(i))){ score-=100; warn.push('對方羅珊娜會驅散你的不屈／連結'); }
+    const tierSum=f.slots.reduce((s,i)=>s+(TIER_RANK[byId[i].pvpTier]||0),0); score+=tierSum*3;
+    results.push({...f,speed:sp,chain:ch,score,why,warn,countersEnemy,counteredByEnemy});
+  }
+  results.sort((a,b)=>b.score-a.score);
+  // 同原型只留最高分
+  const seen=new Set(); const out=[];
+  for(const r of results){ if(seen.has(r.tpl.archetype)) continue; seen.add(r.tpl.archetype); out.push(r); }
+  return out;
+}
+
+/* ====================== 狀態 ====================== */
+const LS={get:(k,d)=>{try{const v=localStorage.getItem('nikkePvp.'+k);return v?JSON.parse(v):d}catch(e){return d}},set:(k,v)=>{try{localStorage.setItem('nikkePvp.'+k,JSON.stringify(v))}catch(e){}}};
+let mode=LS.get('mode','attack');
+let enemy=LS.get('enemy',[null,null,null,null,null]);
+let mine=LS.get('mine',[null,null,null,null,null]);
+let owned=new Set(LS.get('owned',[]));
+let history=LS.get('history',[]);
+let pickerTarget=null; // {team:'enemy'|'mine', idx}
+let pickerFilter={burst:null,weapon:null};
+let rosterFilter={burst:null,weapon:null,element:null,ownedOnly:false};
+
+/* ====================== UI 工具 ====================== */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+const burstBadge=b=>`<span class="badge ${b==='Λ'?'bL':'b'+({I:1,II:2,III:3})[b]}">${b==='Λ'?'Λ':'B'+({I:1,II:2,III:3})[b]}</span>`;
+const elBadge=e=>`<span class="badge ${e}">${EL_ZH[e]||e}</span>`;
+const tierBadge=t=>t?`<span class="badge tier ${t}">${t}</span>`:'';
+function unitLine(id){ const c=byId[id]; if(!c) return esc(id); return `<b>${esc(c.name['zh-TW'])}</b> <span class="muted">${esc(c.name.en)}</span> ${burstBadge(c.burst)}${elBadge(c.element)}<span class="badge">${c.weapon}</span><span class="badge">${ROLE_ZH[c.role]}</span>${tierBadge(c.pvpTier)}`; }
+function tagBadges(id){ return (UNIT_TAGS[id]||[]).map(t=>`<span class="badge tag">${t}</span>`).join(''); }
+
+function renderSlots(elId,team,teamKey){
+  const el=$(elId); el.innerHTML='';
+  team.forEach((id,i)=>{
+    const d=document.createElement('div'); d.className='slot'+(id?' filled':'');
+    const c=id&&byId[id];
+    d.innerHTML=`<span class="pos">P${i+1}</span><span class="x" title="移除">✕</span>`+(c?`<div class="nm">${esc(c.name['zh-TW'])}</div><div class="en">${esc(c.name.en)}</div><div>${burstBadge(c.burst)}${elBadge(c.element)}<span class="badge">${c.weapon}</span></div>`:`<div class="add">＋ 選角色</div>`);
+    d.onclick=e=>{ if(e.target.classList.contains('x')){ team[i]=null; save(); refresh(); return;} openPicker(teamKey,i); };
+    el.appendChild(d);
+  });
+}
+function save(){ LS.set('enemy',enemy); LS.set('mine',mine); LS.set('owned',[...owned]); LS.set('mode',mode); LS.set('history',history); }
+
+/* 名稱模糊比對 */
+function findByName(q){
+  q=q.trim().toLowerCase(); if(!q) return null;
+  const norm=s=>s.toLowerCase().replace(/[\s:：·・\-_]/g,'');
+  const nq=norm(q);
+  let best=null,bs=0;
+  for(const c of CHARACTERS){
+    const names=[c.name['zh-TW'],c.name['zh-CN'],c.name.en,c.name.ja,c.id].map(norm);
+    let s=0;
+    for(const n of names){ if(n===nq){s=100;break;} if(n.startsWith(nq)) s=Math.max(s,80-(n.length-nq.length)); else if(n.includes(nq)) s=Math.max(s,60-(n.length-nq.length)); }
+    if(s>bs){bs=s;best=c;}
+  }
+  return bs>0?best:null;
+}
+function quickFill(team,text){
+  const parts=text.split(/[\s,，、/]+/).filter(Boolean).slice(0,5);
+  const notFound=[];
+  parts.forEach((p,i)=>{ const c=findByName(p); if(c) team[i]=c.id; else notFound.push(p); });
+  if(notFound.length) alert('找不到：'+notFound.join('、')+'\n可以改用英文名或先在選角視窗搜尋看看正確譯名。');
+}
+
+/* ====================== 選角視窗 ====================== */
+function openPicker(teamKey,idx){
+  pickerTarget={team:teamKey,idx};
+  $('#pickerTitle').textContent=(teamKey==='enemy'?'對方 ':'我方 ')+'P'+(idx+1)+'：選擇角色';
+  $('#pickerSearch').value=''; $('#picker').classList.add('open'); renderPickerFilters(); renderPicker(); setTimeout(()=>$('#pickerSearch').focus(),50);
+}
+function closePicker(){ $('#picker').classList.remove('open'); pickerTarget=null; }
+function renderPickerFilters(){
+  const f=$('#pickerFilters'); f.innerHTML='';
+  const mk=(label,key,val)=>{ const b=document.createElement('button'); b.className='btn'+((pickerFilter[key]===val)?' primary':''); b.textContent=label; b.onclick=()=>{pickerFilter[key]=pickerFilter[key]===val?null:val; renderPickerFilters(); renderPicker();}; f.appendChild(b); };
+  ['I','II','III','Λ'].forEach(b=>mk('B'+(b==='Λ'?'Λ':({I:1,II:2,III:3})[b]),'burst',b));
+  ['RL','SG','SR','AR','SMG','MG'].forEach(w=>mk(w,'weapon',w));
+}
+function pickerCandidates(){
+  const q=$('#pickerSearch').value.trim().toLowerCase();
+  const norm=s=>s.toLowerCase().replace(/[\s:：·・\-_]/g,'');
+  let list=CHARACTERS.filter(c=>(!pickerFilter.burst||c.burst===pickerFilter.burst)&&(!pickerFilter.weapon||c.weapon===pickerFilter.weapon));
+  if(q){ const nq=norm(q); list=list.filter(c=>[c.name['zh-TW'],c.name['zh-CN'],c.name.en,c.name.ja,c.id].some(n=>norm(n).includes(nq))); }
+  list.sort((a,b)=>(TIER_RANK[b.pvpTier]||0)-(TIER_RANK[a.pvpTier]||0)||a.name['zh-TW'].localeCompare(b.name['zh-TW'],'zh-Hant'));
+  return list;
+}
+function renderPicker(){
+  const team=pickerTarget.team==='enemy'?enemy:mine;
+  const inTeam=new Set(team.filter(Boolean));
+  const el=$('#pickerList'); el.innerHTML='';
+  for(const c of pickerCandidates()){
+    const d=document.createElement('div'); const dis=inTeam.has(c.id)&&team[pickerTarget.idx]!==c.id;
+    d.className='pick'+(owned.has(c.id)?' owned':'')+(dis?' dis':'');
+    d.innerHTML=`<b>${esc(c.name['zh-TW'])}</b><span class="en">${esc(c.name.en)}</span><div>${burstBadge(c.burst)}${elBadge(c.element)}<span class="badge">${c.weapon}</span>${tierBadge(c.pvpTier)}</div>`;
+    if(!dis) d.onclick=()=>{ team[pickerTarget.idx]=c.id; save(); closePicker(); refresh(); };
+    el.appendChild(d);
+  }
+  if(!el.children.length) el.innerHTML='<div class="muted">沒有符合的角色</div>';
+}
+
+/* ====================== 角色庫 ====================== */
+function renderRosterFilters(){
+  const f=$('#rosterFilters'); f.innerHTML='';
+  const mk=(label,key,val)=>{ const b=document.createElement('button'); b.className='btn'+((rosterFilter[key]===val)?' primary':''); b.textContent=label; b.onclick=()=>{rosterFilter[key]=rosterFilter[key]===val?null:val; renderRoster();}; f.appendChild(b); };
+  ['I','II','III','Λ'].forEach(b=>mk('B'+(b==='Λ'?'Λ':({I:1,II:2,III:3})[b]),'burst',b));
+  ['RL','SG','SR','AR','SMG','MG'].forEach(w=>mk(w,'weapon',w));
+  ['fire','water','wind','electric','iron'].forEach(e=>mk(EL_ZH[e],'element',e));
+  const b=document.createElement('button'); b.className='btn'+(rosterFilter.ownedOnly?' primary':''); b.textContent='只看擁有'; b.onclick=()=>{rosterFilter.ownedOnly=!rosterFilter.ownedOnly; renderRoster();}; f.appendChild(b);
+}
+function renderRoster(){
+  renderRosterFilters();
+  const q=$('#rosterSearch').value.trim().toLowerCase(); const norm=s=>s.toLowerCase().replace(/[\s:：·・\-_]/g,'');
+  let list=CHARACTERS.filter(c=>(!rosterFilter.burst||c.burst===rosterFilter.burst)&&(!rosterFilter.weapon||c.weapon===rosterFilter.weapon)&&(!rosterFilter.element||c.element===rosterFilter.element)&&(!rosterFilter.ownedOnly||owned.has(c.id)));
+  if(q){ const nq=norm(q); list=list.filter(c=>[c.name['zh-TW'],c.name['zh-CN'],c.name.en,c.name.ja,c.id].some(n=>norm(n).includes(nq))); }
+  list.sort((a,b)=>(TIER_RANK[b.pvpTier]||0)-(TIER_RANK[a.pvpTier]||0)||a.name['zh-TW'].localeCompare(b.name['zh-TW'],'zh-Hant'));
+  const el=$('#rosterGrid'); el.innerHTML='';
+  for(const c of list){
+    const d=document.createElement('div'); d.className='pick'+(owned.has(c.id)?' owned':'');
+    d.innerHTML=`<b>${owned.has(c.id)?'✔ ':''}${esc(c.name['zh-TW'])}</b><span class="en">${esc(c.name.en)}</span><div>${burstBadge(c.burst)}${elBadge(c.element)}<span class="badge">${c.weapon}</span>${tierBadge(c.pvpTier)}</div>`;
+    d.onclick=()=>{ if(owned.has(c.id)) owned.delete(c.id); else owned.add(c.id); save(); renderRoster(); updateOwnedCount(); renderSolve(); };
+    el.appendChild(d);
+  }
+  updateOwnedCount();
+}
+function updateOwnedCount(){ $('#ownedCount').textContent=owned.size+'/'+CHARACTERS.length; }
+
+/* ====================== 解隊畫面 ====================== */
+function speedBlock(sp,label){
+  const rows=TIERS.map(t=>{ const v=sp.totals[t]; const pct=Math.min(100,v*100); return `<div class="tierrow"><span>${t}</span><div class="bar"><i style="width:${pct}%"></i></div><span class="muted">${(v*100).toFixed(0)}%</span></div>`; }).join('');
+  return `<div><div class="speed f${sp.tier}">${sp.tier}${sp.reached?'':' 以下'}</div><div class="muted">${label}約 ${sp.sec} 秒開全爆裂（${sp.cycles} 輪火箭筒）。各速度階的充能達成率：</div>${rows}</div>`;
+}
+function chainBlock(ch){
+  if(!ch.valid) return `<div class="badge bad">爆裂鏈不完整：缺 ${ch.missing.join('、')}</div>`;
+  const w=x=>x?`<span class="who">P${x.pos} ${esc(x.c.name['zh-TW'])}</span>`:'<span class="who">?</span>';
+  return `<div class="chain">${burstBadge('I')}${w(ch.b1)}<span class="arrow">→</span>${burstBadge('II')}${w(ch.b2)}<span class="arrow">→</span>${burstBadge('III')}${w(ch.b3)}</div>`;
+}
+function renderAnalysis(){
+  const ids=enemy.filter(Boolean); const el=$('#analysis');
+  if(ids.length<5){ el.className='muted'; el.textContent=`已填 ${ids.length}/5，填滿後自動分析。`; return null; }
+  el.className='';
+  const enemyMode=mode==='attack'?'defense':'attack';
+  const ctx=ctxOf(enemy,enemyMode);
+  const arch=detectArchetypes(enemy); const heur=heuristicArchetypes(enemy);
+  let h=`<h3>速度</h3>${speedBlock(ctx.speed,'對方')}`;
+  h+=`<h3>爆裂鏈順序</h3>${chainBlock(ctx.chain)}`;
+  h+=`<h3>體系判定</h3>`;
+  if(arch.length){ h+=arch.map(a=>`<div style="margin:4px 0"><span class="badge ${a===arch[0]?'bad':'warn'}">${ARCH_NAME[a.arch]||a.arch}</span> <span class="muted">${esc(a.tpl.notes['zh-TW'])}</span></div>`).join(''); }
+  else h+=`<div class="muted">沒有完全符合的主流模板。</div>`;
+  if(heur.length) h+=`<div class="muted" style="margin-top:4px">特徵：${heur.join('、')}</div>`;
+  h+=`<h3>逐位威脅</h3>`;
+  h+=enemy.map((id,i)=>{ const c=byId[id]; const pos=i===0||i===4?'<span class="badge warn" title="最常被集火">承傷位</span>':(i===2||i===3?'<span class="badge good" title="最安全">安全位</span>':''); return `<div class="threat"><span class="p">P${i+1}</span><div>${unitLine(id)} ${pos}<div>${tagBadges(id)||'<span class="muted">一般角色</span>'}</div></div></div>`; }).join('');
+  el.innerHTML=h;
+  return ctx;
+}
+function renderCounters(ctx){
+  const el=$('#counters');
+  if(!ctx){ el.className='muted'; el.textContent='填滿 5 個角色後自動產生。'; return; }
+  el.className='';
+  const arch=detectArchetypes(enemy);
+  let h='';
+  const fired=RULES.filter(r=>r.when(ctx));
+  if(fired.length){ h+=`<h3>針對對方特徵</h3><ul class="tips">`+fired.map(r=>`<li><span class="badge ${r.level}">${typeof r.title==='function'?r.title(ctx):r.title}</span> ${typeof r.text==='function'?r.text(ctx):r.text}</li>`).join('')+`</ul>`; }
+  if(arch.length){
+    const cb=new Set(); const dont=new Set();
+    arch.forEach(a=>{ a.tpl.counteredBy.forEach(x=>cb.add(x)); a.tpl.counters.forEach(x=>dont.add(x)); TEMPLATES.filter(t=>t.counters.includes(a.arch)).forEach(t=>cb.add(t.archetype)); });
+    h+=`<h3>能克制對方體系的隊型</h3><div>`+[...cb].map(a=>`<span class="badge good">${ARCH_NAME[a]||a}</span>`).join(' ')+`</div>`;
+    if(dont.size) h+=`<h3>對方反而克制的隊型（別用）</h3><div>`+[...dont].map(a=>`<span class="badge bad">${ARCH_NAME[a]||a}</span>`).join(' ')+`</div>`;
+  }
+  h+=`<h3>通用原則</h3><ul class="tips"><li>要嘛比對方快一階先開爆裂，要嘛確定扛得住對方第一波再反打；兩個都做不到就換體系。</li><li>對方主 C 在哪一位：P1／P5 會先被打，若對方把主 C 放在 P1／P5，霰彈集火或戰術三人組有機會在爆裂前打死。</li><li>戰力差太多（低於對方 84.6%）會吃懲罰，先確認戰力再談陣容。</li></ul>`;
+  el.innerHTML=h;
+}
+function teamCard(r,eSpeed,idx){
+  const t=r.tpl;
+  const members=r.slots.map((id,i)=>{ const c=byId[id]; const k=r.kind[i]; const alt=(r.alts&&r.alts[i]&&r.alts[i].length)?`<div class="alt">替補：${r.alts[i].map(nameOf).join('／')}</div>`:''; return `<div class="m ${k}"><div class="pos">P${i+1} ${k==='req'?'核心':k==='sub'?'替補':'彈性'}</div><b>${esc(c.name['zh-TW'])}</b><div>${burstBadge(c.burst)}<span class="badge">${c.weapon}</span></div>${alt}</div>`; }).join('');
+  const cmp = r.speed.cycles<eSpeed.cycles?'<span class="badge good">比對方快</span>':r.speed.cycles===eSpeed.cycles?'<span class="badge warn">同速</span>':'<span class="badge bad">比對方慢</span>';
+  return `<div class="team"><div class="hd"><b>${idx+1}. ${esc(t.name['zh-TW'])}</b><span class="badge">${ARCH_NAME[t.archetype]||t.archetype}</span><span class="badge">P${t.priority} 模板</span><span class="badge ${r.speed.tier==='2RL'||r.speed.tier==='5SG'?'bad':r.speed.tier==='3RL'?'warn':''}">${r.speed.tier}</span>${cmp}<button class="btn" data-apply="${idx}" style="margin-left:auto">帶入試算</button></div><div class="members">${members}</div><div class="why">${r.why.map(w=>'✔ '+esc(w)).join('<br>')}${r.warn.length?'<br>'+r.warn.map(w=>'<span style="color:var(--warn)">⚠ '+w+'</span>').join('<br>'):''}</div><div class="muted" style="margin-top:4px">${esc(t.notes['zh-TW'])}</div></div>`;
+}
+let lastBuilt=[];
+function renderBuilt(ctx){
+  const el=$('#builtTeams'); const note=$('#rosterNote');
+  const onlyOwned=$('#chkOnlyOwned').checked; const allowSub=$('#chkAllowSub').checked;
+  note.textContent=onlyOwned?(owned.size?`（角色庫 ${owned.size} 人）`:'（角色庫是空的，先去「我的角色庫」勾選，或取消「只用我擁有的角色」）'):'（使用全部角色）';
+  if(!ctx){ el.className='muted'; el.textContent='填滿對方隊伍後自動產生。'; lastBuilt=[]; return; }
+  const ownedSet=onlyOwned?owned:null;
+  if(onlyOwned&&!owned.size){ el.className='muted'; el.textContent='角色庫是空的。'; lastBuilt=[]; return; }
+  const res=buildCounters(enemy,mode,ownedSet,allowSub);
+  lastBuilt=res;
+  if(!res.length){ el.className='muted'; el.textContent='用目前的角色庫組不出任何完整模板隊伍（缺核心角或爆裂鏈不完整）。試試打開「允許替補」或取消「只用我擁有的角色」看看需要哪些角色。'; return; }
+  el.className='';
+  const top=res.slice(0,8);
+  el.innerHTML=top.map((r,i)=>teamCard(r,ctx.speed,i)).join('')+(res.length>8?`<div class="muted">還有 ${res.length-8} 種較弱的選擇未顯示。</div>`:'');
+  // 缺角提示
+  if(ownedSet){
+    const miss={};
+    for(const t of TEMPLATES){ if(t.mode!=='both'&&t.mode!==mode) continue; const eArch=detectArchetypes(enemy); const good=eArch.some(a=>a.tpl.counteredBy.includes(t.archetype)||t.counters.includes(a.arch)); if(!good) continue; t.required.filter(r=>!ownedSet.has(r)).forEach(r=>{ miss[r]=miss[r]||new Set(); miss[r].add(t.archetype); }); }
+    const keys=Object.keys(miss); if(keys.length) el.innerHTML+=`<details><summary>如果想抽／養角色來解這隊，缺的核心角</summary><ul class="tips">${keys.map(k=>`<li><b>${esc(nameOf(k))}</b>：解鎖 ${[...miss[k]].map(a=>ARCH_NAME[a]||a).join('、')}</li>`).join('')}</ul></details>`;
+  }
+  el.querySelectorAll('[data-apply]').forEach(b=>b.onclick=()=>{ const r=lastBuilt[+b.dataset.apply]; mine=[...r.slots]; save(); refresh(); $('#mySlots').scrollIntoView({behavior:'smooth'}); });
+}
+function renderMyEval(ctx){
+  const el=$('#myEval'); const ids=mine.filter(Boolean);
+  if(ids.length<5){ el.className='muted'; el.textContent=`已排 ${ids.length}/5。`; return; }
+  el.className='';
+  const mySp=speedOf(mine,mode); const myCh=chainOf(mine); const myArch=detectArchetypes(mine); const myHeur=heuristicArchetypes(mine);
+  let h=`<div class="grid2"><div><h3>我方速度</h3>${speedBlock(mySp,'我方')}</div><div><h3>我方爆裂鏈</h3>${chainBlock(myCh)}<h3>我方體系</h3>${myArch.length?myArch.map(a=>`<span class="badge good">${ARCH_NAME[a.arch]||a.arch}</span>`).join(' '):'<span class="muted">不屬於主流模板</span>'}${myHeur.length?`<div class="muted">特徵：${myHeur.join('、')}</div>`:''}</div></div>`;
+  if(!myCh.valid){ h=`<div class="verdict bad">爆裂鏈不完整（缺 ${myCh.missing.join('、')}），這隊永遠開不了全爆裂。</div>`+h; el.innerHTML=h; return; }
+  if(!ctx){ el.innerHTML=h+'<div class="muted">填滿對方隊伍後會顯示對戰判斷。</div>'; return; }
+  const eArch=detectArchetypes(enemy); let pts=0; const good=[],bad=[];
+  for(const m of myArch) for(const e of eArch){
+    if(m.tpl.counters.includes(e.arch)||e.tpl.counteredBy.includes(m.arch)){ pts+=2; good.push(`我方「${ARCH_NAME[m.arch]}」克制對方「${ARCH_NAME[e.arch]}」`); }
+    if(e.tpl.counters.includes(m.arch)||m.tpl.counteredBy.includes(e.arch)){ pts-=2; bad.push(`對方「${ARCH_NAME[e.arch]}」克制我方「${ARCH_NAME[m.arch]}」`); }
+  }
+  const dc=ctx.speed.cycles-mySp.cycles;
+  if(!ctx.chain.valid){ pts+=3; good.push('對方爆裂鏈不完整，我方先手必勝'); }
+  else if(dc>0){ pts+=1.5; good.push(`我方 ${mySp.tier} 比對方 ${ctx.speed.tier} 快`); }
+  else if(dc<0){ const stall=myArch.some(a=>STALL_ARCH.has(a.arch)); pts-= stall?0.5:1.5; bad.push(`我方 ${mySp.tier} 比對方 ${ctx.speed.tier} 慢`+(stall?'（持久體系可接受）':'')); }
+  else { good.push('雙方同速，結果不穩'); }
+  const myHi=mine.filter(i=>['SG','SMG','MG'].includes(byId[i].weapon));
+  if(ctx.has('scarlet','scarlet-black-shadow')&&myHi.length){ pts-=1; bad.push('我方高射速武器（'+myHi.map(nameOf).join('、')+'）會被紅蓮 S2 反擊'); }
+  if(ctx.has('rosanna','rosanna-treasure')&&mine.some(i=>['blanc','jackal','folkwang'].includes(i))){ pts-=1; bad.push('對方羅珊娜會驅散我方的不屈／連結'); }
+  if(ctx.has('noah')&&dc>=0&&!myArch.some(a=>STALL_ARCH.has(a.arch))){ pts-=1; bad.push('對方諾雅的無敵會吃掉我方第一波，而我方不是持久體系'); }
+  const v=pts>=2?['good','優勢：這隊打這個對手有把握']:pts<=-1.5?['bad','劣勢：建議換體系或換速度']:['warn','五五波：看戰力與站位'];
+  h=`<div class="verdict ${v[0]}">${v[1]}</div>`+h+`<h3>判斷依據</h3><ul class="tips">${good.map(g=>'<li>✔ '+esc(g)+'</li>').join('')}${bad.map(b=>'<li style="color:var(--warn)">⚠ '+esc(b)+'</li>').join('')}</ul>`;
+  el.innerHTML=h;
+}
+function renderHistory(){
+  const el=$('#enemyHistory'); el.innerHTML='';
+  history.forEach((hst,i)=>{ const b=document.createElement('button'); b.className='btn'; b.textContent=hst.map(nameOf).join('／'); b.title='點擊載入；按住 Shift 點擊刪除'; b.onclick=e=>{ if(e.shiftKey){history.splice(i,1);save();renderHistory();return;} enemy=[...hst]; save(); refresh(); }; el.appendChild(b); });
+}
+function renderSolve(){
+  renderSlots('#enemySlots',enemy,'enemy'); renderSlots('#mySlots',mine,'mine');
+  const ctx=renderAnalysis(); renderCounters(ctx); renderBuilt(ctx); renderMyEval(ctx); renderHistory();
+}
+function refresh(){ updateOwnedCount(); renderSolve(); }
+
+/* ====================== 事件 ====================== */
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{ document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active')); b.classList.add('active'); document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active')); $('#tab-'+b.dataset.tab).classList.add('active'); if(b.dataset.tab==='roster') renderRoster(); });
+document.querySelectorAll('#modeSeg button').forEach(b=>{ if(b.dataset.mode===mode) b.classList.add('active'); else b.classList.remove('active'); b.onclick=()=>{ mode=b.dataset.mode; document.querySelectorAll('#modeSeg button').forEach(x=>x.classList.toggle('active',x===b)); save(); refresh(); }; });
+$('#btnQuickEnemy').onclick=()=>{ quickFill(enemy,$('#quickEnemy').value); save(); refresh(); };
+$('#quickEnemy').addEventListener('keydown',e=>{ if(e.key==='Enter') $('#btnQuickEnemy').click(); });
+$('#btnQuickMy').onclick=()=>{ quickFill(mine,$('#quickMy').value); save(); refresh(); };
+$('#quickMy').addEventListener('keydown',e=>{ if(e.key==='Enter') $('#btnQuickMy').click(); });
+$('#btnClearEnemy').onclick=()=>{ enemy=[null,null,null,null,null]; save(); refresh(); };
+$('#btnClearMy').onclick=()=>{ mine=[null,null,null,null,null]; save(); refresh(); };
+$('#btnSaveEnemy').onclick=()=>{ if(enemy.some(x=>!x)) return alert('先填滿 5 個角色'); if(!history.some(h=>h.join()===enemy.join())) history.unshift([...enemy]); history=history.slice(0,20); save(); renderHistory(); };
+$('#chkOnlyOwned').onchange=refresh; $('#chkAllowSub').onchange=refresh;
+$('#pickerClose').onclick=closePicker; $('#picker').addEventListener('click',e=>{ if(e.target.id==='picker') closePicker(); });
+$('#pickerSearch').addEventListener('input',renderPicker);
+$('#pickerSearch').addEventListener('keydown',e=>{ if(e.key==='Enter'){ const l=pickerCandidates(); const team=pickerTarget.team==='enemy'?enemy:mine; const first=l.find(c=>!team.includes(c.id)); if(first){ team[pickerTarget.idx]=first.id; save(); closePicker(); refresh(); } } if(e.key==='Escape') closePicker(); });
+$('#rosterSearch').addEventListener('input',renderRoster);
+$('#btnOwnAll').onclick=()=>{ if(confirm('把全部角色標成擁有？')){ owned=new Set(CHARACTERS.map(c=>c.id)); save(); renderRoster(); renderSolve(); } };
+$('#btnOwnNone').onclick=()=>{ if(confirm('清空角色庫？')){ owned=new Set(); save(); renderRoster(); renderSolve(); } };
+$('#btnExport').onclick=()=>{ const blob=new Blob([JSON.stringify({owned:[...owned],history},null,1)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='nikke-pvp-roster.json'; a.click(); };
+$('#btnImport').onclick=()=>$('#fileImport').click();
+$('#fileImport').onchange=e=>{ const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=()=>{ try{ const d=JSON.parse(r.result); if(Array.isArray(d.owned)) owned=new Set(d.owned.filter(i=>byId[i])); if(Array.isArray(d.history)) history=d.history; save(); renderRoster(); renderSolve(); alert('已匯入 '+owned.size+' 名角色'); }catch(err){ alert('讀取失敗：'+err.message); } }; r.readAsText(f); e.target.value=''; };
+
+/* ====================== 資料自動更新 ====================== */
+function setDataStatus(text,cls){ const el=$('#dataStatus'); el.textContent=text; el.style.color=cls==='ok'?'var(--good)':cls==='bad'?'var(--warn)':''; }
+function describeData(){ return `${dataInfo.source}資料 ${dataInfo.date}（${CHARACTERS.length} 名角色、${TEMPLATES.length} 個模板）`; }
+async function checkOnlineData(manual){
+  setDataStatus('正在檢查線上資料…');
+  const ctrl=new AbortController(); const timer=setTimeout(()=>ctrl.abort(),10000);
+  const get=n=>fetch(DATA_RAW+n,{cache:'no-store',signal:ctrl.signal}).then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); });
+  try{
+    const [chars,tpls]=await Promise.all([get('characters.json'),get('templates.json')]);
+    clearTimeout(timer);
+    if(!Array.isArray(chars)||chars.length<100||!chars[0].burstGen||!Array.isArray(tpls)||!tpls.length) throw new Error('資料格式不符');
+    const added=chars.filter(c=>!byId[c.id]).map(c=>c.name['zh-TW']);
+    const today=new Date().toISOString().slice(0,10);
+    LS.set('dataCache',{chars,tpls,date:today}); LS.set('lastCheck',today);
+    applyData(chars,tpls,{source:'線上',date:today}); refresh();
+    setDataStatus(describeData()+(added.length?`，新增：${added.slice(0,6).join('、')}${added.length>6?'…':''}`:'，已是最新'),'ok');
+  }catch(e){
+    clearTimeout(timer);
+    setDataStatus(describeData()+'（線上檢查失敗：'+(e.name==='AbortError'?'逾時':e.message)+'）',manual?'bad':'');
+  }
+}
+(function initData(){
+  const cache=LS.get('dataCache',null);
+  if(cache&&Array.isArray(cache.chars)&&cache.chars.length>=CHARACTERS.length) applyData(cache.chars,cache.tpls,{source:'快取',date:cache.date});
+  setDataStatus(describeData());
+  $('#btnCheckData').onclick=()=>checkOnlineData(true);
+  const today=new Date().toISOString().slice(0,10);
+  if(navigator.onLine&&LS.get('lastCheck','')!==today) setTimeout(()=>checkOnlineData(false),300);
+})();
+
+updateOwnedCount(); refresh();
+</script>
+</body>
+</html>
