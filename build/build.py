@@ -1,0 +1,53 @@
+#!/usr/bin/env python3
+"""把 template.html 與 data/*.json 合併成單一離線 HTML。
+
+用法：
+  python build.py            # 用 data/ 內現有資料產生 ../NIKKE-PVP-解隊助手.html
+  python build.py --update   # 先從 GitHub 抓最新 characters.json / templates.json 再產生
+
+資料來源：https://github.com/williamchong/nikke-arena-planner （MIT 授權）
+"""
+import json, sys, datetime, urllib.request
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+DATA = HERE / "data"
+OUT = HERE.parent / "NIKKE-PVP-解隊助手.html"
+RAW = "https://raw.githubusercontent.com/williamchong/nikke-arena-planner/master/app/data/"
+FILES = ["characters.json", "templates.json"]
+
+
+def fetch(name: str) -> bytes:
+    req = urllib.request.Request(RAW + name, headers={"User-Agent": "Mozilla/5.0"})
+    with urllib.request.urlopen(req, timeout=30) as r:
+        return r.read()
+
+
+def update():
+    for name in FILES:
+        raw = fetch(name)
+        json.loads(raw.decode("utf-8"))  # 先確認是合法 JSON 再覆寫
+        (DATA / name).write_bytes(raw)
+        print(f"更新 {name}（{len(raw):,} bytes）")
+    (DATA / "version.json").write_text(
+        json.dumps({"fetched": datetime.date.today().isoformat()}, ensure_ascii=False), encoding="utf-8")
+
+
+def build():
+    chars = json.loads((DATA / "characters.json").read_text(encoding="utf-8"))
+    tpls = json.loads((DATA / "templates.json").read_text(encoding="utf-8"))
+    ver_file = DATA / "version.json"
+    ver = json.loads(ver_file.read_text(encoding="utf-8"))["fetched"] if ver_file.exists() else datetime.date.today().isoformat()
+    html = (HERE / "template.html").read_text(encoding="utf-8")
+    dump = lambda o: json.dumps(o, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+    html = (html.replace("__CHARACTERS__", dump(chars))
+                .replace("__TEMPLATES__", dump(tpls))
+                .replace("__DATA_DATE__", ver))
+    OUT.write_text(html, encoding="utf-8")
+    print(f"已產生 {OUT}（{OUT.stat().st_size:,} bytes，{len(chars)} 名角色，{len(tpls)} 個模板，資料日期 {ver}）")
+
+
+if __name__ == "__main__":
+    if "--update" in sys.argv:
+        update()
+    build()

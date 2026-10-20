@@ -1,0 +1,6 @@
+# 系統與編輯器
+Thumbs.db
+desktop.ini
+.DS_Store
+__pycache__/
+*.pyc
