@@ -64,6 +64,8 @@
 | `build/data/templates-mined.json` | `build/mine_templates.py` 從 nikkeari 的 24,000 回合挖出的 24 個核心家族：場次、勝率、常見補位、站位、互剋（統計結果，非人工驗證） |
 | `build/data/community-teams.json` | 社群明確列出的新人／特殊競技場隊伍（JP wikiwiki、GameWith、Yahoo知恵袋、KR arca／dcinside／ruliweb、Gamemeca，2025-07～2026-10），含來源、日期、站位、速度、打得贏與輸給誰 |
 | `build/data/templates-community.json` | `build/community_templates.py` 把上面的隊伍轉成的 36 個模板（名稱標「（社群）」） |
+| `build/data/nicknames.json` | 角色綽號／別名（白兔、黑兔、偶像阿妮斯、白雪重武、EMT…），搜尋時與正式名一起比對，可自行增補 |
+| `avatars/` | 角色頭像（`build/fetch_avatars.py` 從上游倉庫下載，檔名為角色的 avatarImg 代碼）。圖片為遊戲素材，版權屬 SHIFT UP／Level Infinite，僅作粉絲工具展示 |
 
 模板分四層：上游模板、本工具補充、資料挖掘、社群隊伍；更新流程是 `fetch_arena_stats.py --refresh` → `mine_templates.py` → `community_templates.py` → `build.py`。社群隊伍要新增時直接在 `community-teams.json` 加一筆再跑轉換。
 
