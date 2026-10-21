@@ -100,6 +100,7 @@ def main():
     arch_stats = {}   # arch -> dict
     arch_vs = {}      # "A>B" -> {m, w}
     beaten_by = {}    # key -> {oppkey: wins}
+    bb_samples = {}   # (loser, winner) -> [出處]
     char_pos = {}     # my id -> {server: position_stats}
     total_rounds = 0
     per_server = {}
@@ -161,6 +162,9 @@ def main():
             winner_k, loser_k = (ak, dk) if att_won else (dk, ak)
             bb = beaten_by.setdefault(loser_k, {})
             bb[winner_k] = bb.get(winner_k, 0) + 1
+            smp = bb_samples.setdefault((loser_k, winner_k), [])
+            if len(smp) < 2:  # 每組最多留 2 筆出處：賽季|輪次|勝方(A 進攻/D 防守)|伺服器
+                smp.append(f"{r.get('tournament_name','')}|{r.get('stage','')}|{'A' if att_won else 'D'}|{server[0]}")
             a_arch, d_arch = detect(a_ids), detect(d_ids)
             for arch, won, is_att in [(x, att_won, True) for x in a_arch] + [(x, not att_won, False) for x in d_arch]:
                 s = arch_stats.setdefault(arch, {"m": 0, "w": 0, "am": 0, "aw": 0, "dm": 0, "dw": 0})
@@ -184,7 +188,7 @@ def main():
     keys = sorted(keep, key=lambda k: -team_stats[k]["m"])
     index = {k: i for i, k in enumerate(keys)}
     teams_arr = [[k, team_stats[k]["m"], team_stats[k]["w"], team_stats[k]["am"], team_stats[k]["aw"], team_stats[k]["dm"], team_stats[k]["dw"]] for k in keys]
-    bb_out = {str(index[k]): [[index[ok], n] for ok, n in lst] for k, lst in bb_tmp.items()}
+    bb_out = {str(index[k]): [[index[ok], n, bb_samples.get((k, ok), [])] if pos < 3 else [index[ok], n] for pos, (ok, n) in enumerate(lst)] for k, lst in bb_tmp.items()}  # 出處只留前 3 組
     # 角色站位統計：各伺服器加總
     pos_out = {}
     for mid, per in char_pos.items():
