@@ -13,6 +13,13 @@
 
 頁首的「我方進攻／我方防守」用來切換你是在打別人的防守隊，還是在排自己的防守隊。
 
+## 冠軍競技場實戰數據與進階速度設定
+
+- `build/fetch_arena_stats.py` 會從 [にけあり！NIKKE 競技場分析器](https://nikkeari.cc/zh-CN) 的公開 API 抓冠軍競技場的對戰紀錄（JP／KR／國際服，每回合含進攻隊、防守隊與勝方），整理成 `build/data/arena-stats.json`：每個 5 人組合的場次、勝率、進攻／防守勝率、被哪些隊伍打贏過、含某核心角的隊伍整體勝率、角色常用站位。工具會在「對方分析」顯示這隊（或 4 人相同的相近隊）的實戰戰績，在「解法建議」列出實戰中打贏過它的隊伍並可一鍵帶入。
+- 同一支腳本也會抓 [NIKKE DECK](https://nikke-deck.com/en/deck) 的 `data.json`，整理成 `build/data/deck-speed.json`：哪些角色有「充能速度 17%」超頻選項、量子魔方 Lv7 的充能加成，以及它的 PVP 階級（在角色旁以「deck」標籤顯示，作為第二份獨立評價）。
+- 「進階」區可以勾選對方或我方角色的超頻 17%／量子魔方 Lv7，速度判定會隨之改變；模型與數值來自 nikke-deck 與 NIKKE Synergy 的機制文章，是估算值。
+- 更新：`python build/fetch_arena_stats.py --refresh`（原始回應存在 `build/data/raw/`，不進倉庫），再執行 `python build/build.py`。請勿高頻呼叫對方的 API。
+
 ## 建議的依據、參考對局與對戰紀錄
 
 - 每條建議後面都有「依據：…」標籤，連到出處：上游模板對照表（互剋關係）、Prydwen 的 PVP 機制與隊伍原型指南（角色機制、解法）、巴哈組隊心得；標成「本工具推算」的是速度與評分，不是外部依據。

@@ -107,6 +107,11 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px;border-t
 .rec .t{flex:1;min-width:200px}
 .rec .x{cursor:pointer;color:var(--muted)}
 .rec .x:hover{color:var(--bad)}
+details.mods{margin-top:6px;font-size:12px}
+details.mods summary{color:var(--muted)}
+.mods .mrow{display:inline-flex;gap:6px;align-items:center;margin:4px 12px 2px 0;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:3px 8px}
+.mods .mrow label{display:inline-flex;gap:3px;align-items:center;cursor:pointer}
+.mods .mrow label.dis{opacity:.4;cursor:not-allowed}
 </style>
 </head>
 <body>
@@ -129,6 +134,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px;border-t
   <div class="card">
     <h2>① 對方隊伍 <span class="muted">（照遊戲裡 P1→P5 的順序填）</span></h2>
     <div class="slots" id="enemySlots"></div>
+    <details class="mods"><summary>進階：對方的充能速度超頻／量子魔方（會改變速度判定）</summary><div id="enemyMods"></div></details>
     <div class="row" style="margin-top:10px">
       <input type="text" id="quickEnemy" placeholder="快速輸入：用空格或逗號隔開 5 個名字，例如「紅蓮 豺狼 布蘭兒 桑迪 特蕾娜」，按 Enter" style="flex:1;min-width:260px">
       <button class="btn" id="btnQuickEnemy">套用</button>
@@ -162,6 +168,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px;border-t
   <div class="card">
     <h2>⑤ 自己排一隊試算 <span class="muted">（可從上面的建議「帶入」再微調）</span></h2>
     <div class="slots" id="mySlots"></div>
+    <details class="mods"><summary>進階：我方角色的充能速度超頻／量子魔方（也會套用到「組反制隊」的候選隊）</summary><div id="myMods"></div></details>
     <div class="row" style="margin-top:10px">
       <input type="text" id="quickMy" placeholder="快速輸入 5 個名字，按 Enter" style="flex:1;min-width:260px">
       <button class="btn" id="btnQuickMy">套用</button>
@@ -231,6 +238,31 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px;border-t
       <li>戰力低於對方 84.6% 會吃到屬性懲罰，差太多時陣容再對也打不贏。</li>
       <li>充能數值是以「對方不動（防守 AI）」的理論值估算，實戰會因掩體、射偏、目標切換而有誤差，把它當作相對快慢的參考。</li>
     </ul>
+    <h3>速度機制完整說明</h3>
+    <ol>
+      <li><b>充能只在攻擊命中時發生。</b>每位角色每次命中有固定的基礎充能值；火箭筒打 P1 或 P5 會命中 4 個目標（角色＋掩體各兩個），充能 4 倍；打 P2～P4 命中 6 個，充能 6 倍。霰彈槍每發 10 顆彈丸等於 10 次命中，而且 PVP 中命中率屬性無效、彈丸全中。部分火箭筒命中數不同：紅蓮暗影、灰姑娘只打 1 個；愛蜜莉雅、貝斯蒂戰術升級、A2、超級巨星阿妮斯打 3 個。 <span class="src">依據：<a href="https://www.prydwen.gg/nikke/guides/pvp-mechanics" target="_blank" rel="noopener">Prydwen</a>、<a href="https://nikke-synergy.com/arena-guide_en" target="_blank" rel="noopener">NIKKE Synergy</a></span></li>
+      <li><b>充能公式</b>（NIKKE Synergy）：命中數 × 每次命中充能% × (量子魔方＋充能提升) ＋ 技能觸發次數 × 每次充能% ＋ 固定補給（例如海倫珍藏每次滿蓄力 +14.31%、羅珊娜對倒地目標 +36.54%）＝該角色的充能貢獻。技能額外充能的基礎值例：紅蓮 S2 0.45、豺狼 S1 3.55、哈蘭 S1 2.9、莫德尼亞 S1 0.05。雙持角色（諾雅、索林、克洛、昆西）PVP 只用一把槍，充能減半。</li>
+      <li><b>速度單位 RL</b>：1RL 約 1.216～1.25 秒（一發火箭筒的蓄力＋射擊週期）。2RL＝第二發命中時充滿，2.5RL（5SG）、3RL、3.5RL（7SG）、4RL 依此類推；慢於 4RL 的隊伍通常不值得用。本工具速度表的 1.0 就是「在該階充滿」。</li>
+      <li><b>開爆裂有固定延遲</b>：充滿到 B1 啟動約 0.433 秒，B1→B2、B2→B3 各約 0.533 秒，技能效果再約 0.1 秒後生效。所以 3RL 隊全爆裂約 3.5 秒，相鄰兩階差約 0.5 秒，這就是「慢一階」的實際時間。</li>
+      <li><b>超頻「充能速度」17%</b>：蓄力武器（火箭筒、狙擊槍）蓄力更快，等於把該角色在速度表上往快的方向移半階（2RL 用 2.5RL 的值）。本工具「進階」裡的超頻勾選就是用這個模型估算（來自 nikke-deck 的資料，只有有此超頻選項的角色能勾）。<b>量子魔方 Lv7</b>：充能 +4.66%，常常剛好讓隊伍跨過門檻。這些都是估算，實戰仍以遊戲內表現為準。 <span class="src">依據：<a href="https://nikke-deck.com/en/deck" target="_blank" rel="noopener">nikke-deck</a></span></li>
+      <li><b>火箭射偏（whiff）</b>：火箭筒與狙擊槍在攻擊間隔會被視為進掩體，對方火箭可能打空，失去大量充能；Prydwen 認為這是 95% 對局的勝負關鍵之一，也是同速對局結果不穩的主因。因此諾伊斯、諾雅這類火箭筒不適合單獨當 P1 坦（會被跳過，讓後排被集火）。</li>
+      <li><b>目標順序</b>：進攻時 SMG／MG／AR／SG／RL 第一發打 P5、之後集中 P1，SR 一直打 P5；防守時 SG 集中打 P5，其餘打 P1。換目標時機：裝填、目標進掩體、目標死亡、嘲諷結束。指定目標技能（夏日阿妮斯 S2、帕瓦／佩珀的最高攻擊核爆）會被嘲諷吸走。</li>
+      <li><b>戰力懲罰</b>：低於對方 84.6%（差距超過 15.4%）起扣 20% 屬性，線性增加到最多 90%；冠軍競技場沒有戰力懲罰且全員同步鎖 400，所以純看陣容。P2 留空可讓對方火箭充能由 4 倍降到 2 倍，但冠軍競技場會自動把隊伍往前擠。</li>
+    </ol>
+    <h3>冠軍競技場實戰數據怎麼來的</h3>
+    <p class="muted" id="arenaDataNote"></p>
+    <h3>參考網站</h3>
+    <table>
+      <tr><td><a href="https://nikkeari.cc/zh-CN" target="_blank" rel="noopener">にけあり！NIKKE 競技場分析器</a></td><td>冠軍競技場實戰統計：各隊伍勝率、進攻／防守勝率、站位統計、對戰紀錄。志願玩家提供截圖整理，有 JP／KR／國際服資料。本工具的「實戰數據」來源。</td></tr>
+      <tr><td><a href="https://nikke-deck.com/en/deck" target="_blank" rel="noopener">NIKKE DECK</a></td><td>組隊工具，速度模型含超頻充能 17% 與量子魔方，另有「隊伍對隊伍」比較、PVP 階級表與文章。支援英／法／日／韓。</td></tr>
+      <tr><td><a href="https://nikke-synergy.com/arena-ex_en" target="_blank" rel="noopener">NIKKE Synergy Arena EX</a></td><td>逐幀（約 0.0166 秒）計算爆裂速度並畫出時間軸，可設定魔方與充能加速；機制文章最完整，有繁體中文版。</td></tr>
+      <tr><td><a href="https://nikke.williamchong.cloud/" target="_blank" rel="noopener">NIKKE Arena Planner</a></td><td>本工具角色資料與模板的來源；依角色庫推薦 5v5 與 15v15 隊伍。</td></tr>
+      <tr><td><a href="https://www.prydwen.gg/nikke/guides/pvp-mechanics" target="_blank" rel="noopener">Prydwen PVP 指南</a></td><td>PVP 機制、隊伍原型與反制、冠軍競技場規則、角色評價。英文，需用瀏覽器開（擋自動抓取）。</td></tr>
+      <tr><td><a href="https://nikke.gg/arena-mechanics/" target="_blank" rel="noopener">nikke.gg</a></td><td>競技場機制、角色技能全文與分析（技能數值查詢最方便）。</td></tr>
+      <tr><td><a href="https://forum.gamer.com.tw/C.php?bsn=36390&snA=8237" target="_blank" rel="noopener">巴哈姆特 妮姬板 競技場串</a></td><td>台港澳服玩家的組隊思路與對局討論，最貼近你所在伺服器的環境。</td></tr>
+      <tr><td><a href="https://nikke-tools.netlify.app/" target="_blank" rel="noopener">Nikke Tools（ニケツールズ）</a></td><td>日本玩家製作的工具集（にけあり！推薦連結之一），需在瀏覽器中開啟。</td></tr>
+      <tr><td><a href="https://www.youtube.com/results?search_query=NIKKE+champion+arena" target="_blank" rel="noopener">YouTube：Champion Arena</a></td><td>玩家整理的冠軍競技場隊伍與對局影片（例如 Keripo）。</td></tr>
+    </table>
     <h3>每條建議的依據是什麼</h3>
     <p class="muted">解隊畫面上每條建議後面都有「依據：…」標籤，點了會連到出處。分成幾種：</p>
     <div id="sourceList"></div>
@@ -379,11 +411,59 @@ const SOURCES={
   synergy:{label:'NIKKE Synergy 競技場機制',url:'https://nikke-synergy.com/arena-guide_en',desc:'逐幀充能計算器作者的機制整理；明寫「運用布蘭兒不屈這類技能時，刻意延後開爆裂有時反而有利」，並有爆裂啟動延遲（約 0.433 秒）與技能生效延遲（約 0.1 秒）的數據'},
   'nikkegg-blanc':{label:'nikke.gg 布蘭兒技能',url:'https://nikke.gg/characters/blanc/',desc:'爆裂：血量最低隊友不屈 10 秒＋最大 HP +31.68%、全體敵人受傷 +39.26% 10 秒、每秒回 3.84% 共 8 秒，冷卻 60 秒（同小隊在場減 40.76 秒）'},
   community:{label:'社群實戰經驗',url:null,desc:'台港澳服玩家口耳相傳的打法（含使用者自己提供的經驗），公開文章只有原則沒有對局紀錄，請以實戰驗證'},
+  ari:  {label:'nikkeari 冠軍競技場統計',url:'https://nikkeari.cc/zh-CN',desc:'にけあり！的冠軍競技場對戰資料（志願玩家截圖整理，JP／KR／國際服），本工具已匯入並以隊伍 5 人組合比對'},
+  deck: {label:'nikke-deck 充能資料',url:'https://nikke-deck.com/en/deck',desc:'超頻充能速度 17% 與量子魔方 Lv7 對充能的影響，以及另一份 PVP 階級表'},
   calc: {label:'本工具推算',url:null,desc:'由充能數值與評分規則算出來的結果，不是外部依據'},
   tool: {label:'本工具整理',url:null,desc:'依公開技能機制整理的提示文字'},
 };
 const RULE_SRC={nochain:['calc'],fast:['mech','calc'],slow:['mech','calc'],scarlet:['teams','mech'],jackal:['teams','mech'],noah:['mech','tpl'],blanc:['mech','tpl'],moran:['tpl'],mermaid:['tpl'],revive:['teams'],rosanna:['teams','tpl'],sg:['mech','teams'],sanis:['teams','tpl'],'sanis-mirror':['teams','community'],'blanc-mirror':['synergy','nikkegg-blanc','mech','community'],st:['teams'],stun:['tpl'],share:['tpl']};
 function srcBadges(keys,prefix){ return `<span class="src">${prefix||'依據'}：`+keys.map(k=>{ const s=SOURCES[k]||{label:k,desc:''}; return s.url?`<a href="${s.url}" target="_blank" rel="noopener" title="${esc(s.desc)}">${s.label}</a>`:`<span title="${esc(s.desc)}">${s.label}</span>`; }).join('、')+'</span>'; }
+
+/* ====================== 冠軍競技場實戰統計（nikkeari.cc）與 nikke-deck 充能資料 ====================== */
+const ARENA = __ARENA__;
+const DECK  = __DECK__;
+const ARENA_IDX=new Map((ARENA.teams||[]).map((t,i)=>[t[0],i]));
+const anyName=id=>byId[id]?byId[id].name['zh-TW']:((ARENA.names&&ARENA.names[id])||id);
+const teamKey=ids=>[...ids].sort().join(',');
+const pct=(w,m)=>m?Math.round(w/m*100):null;
+function rowStats(row){ const ids=row[0].split(','); return {key:row[0],ids,m:row[1],w:row[2],am:row[3],aw:row[4],dm:row[5],dw:row[6],wr:pct(row[2],row[1]),awr:pct(row[4],row[3]),dwr:pct(row[6],row[5])}; }
+function arenaTeam(ids){ const i=ARENA_IDX.get(teamKey(ids)); return i===undefined?null:{idx:i,row:ARENA.teams[i]}; }
+function arenaSimilar(ids,minOverlap){ const set=new Set(ids), out=[]; for(let i=0;i<ARENA.teams.length;i++){ const row=ARENA.teams[i]; const ov=row[0].split(',').filter(x=>set.has(x)).length; if(ov>=minOverlap) out.push({idx:i,row,ov}); } return out.sort((a,b)=>b.ov-a.ov||b.row[1]-a.row[1]).slice(0,5); }
+function beatenBy(idx){ return (ARENA.beatenBy[String(idx)]||[]).map(([j,n])=>({idx:j,row:ARENA.teams[j],n})); }
+function archVsRecord(myArch,enemyArchs){ let w=0,l=0; for(const e of enemyArchs){ w+=ARENA.archVs[myArch+'>'+e]||0; l+=ARENA.archVs[e+'>'+myArch]||0; } return {w,l}; }
+const teamLine=st=>st.ids.map(anyName).join('／');
+const deckRank=id=>{ const u=DECK.units&&DECK.units[id]; return u&&u.rank&&u.rank!=='N/A'?`<span class="badge" title="nikke-deck 的 PVP 階級（另一份獨立評價）">deck ${esc(u.rank)}</span>`:''; };
+function posInfo(id){ const c=ARENA.charPos&&ARENA.charPos[id]; if(!c||!c.n) return ''; const best=c.pos.map((p,i)=>({i:i+1,n:p[0],pct:p[1],wr:p[2]})).sort((a,b)=>b.n-a.n)[0]; return `<span class="badge" title="冠軍競技場：出場 ${c.n} 次，整體勝率 ${pct(c.w,c.m)}%">實戰常放 P${best.i}（${best.pct}%，該位勝率 ${best.wr==null?'–':best.wr}%）</span>`; }
+function arenaBlock(ids){
+  if(!ARENA.teams||!ARENA.teams.length) return '';
+  const t=arenaTeam(ids); let h='';
+  if(t){ const s=rowStats(t.row); h+=`<div>這 5 人組合在冠軍競技場出場 <b>${s.m}</b> 場，勝率 <b>${s.wr}%</b>（進攻 ${s.awr==null?'–':s.awr}%／防守 ${s.dwr==null?'–':s.dwr}%）</div>`; }
+  else { const sim=arenaSimilar(ids,4); if(sim.length) h+=`<div class="muted">沒有完全相同的 5 人組合；相近隊伍（4 人相同）：</div>`+sim.map(x=>{ const s=rowStats(x.row); return `<div class="muted">・${teamLine(s)}：${s.m} 場，勝率 ${s.wr}%</div>`; }).join(''); else h+=`<div class="muted">冠軍競技場資料裡沒有相同或 4 人相同的隊伍。</div>`; }
+  const archs=detectArchetypes(ids).map(a=>a.arch).filter(a=>ARENA.arch[a]&&ARENA.arch[a].m>=20);
+  if(archs.length) h+=`<div class="muted" style="margin-top:4px">含同樣核心角的隊伍整體勝率：`+archs.map(a=>{ const s=ARENA.arch[a]; return `${ARCH_NAME[a]||a} ${pct(s.w,s.m)}%（${s.m} 場）`; }).join('、')+`</div>`;
+  return `<h3>冠軍競技場實戰數據 ${srcBadges(['ari'])}</h3>${h}`;
+}
+function beatenBlock(ids){
+  if(!ARENA.teams||!ARENA.teams.length) return '';
+  let t=arenaTeam(ids), list=[], title='';
+  if(t){ list=beatenBy(t.idx); title='實戰中打贏過這隊的隊伍'; }
+  else { const sim=arenaSimilar(ids,4); const agg={}; for(const x of sim) for(const b of beatenBy(x.idx)) agg[b.idx]=(agg[b.idx]||0)+b.n; list=Object.entries(agg).map(([j,n])=>({idx:+j,row:ARENA.teams[+j],n})).sort((a,b)=>b.n-a.n).slice(0,6); title='實戰中打贏過相近隊伍（4 人相同）的隊伍'; }
+  if(!list.length) return '';
+  return `<h3>${title} ${srcBadges(['ari'])}</h3>`+list.map(b=>{ const s=rowStats(b.row); const own=owned.size?s.ids.filter(i=>byId[i]&&owned.has(i)).length:null; return `<div class="rec"><span class="badge good">贏 ${b.n} 次</span><span class="t">${teamLine(s)} <span class="muted">（該隊整體 ${s.m} 場，勝率 ${s.wr}%${own!==null?'；你有 '+own+'/5':''}）</span></span>${s.ids.every(i=>byId[i])?`<button class="btn" data-arena-apply="${b.idx}" style="font-size:11px;padding:2px 8px">帶入試算</button>`:''}</div>`; }).join('')+`<div class="muted">資料裡站位不固定，帶入後請自行調整 P1～P5；勝場數來自 JP／KR／國際服合計，環境可能與台港澳服有差。</div>`;
+}
+function renderArenaNote(){ const el=$('#arenaDataNote'); if(!el) return; const sv=ARENA.servers||{}; el.textContent=`來源：にけあり！（nikkeari.cc）公開的冠軍競技場對戰資料，抓取日期 ${ARENA.fetched||'未知'}，賽季 ${(ARENA.seasons||[]).join('、')}，共 ${ARENA.rounds||0} 回合（`+Object.entries(sv).map(([k,v])=>`${k} ${v.rounds} 回合`).join('、')+`）。資料由志願玩家提供截圖整理，非官方；冠軍競技場全員同步 400、無戰力懲罰，所以勝率反映的是純陣容相剋。執行 build/fetch_arena_stats.py --refresh 可更新。`; }
+
+/* 充能修正（超頻充能速度 17%、量子魔方 Lv7） */
+let enemyMods={}, mineMods={}; // id -> {ol:bool,q:bool}，實際值在狀態區由 LS 載入
+function renderMods(elId,team,mods,lsKey){
+  const el=$(elId); if(!el) return; el.innerHTML='';
+  team.forEach((id,i)=>{ if(!id||!byId[id]) return; const u=DECK.units&&DECK.units[id]; const canOl=!!(u&&u.ol17); const m=mods[id]||{};
+    const d=document.createElement('div'); d.className='mrow';
+    d.innerHTML=`<span>P${i+1} ${esc(nameOf(id))}</span><label class="${canOl?'':'dis'}" title="${canOl?'充能速度 17% 超頻：速度表往快的方向移半階':'此角色沒有充能速度超頻選項'}"><input type="checkbox" data-k="ol" ${m.ol?'checked':''} ${canOl?'':'disabled'}>超頻17%</label><label title="量子魔方 Lv7：充能 +${DECK.quantumLv7||4.66}%"><input type="checkbox" data-k="q" ${m.q?'checked':''}>量子Lv7</label>`;
+    d.querySelectorAll('input').forEach(inp=>inp.onchange=()=>{ mods[id]=mods[id]||{}; mods[id][inp.dataset.k]=inp.checked; if(!mods[id].ol&&!mods[id].q) delete mods[id]; LS.set(lsKey,mods); refresh(); });
+    el.appendChild(d); });
+  if(!el.children.length) el.innerHTML='<span class="muted">先選角色。</span>';
+}
 
 /* ====================== 參考對局（references.json） ====================== */
 let REFERENCES = __REFERENCES__;
@@ -447,10 +527,10 @@ const nameOf=id=>byId[id]?byId[id].name['zh-TW']:id;
 let dataInfo={source:'內建',date:BUILTIN_DATE};
 function applyData(chars,tpls,info){ CHARACTERS=chars; TEMPLATES=tpls; byId=Object.fromEntries(chars.map(c=>[c.id,c])); dataInfo=info; }
 
-function speedOf(ids,mode){
+function speedOf(ids,mode,mods){
   const chars=ids.map(i=>byId[i]).filter(Boolean);
   const totals={};
-  for(const t of ['1RL',...TIERS]) totals[t]=chars.reduce((s,c)=>s+(c.burstGen[mode][t]||0),0);
+  for(const t of ['1RL',...TIERS]) totals[t]=chars.reduce((s,c)=>{ let g=c.burstGen[mode][t]||0; const md=mods&&mods[c.id]; if(md){ if(md.ol&&DECK.units&&DECK.units[c.id]&&DECK.units[c.id].ol17){ const k=TIERS.indexOf(t); if(k>=0&&k<TIERS.length-1) g=c.burstGen[mode][TIERS[k+1]]||g; } if(md.q) g*=1+(DECK.quantumLv7||4.66)/100; } return s+g; },0);
   let tier='5RL', reached=false;
   for(const t of TIERS){ if(totals[t]>=1){tier=t;reached=true;break;} }
   return {tier,totals,reached,cycles:CYCLES[tier],sec:TIER_SEC[tier]};
@@ -488,7 +568,7 @@ function heuristicArchetypes(ids){
 }
 function ctxOf(ids,mode){
   const set=new Set(ids);
-  return {ids,set,speed:speedOf(ids,mode),chain:chainOf(ids),
+  return {ids,set,speed:speedOf(ids,mode,enemyMods),chain:chainOf(ids),
     has:(...a)=>a.some(x=>set.has(x)),
     weaponCount:w=>ids.filter(i=>byId[i]&&byId[i].weapon===w).length};
 }
@@ -539,7 +619,7 @@ function slowerVariant(f,t,targetTier,ownedSet,myMode){
     const pool=CHARACTERS.filter(c=>c.burst===need&&!slots.includes(c.id)&&(!ownedSet||ownedSet.has(c.id)))
       .sort((a,b)=>(opts.includes(b.id)?1:0)-(opts.includes(a.id)?1:0)||(TIER_RANK[b.pvpTier]||0)-(TIER_RANK[a.pvpTier]||0));
     let best=null;
-    for(const c of pool){ const trial=[...slots]; trial[i]=c.id; const idx=TIERS.indexOf(speedOf(trial,myMode).tier); if(idx===target){ best={c,idx}; break; } if(idx<target&&(!best||idx>best.idx)) best={c,idx}; }
+    for(const c of pool){ const trial=[...slots]; trial[i]=c.id; const idx=TIERS.indexOf(speedOf(trial,myMode,mineMods).tier); if(idx===target){ best={c,idx}; break; } if(idx<target&&(!best||idx>best.idx)) best={c,idx}; }
     if(!best) continue;
     slots[i]=best.c.id; kind[i]=opts.includes(best.c.id)?'flex':'sub';
     if(best.idx===target) return {...f,slots,kind,alts:{},variant:'後手鏡像版'};
@@ -550,7 +630,7 @@ function buildCounters(enemyIds,mode,ownedSet,allowSub){
   const myMode = mode; // 我方模式：attack 或 defense
   const enemyMode = mode==='attack'?'defense':'attack';
   const eArch=detectArchetypes(enemyIds); const eArchIds=new Set(eArch.map(a=>a.arch));
-  const eSpeed=speedOf(enemyIds,enemyMode); const eChain=chainOf(enemyIds);
+  const eSpeed=speedOf(enemyIds,enemyMode,enemyMods); const eChain=chainOf(enemyIds);
   const results=[];
   for(const t of TEMPLATES){
     if(t.mode!=='both'&&t.mode!==myMode) continue;
@@ -558,11 +638,11 @@ function buildCounters(enemyIds,mode,ownedSet,allowSub){
     if(!f0.ok) continue;
     const fills=[f0];
     if(mirrorUnit(enemyIds,f0.slots)&&eChain.valid){
-      const eIdx=TIERS.indexOf(eSpeed.tier), myIdx=TIERS.indexOf(speedOf(f0.slots,myMode).tier);
+      const eIdx=TIERS.indexOf(eSpeed.tier), myIdx=TIERS.indexOf(speedOf(f0.slots,myMode,mineMods).tier);
       if(myIdx<=eIdx&&eIdx<TIERS.length-1){ const sv=slowerVariant(f0,t,TIERS[eIdx+1],ownedSet,myMode); if(sv) fills.push(sv); }
     }
     for(const f of fills){
-    const sp=speedOf(f.slots,myMode); const ch=chainOf(f.slots);
+    const sp=speedOf(f.slots,myMode,mineMods); const ch=chainOf(f.slots);
     if(!ch.valid) continue;
     let score=({1:300,2:200,3:100})[t.priority]||0; const why=[]; const warn=[];
     const countersEnemy=[...eArchIds].filter(a=>t.counters.includes(a)||(TEMPLATES.find(x=>x.archetype===a)||{counteredBy:[]}).counteredBy.includes(t.archetype)||eArch.some(e=>e.arch===a&&e.tpl.counteredBy.includes(t.archetype)));
@@ -600,6 +680,7 @@ let mine=LS.get('mine',[null,null,null,null,null]);
 let owned=new Set(LS.get('owned',[]));
 let history=LS.get('history',[]);
 records=LS.get('records',[]);
+enemyMods=LS.get('enemyMods',{}); mineMods=LS.get('mineMods',{});
 let pickerTarget=null; // {team:'enemy'|'mine', idx}
 let pickerFilter={burst:null,weapon:null};
 let rosterFilter={burst:null,weapon:null,element:null,ownedOnly:false};
@@ -610,7 +691,7 @@ const esc=s=>String(s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;',
 const burstBadge=b=>`<span class="badge ${b==='Λ'?'bL':'b'+({I:1,II:2,III:3})[b]}">${b==='Λ'?'Λ':'B'+({I:1,II:2,III:3})[b]}</span>`;
 const elBadge=e=>`<span class="badge ${e}">${EL_ZH[e]||e}</span>`;
 const tierBadge=t=>t?`<span class="badge tier ${t}">${t}</span>`:'';
-function unitLine(id){ const c=byId[id]; if(!c) return esc(id); return `<b>${esc(c.name['zh-TW'])}</b> <span class="muted">${esc(c.name.en)}</span> ${burstBadge(c.burst)}${elBadge(c.element)}<span class="badge">${c.weapon}</span><span class="badge">${ROLE_ZH[c.role]}</span>${tierBadge(c.pvpTier)}`; }
+function unitLine(id){ const c=byId[id]; if(!c) return esc(id); return `<b>${esc(c.name['zh-TW'])}</b> <span class="muted">${esc(c.name.en)}</span> ${burstBadge(c.burst)}${elBadge(c.element)}<span class="badge">${c.weapon}</span><span class="badge">${ROLE_ZH[c.role]}</span>${tierBadge(c.pvpTier)}${deckRank(id)}`; }
 function tagBadges(id){ return (UNIT_TAGS[id]||[]).map(t=>`<span class="badge tag">${t}</span>`).join(''); }
 
 function renderSlots(elId,team,teamKey){
@@ -730,8 +811,9 @@ function renderAnalysis(){
   if(arch.length){ h+=arch.map(a=>`<div style="margin:4px 0"><span class="badge ${a===arch[0]?'bad':'warn'}">${ARCH_NAME[a.arch]||a.arch}</span> <span class="muted">${esc(a.tpl.notes['zh-TW'])}</span></div>`).join(''); }
   else h+=`<div class="muted">沒有完全符合的主流模板。</div>`;
   if(heur.length) h+=`<div class="muted" style="margin-top:4px">特徵：${heur.join('、')}</div>`;
+  h+=arenaBlock(enemy);
   h+=`<h3>逐位威脅</h3>`;
-  h+=enemy.map((id,i)=>{ const c=byId[id]; const pos=i===0||i===4?'<span class="badge warn" title="最常被集火">承傷位</span>':(i===2||i===3?'<span class="badge good" title="最安全">安全位</span>':''); return `<div class="threat"><span class="p">P${i+1}</span><div>${unitLine(id)} ${pos}<div>${tagBadges(id)||'<span class="muted">一般角色</span>'}</div></div></div>`; }).join('');
+  h+=enemy.map((id,i)=>{ const c=byId[id]; const pos=i===0||i===4?'<span class="badge warn" title="最常被集火">承傷位</span>':(i===2||i===3?'<span class="badge good" title="最安全">安全位</span>':''); return `<div class="threat"><span class="p">P${i+1}</span><div>${unitLine(id)} ${pos} ${posInfo(id)}<div>${tagBadges(id)||'<span class="muted">一般角色</span>'}</div></div></div>`; }).join('');
   el.innerHTML=h;
   return ctx;
 }
@@ -744,6 +826,7 @@ function renderCounters(ctx){
   const fired=RULES.filter(r=>r.when(ctx));
   const st=recordStats(enemy,null);
   if(st.same.n||st.arch.n){ h+=`<h3>你的戰績</h3><div>`+(st.same.n?`<span class="badge ${st.same.win>=st.same.loss?'good':'bad'}">同一隊 ${st.same.win} 勝 ${st.same.loss} 負</span> `:'')+(st.arch.n?`<span class="badge">同體系 ${st.arch.win} 勝 ${st.arch.loss} 負</span>`:'')+` <span class="muted">來自你在⑥記錄的對戰</span></div>`; }
+  h+=beatenBlock(enemy);
   if(fired.length){ h+=`<h3>針對對方特徵</h3><ul class="tips">`+fired.map(r=>`<li><span class="badge ${r.level}">${typeof r.title==='function'?r.title(ctx):r.title}</span> ${typeof r.text==='function'?r.text(ctx):r.text} ${srcBadges(RULE_SRC[r.id]||['tool'])}</li>`).join('')+`</ul>`; }
   if(arch.length){
     const cb=new Set(); const dont=new Set();
@@ -753,18 +836,21 @@ function renderCounters(ctx){
   }
   const refs=refsFor(arch.map(a=>a.arch),enemy,null);
   h+=refList(refs,'這個對手體系的參考對局／資料')+`<div style="margin-top:4px">${searchLinks(enemy.filter(i=>(TIER_RANK[byId[i].pvpTier]||0)>=6).slice(0,3).length?enemy.filter(i=>(TIER_RANK[byId[i].pvpTier]||0)>=6).slice(0,3):enemy.slice(0,3))}</div>`;
-  h+=`<h3>通用原則</h3><ul class="tips"><li>要嘛比對方快一階先開爆裂，要嘛確定扛得住對方第一波再反打；兩個都做不到就換體系。 ${srcBadges(['teams'])}</li><li>目標順序：${mode==='attack'?'你的 SMG／MG／AR／SG／RL 第一發打對方 P5、之後集中打 P1，SR 一直打 P5；對方防守的 SG 會集中打你的 P5，其餘武器打你的 P1':'對方進攻的 SMG／MG／AR／SG／RL 會集中打你的 P1，SR 打你的 P5；你防守的 SG 集中打對方 P5，其餘打對方 P1'}。RL／SR 攻擊間隔會被視為進掩體而被跳過，所以諾伊斯、諾雅這類 RL 不適合單獨當 P1 坦。 ${srcBadges(['mech'])}</li><li>戰力差超過 15.4%（低於對方 84.6%）會吃屬性懲罰，先確認戰力再談陣容。 ${srcBadges(['mech'])}</li></ul>`;
+  h+=`<h3>通用原則</h3><ul class="tips"><li>要嘛比對方快一階先開爆裂，要嘛確定扛得住對方第一波再反打；兩個都做不到就換體系。 ${srcBadges(['teams'])}</li><li>冠軍競技場數據裡，進攻方與防守方的勝率差不大（同一隊伍兩邊各約一半），不要假設進攻方必勝；影響較大的是進攻／防守時霰彈槍的目標位置不同。 ${srcBadges(['ari','mech'])}</li><li>目標順序：${mode==='attack'?'你的 SMG／MG／AR／SG／RL 第一發打對方 P5、之後集中打 P1，SR 一直打 P5；對方防守的 SG 會集中打你的 P5，其餘武器打你的 P1':'對方進攻的 SMG／MG／AR／SG／RL 會集中打你的 P1，SR 打你的 P5；你防守的 SG 集中打對方 P5，其餘打對方 P1'}。RL／SR 攻擊間隔會被視為進掩體而被跳過，所以諾伊斯、諾雅這類 RL 不適合單獨當 P1 坦。 ${srcBadges(['mech'])}</li><li>戰力差超過 15.4%（低於對方 84.6%）會吃屬性懲罰，先確認戰力再談陣容。 ${srcBadges(['mech'])}</li></ul>`;
   el.innerHTML=h;
+  el.querySelectorAll('[data-arena-apply]').forEach(b=>b.onclick=()=>{ const s=rowStats(ARENA.teams[+b.dataset.arenaApply]); mine=[...s.ids]; save(); refresh(); $('#mySlots').scrollIntoView({behavior:'smooth'}); });
 }
 function teamCard(r,eSpeed,idx){
   const t=r.tpl;
   const members=r.slots.map((id,i)=>{ const c=byId[id]; const k=r.kind[i]; const alt=(r.alts&&r.alts[i]&&r.alts[i].length)?`<div class="alt">替補：${r.alts[i].map(nameOf).join('／')}</div>`:''; return `<div class="m ${k}"><div class="pos">P${i+1} ${k==='req'?'核心':k==='sub'?'替補':'彈性'}</div><b>${esc(c.name['zh-TW'])}</b><div>${burstBadge(c.burst)}<span class="badge">${c.weapon}</span></div>${alt}</div>`; }).join('');
-  const cmp = r.speed.cycles<eSpeed.cycles?'<span class="badge good">比對方快</span>':r.speed.cycles===eSpeed.cycles?'<span class="badge warn">同速</span>':'<span class="badge bad">比對方慢</span>';
+  const cmp = r.variant?'':(r.speed.cycles<eSpeed.cycles?'<span class="badge good">比對方快</span>':r.speed.cycles===eSpeed.cycles?'<span class="badge warn">同速</span>':'<span class="badge bad">比對方慢</span>');
   const eArchs=detectArchetypes(enemy).map(a=>a.arch);
   const refs=refsFor(eArchs,enemy,t.archetype);
   const st=recordStats(enemy,r.slots);
   const rec=st.pair.n?` <span class="badge ${st.pair.win>=st.pair.loss?'good':'bad'}">你用這隊打過：${st.pair.win} 勝 ${st.pair.loss} 負</span>`:'';
-  return `<div class="team"><div class="hd"><b>${idx+1}. ${esc(t.name['zh-TW'])}${r.variant?'（'+r.variant+'）':''}</b>${r.variant?'<span class="badge good">刻意慢一階</span>':''}<span class="badge">${ARCH_NAME[t.archetype]||t.archetype}</span><span class="badge">P${t.priority} 模板</span><span class="badge ${r.speed.tier==='2RL'||r.speed.tier==='5SG'?'bad':r.speed.tier==='3RL'?'warn':''}">${r.speed.tier}</span>${cmp}${rec}<button class="btn" data-apply="${idx}" style="margin-left:auto">帶入試算</button></div><div class="members">${members}</div><div class="why">${r.why.map(w=>'✔ '+esc(w)).join('<br>')}${r.warn.length?'<br>'+r.warn.map(w=>'<span style="color:var(--warn)">⚠ '+w+'</span>').join('<br>'):''}</div><div class="muted" style="margin-top:4px">${esc(t.notes['zh-TW'])}</div><div style="margin-top:4px">${srcBadges(['tpl'],'克制關係與模板依據')} ${srcBadges(['calc'],'速度與排序')} ${searchLinks(t.required.concat(r.slots.filter(i=>!t.required.includes(i))).slice(0,3))}</div>${refList(refs)}</div>`;
+  const av=archVsRecord(t.archetype,eArchs); const arenaRec=(av.w+av.l)>=10?` <span class="badge ${av.w>=av.l?'good':'bad'}" title="冠軍競技場中，含此核心的隊伍對上含對方核心的隊伍">實戰對位 ${av.w} 勝 ${av.l} 負</span>`:'';
+  const at=arenaTeam(r.slots); const exact=at?(()=>{const s=rowStats(at.row); return ` <span class="badge" title="這 5 人組合在冠軍競技場的整體戰績">實戰 ${s.m} 場 ${s.wr}%</span>`;})():'';
+  return `<div class="team"><div class="hd"><b>${idx+1}. ${esc(t.name['zh-TW'])}${r.variant?'（'+r.variant+'）':''}</b>${r.variant?'<span class="badge good">刻意慢一階</span>':''}<span class="badge">${ARCH_NAME[t.archetype]||t.archetype}</span><span class="badge">P${t.priority} 模板</span><span class="badge ${r.speed.tier==='2RL'||r.speed.tier==='5SG'?'bad':r.speed.tier==='3RL'?'warn':''}">${r.speed.tier}</span>${cmp}${rec}${arenaRec}${exact}<button class="btn" data-apply="${idx}" style="margin-left:auto">帶入試算</button></div><div class="members">${members}</div><div class="why">${r.why.map(w=>'✔ '+esc(w)).join('<br>')}${r.warn.length?'<br>'+r.warn.map(w=>'<span style="color:var(--warn)">⚠ '+w+'</span>').join('<br>'):''}</div><div class="muted" style="margin-top:4px">${esc(t.notes['zh-TW'])}</div><div style="margin-top:4px">${srcBadges(['tpl'],'克制關係與模板依據')} ${srcBadges(['calc'],'速度與排序')} ${searchLinks(t.required.concat(r.slots.filter(i=>!t.required.includes(i))).slice(0,3))}</div>${refList(refs)}</div>`;
 }
 let lastBuilt=[];
 function renderBuilt(ctx){
@@ -792,11 +878,13 @@ function renderMyEval(ctx){
   const el=$('#myEval'); const ids=mine.filter(Boolean);
   if(ids.length<5){ el.className='muted'; el.textContent=`已排 ${ids.length}/5。`; return; }
   el.className='';
-  const mySp=speedOf(mine,mode); const myCh=chainOf(mine); const myArch=detectArchetypes(mine); const myHeur=heuristicArchetypes(mine);
+  const mySp=speedOf(mine,mode,mineMods); const myCh=chainOf(mine); const myArch=detectArchetypes(mine); const myHeur=heuristicArchetypes(mine);
   let h=`<div class="grid2"><div><h3>我方速度</h3>${speedBlock(mySp,'我方')}</div><div><h3>我方爆裂鏈</h3>${chainBlock(myCh)}<h3>我方體系</h3>${myArch.length?myArch.map(a=>`<span class="badge good">${ARCH_NAME[a.arch]||a.arch}</span>`).join(' '):'<span class="muted">不屬於主流模板</span>'}${myHeur.length?`<div class="muted">特徵：${myHeur.join('、')}</div>`:''}</div></div>`;
   if(!myCh.valid){ h=`<div class="verdict bad">爆裂鏈不完整（缺 ${myCh.missing.join('、')}），這隊永遠開不了全爆裂。</div>`+h; el.innerHTML=h; return; }
   if(!ctx){ el.innerHTML=h+'<div class="muted">填滿對方隊伍後會顯示對戰判斷。</div>'; return; }
   const eArch=detectArchetypes(enemy); let pts=0; const good=[],bad=[];
+  for(const m of myArch){ const av=archVsRecord(m.arch,eArch.map(e=>e.arch)); if(av.w+av.l>=10){ const r=av.w/(av.w+av.l); if(r>=0.6){ pts+=1; good.push(`冠軍競技場實戰：含「${ARCH_NAME[m.arch]}」核心的隊伍對上對方這類核心 ${av.w} 勝 ${av.l} 負`); } else if(r<=0.4){ pts-=1; bad.push(`冠軍競技場實戰：含「${ARCH_NAME[m.arch]}」核心的隊伍對上對方這類核心 ${av.w} 勝 ${av.l} 負`); } else good.push(`冠軍競技場實戰：含「${ARCH_NAME[m.arch]}」核心對上對方這類核心 ${av.w} 勝 ${av.l} 負，五五波`); } }
+  { const at=arenaTeam(mine); if(at){ const s=rowStats(at.row); good.push(`這 5 人組合在冠軍競技場出場 ${s.m} 場，整體勝率 ${s.wr}%`); } }
   for(const m of myArch) for(const e of eArch){
     if(m.tpl.counters.includes(e.arch)||e.tpl.counteredBy.includes(m.arch)){ pts+=2; good.push(`我方「${ARCH_NAME[m.arch]}」克制對方「${ARCH_NAME[e.arch]}」`); }
     if(e.tpl.counters.includes(m.arch)||m.tpl.counteredBy.includes(e.arch)){ pts-=2; bad.push(`對方「${ARCH_NAME[e.arch]}」克制我方「${ARCH_NAME[m.arch]}」`); }
@@ -824,7 +912,8 @@ function renderHistory(){
 }
 function renderSolve(){
   renderSlots('#enemySlots',enemy,'enemy'); renderSlots('#mySlots',mine,'mine');
-  const ctx=renderAnalysis(); renderCounters(ctx); renderBuilt(ctx); renderMyEval(ctx); renderHistory(); renderRecords(); renderSourceHelp();
+  renderMods('#enemyMods',enemy,enemyMods,'enemyMods'); renderMods('#myMods',mine,mineMods,'mineMods');
+  const ctx=renderAnalysis(); renderCounters(ctx); renderBuilt(ctx); renderMyEval(ctx); renderHistory(); renderRecords(); renderSourceHelp(); renderArenaNote();
 }
 function refresh(){ updateOwnedCount(); renderSolve(); }
 
