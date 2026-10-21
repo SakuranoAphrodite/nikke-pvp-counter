@@ -716,17 +716,38 @@ function autoArrange(ids){
   for(const b of ['I','II','III']){ const key=chosen[b]; if(!key) continue; const ki=slots.indexOf(key); const fi=slots.findIndex(i=>i&&byId[i].burst===b); if(fi>=0&&fi<ki&&!tankSlot(fi)&&!tankSlot(ki)){ [slots[fi],slots[ki]]=[slots[ki],slots[fi]]; } }
   return slots;
 }
+const needChain=(t,r)=>t.chainCore?t.chainCore.includes(r):burstDependent(r);
 function detectArchetypes(ids){
   const set=new Set(ids); const out={};
   const cs=ids.filter(Boolean).length>=3?chainSet(ids):null; // 靠爆裂的核心角必須在軸內，體系才算成立
   for(const t of TEMPLATES){
     if(!t.required.every(r=>set.has(r))) continue;
-    if(cs&&t.required.some(r=>burstDependent(r)&&!cs.has(r))) continue;
+    if(cs&&t.required.some(r=>needChain(t,r)&&!cs.has(r))) continue; // 靠爆裂的核心角必須在軸內；資料挖掘模板改用對局裡「實際開爆裂」的統計（chainCore）
     let flexHits=0; for(const f of t.flex){ if(f.options.some(o=>set.has(o)&&!t.required.includes(o))) flexHits++; }
     const score=t.required.length*2+flexHits;
     if(!out[t.archetype]||out[t.archetype].score<score) out[t.archetype]={arch:t.archetype,tpl:t,score,flexHits};
   }
   return Object.values(out).sort((a,b)=>b.score-a.score);
+}
+/* 核心角都在、但「該開爆裂的核心角」不在軸內的模板：體系不成立，列出來提醒（例如桑迪排在特蕾娜前面搶了 B2） */
+function chainMisses(ids){
+  const set=new Set(ids); if(ids.filter(Boolean).length<5) return [];
+  const cs=chainSet(ids); const out=[];
+  for(const t of TEMPLATES){
+    if(!t.required.every(r=>set.has(r))) continue;
+    const miss=t.required.filter(r=>needChain(t,r)&&!cs.has(r));
+    if(!miss.length) continue;
+    const instead=ids.filter(i=>cs.has(i)&&!miss.includes(i)&&miss.some(m=>byId[m]&&byId[i]&&byId[i].burst===byId[m].burst));
+    const rate=t.chainRate?miss.map(m=>`${nameOf(m)} ${t.chainRate[m]}%`).join('、'):'';
+    out.push({tpl:t,miss,instead,text:`這隊有「${archName(t.archetype)}」的核心角，但${miss.map(nameOf).join('、')}不在軸內（${instead.length?instead.map(nameOf).join('、')+'排在前面搶了爆裂':'沒開到爆裂'}）${rate?`；挖掘對局裡 ${rate} 的場次是由她開爆裂`:''}，所以不套用這個體系的克制統計。`});
+  }
+  return out;
+}
+/* 資料挖掘模板附帶的對位統計：tpl 對 vsId 的場數與勝率；flip=true 表示從對方模板的統計反推（勝率取反） */
+function vsStat(tpl,vsId,flip){
+  const st=tpl&&tpl._stats; if(!st) return '';
+  const r=[...(st.vs||[]),...(st.vsArch||[]),...(st.vsArchBad||[])].find(x=>x.vs===vsId); if(!r) return '';
+  return `（冠軍競技場 ${r.games} 場、我方勝率 ${flip?100-r.win:r.win}%）`;
 }
 function heuristicArchetypes(ids){
   const tags=ids.flatMap(i=>UNIT_TAGS[i]||[]); const r=[];
@@ -823,7 +844,7 @@ function buildCounters(enemyIds,mode,ownedSet,allowSub){
     let score=({1:300,2:200,3:100})[t.priority]||0; const why=[]; const warn=[];
     const countersEnemy=[...eArchIds].filter(a=>t.counters.includes(a)||(TEMPLATES.find(x=>x.archetype===a)||{counteredBy:[]}).counteredBy.includes(t.archetype)||eArch.some(e=>e.arch===a&&e.tpl.counteredBy.includes(t.archetype)));
     const counteredByEnemy=[...eArchIds].filter(a=>t.counteredBy.includes(a)||eArch.some(e=>e.arch===a&&e.tpl.counters.includes(t.archetype)));
-    if(countersEnemy.length){ score+=400*countersEnemy.length; why.push('克制對方的「'+countersEnemy.map(a=>archName(a)).join('」「')+'」'); }
+    if(countersEnemy.length){ score+=400*countersEnemy.length; why.push('克制對方的「'+countersEnemy.map(a=>archName(a)+(vsStat(t,a)||vsStat(TEMPLATES.find(x=>x.archetype===a),t.archetype,true))).join('」「')+'」'); }
     if(counteredByEnemy.length){ score-=300*counteredByEnemy.length; warn.push('會被對方的「'+counteredByEnemy.map(a=>archName(a)).join('」「')+'」克制'); }
     const dc=(eSpeed.cycles+eChain.extraSec)-(sp.cycles+ch.extraSec); // 再入延遲以秒計入（1 輪 RL 約 1 秒）
     const mj=eChain.valid?mirrorJudge(f.slots,sp.tier,enemyIds,eSpeed.tier):null;
@@ -1050,6 +1071,7 @@ function renderAnalysis(){
   h+=`<h3>體系判定</h3>`;
   if(arch.length){ h+=arch.map(a=>`<div style="margin:4px 0"><span class="badge ${a===arch[0]?'bad':'warn'}">${archName(a.arch)}</span> <span class="muted">${esc(a.tpl.notes['zh-TW'])}</span></div>`).join(''); }
   else h+=`<div class="muted">沒有完全符合的主流模板。</div>`;
+  for(const cm of chainMisses(enemy)) h+=`<div class="muted">⚠ 對方${esc(cm.text.replace('不套用這個體系的克制統計','不算這個體系'))}</div>`;
   { const cs=chainSet(enemy); const lost=[]; const set=new Set(enemy); for(const t of TEMPLATES){ if(!t.required.every(r=>set.has(r))) continue; const off=t.required.filter(r=>burstDependent(r)&&!cs.has(r)); if(off.length&&!arch.some(a=>a.arch===t.archetype)) lost.push(`${archName(t.archetype)}（${off.map(nameOf).join('、')}在軸外）`); } if(lost.length) h+=`<div class="muted">因站位而不成立的體系：${[...new Set(lost)].join('、')}</div>`; }
   if(heur.length) h+=`<div class="muted" style="margin-top:4px">特徵：${heur.join('、')}</div>`;
   h+=arenaBlock(enemy);
@@ -1133,9 +1155,11 @@ function evalMatch(myIds,enemyIds,myMods,eMods){
   for(const m of myArch){ const av=archVsRecord(m.arch,eArch.map(e=>e.arch)); if(av.w+av.l>=10){ const r=av.w/(av.w+av.l); if(r>=0.6){ pts+=1; good.push(`冠軍競技場實戰：含「${archName(m.arch)}」核心的隊伍對上對方這類核心 ${av.w} 勝 ${av.l} 負`); } else if(r<=0.4){ pts-=1; bad.push(`冠軍競技場實戰：含「${archName(m.arch)}」核心的隊伍對上對方這類核心 ${av.w} 勝 ${av.l} 負`); } else good.push(`冠軍競技場實戰：含「${archName(m.arch)}」核心對上對方這類核心 ${av.w} 勝 ${av.l} 負，五五波`); } }
   { const at=arenaTeam(myIds); if(at){ const s=rowStats(at.row); good.push(`這 5 人組合在冠軍競技場出場 ${s.m} 場，整體勝率 ${s.wr}%`); } }
   for(const m of myArch) for(const e of eArch){
-    if(m.tpl.counters.includes(e.arch)||e.tpl.counteredBy.includes(m.arch)){ pts+=2; good.push(`我方「${archName(m.arch)}」克制對方「${archName(e.arch)}」`); }
-    if(e.tpl.counters.includes(m.arch)||m.tpl.counteredBy.includes(e.arch)){ pts-=2; bad.push(`對方「${archName(e.arch)}」克制我方「${archName(m.arch)}」`); }
+    if(m.tpl.counters.includes(e.arch)||e.tpl.counteredBy.includes(m.arch)){ pts+=2; good.push(`我方「${archName(m.arch)}」克制對方「${archName(e.arch)}」${vsStat(m.tpl,e.arch)||vsStat(e.tpl,m.arch,true)}`); }
+    if(e.tpl.counters.includes(m.arch)||m.tpl.counteredBy.includes(e.arch)){ pts-=2; bad.push(`對方「${archName(e.arch)}」克制我方「${archName(m.arch)}」${vsStat(e.tpl,m.arch,true)||vsStat(m.tpl,e.arch)}`); }
   }
+  for(const cm of chainMisses(myIds)) bad.push('我方'+cm.text);
+  for(const cm of chainMisses(enemyIds)) good.push('對方'+cm.text.replace('不套用這個體系的克制統計','對方不算這個體系'));
   const dc=(ctx.speed.cycles+ctx.chain.extraSec)-(mySp.cycles+myCh.extraSec); // 再入延遲以秒計入
   const mj=ctx.chain.valid?mirrorJudge(myIds,mySp.tier,enemyIds,ctx.speed.tier):null;
   if(myCh.stages>3) bad.push(`我方是 ${myCh.stages} 段軸（${myCh.reNote}），全爆裂晚約 ${myCh.extraSec.toFixed(1)} 秒，已計入速度比較`);

@@ -76,6 +76,8 @@
 | `build/data/nicknames.json` | 角色綽號／別名（白兔、黑兔、偶像阿妮斯、白雪重武、EMT…），搜尋時與正式名一起比對，可自行增補 |
 | `avatars/` | 角色頭像（`build/fetch_avatars.py` 從上游倉庫下載，檔名為角色的 avatarImg 代碼）。圖片為遊戲素材，版權屬 SHIFT UP／Level Infinite，僅作粉絲工具展示 |
 
+資料挖掘模板除了核心角與站位，還記錄這些對局裡「實際開爆裂的核心角」比例（chainRate／chainCore）：例如桑迪珍藏＋拉普拉斯究極英雄＋特蕾娜那一家，77% 的場次由特蕾娜開 B2、桑迪只有 14%，所以只有特蕾娜在軸內時才算這個體系、才套用它的克制統計；桑迪排在前面搶了 B2 時工具會提醒。克制行會附上對位場數與勝率（例如「311 場、我方勝率 82%」）。
+
 模板分四層：上游模板、本工具補充、資料挖掘、社群隊伍；更新流程是 `fetch_arena_stats.py --refresh` → `mine_templates.py` → `community_templates.py` → `build.py`。社群隊伍要新增時直接在 `community-teams.json` 加一筆再跑轉換。
 
 ## 哪裡可以找到這類隊伍資料與討論
