@@ -61,6 +61,20 @@
 | `build/data/characters.json` | 209 名角色資料、繁中譯名、充能數值、PVP 階級 |
 | `build/data/templates.json` | 上游的 23 個主流隊伍模板與互剋關係 |
 | `build/data/templates-extra.json` | 本工具補充的 2026 體系模板（超級巨星阿妮斯＋餅乾核心、娜由塔一閃、豺狼＋貝斯蒂不屈、諾雅諾伊斯餅乾灰姑娘），獨立嵌入，線上更新上游模板後仍會合併 |
+| `build/data/templates-mined.json` | `build/mine_templates.py` 從 nikkeari 的 24,000 回合挖出的 24 個核心家族：場次、勝率、常見補位、站位、互剋（統計結果，非人工驗證） |
+| `build/data/community-teams.json` | 社群明確列出的新人／特殊競技場隊伍（JP wikiwiki、GameWith、Yahoo知恵袋、KR arca／dcinside／ruliweb、Gamemeca，2025-07～2026-10），含來源、日期、站位、速度、打得贏與輸給誰 |
+| `build/data/templates-community.json` | `build/community_templates.py` 把上面的隊伍轉成的 36 個模板（名稱標「（社群）」） |
+
+模板分四層：上游模板、本工具補充、資料挖掘、社群隊伍；更新流程是 `fetch_arena_stats.py --refresh` → `mine_templates.py` → `community_templates.py` → `build.py`。社群隊伍要新增時直接在 `community-teams.json` 加一筆再跑轉換。
+
+## 哪裡可以找到這類隊伍資料與討論
+
+- 日本：[wikiwiki（NIKKE）アリーナ攻略](https://wikiwiki.jp/fpo2w6pt/（NIKKE）アリーナ攻略)（隊伍、互剋、新手三隊範本，更新最勤）、[GameWith 競技場](https://gamewith.jp/nikke/article/show/379079)、[Yahoo!知恵袋](https://chiebukuro.yahoo.co.jp/)（搜「NIKKE アリーナ」有大量「這隊怎麼打」問答）。
+- 韓國：[arca.live 니케 채널](https://arca.live/b/nikketgv)（特殊競技場體系整理、新手配法）、[dcinside 니케 갤러리](https://gall.dcinside.com/mgallery/board/lists/?id=gov)（冠軍競技場環境文、新手攻守指南）、[ruliweb](https://bbs.ruliweb.com/game/86188)。
+- 資料統計：[にけあり！nikkeari.cc](https://nikkeari.cc/zh-CN)（冠軍競技場對戰紀錄與勝率）、[NIKKE Synergy](https://nikke-synergy.com/arena-ex_en)（逐幀速度計算，有繁中）、[NIKKE DECK](https://nikke-deck.com/en/deck)（含超頻與魔方的組隊工具、PVP 階級、冠軍競技場規則文）。
+- 英文：[Prydwen PVP 指南](https://www.prydwen.gg/nikke/guides/pvp-sp-arena-teams)（需用瀏覽器開）、[nikke.gg](https://nikke.gg/)（角色技能與評測）、[Gamemeca 冠軍競技場月報](https://www.gamemeca.com/en/view.php?gid=1775676)。
+- 台港澳：[巴哈姆特妮姬板競技場串](https://forum.gamer.com.tw/C.php?bsn=36390&snA=8237)（2026 年的隊伍討論多以圖片與影片呈現，文字版隊伍少）。
+- 簡中：[233乐园](https://www.233leyuan.com/post-detail/2069994974744829952)、GameKee（多為影片與圖片，文字版隊伍少）。
 
 ## 新角色出來怎麼辦
 

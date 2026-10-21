@@ -42,6 +42,9 @@ def build():
     mined_file = DATA / "templates-mined.json"  # 由 mine_templates.py 從冠軍競技場資料挖出的模板
     if mined_file.exists():
         extra = extra + json.loads(mined_file.read_text(encoding="utf-8"))
+    community_file = DATA / "templates-community.json"  # 由 community_templates.py 從社群隊伍清單轉成的模板
+    if community_file.exists():
+        extra = extra + json.loads(community_file.read_text(encoding="utf-8"))
     ver_file = DATA / "version.json"
     ver = json.loads(ver_file.read_text(encoding="utf-8"))["fetched"] if ver_file.exists() else datetime.date.today().isoformat()
     html = (HERE / "template.html").read_text(encoding="utf-8")
