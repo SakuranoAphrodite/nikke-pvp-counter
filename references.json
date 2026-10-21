@@ -3,6 +3,54 @@
  "_說明": "參考對局與資料。欄位：title 標題、url 連結、source 來源、kind 影片/攻略/討論/對局、enemy 對手體系 id（見 templates.json 的 archetype）、my 我方體系 id、units 對手關鍵角色 id（命中兩個以上就會顯示）、result win/loss（自己打過的對局才填）、note 一句話說明、date 日期。",
  "items": [
   {
+   "title": "JP wikiwiki 競技場攻略（2026-10-21 更新）：諾雅無敵對同速核爆、小美人魚暈眩、不屈對決後開有利、2026 主流隊",
+   "url": "https://wikiwiki.jp/fpo2w6pt/（NIKKE）アリーナ攻略",
+   "source": "wikiwiki.jp", "kind": "攻略",
+   "enemy": ["noah-stall", "scarlet-nuke", "blanc-indom", "cinderella-carry", "mermaid-disrupt"], "my": [], "units": [],
+   "note": "2026 隊：諾雅/諾伊斯/餅乾/魯瑪妮/灰姑娘(3RL)、豺狼/貝斯蒂TU/愛因/布蘭兒/海倫珍藏(2RL)、娜由塔/海倫珍藏/白雪HA/羅珊娜/豺狼(2RL)、馬斯特/艾瑪TU/銀華TU/貝斯蒂TU/冬索林(5RL)",
+   "date": "2026-10-21"
+  },
+  {
+   "title": "KR 冠軍競技場環境（dcinside 2026-05）：超級巨星阿妮斯＋貝伊／諾雅／布蘭兒＋餅乾",
+   "url": "https://gall.dcinside.com/mgallery/board/view/?id=gov&no=5472041",
+   "source": "dcinside", "kind": "討論",
+   "enemy": ["anis-star-system", "noah-stall", "blanc-indom", "share-wall"], "my": ["anis-star-system"], "units": ["anis-star", "biscuit"],
+   "note": "上季最多冠軍的是「阿妮斯＋貝伊＋餅乾」；B2 位常見娜由塔/布蘭兒/諾雅/餅乾，B1 阿妮斯/牡丹/豺狼",
+   "date": "2026-05-24"
+  },
+  {
+   "title": "KR arca 特殊競技場體系整理（2026-01）：體系由 B2 決定，不屈給連結中血最低者",
+   "url": "https://arca.live/b/nikketgv/160711100",
+   "source": "arca.live", "kind": "攻略",
+   "enemy": ["blanc-indom", "noah-stall", "share-wall", "nayuta-carry"], "my": ["rosanna-counter", "blanc-indom"], "units": ["blanc", "jackal"],
+   "note": "對布蘭兒隊：鏡像布蘭兒讓自己的主 C 吃到不屈，或用羅珊娜在不屈前打死 DPS；貝伊 S1 40/15×4＋S2 92.9% 轉掩體≈80% 減傷",
+   "date": "2026-01-27"
+  },
+  {
+   "title": "KR arca 新手特殊競技場配法（2026-03）：對諾雅帶自布隊，對自布帶娜由塔一閃",
+   "url": "https://arca.live/b/nikketgv/165480983",
+   "source": "arca.live", "kind": "攻略",
+   "enemy": ["noah-stall", "blanc-indom"], "my": ["blanc-indom", "nayuta-carry"], "units": [],
+   "note": "娜由塔/海倫/小紅帽/拉普拉斯/桑迪 需 2RL，沒超頻充能會輸小美人魚；小美人魚放 P4 避貝斯蒂濺射",
+   "date": "2026-03-21"
+  },
+  {
+   "title": "nikke.gg 灰姑娘 PVP 評測（2026-08）：連續 10 段約 2 秒，諾雅／布蘭兒隊幾乎必剋",
+   "url": "https://nikke.gg/pvp-review-cinderella/",
+   "source": "nikke.gg", "kind": "攻略",
+   "enemy": ["cinderella-carry"], "my": ["noah-stall", "blanc-indom"], "units": ["cinderella"],
+   "note": "2RL 灰姑娘對 3RL 諾雅/布蘭兒隊幾乎必輸；灰姑娘放 P1 會被跳過，放 P4/P5；貝伊 B2 可吸掉對方核爆讓自家核爆先落地",
+   "date": "2026-08-28"
+  },
+  {
+   "title": "CN 國服冠軍競技場半月報（2026-06，片段）：諾雅＋拉毗小紅帽＋餅乾＋超級巨星阿妮斯 打灰姑娘隊",
+   "url": "https://www.bilibili.com/read/cv50537158",
+   "source": "bilibili", "kind": "討論",
+   "enemy": ["cinderella-carry"], "my": ["noah-stall", "anis-star-system"], "units": ["cinderella"],
+   "note": "只讀到搜尋片段，內文需登入；國服冠軍用「诺帽饼＋阿尼斯」專打快照灰、杨灰、诺诺饼灰",
+   "date": "2026-06-16"
+  },
+  {
    "title": "Prydwen：PvP Arena Mechanics（目標順序、充能倍率、嘲諷、無敵與不屈）",
    "url": "https://www.prydwen.gg/nikke/guides/pvp-mechanics",
    "source": "Prydwen", "kind": "攻略",
