@@ -4,3 +4,6 @@ desktop.ini
 .DS_Store
 __pycache__/
 *.pyc
+
+# 原始抓取資料（體積大，不進倉庫）
+build/data/raw/

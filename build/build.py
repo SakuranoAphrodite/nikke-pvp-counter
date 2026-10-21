@@ -43,9 +43,14 @@ def build():
     dump = lambda o: json.dumps(o, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
     refs_file = HERE.parent / "references.json"
     refs = json.loads(refs_file.read_text(encoding="utf-8")) if refs_file.exists() else {"updated": "", "items": []}
+    arena_file, deck_file = DATA / "arena-stats.json", DATA / "deck-speed.json"
+    arena = json.loads(arena_file.read_text(encoding="utf-8")) if arena_file.exists() else {"teams": [], "beatenBy": {}, "arch": {}, "archVs": {}, "charPos": {}, "names": {}, "rounds": 0}
+    deck = json.loads(deck_file.read_text(encoding="utf-8")) if deck_file.exists() else {"units": {}, "quantumLv7": 4.66}
     html = (html.replace("__CHARACTERS__", dump(chars))
                 .replace("__TEMPLATES__", dump(tpls))
                 .replace("__REFERENCES__", dump(refs))
+                .replace("__ARENA__", dump(arena))
+                .replace("__DECK__", dump(deck))
                 .replace("__DATA_DATE__", ver))
     OUT.write_text(html, encoding="utf-8")
     INDEX.write_text(html, encoding="utf-8")  # GitHub Pages 用的同內容副本
