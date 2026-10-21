@@ -1,19 +1,80 @@
 [
  {
   "id": "anis-star-biscuit-core",
-  "name": {"en": "Anis: Star + Biscuit core (2026 CA meta)", "zh-TW": "超級巨星阿妮斯＋餅乾核心（2026 冠軍環境）", "zh-CN": "超级巨星阿妮斯＋饼干核心", "ja": "アニス：スター＋ビスケット"},
+  "name": {
+   "en": "Anis: Star + Biscuit core (2026 CA meta)",
+   "zh-TW": "超級巨星阿妮斯＋餅乾核心（2026 冠軍環境）",
+   "zh-CN": "超级巨星阿妮斯＋饼干核心",
+   "ja": "アニス：スター＋ビスケット"
+  },
   "archetype": "anis-star-system",
   "mode": "both",
-  "required": ["anis-star", "biscuit"],
-  "flex": [
-   {"slot": 1, "options": ["blanc", "noah", "bay-treasure", "bay", "nayuta", "trina"]},
-   {"slot": 2, "options": ["helm-treasure", "cinderella", "maiden-ice-rose", "snow-white-heavy-arms", "privaty-treasure", "laplace-ultimate-hero", "neon-vision-eye", "liberalio", "emilia", "scarlet"]},
-   {"slot": 3, "options": ["privaty-treasure", "mihara-bonding-chain", "snow-white-heavy-arms", "maiden-ice-rose", "cinderella", "helm-treasure", "laplace-ultimate-hero", "neon-vision-eye", "liberalio", "scarlet-black-shadow"]}
+  "required": [
+   "anis-star",
+   "biscuit"
   ],
-  "burstSlots": ["I", "II", "III", "III", "II"],
+  "flex": [
+   {
+    "slot": 1,
+    "options": [
+     "blanc",
+     "noah",
+     "bay-treasure",
+     "bay",
+     "nayuta",
+     "trina"
+    ]
+   },
+   {
+    "slot": 2,
+    "options": [
+     "helm-treasure",
+     "cinderella",
+     "maiden-ice-rose",
+     "snow-white-heavy-arms",
+     "privaty-treasure",
+     "laplace-ultimate-hero",
+     "neon-vision-eye",
+     "liberalio",
+     "emilia",
+     "scarlet"
+    ]
+   },
+   {
+    "slot": 3,
+    "options": [
+     "privaty-treasure",
+     "mihara-bonding-chain",
+     "snow-white-heavy-arms",
+     "maiden-ice-rose",
+     "cinderella",
+     "helm-treasure",
+     "laplace-ultimate-hero",
+     "neon-vision-eye",
+     "liberalio",
+     "scarlet-black-shadow"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "I",
+   "II",
+   "III",
+   "III",
+   "II"
+  ],
   "preferredSpeed": "3RL",
-  "counters": ["scarlet-nuke", "cinderella-carry", "mermaid-disrupt", "blanc-indom"],
-  "counteredBy": ["rosanna-counter", "tactical-trio", "sg-burst"],
+  "counters": [
+   "scarlet-nuke",
+   "cinderella-carry",
+   "mermaid-disrupt",
+   "blanc-indom"
+  ],
+  "counteredBy": [
+   "rosanna-counter",
+   "tactical-trio",
+   "sg-burst"
+  ],
   "priority": 1,
   "notes": {
    "en": "2026 Champion Arena core: Anis: Star B1 battery/tank at P1, a B2 protector (Blanc / Noah / Bay), two B3 DPS, Biscuit at P5 to make the Defender invulnerable. Source: dcinside 2026-05 CA meta, nikkeari top teams.",
@@ -24,42 +85,139 @@
  },
  {
   "id": "nayuta-rush",
-  "name": {"en": "Nayuta rush (2RL)", "zh-TW": "娜由塔一閃（2RL 速攻）", "zh-CN": "娜由塔一闪", "ja": "ナユタ速攻"},
+  "name": {
+   "en": "Nayuta rush (2RL)",
+   "zh-TW": "娜由塔一閃（2RL 速攻）",
+   "zh-CN": "娜由塔一闪",
+   "ja": "ナユタ速攻"
+  },
   "archetype": "nayuta-rush",
   "mode": "both",
-  "required": ["nayuta", "helm-treasure"],
-  "flex": [
-   {"slot": 0, "options": ["jackal", "rosanna-treasure", "rosanna", "anis-star", "little-mermaid"]},
-   {"slot": 3, "options": ["snow-white-heavy-arms", "laplace-ultimate-hero", "red-hood", "liberalio", "scarlet-black-shadow"]},
-   {"slot": 4, "options": ["centi-treasure", "centi", "trina", "bay-treasure", "takina"]}
+  "required": [
+   "nayuta",
+   "helm-treasure"
   ],
-  "burstSlots": ["I", "II", "III", "III", "II"],
+  "flex": [
+   {
+    "slot": 0,
+    "options": [
+     "jackal",
+     "rosanna-treasure",
+     "rosanna",
+     "anis-star",
+     "little-mermaid"
+    ]
+   },
+   {
+    "slot": 3,
+    "options": [
+     "snow-white-heavy-arms",
+     "laplace-ultimate-hero",
+     "red-hood",
+     "liberalio",
+     "scarlet-black-shadow"
+    ]
+   },
+   {
+    "slot": 4,
+    "options": [
+     "centi-treasure",
+     "centi",
+     "trina",
+     "bay-treasure",
+     "takina"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "I",
+   "II",
+   "III",
+   "III",
+   "II"
+  ],
   "preferredSpeed": "2RL",
-  "counters": ["blanc-indom", "moran-system", "cat-team"],
-  "counteredBy": ["mermaid-disrupt", "noah-stall"],
+  "counters": [
+   "blanc-indom",
+   "moran-system",
+   "cat-team"
+  ],
+  "counteredBy": [
+   "anis-star-system",
+   "mermaid-disrupt",
+   "noah-stall"
+  ],
   "priority": 2,
   "notes": {
-   "en": "2026 JP/KR rush: Nayuta's opening 9 s indomitability keeps her alive, Helm: Treasure full-charge +14.31% gauge makes it 2RL, SW:HA / Laplace nuke. Needs 2RL (charge-speed OL) or it loses to Little Mermaid.",
-   "zh-TW": "2026 JP／KR 速攻（本工具依 wikiwiki、arca 補充）：娜由塔開場 9 秒不屈撐住，海倫珍藏滿蓄 +14.31% 充能把隊伍拉到 2RL，白雪重武／拉普拉斯究極英雄收割。必須真的到 2RL（通常要充能速度超頻），否則會輸給小美人魚；對布蘭兒不屈隊與減傷坦牆有利。",
+   "en": "2026 JP/KR rush: Nayuta's opening 9 s indomitability keeps her alive, Helm: Treasure full-charge +14.31% gauge makes it 2RL, SW:HA / Laplace nuke. Needs 2RL (charge-speed OL) or it loses to Little Mermaid. nikkeari: 53% vs Blanc+Jackal but only 27% vs Anis:Star+Blanc.",
+   "zh-TW": "2026 JP／KR 速攻（本工具依 wikiwiki、arca 補充）：娜由塔開場 9 秒不屈撐住，海倫珍藏滿蓄 +14.31% 充能把隊伍拉到 2RL，白雪重武／拉普拉斯究極英雄收割。必須真的到 2RL（通常要充能速度超頻），否則會輸給小美人魚；對布蘭兒不屈隊與減傷坦牆有利。 注意：nikkeari 資料裡娜由塔＋海倫珍藏對「布蘭兒＋豺狼」隊 53%，但對「超級巨星阿妮斯＋布蘭兒」隊只有 27%（648 場）、有餅乾時 26%——對方若已靠超級巨星充能先開、布蘭兒不屈先掛上，一閃打不穿，之後的持久戰必輸。",
    "zh-CN": "娜由塔速攻。",
    "ja": "ナユタ速攻。"
   }
  },
  {
   "id": "jackal-vesti-blanc",
-  "name": {"en": "Jackal + Vesti TU under Blanc (2RL)", "zh-TW": "豺狼＋貝斯蒂戰術升級不屈核爆（2RL）", "zh-CN": "豺狼＋贝斯蒂战术升级", "ja": "ジャッカル＋TUベスティー"},
+  "name": {
+   "en": "Jackal + Vesti TU under Blanc (2RL)",
+   "zh-TW": "豺狼＋貝斯蒂戰術升級不屈核爆（2RL）",
+   "zh-CN": "豺狼＋贝斯蒂战术升级",
+   "ja": "ジャッカル＋TUベスティー"
+  },
   "archetype": "blanc-indom",
   "mode": "both",
-  "required": ["vesti-tactical-upgrade", "blanc"],
-  "flex": [
-   {"slot": 0, "options": ["jackal", "anis-star", "rosanna-treasure", "rosanna"]},
-   {"slot": 2, "options": ["ada", "helm-treasure", "ein", "liberalio", "scarlet-black-shadow"]},
-   {"slot": 4, "options": ["helm-treasure", "centi-treasure", "centi", "trina", "takina"]}
+  "required": [
+   "vesti-tactical-upgrade",
+   "blanc"
   ],
-  "burstSlots": ["I", "II", "III", "III", "III"],
+  "flex": [
+   {
+    "slot": 0,
+    "options": [
+     "jackal",
+     "anis-star",
+     "rosanna-treasure",
+     "rosanna"
+    ]
+   },
+   {
+    "slot": 2,
+    "options": [
+     "ada",
+     "helm-treasure",
+     "ein",
+     "liberalio",
+     "scarlet-black-shadow"
+    ]
+   },
+   {
+    "slot": 4,
+    "options": [
+     "helm-treasure",
+     "centi-treasure",
+     "centi",
+     "trina",
+     "takina"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "I",
+   "II",
+   "III",
+   "III",
+   "III"
+  ],
   "preferredSpeed": "2RL",
-  "counters": ["scarlet-nuke", "moran-system", "cat-team"],
-  "counteredBy": ["rosanna-counter", "mermaid-disrupt", "noah-stall"],
+  "counters": [
+   "scarlet-nuke",
+   "moran-system",
+   "cat-team"
+  ],
+  "counteredBy": [
+   "rosanna-counter",
+   "mermaid-disrupt",
+   "noah-stall"
+  ],
   "priority": 2,
   "notes": {
    "en": "2026 JP wikiwiki: Jackal / Vesti TU / Ein / Blanc / Helm: Treasure. Blanc's indomitability protects Vesti TU whose 3-target RL ignores defense buffs.",
@@ -70,18 +228,59 @@
  },
  {
   "id": "noah-noise-biscuit-cinderella",
-  "name": {"en": "Noah + Noise + Biscuit + Cinderella (3RL)", "zh-TW": "諾雅＋諾伊斯＋餅乾＋灰姑娘持久（3RL）", "zh-CN": "诺雅＋诺伊斯＋饼干＋灰姑娘", "ja": "ノア／ノイズ／ビスケット／シンデレラ"},
+  "name": {
+   "en": "Noah + Noise + Biscuit + Cinderella (3RL)",
+   "zh-TW": "諾雅＋諾伊斯＋餅乾＋灰姑娘持久（3RL）",
+   "zh-CN": "诺雅＋诺伊斯＋饼干＋灰姑娘",
+   "ja": "ノア／ノイズ／ビスケット／シンデレラ"
+  },
   "archetype": "noah-stall",
   "mode": "both",
-  "required": ["noah", "biscuit", "cinderella"],
-  "flex": [
-   {"slot": 0, "options": ["noise", "moran-treasure", "moran", "rapunzel", "anis-star"]},
-   {"slot": 4, "options": ["rumani", "anis-star", "rapunzel", "centi-treasure", "centi"]}
+  "required": [
+   "noah",
+   "biscuit",
+   "cinderella"
   ],
-  "burstSlots": ["I", "II", "III", "II", "I"],
+  "flex": [
+   {
+    "slot": 0,
+    "options": [
+     "noise",
+     "moran-treasure",
+     "moran",
+     "rapunzel",
+     "anis-star"
+    ]
+   },
+   {
+    "slot": 4,
+    "options": [
+     "rumani",
+     "anis-star",
+     "rapunzel",
+     "centi-treasure",
+     "centi"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "I",
+   "II",
+   "III",
+   "II",
+   "I"
+  ],
   "preferredSpeed": "3RL",
-  "counters": ["scarlet-nuke", "cinderella-carry", "nayuta-rush"],
-  "counteredBy": ["sanis-stall", "rosanna-counter", "tactical-trio"],
+  "counters": [
+   "scarlet-nuke",
+   "cinderella-carry",
+   "nayuta-rush"
+  ],
+  "counteredBy": [
+   "sanis-stall",
+   "rosanna-counter",
+   "tactical-trio"
+  ],
   "priority": 2,
   "notes": {
    "en": "2026 JP wikiwiki: double taunt (Noise + Noah) and double invulnerability (Noah burst + Biscuit on a Defender), then Cinderella's 10-hit nuke.",

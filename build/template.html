@@ -311,6 +311,7 @@ details.mods summary{color:var(--muted)}
     </ol>
     <h3>冠軍競技場實戰數據怎麼來的</h3>
     <p class="muted" id="arenaDataNote"></p>
+    <p class="muted">工具用這份資料的三種方式：①「這隊出場 N 場、勝率」是同 5 人組合的統計；②「直接對位」是含我方 4 位（不足 20 場時放寬到 3 位）相同角色的隊伍，對上含對方 4 位（或 3 位）相同角色的隊伍的勝負，珍藏與一般版視為同一人，這是最接近你這場的實戰數字，和模板寫的克制關係衝突時以它為準；③「模板對位」是依體系分類加總的粗略數字，只在沒有直接對位資料時計分。資料挖掘模板的克制行會附上該對位的場數與勝率。</p>
     <h3>參考網站</h3>
     <table>
       <tr><td><a href="https://nikkeari.cc/zh-CN" target="_blank" rel="noopener">にけあり！NIKKE 競技場分析器</a></td><td>冠軍競技場實戰統計：各隊伍勝率、進攻／防守勝率、站位統計、對戰紀錄。志願玩家提供截圖整理，有 JP／KR／國際服資料。本工具的「實戰數據」來源。</td></tr>
@@ -531,6 +532,27 @@ function rowStats(row){ const ids=row[0].split(','); return {key:row[0],ids,m:ro
 function arenaTeam(ids){ let i=ARENA_IDX.get(teamKey(ids)); if(i!==undefined) return {idx:i,row:ARENA.teams[i],exact:true}; i=ARENA_IDX_NT.get(teamKeyNT(ids)); return i===undefined?null:{idx:i,row:ARENA.teams[i],exact:false}; }
 function arenaSimilar(ids,minOverlap){ const set=new Set(ids), out=[]; for(let i=0;i<ARENA.teams.length;i++){ const row=ARENA.teams[i]; const ov=row[0].split(',').filter(x=>set.has(x)).length; if(ov>=minOverlap) out.push({idx:i,row,ov}); } return out.sort((a,b)=>b.ov-a.ov||b.row[1]-a.row[1]).slice(0,5); }
 function beatenBy(idx){ return (ARENA.beatenBy[String(idx)]||[]).map(([j,n,s])=>({idx:j,row:ARENA.teams[j],n,samples:s||[]})); }
+/* 直接對位：不經模板分類，找「含我方 k 位相同角色的隊」對上「含對方 k 位相同角色的隊」的實戰勝負。先試 k=4，不夠樣本再放寬到 3 */
+const _prCache=new Map();
+function pairRecord(myIds,enemyIds){
+  if(!ARENA.teams||!ARENA.teams.length) return null;
+  const ck=teamKey(myIds)+'|'+teamKey(enemyIds); if(_prCache.has(ck)) return _prCache.get(ck);
+  const nt=x=>x.replace(/-treasure$/,''); // 珍藏與一般版視為同一人（拉普拉斯究極英雄是另一個 id，不受影響）
+  const ov=(row,set)=>row[0].split(',').filter(x=>set.has(nt(x))).length;
+  const ms=new Set(myIds.filter(Boolean).map(nt)), es=new Set(enemyIds.filter(Boolean).map(nt));
+  let res=null;
+  for(const k of [4,3]){
+    const my=new Set(), en=new Set();
+    ARENA.teams.forEach((row,i)=>{ if(ov(row,ms)>=k) my.add(i); if(ov(row,es)>=k) en.add(i); });
+    let w=0,l=0; const wins=new Map(), losses=new Map();
+    for(const e of en) for(const [j,n] of (ARENA.beatenBy[String(e)]||[])) if(my.has(j)&&!en.has(j)){ w+=n; wins.set(j,(wins.get(j)||0)+n); }
+    for(const m of my) for(const [j,n] of (ARENA.beatenBy[String(m)]||[])) if(en.has(j)&&!my.has(j)){ l+=n; losses.set(j,(losses.get(j)||0)+n); }
+    if(w+l>=20||k===3){ res={k,w,l,n:w+l,r:w+l?w/(w+l):0.5,myTeams:my.size,enemyTeams:en.size,topWin:[...wins].sort((a,b)=>b[1]-a[1]).slice(0,2).map(([i,n])=>({row:ARENA.teams[i],n})),topLoss:[...losses].sort((a,b)=>b[1]-a[1]).slice(0,2).map(([i,n])=>({row:ARENA.teams[i],n}))}; if(w+l>=20) break; }
+  }
+  if(res&&res.n<10) res=null;
+  _prCache.set(ck,res); return res;
+}
+function pairText(pr,who){ return `冠軍競技場直接對位：含${who||'我方'} ${pr.k} 位相同角色的隊，對上含對方 ${pr.k} 位相同角色的隊 ${pr.w} 勝 ${pr.l} 負（勝率 ${Math.round(pr.r*100)}%）`; }
 const SIDE_ZH={A:'進攻方勝',D:'防守方勝'};
 const SERVER_ZH={G:'國際服',J:'JP',K:'KR',GLOBAL:'國際服',JP:'JP',KR:'KR'};
 function sampleText(s){ const [season,stage,side,server]=String(s).split('|'); return `${season} ${stage}（${SERVER_ZH[server]||server}，${SIDE_ZH[side]||side}）`; }
@@ -845,8 +867,11 @@ function buildCounters(enemyIds,mode,ownedSet,allowSub){
     let score=({1:300,2:200,3:100})[t.priority]||0; const why=[]; const warn=[];
     const countersEnemy=[...eArchIds].filter(a=>t.counters.includes(a)||(TEMPLATES.find(x=>x.archetype===a)||{counteredBy:[]}).counteredBy.includes(t.archetype)||eArch.some(e=>e.arch===a&&e.tpl.counteredBy.includes(t.archetype)));
     const counteredByEnemy=[...eArchIds].filter(a=>t.counteredBy.includes(a)||eArch.some(e=>e.arch===a&&e.tpl.counters.includes(t.archetype)));
-    if(countersEnemy.length){ score+=400*countersEnemy.length; why.push('克制對方的「'+countersEnemy.map(a=>archName(a)+(vsStat(t,a)||vsStat(TEMPLATES.find(x=>x.archetype===a),t.archetype,true))).join('」「')+'」'); }
-    if(counteredByEnemy.length){ score-=300*counteredByEnemy.length; warn.push('會被對方的「'+counteredByEnemy.map(a=>archName(a)).join('」「')+'」克制'); }
+    const pr=pairRecord(f.slots,enemyIds);
+    const prBad=pr&&pr.n>=20&&pr.r<=0.4, prGood=pr&&pr.n>=20&&pr.r>=0.6;
+    if(countersEnemy.length&&!prBad){ score+=400*countersEnemy.length; why.push('克制對方的「'+countersEnemy.map(a=>archName(a)+(vsStat(t,a)||vsStat(TEMPLATES.find(x=>x.archetype===a),t.archetype,true))).join('」「')+'」'); }
+    if(counteredByEnemy.length&&!prGood){ score-=300*counteredByEnemy.length; warn.push('會被對方的「'+counteredByEnemy.map(a=>archName(a)).join('」「')+'」克制'); }
+    if(pr&&pr.n>=20){ score+=Math.round((pr.r-0.5)*1600); const t=pairText(pr); if(prGood) why.push(t+(counteredByEnemy.length?'；模板寫的「被克制」與實戰相反，以實戰為準':'')); else if(prBad) warn.push(t+(countersEnemy.length?'；模板寫的「克制」與實戰相反，以實戰為準，不採用克制加分':'')); else why.push(t+'，五五波'); }
     const dc=(eSpeed.cycles+eChain.extraSec)-(sp.cycles+ch.extraSec); // 再入延遲以秒計入（1 輪 RL 約 1 秒）
     const mj=eChain.valid?mirrorJudge(f.slots,sp.tier,enemyIds,eSpeed.tier):null;
     if(ch.stages>3) warn.push(`${ch.stages} 段軸（${ch.reNote}），全爆裂晚約 ${ch.extraSec.toFixed(1)} 秒，已計入速度比較`);
@@ -1119,7 +1144,8 @@ function teamCard(r,eSpeed,idx){
   const refs=refsFor(eArchs,enemy,t.archetype);
   const st=recordStats(enemy,r.slots);
   const rec=st.pair.n?` <span class="badge ${st.pair.win>=st.pair.loss?'good':'bad'}">你用這隊打過：${st.pair.win} 勝 ${st.pair.loss} 負</span>`:'';
-  const av=archVsRecord(t.archetype,eArchs); const arenaRec=(av.w+av.l)>=10?` <span class="badge ${av.w>=av.l?'good':'bad'}" title="冠軍競技場中，含此核心的隊伍對上含對方核心的隊伍">實戰對位 ${av.w} 勝 ${av.l} 負</span>`:'';
+  const pr=pairRecord(r.slots,enemy); const av=archVsRecord(t.archetype,eArchs);
+  const arenaRec=(pr&&pr.n>=20)?` <span class="badge ${pr.r>=0.6?'good':pr.r<=0.4?'bad':'warn'}" title="冠軍競技場中，含這隊 ${pr.k} 位相同角色的隊伍對上含對方 ${pr.k} 位相同角色的隊伍（珍藏與一般版視為同一人）">直接對位 ${pr.w} 勝 ${pr.l} 負</span>`:(av.w+av.l)>=10?` <span class="badge ${av.w>=av.l?'good':'bad'}" title="冠軍競技場中，含此模板核心的隊伍對上含對方各體系核心的隊伍（依體系分類加總，較粗略）">模板對位 ${av.w} 勝 ${av.l} 負</span>`:'';
   const at=arenaTeam(r.slots); const exact=at?(()=>{const s=rowStats(at.row); return ` <span class="badge" title="這 5 人組合在冠軍競技場的整體戰績">實戰 ${s.m} 場 ${s.wr}%</span>`;})():'';
   return `<div class="team"><div class="hd"><b>${idx+1}. ${esc(t.name['zh-TW'])}${r.variant?'（'+r.variant+'）':''}</b>${r.variant?'<span class="badge good">刻意慢一階</span>':''}<span class="badge">${archName(t.archetype)}</span><span class="badge" title="模板強度等級（來自上游模板的 priority）：主流 +300、強力 +200、可用 +100">${({1:'主流模板',2:'強力模板',3:'可用模板'})[t.priority]||'模板'}</span><span class="badge ${r.speed.tier==='2RL'||r.speed.tier==='5SG'?'bad':r.speed.tier==='3RL'?'warn':''}">${r.speed.tier}</span>${cmp}${rec}${arenaRec}${exact}<button class="btn" data-apply="${idx}" style="margin-left:auto">帶入試算</button></div><div class="members">${members}</div><div class="why">${r.why.map(w=>'✔ '+esc(w)).join('<br>')}${r.warn.length?'<br>'+r.warn.map(w=>'<span style="color:var(--warn)">⚠ '+w+'</span>').join('<br>'):''}</div><div class="muted" style="margin-top:4px">${esc(t.notes['zh-TW'])}</div><div style="margin-top:4px">${srcBadges(['tpl'],'克制關係與模板依據')} ${srcBadges(['calc'],'速度與排序')}</div>${refList(refs)}</div>`;
 }
@@ -1153,12 +1179,24 @@ function evalMatch(myIds,enemyIds,myMods,eMods){
   const mySp=speedOf(myIds,mode,myMods); const myCh=chainOf(myIds); const myArch=detectArchetypes(myIds); const myHeur=heuristicArchetypes(myIds);
   if(!myCh.valid) return {pts:-9,good:[],bad:[`我方爆裂鏈不完整（缺 ${myCh.missing.join('、')}），永遠開不了全爆裂`],verdict:'bad',label:'劣勢',p:0.05,mySp,myCh,myArch,myHeur,ctx,st:null};
   const eArch=detectArchetypes(enemyIds); let pts=0; const good=[],bad=[];
-  for(const m of myArch){ const av=archVsRecord(m.arch,eArch.map(e=>e.arch)); if(av.w+av.l>=10){ const r=av.w/(av.w+av.l); if(r>=0.6){ pts+=1; good.push(`冠軍競技場實戰：含「${archName(m.arch)}」核心的隊伍對上對方這類核心 ${av.w} 勝 ${av.l} 負`); } else if(r<=0.4){ pts-=1; bad.push(`冠軍競技場實戰：含「${archName(m.arch)}」核心的隊伍對上對方這類核心 ${av.w} 勝 ${av.l} 負`); } else good.push(`冠軍競技場實戰：含「${archName(m.arch)}」核心對上對方這類核心 ${av.w} 勝 ${av.l} 負，五五波`); } }
+  const pr=pairRecord(myIds,enemyIds); const prOK=!!(pr&&pr.n>=20);
+  for(const m of myArch){ const parts=[]; let w=0,l=0;
+    for(const e of eArch){ const av=archVsRecord(m.arch,[e.arch]); if(av.w+av.l>=10){ parts.push(`對「${archName(e.arch)}」${av.w} 勝 ${av.l} 負`); w+=av.w; l+=av.l; } }
+    if(!parts.length) continue; const r=w/(w+l); const txt=`冠軍競技場模板對位（${prOK?'參考，以下面的直接對位為準':'依體系分類'}）：含「${archName(m.arch)}」核心的隊伍 ${parts.join('、')}`;
+    if(r>=0.6){ if(!prOK) pts+=1; good.push(txt); } else if(r<=0.4){ if(!prOK) pts-=1; bad.push(txt); } else good.push(txt+'，五五波'); }
   { const at=arenaTeam(myIds); if(at){ const s=rowStats(at.row); good.push(`這 5 人組合在冠軍競技場出場 ${s.m} 場，整體勝率 ${s.wr}%`); } }
+  let cPts=0; const cGood=[],cBad=[];
   for(const m of myArch) for(const e of eArch){
-    if(m.tpl.counters.includes(e.arch)||e.tpl.counteredBy.includes(m.arch)){ pts+=2; good.push(`我方「${archName(m.arch)}」克制對方「${archName(e.arch)}」${vsStat(m.tpl,e.arch)||vsStat(e.tpl,m.arch,true)}`); }
-    if(e.tpl.counters.includes(m.arch)||m.tpl.counteredBy.includes(e.arch)){ pts-=2; bad.push(`對方「${archName(e.arch)}」克制我方「${archName(m.arch)}」${vsStat(e.tpl,m.arch,true)||vsStat(m.tpl,e.arch)}`); }
+    if(m.tpl.counters.includes(e.arch)||e.tpl.counteredBy.includes(m.arch)){ cPts+=2; cGood.push(`我方「${archName(m.arch)}」克制對方「${archName(e.arch)}」${vsStat(m.tpl,e.arch)||vsStat(e.tpl,m.arch,true)}`); }
+    if(e.tpl.counters.includes(m.arch)||m.tpl.counteredBy.includes(e.arch)){ cPts-=2; cBad.push(`對方「${archName(e.arch)}」克制我方「${archName(m.arch)}」${vsStat(e.tpl,m.arch,true)||vsStat(m.tpl,e.arch)}`); }
   }
+  if(prOK){
+    const t=pairText(pr);
+    if(pr.r>=0.6){ pts+=2; good.push(t); if(cPts<0){ cBad.length=0; cPts=0; good.push('模板寫的「被克制」與直接對位的實戰結果相反，以實戰為準'); } }
+    else if(pr.r<=0.4){ pts-=2; bad.push(t); if(cPts>0){ cGood.length=0; cPts=0; bad.push('模板寫的「克制」與直接對位的實戰結果相反，以實戰為準，不採用模板的克制加分'); } }
+    else good.push(t+'，五五波');
+  }
+  pts+=cPts; good.push(...cGood); bad.push(...cBad);
   for(const cm of chainMisses(myIds)) bad.push('我方'+cm.text);
   for(const cm of chainMisses(enemyIds)) good.push('對方'+cm.text.replace('不套用這個體系的克制統計','對方不算這個體系'));
   const dc=(ctx.speed.cycles+ctx.chain.extraSec)-(mySp.cycles+myCh.extraSec); // 再入延遲以秒計入
@@ -1190,6 +1228,7 @@ function evalMatch(myIds,enemyIds,myMods,eMods){
   const verdict=pts>=2?'good':pts<=-1.5?'bad':'warn';
   const st=recordStats(enemyIds,myIds);
   let p={good:0.75,warn:0.5,bad:0.25}[verdict];
+  if(pr&&pr.n>=20) p=(p+pr.r)/2; // 有直接對位資料時與它平均
   if(st.pair.n>=2) p=(st.pair.win+1)/(st.pair.n+2); // 自己打過兩場以上就用實戰結果估
   return {pts,good,bad,verdict,label:{good:'優勢',warn:'五五波',bad:'劣勢'}[verdict],p,mySp,myCh,myArch,myHeur,ctx,st};
 }
