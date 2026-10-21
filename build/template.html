@@ -144,6 +144,7 @@ details.mods summary{color:var(--muted)}
   <div class="seg" id="modeSeg">
     <button data-mode="attack" class="active" title="我去打別人的防守隊">我方進攻</button>
     <button data-mode="defense" title="我在排防守隊，對方是進攻隊">我方防守</button>
+    <select id="speedSrc" title="速度（充能達成率）用哪一套資料與公式計算" style="margin-left:8px"><option value="deck">速度：nikke-deck 公式</option><option value="planner">速度：arena-planner 資料</option></select>
   </div>
   <nav>
     <button data-tab="solve" class="active">解隊</button>
@@ -315,6 +316,8 @@ details.mods summary{color:var(--muted)}
       <li><b>目標順序</b>：進攻時 SMG／MG／AR／SG／RL 第一發打 P5、之後集中 P1，SR 一直打 P5；防守時 SG 集中打 P5，其餘打 P1。換目標時機：裝填、目標進掩體、目標死亡、嘲諷結束。指定目標技能（夏日阿妮斯 S2、帕瓦／佩珀的最高攻擊核爆）會被嘲諷吸走。</li>
       <li><b>戰力懲罰</b>：低於對方 84.6%（差距超過 15.4%）起扣 20% 屬性，線性增加到最多 90%；冠軍競技場沒有戰力懲罰且全員同步鎖 400，所以純看陣容。P2 留空可讓對方火箭充能由 4 倍降到 2 倍，但冠軍競技場會自動把隊伍往前擠。</li>
     </ol>
+    <h3>速度（充能達成率）怎麼算</h3>
+    <p class="muted">預設用 <a href="https://nikke-deck.com/en/deck" target="_blank" rel="noopener">nikke-deck.com</a> 的資料與公式，和該站的結果一致：每位角色在 2RL／2.5RL（本工具寫 5SG）／3RL／3.5RL（7SG）／4RL 五階的充能百分比相加，哪一階先到 100% 就是這隊的速度。細節：有「技能 10」版本的角色（海倫珍藏、愛蜜莉雅、拉貝爾…）預設用技能 10 的數值；勾「超頻 17%」用該角色的 17% 版本；量子魔方 Lv7 乘 1.0466；隊上有超級巨星阿妮斯時，其他每位依「0.084 × 角色係數 × 該階命中數」另外加充能（她的被動）。頁首可切換成 nikke-arena-planner 的資料，兩者有 27 位角色的數值不同（例如拉普拉斯究極英雄、白雪重武、戰術貝斯蒂），1RL 與 5RL 兩階 nikke-deck 沒有資料，仍用 planner 的值。豺狼的連結（分攤傷害回充）nikke-deck 另有特殊處理，本工具未納入。</p>
     <details><summary><b>名字簡稱表</b>（點開看）</summary>
     <p class="muted">快速輸入與選角搜尋認得的綽號、簡稱與單字縮寫。這些是從社群常見寫法（巴哈、PTT、KR／JP 隊伍縮寫如「諾帽餅」「노노비수라」）整理的，<b>沒有統計來源</b>，不是使用頻率排名；要增補請改 <code>build/data/nicknames.json</code> 再執行 build.py。簡體名由上游資料提供，不列在這裡。</p>
     <p class="muted">單字輸入的規則：先看有沒有角色的綽號剛好是這個字（白→布蘭兒、諾→諾雅），沒有的話取名字以這個字開頭的角色，多位同首字時選 PVP 階級高、冠軍競技場出場多的那位，有珍藏版一律珍藏版。下面「單字對應」列出每個首字實際會對到誰；想改對應就在 nicknames.json 給想要的角色加上那個單字。</p>
@@ -640,7 +643,7 @@ function renderMods(elId,team,mods,lsKey){
   const el=$(elId); if(!el) return; el.innerHTML='';
   team.forEach((id,i)=>{ if(!id||!byId[id]) return; const u=DECK.units&&DECK.units[id]; const canOl=!!(u&&u.ol17); const m=mods[id]||{};
     const d=document.createElement('div'); d.className='mrow';
-    d.innerHTML=`<span>P${i+1} ${esc(nameOf(id))}</span><label class="${canOl?'':'dis'}" title="${canOl?'充能速度 17% 超頻：速度表往快的方向移半階':'此角色沒有充能速度超頻選項'}"><input type="checkbox" data-k="ol" ${m.ol?'checked':''} ${canOl?'':'disabled'}>超頻17%</label><label title="量子魔方 Lv7：充能 +${DECK.quantumLv7||4.66}%"><input type="checkbox" data-k="q" ${m.q?'checked':''}>量子Lv7</label>`;
+    d.innerHTML=`<span>P${i+1} ${esc(nameOf(id))}</span><label class="${canOl?'':'dis'}" title="${canOl?'充能速度 17% 超頻：改用 nikke-deck 的 17% 充能數值（通常等於往快的方向移半階）':'此角色沒有充能速度超頻選項'}"><input type="checkbox" data-k="ol" ${m.ol?'checked':''} ${canOl?'':'disabled'}>超頻17%</label><label title="量子魔方 Lv7：充能 +${DECK.quantumLv7||4.66}%"><input type="checkbox" data-k="q" ${m.q?'checked':''}>量子Lv7</label>`;
     d.querySelectorAll('input').forEach(inp=>inp.onchange=()=>{ mods[id]=mods[id]||{}; mods[id][inp.dataset.k]=inp.checked; if(!mods[id].ol&&!mods[id].q) delete mods[id]; LS.set(lsKey,mods); refresh(); });
     el.appendChild(d); });
   if(!el.children.length) el.innerHTML='<span class="muted">先選角色。</span>';
@@ -709,10 +712,28 @@ const nameOf=id=>byId[id]?byId[id].name['zh-TW']:id;
 let dataInfo={source:'內建',date:BUILTIN_DATE};
 function applyData(chars,tpls,info){ CHARACTERS=chars; const ids=new Set(tpls.map(t=>t.id)); TEMPLATES=tpls.concat(TEMPLATES_EXTRA.filter(t=>!ids.has(t.id))); byId=Object.fromEntries(chars.map(c=>[c.id,c])); dataInfo=info; }
 
+/* 速度資料來源：deck = nikke-deck.com 的每階充能與公式（預設）；planner = nikke-arena-planner 的資料 */
+let speedSrc='deck'; // 實際值在狀態區由 localStorage 載入
+const DECK_IDX={'2RL':0,'5SG':1,'3RL':2,'7SG':3,'4RL':4}; // nikke-deck 的五階：2RL、2.5RL、3RL、3.5RL、4RL
+/* nikke-deck 公式（app-deck-details.getBurstGeneration）：
+   每階充能 = 該角色的 burstGeneration（有「S10」預設版本就用它；勾超頻 17% 用 17% 版本）
+   量子魔方 Lv7：×(1+4.66%)
+   隊上有超級巨星阿妮斯時，其他每位 += 0.084 × 角色係數 × 該階命中數（她的被動讓隊友每擊多充能） */
+function deckGen(c,t,md,star){
+  const u=DECK.units&&DECK.units[c.id]; const k=DECK_IDX[t];
+  if(!u||!u.gen||k===undefined) return null;
+  const ol=!!(md&&md.ol&&u.gen17);
+  let g=(ol?u.gen17:u.gen)[k]; if(g==null) return null;
+  if(md&&md.q) g*=1+(DECK.quantumLv7||4.66)/100;
+  if(star&&c.id!=='anis-star'){ const h=((ol&&u.hits17)?u.hits17:u.hits||[])[k]||0; g+=0.084*(u.ratio||1)*h; }
+  return g/100;
+}
 function speedOf(ids,mode,mods){
   const chars=ids.map(i=>byId[i]).filter(Boolean);
-  const totals={};
-  for(const t of ['1RL',...TIERS]) totals[t]=chars.reduce((s,c)=>{ let g=c.burstGen[mode][t]||0; const md=mods&&mods[c.id]; if(md){ if(md.ol&&DECK.units&&DECK.units[c.id]&&DECK.units[c.id].ol17){ const k=TIERS.indexOf(t); if(k>=0&&k<TIERS.length-1) g=c.burstGen[mode][TIERS[k+1]]||g; } if(md.q) g*=1+(DECK.quantumLv7||4.66)/100; } return s+g; },0);
+  const totals={}; const star=chars.some(c=>c.id==='anis-star');
+  for(const t of ['1RL',...TIERS]) totals[t]=chars.reduce((s,c)=>{ let g=c.burstGen[mode][t]||0; const md=mods&&mods[c.id];
+    if(speedSrc==='deck'){ const dg=deckGen(c,t,md,star); if(dg!=null) return s+dg; if(t==='1RL'){ const d2=deckGen(c,'2RL',md,star); if(d2!=null) return s+d2/2; } }
+    if(md){ if(md.ol&&DECK.units&&DECK.units[c.id]&&DECK.units[c.id].ol17){ const k=TIERS.indexOf(t); if(k>=0&&k<TIERS.length-1) g=c.burstGen[mode][TIERS[k+1]]||g; } if(md.q) g*=1+(DECK.quantumLv7||4.66)/100; } return s+g; },0);
   let tier='5RL', reached=false;
   for(const t of TIERS){ if(totals[t]>=1){tier=t;reached=true;break;} }
   return {tier,totals,reached,cycles:CYCLES[tier],sec:TIER_SEC[tier]};
@@ -953,6 +974,7 @@ function buildCounters(enemyIds,mode,ownedSet,allowSub){
 /* ====================== 狀態 ====================== */
 const LS={get:(k,d)=>{try{const v=localStorage.getItem('nikkePvp.'+k);return v?JSON.parse(v):d}catch(e){return d}},set:(k,v)=>{try{localStorage.setItem('nikkePvp.'+k,JSON.stringify(v))}catch(e){}}};
 let mode=LS.get('mode','attack');
+speedSrc=LS.get('speedSrc','deck');
 let enemy=LS.get('enemy',[null,null,null,null,null]);
 let mine=LS.get('mine',[null,null,null,null,null]);
 let owned=new Set(LS.get('owned',[]));
@@ -1130,7 +1152,8 @@ function updateOwnedCount(){ $('#ownedCount').textContent=owned.size+'/'+CHARACT
 /* ====================== 解隊畫面 ====================== */
 function speedBlock(sp,label){
   const rows=TIERS.map(t=>{ const v=sp.totals[t]; const pct=Math.min(100,v*100); return `<div class="tierrow"><span>${t}</span><div class="bar"><i style="width:${pct}%"></i></div><span class="muted">${(v*100).toFixed(0)}%</span></div>`; }).join('');
-  return `<div><div class="speed f${sp.tier}">${sp.tier}${sp.reached?'':' 以下'}</div><div class="muted">${label}約 ${sp.sec} 秒開全爆裂（${sp.cycles} 輪火箭筒）。各速度階的充能達成率：</div>${rows}</div>`;
+  const srcNote=speedSrc==='deck'?'依 nikke-deck 的充能資料與公式（含 S10 預設版本、超級巨星阿妮斯的每擊加成）':'依 nikke-arena-planner 的充能資料';
+  return `<div><div class="speed f${sp.tier}">${sp.tier}${sp.reached?'':' 以下'}</div><div class="muted">${label}約 ${sp.sec} 秒開全爆裂（${sp.cycles} 輪火箭筒）。各速度階的充能達成率（${srcNote}）：</div>${rows}</div>`;
 }
 function chainBlock(ch){
   if(!ch.valid) return `<div class="badge bad">爆裂鏈不完整：缺 ${ch.missing.join('、')}</div>`;
@@ -1339,6 +1362,7 @@ function switchTab(name){ document.querySelectorAll('nav button').forEach(x=>x.c
 /* ====================== 事件 ====================== */
 document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>switchTab(b.dataset.tab));
 if($('#nickSearch')) $('#nickSearch').oninput=renderNickTable;
+if($('#speedSrc')){ $('#speedSrc').value=speedSrc; $('#speedSrc').onchange=()=>{ speedSrc=$('#speedSrc').value; LS.set('speedSrc',speedSrc); _prCache.clear(); refresh(); }; }
 document.querySelectorAll('#modeSeg button').forEach(b=>{ if(b.dataset.mode===mode) b.classList.add('active'); else b.classList.remove('active'); b.onclick=()=>{ mode=b.dataset.mode; document.querySelectorAll('#modeSeg button').forEach(x=>x.classList.toggle('active',x===b)); save(); refresh(); }; });
 $('#btnQuickEnemy').onclick=()=>{ quickFill(enemy,$('#quickEnemy').value,$('#quickEnemyNote')); save(); refresh(); };
 $('#quickEnemy').addEventListener('keydown',e=>{ if(e.key==='Enter') $('#btnQuickEnemy').click(); });

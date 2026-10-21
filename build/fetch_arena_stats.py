@@ -243,14 +243,26 @@ def main():
                 mid = en2my.get(en)
             if not mid:
                 continue
-            entry = {"rank": n.get("rank"), "ol17": False, "s10": None}
+            # nikke-deck 公式（chunk app-deck-details.getBurstGeneration）：
+            #   每階充能 = 特殊版本（S10 預設或超頻 17%）的 burstGeneration，否則一般 burstGeneration；量子魔方 ×(1+4.66%)；
+            #   隊上有超級巨星阿妮斯（c017）時，其他每位 += 0.084 × 角色係數 × 該階命中數（hitOneTarget）
+            RATIO = {"c017": 6, "c821": 4.5, "c232": 8, "c183": 2.5, "c062": 4, "c811": 4.5, "c261": 2, "c290": 1.704, "c582": 1.704,
+                     "c225": 2, "c230": 2, "c094": 6, "c851": 5, "c302": 1, "c511": 1.5}
+            entry = {"rank": n.get("rank"), "ol17": False, "s10": None, "deckId": n["id"],
+                     "ratio": RATIO.get(n["id"], 4 if n.get("weapon") == 2 else 1)}
+            base_gen, base_hits = n.get("burstGeneration") or None, n.get("hitOneTarget") or None
             for sp in n.get("specials", []):
                 if sp["name"] == "17%":
                     entry["ol17"] = True
+                    entry["gen17"] = sp.get("burstGeneration"); entry["hits17"] = sp.get("hitOneTarget") or base_hits
                 elif sp["name"] == "S10":
                     entry["s10"] = {"gen": sp.get("burstGeneration"), "default": sp.get("default", False)}
-            if n.get("burstGeneration"):
-                entry["gen"] = n["burstGeneration"]
+                    if sp.get("default") or not base_gen:  # nikke-deck 預設就用 S10 版本
+                        base_gen = sp.get("burstGeneration"); base_hits = sp.get("hitOneTarget") or base_hits
+            if base_gen:
+                entry["gen"] = base_gen
+            if base_hits:
+                entry["hits"] = base_hits
             speed[mid] = entry
         quantum = next((c for c in deck.get("cubes", []) if "Quantum" in c["name"]["en"]), None)
         (DATA / "deck-speed.json").write_text(json.dumps({
