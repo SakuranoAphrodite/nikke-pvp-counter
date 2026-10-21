@@ -154,12 +154,13 @@ details.mods summary{color:var(--muted)}
     <div class="slots" id="enemySlots"></div>
     <details class="mods"><summary>進階：對方的充能速度超頻／量子魔方（會改變速度判定）</summary><div id="enemyMods"></div></details>
     <div class="row" style="margin-top:10px">
-      <input type="text" id="quickEnemy" placeholder="快速輸入：用空格或逗號隔開 5 個名字，例如「紅蓮 豺狼 布蘭兒 桑迪 特蕾娜」，按 Enter" style="flex:1;min-width:260px">
+      <input type="text" id="quickEnemy" placeholder="快速輸入：空格隔開 5 個名字或簡稱，例如「紅蓮 豺狼 白兔 桑迪 特蕾」，按 Enter" style="flex:1;min-width:260px">
       <button class="btn" id="btnQuickEnemy">套用</button>
       <button class="btn primary" id="btnPickEnemy" title="在視窗裡連點 5 位，一次選完">一次選整隊</button>
       <button class="btn" id="btnSaveEnemy">存到歷史</button>
       <button class="btn danger" id="btnClearEnemy">清空</button>
     </div>
+    <div class="muted" id="quickEnemyNote" style="margin-top:4px;font-size:12px"></div>
     <div class="hist" id="enemyHistory" style="margin-top:8px"></div>
   </div>
 
@@ -195,6 +196,7 @@ details.mods summary{color:var(--muted)}
       <button class="btn" id="btnArrangeMy" title="關鍵爆裂角排進軸內、防禦者放 P1／P5、火力放 P3／P4">自動排軸</button>
       <button class="btn danger" id="btnClearMy">清空</button>
     </div>
+    <div class="muted" id="quickMyNote" style="margin-top:4px;font-size:12px"></div>
     <div id="myEval" class="muted" style="margin-top:10px">排好 5 人後自動評估對戰。</div>
   </div>
 
@@ -861,20 +863,31 @@ function findByName(q){
   q=q.trim().toLowerCase(); if(!q) return null;
   const norm=s=>s.toLowerCase().replace(/[\s:：·・\-_]/g,'');
   const nq=norm(q);
-  let best=null,bs=0;
+  const scored=[];
   for(const c of CHARACTERS){
     const names=namesOf(c).map(norm);
     let s=0;
     for(const n of names){ if(n===nq){s=100;break;} if(n.startsWith(nq)) s=Math.max(s,80-(n.length-nq.length)); else if(n.includes(nq)) s=Math.max(s,60-(n.length-nq.length)); }
-    if(s>bs){bs=s;best=c;}
+    if(s>0) scored.push({c,s});
   }
-  return bs>0?best:null;
+  if(!scored.length) return null;
+  const tier=c=>TIER_RANK[c.pvpTier]||0;
+  scored.sort((a,b)=>b.s-a.s||tier(b.c)-tier(a.c));
+  const top=scored[0];
+  // 簡稱對到同一家族多個版本（一般版／珍藏版／換裝）時：優先你角色庫裡有的，再比階級
+  if(owned.size&&!owned.has(top.c.id)){
+    const base=norm(top.c.name['zh-TW']).replace(/珍藏$/,'');
+    const fam=scored.filter(x=>x.s>=60&&owned.has(x.c.id)&&(norm(x.c.name['zh-TW']).startsWith(base)||x.c.id.startsWith(top.c.id+'-')));
+    if(fam.length) return fam[0].c;
+  }
+  return top.c;
 }
-function quickFill(team,text){
+function quickFill(team,text,noteEl){
   const parts=text.split(/[\s,，、/]+/).filter(Boolean).slice(0,5);
-  const notFound=[];
-  parts.forEach((p,i)=>{ const c=findByName(p); if(c) team[i]=c.id; else notFound.push(p); });
-  if(notFound.length) alert('找不到：'+notFound.join('、')+'\n可以改用英文名或先在選角視窗搜尋看看正確譯名。');
+  const notFound=[], hits=[];
+  parts.forEach((p,i)=>{ const c=findByName(p); if(c){ team[i]=c.id; hits.push(`${esc(p)}→${esc(c.name['zh-TW'])}`); } else notFound.push(p); });
+  if(noteEl) noteEl.innerHTML=(hits.length?'辨識：'+hits.join('、'):'')+(notFound.length?` <span style="color:var(--bad)">找不到：${esc(notFound.join('、'))}</span>`:'')+(hits.length?' <span class="muted">（簡稱對到多個版本時優先你擁有的；不對就點該格換人）</span>':'');
+  else if(notFound.length) alert('找不到：'+notFound.join('、')+'\n可以改用英文名或先在選角視窗搜尋看看正確譯名。');
 }
 
 /* ====================== 選角視窗 ====================== */
@@ -1117,9 +1130,9 @@ function refresh(){ updateOwnedCount(); renderSolve(); }
 /* ====================== 事件 ====================== */
 document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{ document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active')); b.classList.add('active'); document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active')); $('#tab-'+b.dataset.tab).classList.add('active'); if(b.dataset.tab==='roster') renderRoster(); });
 document.querySelectorAll('#modeSeg button').forEach(b=>{ if(b.dataset.mode===mode) b.classList.add('active'); else b.classList.remove('active'); b.onclick=()=>{ mode=b.dataset.mode; document.querySelectorAll('#modeSeg button').forEach(x=>x.classList.toggle('active',x===b)); save(); refresh(); }; });
-$('#btnQuickEnemy').onclick=()=>{ quickFill(enemy,$('#quickEnemy').value); save(); refresh(); };
+$('#btnQuickEnemy').onclick=()=>{ quickFill(enemy,$('#quickEnemy').value,$('#quickEnemyNote')); save(); refresh(); };
 $('#quickEnemy').addEventListener('keydown',e=>{ if(e.key==='Enter') $('#btnQuickEnemy').click(); });
-$('#btnQuickMy').onclick=()=>{ quickFill(mine,$('#quickMy').value); save(); refresh(); };
+$('#btnQuickMy').onclick=()=>{ quickFill(mine,$('#quickMy').value,$('#quickMyNote')); save(); refresh(); };
 $('#quickMy').addEventListener('keydown',e=>{ if(e.key==='Enter') $('#btnQuickMy').click(); });
 $('#btnClearEnemy').onclick=()=>{ enemy=[null,null,null,null,null]; save(); refresh(); };
 $('#btnClearMy').onclick=()=>{ mine=[null,null,null,null,null]; save(); refresh(); };
