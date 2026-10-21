@@ -35,12 +35,20 @@
    "date": "2024"
   },
   {
-   "title": "社群打法：對超級巨星阿妮斯隊用更慢的超級巨星阿妮斯後手鏡像",
-   "url": "https://nikke.gg/anis-star-analysis-should-you-pull/",
-   "source": "社群經驗＋nikke.gg 技能分析", "kind": "打法",
-   "enemy": ["anis-star-system"], "my": ["anis-star-system"], "units": ["anis-star"],
-   "note": "她的強度集中在爆裂後 10 秒的流星與防禦加成；自己慢一階後開，對方窗口先結束就站得比她久。連結是技能數值出處，打法本身為玩家經驗",
-   "date": "2026-10"
+   "title": "NIKKE Synergy：競技場機制 4.1，運用布蘭兒不屈時刻意延後開爆裂反而有利",
+   "url": "https://nikke-synergy.com/arena-guide_en",
+   "source": "NIKKE Synergy", "kind": "攻略",
+   "enemy": ["blanc-indom", "anis-star-system"], "my": ["blanc-indom", "anis-star-system"], "units": ["blanc"],
+   "note": "布蘭兒鏡像（例如白兔＋偶像阿妮斯對白兔＋偶像阿妮斯）：先開的那方 10 秒不屈先到期、最後一隻先倒；要刻意慢一階後開。原文為原則性說明，對局細節為台港澳服玩家經驗",
+   "date": "2024-07"
+  },
+  {
+   "title": "nikke.gg：布蘭兒技能（不屈 10 秒、敵方受傷 +39%、冷卻 60 秒）",
+   "url": "https://nikke.gg/characters/blanc/",
+   "source": "nikke.gg", "kind": "攻略",
+   "enemy": ["blanc-indom"], "my": [], "units": ["blanc"],
+   "note": "不屈只給血量最低的一位隊友；不屈期間仍會受傷（Prydwen 機制頁），到期即倒",
+   "date": "2026"
   },
   {
    "title": "Prydwen：Meta Teams and Archetypes，夏日阿妮斯鏡像（後手）的段落",
