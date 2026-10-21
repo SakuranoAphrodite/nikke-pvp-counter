@@ -131,15 +131,24 @@ def main():
         total_rounds += len(rounds)
         time.sleep(1)
 
-        def key_of(ari_ids):
-            mids = [ari2my.get(i) for i in ari_ids]
-            if any(m is None for m in mids):
-                return None, None
+        my_ids = {c["id"] for c in chars}
+        TREASURE_ALIAS = {"laplace": "laplace-ultimate-hero"}  # 珍藏版在本工具是獨立角色名
+        def key_of(ari_ids, cols):
+            mids = []
+            for i, col in zip(ari_ids, list(cols or []) + [None] * 5):
+                m = ari2my.get(i)
+                if m is None:
+                    return None, None
+                if str(col or "").startswith("treasure"):  # nikkeari 把珍藏記成收藏等級標記
+                    t = TREASURE_ALIAS.get(m, m + "-treasure")
+                    if t in my_ids:
+                        m = t
+                mids.append(m)
             return ",".join(sorted(mids)), mids
 
         for r in rounds:
-            ak, a_ids = key_of(r["attacker_team"])
-            dk, d_ids = key_of(r["defender_team"])
+            ak, a_ids = key_of(r["attacker_team"], r.get("attacker_collections"))
+            dk, d_ids = key_of(r["defender_team"], r.get("defender_collections"))
             if not ak or not dk:
                 continue
             att_won = r["winner_player_id"] == r["attacker_player_id"]
@@ -163,8 +172,8 @@ def main():
                     v = arch_vs.setdefault(wa + ">" + la, 0)
                     arch_vs[wa + ">" + la] = v + 1
 
-    # 精簡：隊伍只留 3 場以上，改用索引引用；beatenBy 只留前 6
-    keep = {k for k, v in team_stats.items() if v["m"] >= 3}
+    # 精簡：隊伍只留 2 場以上，改用索引引用；beatenBy 只留前 6
+    keep = {k for k, v in team_stats.items() if v["m"] >= 2}
     bb_tmp = {}
     for k, d in beaten_by.items():
         if k not in keep:
