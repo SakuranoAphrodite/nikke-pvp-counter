@@ -38,6 +38,17 @@ main{max-width:1200px;margin:0 auto;padding:16px}
 .slot .nm{font-size:13px;font-weight:600;margin-top:16px;word-break:break-all;line-height:1.25}
 .slot .en{font-size:10px;color:var(--muted);word-break:break-all}
 .slot .add{color:var(--muted);font-size:13px;margin-top:28px}
+.slot .mv{position:absolute;bottom:2px;font-size:12px;color:var(--muted);padding:0 5px;border-radius:4px;background:#0f121a;opacity:.7}
+.slot .mv:hover{color:var(--text);opacity:1;background:var(--accent)}
+.slot .mv.l{left:4px}.slot .mv.r{right:4px}
+.slot.dragover{border-color:var(--accent2);background:#1b2a3a}
+.slot.dragging{opacity:.5}
+.tray{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0;min-height:34px}
+.tray .chip{background:var(--panel2);border:1px solid var(--accent);border-radius:8px;padding:4px 8px;font-size:12px;display:inline-flex;gap:6px;align-items:center}
+.tray .chip.empty{border-style:dashed;border-color:var(--line);color:var(--muted)}
+.tray .chip .x{cursor:pointer;color:var(--muted)}
+.tray .chip .x:hover{color:var(--bad)}
+.pick.sel{border-color:var(--accent);background:#2a2650}
 .badge{display:inline-block;font-size:11px;padding:1px 6px;border-radius:6px;background:#2b3040;color:#dfe3ee;margin:1px 2px;vertical-align:middle;white-space:nowrap}
 .badge.b1{background:#2d5fa8}.badge.b2{background:#a8732d}.badge.b3{background:#a83a3a}.badge.bL{background:#6b3aa8}
 .badge.fire{background:var(--fire);color:#111}.badge.water{background:var(--water);color:#111}.badge.wind{background:var(--wind);color:#111}.badge.electric{background:var(--electric);color:#111}.badge.iron{background:var(--iron);color:#111}
@@ -138,6 +149,7 @@ details.mods summary{color:var(--muted)}
     <div class="row" style="margin-top:10px">
       <input type="text" id="quickEnemy" placeholder="快速輸入：用空格或逗號隔開 5 個名字，例如「紅蓮 豺狼 布蘭兒 桑迪 特蕾娜」，按 Enter" style="flex:1;min-width:260px">
       <button class="btn" id="btnQuickEnemy">套用</button>
+      <button class="btn primary" id="btnPickEnemy" title="在視窗裡連點 5 位，一次選完">一次選整隊</button>
       <button class="btn" id="btnSaveEnemy">存到歷史</button>
       <button class="btn danger" id="btnClearEnemy">清空</button>
     </div>
@@ -172,6 +184,7 @@ details.mods summary{color:var(--muted)}
     <div class="row" style="margin-top:10px">
       <input type="text" id="quickMy" placeholder="快速輸入 5 個名字，按 Enter" style="flex:1;min-width:260px">
       <button class="btn" id="btnQuickMy">套用</button>
+      <button class="btn primary" id="btnPickMy" title="在視窗裡連點 5 位，一次選完">一次選整隊</button>
       <button class="btn" id="btnArrangeMy" title="關鍵爆裂角排進軸內、防禦者放 P1／P5、火力放 P3／P4">自動排軸</button>
       <button class="btn danger" id="btnClearMy">清空</button>
     </div>
@@ -216,7 +229,7 @@ details.mods summary{color:var(--muted)}
     <h2>怎麼用</h2>
     <ol>
       <li>到「我的角色庫」把你有的角色點成「擁有」（只需做一次，會記住）。</li>
-      <li>回「解隊」，照對方防守隊 P1→P5 的順序填入 5 個角色（可以直接在快速輸入框打中文名）。</li>
+      <li>回「解隊」，按「一次選整隊」在視窗裡依 P1→P5 連點 5 位後套用；也可以點單一格換人，或在快速輸入框直接打中文名。排好後用格子上的 ◀ ▶ 或拖曳調整站位。</li>
       <li>看「對方分析」：速度階、爆裂鏈順序、屬於哪種體系、關鍵威脅。</li>
       <li>看「解法建議」與「組反制隊」：工具會從你的角色庫挑出能克制對方體系、速度又夠的隊伍。</li>
       <li>想自己調整，就在「自己排一隊試算」排 5 人，會直接告訴你快慢與互剋關係。</li>
@@ -298,9 +311,11 @@ details.mods summary{color:var(--muted)}
   <div class="box">
     <div class="row">
       <b id="pickerTitle">選擇角色</b>
-      <input type="text" id="pickerSearch" placeholder="輸入中文／英文／日文名稱" style="flex:1;min-width:200px">
+      <input type="text" id="pickerSearch" placeholder="輸入中文／英文／日文名稱，Enter 選第一個" style="flex:1;min-width:200px">
+      <button class="btn primary" id="pickerApply" style="display:none">套用這 5 人</button>
       <button class="btn" id="pickerClose">關閉</button>
     </div>
+    <div class="tray" id="pickerTray" style="display:none"></div>
     <div class="filters" id="pickerFilters"></div>
     <div class="list" id="pickerList"></div>
   </div>
@@ -801,11 +816,19 @@ function tagBadges(id){ return (UNIT_TAGS[id]||[]).map(t=>`<span class="badge ta
 
 function renderSlots(elId,team,teamKey){
   const el=$(elId); el.innerHTML='';
+  const swap=(a,b)=>{ if(a<0||b<0||a>4||b>4||a===b) return; [team[a],team[b]]=[team[b],team[a]]; save(); refresh(); };
   team.forEach((id,i)=>{
     const d=document.createElement('div'); d.className='slot'+(id?' filled':'');
     const c=id&&byId[id];
-    d.innerHTML=`<span class="pos">P${i+1}</span><span class="x" title="移除">✕</span>`+(c?`<div class="nm">${esc(c.name['zh-TW'])}</div><div class="en">${esc(c.name.en)}</div><div>${burstBadge(c.burst)}${elBadge(c.element)}<span class="badge">${c.weapon}</span></div>`:`<div class="add">＋ 選角色</div>`);
-    d.onclick=e=>{ if(e.target.classList.contains('x')){ team[i]=null; save(); refresh(); return;} openPicker(teamKey,i); };
+    d.innerHTML=`<span class="pos">P${i+1}</span><span class="x" title="移除">✕</span>`+(c?`<div class="nm">${esc(c.name['zh-TW'])}</div><div class="en">${esc(c.name.en)}</div><div>${burstBadge(c.burst)}${elBadge(c.element)}<span class="badge">${c.weapon}</span></div>${i>0?'<span class="mv l" title="往左移一格">◀</span>':''}${i<4?'<span class="mv r" title="往右移一格">▶</span>':''}`:`<div class="add">＋ 選角色</div>`);
+    d.onclick=e=>{ if(e.target.classList.contains('x')){ team[i]=null; save(); refresh(); return;} if(e.target.classList.contains('mv')){ swap(i,e.target.classList.contains('l')?i-1:i+1); return; } openPicker(teamKey,i); };
+    // 拖曳換位（桌機）；手機用左右箭頭
+    d.draggable=!!id;
+    d.addEventListener('dragstart',e=>{ e.dataTransfer.setData('text/plain',String(i)); e.dataTransfer.effectAllowed='move'; d.classList.add('dragging'); });
+    d.addEventListener('dragend',()=>d.classList.remove('dragging'));
+    d.addEventListener('dragover',e=>{ e.preventDefault(); d.classList.add('dragover'); });
+    d.addEventListener('dragleave',()=>d.classList.remove('dragover'));
+    d.addEventListener('drop',e=>{ e.preventDefault(); d.classList.remove('dragover'); const from=+e.dataTransfer.getData('text/plain'); if(!isNaN(from)) swap(from,i); });
     el.appendChild(d);
   });
 }
@@ -834,9 +857,23 @@ function quickFill(team,text){
 
 /* ====================== 選角視窗 ====================== */
 function openPicker(teamKey,idx){
-  pickerTarget={team:teamKey,idx};
+  pickerTarget={team:teamKey,idx,multi:false};
   $('#pickerTitle').textContent=(teamKey==='enemy'?'對方 ':'我方 ')+'P'+(idx+1)+'：選擇角色';
+  $('#pickerApply').style.display='none'; $('#pickerTray').style.display='none';
   $('#pickerSearch').value=''; $('#picker').classList.add('open'); renderPickerFilters(); renderPicker(); setTimeout(()=>$('#pickerSearch').focus(),50);
+}
+/* 一次選整隊：連點 5 位，上方托盤顯示順序（P1→P5），按套用寫回 */
+function openTeamPicker(teamKey){
+  const team=teamKey==='enemy'?enemy:mine;
+  pickerTarget={team:teamKey,idx:null,multi:true,sel:team.filter(Boolean).slice(0,5)};
+  $('#pickerTitle').textContent=(teamKey==='enemy'?'對方隊伍':'我方隊伍')+'：依 P1→P5 順序連點 5 位';
+  $('#pickerApply').style.display=''; $('#pickerTray').style.display='';
+  $('#pickerSearch').value=''; $('#picker').classList.add('open'); renderPickerFilters(); renderTray(); renderPicker(); setTimeout(()=>$('#pickerSearch').focus(),50);
+}
+function renderTray(){
+  const t=$('#pickerTray'); const sel=pickerTarget.sel; t.innerHTML='';
+  for(let i=0;i<5;i++){ const id=sel[i]; const d=document.createElement('span'); d.className='chip'+(id?'':' empty'); d.innerHTML=id?`P${i+1} ${esc(nameOf(id))} <span class="x" title="移除">✕</span>`:`P${i+1} 未選`; if(id) d.querySelector('.x').onclick=()=>{ sel.splice(i,1); renderTray(); renderPicker(); }; t.appendChild(d); }
+  $('#pickerApply').textContent=sel.length===5?'套用這 5 人':`已選 ${sel.length}/5（可先套用）`;
 }
 function closePicker(){ $('#picker').classList.remove('open'); pickerTarget=null; }
 function renderPickerFilters(){
@@ -853,15 +890,22 @@ function pickerCandidates(){
   list.sort((a,b)=>(TIER_RANK[b.pvpTier]||0)-(TIER_RANK[a.pvpTier]||0)||a.name['zh-TW'].localeCompare(b.name['zh-TW'],'zh-Hant'));
   return list;
 }
+function pickOne(c){
+  const team=pickerTarget.team==='enemy'?enemy:mine;
+  if(pickerTarget.multi){ const sel=pickerTarget.sel; const k=sel.indexOf(c.id); if(k>=0) sel.splice(k,1); else if(sel.length<5) sel.push(c.id); renderTray(); renderPicker(); return; }
+  team[pickerTarget.idx]=c.id; save(); closePicker(); refresh();
+}
 function renderPicker(){
   const team=pickerTarget.team==='enemy'?enemy:mine;
   const inTeam=new Set(team.filter(Boolean));
   const el=$('#pickerList'); el.innerHTML='';
   for(const c of pickerCandidates()){
-    const d=document.createElement('div'); const dis=inTeam.has(c.id)&&team[pickerTarget.idx]!==c.id;
-    d.className='pick'+(owned.has(c.id)?' owned':'')+(dis?' dis':'');
-    d.innerHTML=`<b>${esc(c.name['zh-TW'])}</b><span class="en">${esc(c.name.en)}</span><div>${burstBadge(c.burst)}${elBadge(c.element)}<span class="badge">${c.weapon}</span>${tierBadge(c.pvpTier)}</div>`;
-    if(!dis) d.onclick=()=>{ team[pickerTarget.idx]=c.id; save(); closePicker(); refresh(); };
+    const d=document.createElement('div');
+    const selected=pickerTarget.multi&&pickerTarget.sel.includes(c.id);
+    const dis=pickerTarget.multi?(!selected&&pickerTarget.sel.length>=5):(inTeam.has(c.id)&&team[pickerTarget.idx]!==c.id);
+    d.className='pick'+(owned.has(c.id)?' owned':'')+(dis?' dis':'')+(selected?' sel':'');
+    d.innerHTML=`${selected?'<span class="badge good" style="float:right">P'+(pickerTarget.sel.indexOf(c.id)+1)+'</span>':''}<b>${esc(c.name['zh-TW'])}</b><span class="en">${esc(c.name.en)}</span><div>${burstBadge(c.burst)}${elBadge(c.element)}<span class="badge">${c.weapon}</span>${tierBadge(c.pvpTier)}</div>`;
+    if(!dis||selected) d.onclick=()=>pickOne(c);
     el.appendChild(d);
   }
   if(!el.children.length) el.innerHTML='<div class="muted">沒有符合的角色</div>';
@@ -1062,7 +1106,9 @@ $('#btnSaveEnemy').onclick=()=>{ if(enemy.some(x=>!x)) return alert('先填滿 5
 $('#chkOnlyOwned').onchange=refresh; $('#chkAllowSub').onchange=refresh;
 $('#pickerClose').onclick=closePicker; $('#picker').addEventListener('click',e=>{ if(e.target.id==='picker') closePicker(); });
 $('#pickerSearch').addEventListener('input',renderPicker);
-$('#pickerSearch').addEventListener('keydown',e=>{ if(e.key==='Enter'){ const l=pickerCandidates(); const team=pickerTarget.team==='enemy'?enemy:mine; const first=l.find(c=>!team.includes(c.id)); if(first){ team[pickerTarget.idx]=first.id; save(); closePicker(); refresh(); } } if(e.key==='Escape') closePicker(); });
+$('#pickerSearch').addEventListener('keydown',e=>{ if(e.key==='Enter'){ const l=pickerCandidates(); const team=pickerTarget.team==='enemy'?enemy:mine; const first=pickerTarget.multi?l.find(c=>!pickerTarget.sel.includes(c.id)):l.find(c=>!team.includes(c.id)); if(first){ pickOne(first); if(pickerTarget&&pickerTarget.multi){ $('#pickerSearch').value=''; renderPicker(); } } } if(e.key==='Escape') closePicker(); });
+$('#pickerApply').onclick=()=>{ if(!pickerTarget||!pickerTarget.multi) return; const team=pickerTarget.team==='enemy'?enemy:mine; const sel=pickerTarget.sel; for(let i=0;i<5;i++) team[i]=sel[i]||null; save(); closePicker(); refresh(); };
+$('#btnPickEnemy').onclick=()=>openTeamPicker('enemy'); $('#btnPickMy').onclick=()=>openTeamPicker('mine');
 $('#rosterSearch').addEventListener('input',renderRoster);
 $('#btnOwnAll').onclick=()=>{ if(confirm('把全部角色標成擁有？')){ owned=new Set(CHARACTERS.map(c=>c.id)); LS.set('followRemote',false); save(); renderRoster(); renderSolve(); } };
 $('#btnOwnNone').onclick=()=>{ if(confirm('清空角色庫？')){ owned=new Set(); LS.set('followRemote',false); save(); renderRoster(); renderSolve(); } };
