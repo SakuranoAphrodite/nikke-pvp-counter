@@ -37,6 +37,8 @@ def update():
 def build():
     chars = json.loads((DATA / "characters.json").read_text(encoding="utf-8"))
     tpls = json.loads((DATA / "templates.json").read_text(encoding="utf-8"))
+    extra_file = DATA / "templates-extra.json"  # 本工具自行補充的模板（獨立嵌入，線上更新上游模板後再合併）
+    extra = json.loads(extra_file.read_text(encoding="utf-8")) if extra_file.exists() else []
     ver_file = DATA / "version.json"
     ver = json.loads(ver_file.read_text(encoding="utf-8"))["fetched"] if ver_file.exists() else datetime.date.today().isoformat()
     html = (HERE / "template.html").read_text(encoding="utf-8")
@@ -48,13 +50,14 @@ def build():
     deck = json.loads(deck_file.read_text(encoding="utf-8")) if deck_file.exists() else {"units": {}, "quantumLv7": 4.66}
     html = (html.replace("__CHARACTERS__", dump(chars))
                 .replace("__TEMPLATES__", dump(tpls))
+                .replace("__TEMPLATES_EXTRA__", dump(extra))
                 .replace("__REFERENCES__", dump(refs))
                 .replace("__ARENA__", dump(arena))
                 .replace("__DECK__", dump(deck))
                 .replace("__DATA_DATE__", ver))
     OUT.write_text(html, encoding="utf-8")
     INDEX.write_text(html, encoding="utf-8")  # GitHub Pages 用的同內容副本
-    print(f"已產生 {OUT} 與 {INDEX.name}（{OUT.stat().st_size:,} bytes，{len(chars)} 名角色，{len(tpls)} 個模板，資料日期 {ver}）")
+    print(f"已產生 {OUT} 與 {INDEX.name}（{OUT.stat().st_size:,} bytes，{len(chars)} 名角色，{len(tpls)}+{len(extra)} 個模板，資料日期 {ver}）")
 
 
 if __name__ == "__main__":

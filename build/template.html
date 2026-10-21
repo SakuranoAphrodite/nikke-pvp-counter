@@ -309,7 +309,8 @@ details.mods summary{color:var(--muted)}
 <script>
 /* ====================== 資料 ====================== */
 let CHARACTERS = __CHARACTERS__;
-let TEMPLATES  = __TEMPLATES__;
+const TEMPLATES_EXTRA = __TEMPLATES_EXTRA__; // 本工具補充的 2026 體系模板，線上更新上游模板後仍會合併
+let TEMPLATES  = __TEMPLATES__.concat(TEMPLATES_EXTRA);
 const BUILTIN_DATE = '__DATA_DATE__';
 const DATA_RAW = 'https://raw.githubusercontent.com/williamchong/nikke-arena-planner/master/app/data/';
 
@@ -397,7 +398,7 @@ const ARCH_NAME = {
   'moran-scarlet':'牡丹＋紅蓮混合','alice-carry':'愛麗絲主C','sanis-stall':'夏日阿妮斯持久戰','mermaid-disrupt':'小美人魚暈眩干擾',
   'helm-carry':'海倫珍藏主C','rosanna-counter':'羅珊娜驅散反制','rapi-rh':'拉毗小紅帽主C','vesti-tu':'貝斯蒂戰術升級主C',
   'nayuta-carry':'娜由塔主C','alice-revive':'愛麗絲復活隊','cinderella-carry':'灰姑娘主C','cat-team':'貓隊（尼羅＋牡丹）',
-  'tactical-trio':'戰術三人組（爆裂前擊殺）','sg-burst':'霰彈集火隊','anis-star-system':'超級巨星阿妮斯＋尼恩','privaty-stun':'普麗瓦蒂暈眩鎖','share-wall':'豺狼＋貝伊分攤牆'
+  'tactical-trio':'戰術三人組（爆裂前擊殺）','sg-burst':'霰彈集火隊','anis-star-system':'超級巨星阿妮斯體系','privaty-stun':'普麗瓦蒂暈眩鎖','share-wall':'豺狼＋貝伊分攤牆','nayuta-rush':'娜由塔一閃（2RL 速攻）'
 };
 // 耗血持久型原型：慢一點也可以接受
 const STALL_ARCH = new Set(['noah-stall','moran-system','cat-team','share-wall','blanc-indom','sanis-stall','alice-revive','anis-star-system']);
@@ -563,7 +564,7 @@ const ROLE_ZH={attacker:'火力',supporter:'支援',defender:'防禦'};
 let byId=Object.fromEntries(CHARACTERS.map(c=>[c.id,c]));
 const nameOf=id=>byId[id]?byId[id].name['zh-TW']:id;
 let dataInfo={source:'內建',date:BUILTIN_DATE};
-function applyData(chars,tpls,info){ CHARACTERS=chars; TEMPLATES=tpls; byId=Object.fromEntries(chars.map(c=>[c.id,c])); dataInfo=info; }
+function applyData(chars,tpls,info){ CHARACTERS=chars; const ids=new Set(tpls.map(t=>t.id)); TEMPLATES=tpls.concat(TEMPLATES_EXTRA.filter(t=>!ids.has(t.id))); byId=Object.fromEntries(chars.map(c=>[c.id,c])); dataInfo=info; }
 
 function speedOf(ids,mode,mods){
   const chars=ids.map(i=>byId[i]).filter(Boolean);
