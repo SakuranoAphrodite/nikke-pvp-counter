@@ -245,6 +245,7 @@ details.mods summary{color:var(--muted)}
       <li><b>充能公式</b>（NIKKE Synergy）：命中數 × 每次命中充能% × (量子魔方＋充能提升) ＋ 技能觸發次數 × 每次充能% ＋ 固定補給（例如海倫珍藏每次滿蓄力 +14.31%、羅珊娜對倒地目標 +36.54%）＝該角色的充能貢獻。技能額外充能的基礎值例：紅蓮 S2 0.45、豺狼 S1 3.55、哈蘭 S1 2.9、莫德尼亞 S1 0.05。雙持角色（諾雅、索林、克洛、昆西）PVP 只用一把槍，充能減半。</li>
       <li><b>速度單位 RL</b>：1RL 約 1.216～1.25 秒（一發火箭筒的蓄力＋射擊週期）。2RL＝第二發命中時充滿，2.5RL（5SG）、3RL、3.5RL（7SG）、4RL 依此類推；慢於 4RL 的隊伍通常不值得用。本工具速度表的 1.0 就是「在該階充滿」。</li>
       <li><b>開爆裂有固定延遲</b>：充滿到 B1 啟動約 0.433 秒，B1→B2、B2→B3 各約 0.533 秒，技能效果再約 0.1 秒後生效。所以 3RL 隊全爆裂約 3.5 秒，相鄰兩階差約 0.5 秒，這就是「慢一階」的實際時間。</li>
+      <li><b>再入 B1（四段軸）</b>：超級巨星阿妮斯在隊上有其他 B1 時進入「大家的星星」模式，她開完爆裂會再入 B1 段，讓另一位 B1 也能開，軸變成 B1→再入B1→B2→B3，全爆裂多晚約 0.533 秒；工具在速度比較時把它視為慢半階。前提是她要排在其他 B1 前面；她的爆裂效果也會改變（全隊最大 HP +15%，失去「我的星星」的攻擊 +40% 與全隊冷卻 −7.48 秒）。 <span class="src">依據：<a href="https://nikke.gg/anis-star-analysis-should-you-pull/" target="_blank" rel="noopener">nikke.gg 技能文字</a>、<a href="https://nikke-synergy.com/arena-guide_en" target="_blank" rel="noopener">NIKKE Synergy（Burst re-1 延遲）</a></span></li>
       <li><b>超頻「充能速度」17%</b>：蓄力武器（火箭筒、狙擊槍）蓄力更快，等於把該角色在速度表上往快的方向移半階（2RL 用 2.5RL 的值）。本工具「進階」裡的超頻勾選就是用這個模型估算（來自 nikke-deck 的資料，只有有此超頻選項的角色能勾）。<b>量子魔方 Lv7</b>：充能 +4.66%，常常剛好讓隊伍跨過門檻。這些都是估算，實戰仍以遊戲內表現為準。 <span class="src">依據：<a href="https://nikke-deck.com/en/deck" target="_blank" rel="noopener">nikke-deck</a></span></li>
       <li><b>火箭射偏（whiff）</b>：火箭筒與狙擊槍在攻擊間隔會被視為進掩體，對方火箭可能打空，失去大量充能；Prydwen 認為這是 95% 對局的勝負關鍵之一，也是同速對局結果不穩的主因。因此諾伊斯、諾雅這類火箭筒不適合單獨當 P1 坦（會被跳過，讓後排被集火）。</li>
       <li><b>目標順序</b>：進攻時 SMG／MG／AR／SG／RL 第一發打 P5、之後集中 P1，SR 一直打 P5；防守時 SG 集中打 P5，其餘打 P1。換目標時機：裝填、目標進掩體、目標死亡、嘲諷結束。指定目標技能（夏日阿妮斯 S2、帕瓦／佩珀的最高攻擊核爆）會被嘲諷吸走。</li>
@@ -345,7 +346,7 @@ const UNIT_TAGS = {
   'centi':                  ['充能電池'],
   'centi-treasure':         ['充能電池'],
   'trina':                  ['充能電池'],
-  'anis-star':              ['充能電池','坦克'],
+  'anis-star':              ['充能電池','坦克','再入B1'],
   'anis':                   ['充能電池'],
   'bay-treasure':           ['傷害分攤','充能電池'],
   'bay':                    ['傷害分攤','充能電池'],
@@ -540,6 +541,8 @@ function speedOf(ids,mode,mods){
   for(const t of TIERS){ if(totals[t]>=1){tier=t;reached=true;break;} }
   return {tier,totals,reached,cycles:CYCLES[tier],sec:TIER_SEC[tier]};
 }
+/* 開爆裂後「再入 B1 段」的角色：她開完後另一位 B1 也能開（軸變四段，全爆裂晚約 0.533 秒） */
+const REENTER_B1={'anis-star':'超級巨星阿妮斯'};
 function chainOf(ids){
   const chars=ids.map((id,i)=>({c:byId[id],pos:i+1})).filter(x=>x.c);
   const has={I:false,II:false,III:false}; let lambda=false;
@@ -548,14 +551,22 @@ function chainOf(ids){
   const valid = lambda || missing.length===0;
   const used=new Set();
   const find=b=>{ const cand=chars.filter(x=>!used.has(x.pos)&&(x.c.burst===b||x.c.burst==='Λ')); const exact=cand.filter(x=>x.c.burst===b); const r=(exact.length?exact:cand)[0]||null; if(r) used.add(r.pos); return r; };
-  const b1=find('I'),b2=find('II'),b3=find('III');
-  return {valid,missing:missing.map(m=>'B'+({I:1,II:2,III:3})[m]),b1,b2,b3};
+  const b1=find('I'); let reB1=null, stages=3;
+  if(b1&&REENTER_B1[b1.c.id]){ const other=chars.find(x=>!used.has(x.pos)&&x.c.burst==='I'); if(other){ used.add(other.pos); reB1=other; stages=4; } }
+  const b2=find('II'),b3=find('III');
+  // 超級巨星阿妮斯的模式：隊上有其他 B1（不含 Λ）就是「大家的星星」，否則「我的星星」
+  const star=chars.find(x=>x.c.id==='anis-star');
+  const starMode=star?(chars.some(x=>x.c.id!=='anis-star'&&x.c.burst==='I')?'everyone':'own'):null;
+  return {valid,missing:missing.map(m=>'B'+({I:1,II:2,III:3})[m]),b1,reB1,b2,b3,stages,starMode,extraSec:(stages-3)*0.533};
 }
+/* 速度比較用的「有效速度階索引」：多一段爆裂視為慢一階 */
+function effIdx(ids,tier){ return TIERS.indexOf(tier)+(chainOf(ids).stages-3); }
+function starModeText(ids){ const ch=chainOf(ids); if(!ch.starMode) return ''; if(ch.starMode==='own') return '<span class="badge tag" title="隊上只有她一個 B1">我的星星：攻擊 +40%、全隊爆裂冷卻 −7.48 秒、進全爆裂時全隊攻擊 +35%</span>'; const fires=ch.b1&&ch.b1.c.id==='anis-star'; return `<span class="badge tag" title="隊上有其他 B1">大家的星星：${fires?'她開完再入 B1，另一位 B1 也會開（軸四段，全爆裂晚約 0.5 秒）':'她不是最前面的 B1，第一輪不會開也不會再入'}；爆裂改為全隊最大 HP +15%，失去攻擊 +40% 與冷卻縮減</span>`; }
 /* 軸：第一輪會開爆裂的三位；其餘為軸外（爆裂技能不會發動） */
 // 只放「效果來自爆裂技能本身」的標籤；餅乾的防禦者免疫、豺狼連結、羅珊娜驅散、夏日阿妮斯雙目標都是一般技能，軸外也有效
 const BURST_TAGS=new Set(['AOE核爆','核爆','單體爆裂','爆裂主C','持續爆裂輸出','全隊無敵','不屈','復活','全體暈眩','全體嘲諷']);
-function chainSet(ids){ const ch=chainOf(ids); return new Set([ch.b1,ch.b2,ch.b3].filter(Boolean).map(x=>x.c.id)); }
-function chainRole(ids,id){ const ch=chainOf(ids); if(ch.b1&&ch.b1.c.id===id) return 'B1'; if(ch.b2&&ch.b2.c.id===id) return 'B2'; if(ch.b3&&ch.b3.c.id===id) return 'B3'; return null; }
+function chainSet(ids){ const ch=chainOf(ids); return new Set([ch.b1,ch.reB1,ch.b2,ch.b3].filter(Boolean).map(x=>x.c.id)); }
+function chainRole(ids,id){ const ch=chainOf(ids); if(ch.b1&&ch.b1.c.id===id) return 'B1'; if(ch.reB1&&ch.reB1.c.id===id) return '再入B1'; if(ch.b2&&ch.b2.c.id===id) return 'B2'; if(ch.b3&&ch.b3.c.id===id) return 'B3'; return null; }
 function burstDependent(id){ return (UNIT_TAGS[id]||[]).some(t=>BURST_TAGS.has(t)); }
 function offChainKey(ids){ const cs=chainSet(ids); return ids.filter(i=>i&&byId[i]&&!cs.has(i)&&burstDependent(i)); }
 /* 自動排軸：關鍵爆裂角排進軸內（同類型中位置最小）、防禦者 P1/P5、火力 P3/P4 */
@@ -636,7 +647,7 @@ const MIRROR_UNITS=['blanc','anis-sparkling-summer']; // 布蘭兒（10 秒不�
 function mirrorUnit(enemyIds,mySlots){ const ec=chainSet(enemyIds), mc=chainSet(mySlots); return MIRROR_UNITS.find(u=>ec.has(u)&&mc.has(u))||null; } // 雙方都要在軸內才算鏡像
 function mirrorJudge(mySlots,myTier,enemyIds,enemyTier){
   const u=mirrorUnit(enemyIds,mySlots); if(!u) return null; const n=nameOf(u);
-  const d=TIERS.indexOf(myTier)-TIERS.indexOf(enemyTier);
+  const d=effIdx(mySlots,myTier)-effIdx(enemyIds,enemyTier); // 含四段軸的延遲
   if(d===1) return {score:220,pts:2,good:`後手鏡像：我方${n} ${myTier} 比對方 ${enemyTier} 慢一階，對方的 10 秒${u==='blanc'?'不屈':'爆裂窗口'}先到期，我方最後一隻站得比對方久`};
   if(d>1) return {score:-60,pts:-0.5,bad:`後手鏡像但慢了 ${d} 階（${myTier} 對 ${enemyTier}），可能撐不到自己開爆裂`};
   if(d===0) return {score:20,pts:0,bad:`${n}鏡像同速（${myTier}），誰先開看隨機；建議換掉一個充能電池讓自己慢一階`};
@@ -672,7 +683,7 @@ function buildCounters(enemyIds,mode,ownedSet,allowSub){
     if(!f0.ok) continue;
     const fills=[f0];
     if(mirrorUnit(enemyIds,f0.slots)&&eChain.valid){
-      const eIdx=TIERS.indexOf(eSpeed.tier), myIdx=TIERS.indexOf(speedOf(f0.slots,myMode,mineMods).tier);
+      const eIdx=effIdx(enemyIds,eSpeed.tier), myIdx=effIdx(f0.slots,speedOf(f0.slots,myMode,mineMods).tier);
       if(myIdx<=eIdx&&eIdx<TIERS.length-1){ const sv=slowerVariant(f0,t,TIERS[eIdx+1],ownedSet,myMode); if(sv) fills.push(sv); }
     }
     for(const f of fills){
@@ -683,13 +694,14 @@ function buildCounters(enemyIds,mode,ownedSet,allowSub){
     const counteredByEnemy=[...eArchIds].filter(a=>t.counteredBy.includes(a)||eArch.some(e=>e.arch===a&&e.tpl.counters.includes(t.archetype)));
     if(countersEnemy.length){ score+=400*countersEnemy.length; why.push('克制對方的「'+countersEnemy.map(a=>ARCH_NAME[a]||a).join('」「')+'」'); }
     if(counteredByEnemy.length){ score-=300*counteredByEnemy.length; warn.push('會被對方的「'+counteredByEnemy.map(a=>ARCH_NAME[a]||a).join('」「')+'」克制'); }
-    const dc=eSpeed.cycles-sp.cycles;
+    const dc=(eSpeed.cycles+0.5*(eChain.stages-3))-(sp.cycles+0.5*(ch.stages-3)); // 四段軸視為慢半階
     const mj=eChain.valid?mirrorJudge(f.slots,sp.tier,enemyIds,eSpeed.tier):null;
+    if(ch.stages>3) warn.push('四段軸（超級巨星阿妮斯再入 B1），全爆裂晚約 0.5 秒，已計入速度比較');
     if(!eChain.valid){ score+=200; why.push('對方爆裂鏈不完整，先手必勝'); }
     else if(mj){ score+=mj.score; if(mj.good) why.push(mj.good); if(mj.bad) warn.push(mj.bad); }
     else if(dc>0){ score+=150; why.push(`速度 ${sp.tier} 比對方 ${eSpeed.tier} 快，先開爆裂`); }
     else if(dc===0){ score+=40; why.push(`速度 ${sp.tier} 與對方同階，結果不穩，靠體系壓制`); }
-    else { score+= STALL_ARCH.has(t.archetype)? -40 : -140; warn.push(`速度 ${sp.tier} 比對方 ${eSpeed.tier} 慢`+(STALL_ARCH.has(t.archetype)?'（持久體系可接受，但要扛得住第一波）':'，會被先手')); }
+    else { score+= STALL_ARCH.has(t.archetype)? -40 : -140; warn.push(`速度 ${sp.tier}${ch.stages>3?'（四段軸）':''} 比對方 ${eSpeed.tier}${eChain.stages>3?'（四段軸）':''} 慢`+(STALL_ARCH.has(t.archetype)?'（持久體系可接受，但要扛得住第一波）':'，會被先手')); }
     const subs=f.kind.filter(k=>k==='sub').length; if(subs){ score-=60*subs; warn.push(`${subs} 格為非模板替補`); }
     const offK=offChainKey(f.slots); if(offK.length){ score-=120*offK.length; warn.push(`${offK.map(nameOf).join('、')}在軸外，第一輪不會開爆裂（等於浪費一個關鍵角）`); }
     // 紅蓮反擊檢查
@@ -831,7 +843,8 @@ function speedBlock(sp,label){
 function chainBlock(ch){
   if(!ch.valid) return `<div class="badge bad">爆裂鏈不完整：缺 ${ch.missing.join('、')}</div>`;
   const w=x=>x?`<span class="who">P${x.pos} ${esc(x.c.name['zh-TW'])}</span>`:'<span class="who">?</span>';
-  return `<div class="chain">${burstBadge('I')}${w(ch.b1)}<span class="arrow">→</span>${burstBadge('II')}${w(ch.b2)}<span class="arrow">→</span>${burstBadge('III')}${w(ch.b3)}</div>`;
+  const re=ch.reB1?`<span class="arrow">→</span><span class="badge b1" title="超級巨星阿妮斯開完後再入 B1 段">再入B1</span>${w(ch.reB1)}`:'';
+  return `<div class="chain">${burstBadge('I')}${w(ch.b1)}${re}<span class="arrow">→</span>${burstBadge('II')}${w(ch.b2)}<span class="arrow">→</span>${burstBadge('III')}${w(ch.b3)}</div>`+(ch.stages>3?`<div class="muted">四段軸：全爆裂比一般慢約 ${ch.extraSec.toFixed(1)} 秒，速度比較時視為慢一階。</div>`:'');
 }
 function renderAnalysis(){
   const ids=enemy.filter(Boolean); const el=$('#analysis');
@@ -849,7 +862,7 @@ function renderAnalysis(){
   if(heur.length) h+=`<div class="muted" style="margin-top:4px">特徵：${heur.join('、')}</div>`;
   h+=arenaBlock(enemy);
   h+=`<h3>逐位威脅</h3>`;
-  h+=enemy.map((id,i)=>{ const c=byId[id]; const pos=i===0||i===4?'<span class="badge warn" title="最常被集火">承傷位</span>':(i===2||i===3?'<span class="badge good" title="最安全">安全位</span>':''); const cr=chainRole(enemy,id); const axis=cr?`<span class="badge good" title="第一輪會開這段爆裂">開 ${cr}</span>`:(burstDependent(id)?`<span class="badge bad" title="同類型有人排在更前面，第一輪不會開爆裂">軸外：爆裂不會開</span>`:`<span class="badge" title="第一輪不開爆裂，只靠普攻與被動">軸外</span>`); return `<div class="threat"><span class="p">P${i+1}</span><div>${unitLine(id)} ${pos} ${axis} ${posInfo(id)}<div>${tagBadges(id)||'<span class="muted">一般角色</span>'}</div></div></div>`; }).join('');
+  h+=enemy.map((id,i)=>{ const c=byId[id]; const pos=i===0||i===4?'<span class="badge warn" title="最常被集火">承傷位</span>':(i===2||i===3?'<span class="badge good" title="最安全">安全位</span>':''); const cr=chainRole(enemy,id); const axis=cr?`<span class="badge good" title="第一輪會開這段爆裂">開 ${cr}</span>`:(burstDependent(id)?`<span class="badge bad" title="同類型有人排在更前面，第一輪不會開爆裂">軸外：爆裂不會開</span>`:`<span class="badge" title="第一輪不開爆裂，只靠普攻與被動">軸外</span>`); const star=id==='anis-star'?starModeText(enemy):''; return `<div class="threat"><span class="p">P${i+1}</span><div>${unitLine(id)} ${pos} ${axis} ${posInfo(id)}<div>${tagBadges(id)||'<span class="muted">一般角色</span>'}${star}</div></div></div>`; }).join('');
   const off=offChainKey(enemy);
   if(off.length) h+=`<div class="muted" style="margin-top:6px">⚠ 對方的 ${off.map(nameOf).join('、')} 在軸外：第一輪不會開爆裂，下方關於她們爆裂效果的提示要等第二輪（冷卻後、且軸內同類型角陣亡或輪替）才成立。</div>`;
   el.innerHTML=h;
@@ -932,13 +945,16 @@ function renderMyEval(ctx){
     if(m.tpl.counters.includes(e.arch)||e.tpl.counteredBy.includes(m.arch)){ pts+=2; good.push(`我方「${ARCH_NAME[m.arch]}」克制對方「${ARCH_NAME[e.arch]}」`); }
     if(e.tpl.counters.includes(m.arch)||m.tpl.counteredBy.includes(e.arch)){ pts-=2; bad.push(`對方「${ARCH_NAME[e.arch]}」克制我方「${ARCH_NAME[m.arch]}」`); }
   }
-  const dc=ctx.speed.cycles-mySp.cycles;
+  const dc=(ctx.speed.cycles+0.5*(ctx.chain.stages-3))-(mySp.cycles+0.5*(myCh.stages-3)); // 四段軸視為慢半階
   const mj=ctx.chain.valid?mirrorJudge(mine,mySp.tier,enemy,ctx.speed.tier):null;
+  if(myCh.stages>3) bad.push('我方是四段軸（超級巨星阿妮斯再入 B1），全爆裂晚約 0.5 秒，已計入速度比較');
+  if(ctx.chain.stages>3) good.push('對方是四段軸（超級巨星阿妮斯再入 B1），全爆裂晚約 0.5 秒，已計入速度比較');
+  if(myCh.starMode) good.push('我方超級巨星阿妮斯模式：'+(myCh.starMode==='own'?'我的星星（攻擊 +40%、全隊冷卻 −7.48 秒）':'大家的星星（全隊最大 HP +15%，失去攻擊加成與冷卻縮減）'));
   if(!ctx.chain.valid){ pts+=3; good.push('對方爆裂鏈不完整，我方先手必勝'); }
   else if(mj){ pts+=mj.pts; if(mj.good) good.push(mj.good); if(mj.bad) bad.push(mj.bad); }
   else if(MIRROR_UNITS.some(u=>mine.includes(u)&&enemy.includes(u))){ const u=MIRROR_UNITS.find(u=>mine.includes(u)&&enemy.includes(u)); bad.push(`雙方都有${nameOf(u)}但至少一方在軸外，不構成後手鏡像`); }
   else if(dc>0){ pts+=1.5; good.push(`我方 ${mySp.tier} 比對方 ${ctx.speed.tier} 快`); }
-  else if(dc<0){ const stall=myArch.some(a=>STALL_ARCH.has(a.arch)); pts-= stall?0.5:1.5; bad.push(`我方 ${mySp.tier} 比對方 ${ctx.speed.tier} 慢`+(stall?'（持久體系可接受）':'')); }
+  else if(dc<0){ const stall=myArch.some(a=>STALL_ARCH.has(a.arch)); pts-= stall?0.5:1.5; bad.push(`我方 ${mySp.tier}${myCh.stages>3?'（四段軸）':''} 比對方 ${ctx.speed.tier}${ctx.chain.stages>3?'（四段軸）':''} 慢`+(stall?'（持久體系可接受）':'')); }
   else { good.push('雙方同速，結果不穩'); }
   const myHi=mine.filter(i=>['SG','SMG','MG'].includes(byId[i].weapon));
   if(ctx.has('scarlet','scarlet-black-shadow')&&myHi.length){ pts-=1; bad.push('我方高射速武器（'+myHi.map(nameOf).join('、')+'）會被紅蓮 S2 反擊'); }
