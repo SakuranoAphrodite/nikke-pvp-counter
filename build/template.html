@@ -154,7 +154,7 @@ details.mods summary{color:var(--muted)}
     <div class="slots" id="enemySlots"></div>
     <details class="mods"><summary>進階：對方的充能速度超頻／量子魔方（會改變速度判定）</summary><div id="enemyMods"></div></details>
     <div class="row" style="margin-top:10px">
-      <input type="text" id="quickEnemy" placeholder="快速輸入：空格隔開 5 個名字或簡稱，例如「紅蓮 豺狼 白兔 桑迪 特蕾」，按 Enter" style="flex:1;min-width:260px">
+      <input type="text" id="quickEnemy" placeholder="快速輸入：名字或簡稱用空格隔開（紅蓮 豺狼 白兔 桑迪 特蕾），或直接打縮寫串（諾諾餅灰米），按 Enter" style="flex:1;min-width:260px">
       <button class="btn" id="btnQuickEnemy">套用</button>
       <button class="btn primary" id="btnPickEnemy" title="在視窗裡連點 5 位，一次選完">一次選整隊</button>
       <button class="btn" id="btnSaveEnemy">存到歷史</button>
@@ -859,12 +859,14 @@ function renderSlots(elId,team,teamKey){
 function save(){ LS.set('enemy',enemy); LS.set('mine',mine); LS.set('owned',[...owned]); LS.set('mode',mode); LS.set('history',history); }
 
 /* 名稱模糊比對 */
-function findByName(q){
+function findByName(q,exclude){
   q=q.trim().toLowerCase(); if(!q) return null;
   const norm=s=>s.toLowerCase().replace(/[\s:：·・\-_]/g,'');
-  const nq=norm(q);
+  const wantBase=/一般|普通|無珍藏|非珍藏/.test(q); q=q.replace(/一般|普通|無珍藏|非珍藏/g,'');
+  const nq=norm(q); if(!nq) return null;
   const scored=[];
   for(const c of CHARACTERS){
+    if(exclude&&exclude.has(c.id)) continue;
     const names=namesOf(c).map(norm);
     let s=0;
     for(const n of names){ if(n===nq){s=100;break;} if(n.startsWith(nq)) s=Math.max(s,80-(n.length-nq.length)); else if(n.includes(nq)) s=Math.max(s,60-(n.length-nq.length)); }
@@ -873,20 +875,36 @@ function findByName(q){
   if(!scored.length) return null;
   const tier=c=>TIER_RANK[c.pvpTier]||0;
   scored.sort((a,b)=>b.s-a.s||tier(b.c)-tier(a.c));
-  const top=scored[0];
-  // 簡稱對到同一家族多個版本（一般版／珍藏版／換裝）時：優先你角色庫裡有的，再比階級
-  if(owned.size&&!owned.has(top.c.id)){
-    const base=norm(top.c.name['zh-TW']).replace(/珍藏$/,'');
-    const fam=scored.filter(x=>x.s>=60&&owned.has(x.c.id)&&(norm(x.c.name['zh-TW']).startsWith(base)||x.c.id.startsWith(top.c.id+'-')));
-    if(fam.length) return fam[0].c;
+  let top=scored[0].c;
+  // 有珍藏版就預設珍藏版（除非寫「一般」）；珍藏版本身被選到時維持
+  if(!wantBase&&!top.id.endsWith('-treasure')){ const t=byId[top.id+'-treasure']; if(t&&!(exclude&&exclude.has(t.id))) top=t; }
+  if(wantBase&&top.id.endsWith('-treasure')){ const b=byId[top.id.replace(/-treasure$/,'')]; if(b) top=b; }
+  return top;
+}
+/* 不加空格的縮寫字串（例如「諾諾餅灰米」）：貪婪切成 2 字或 1 字，已用過的角色不重複 */
+function segmentNames(token,used){
+  const out=[]; let i=0;
+  while(i<token.length&&out.length<5){
+    let hit=null;
+    for(const len of [3,2,1]){ const piece=token.slice(i,i+len); if(piece.length<len) continue; const c=findByName(piece,used); if(c){ hit={c,len}; break; } }
+    if(!hit) return null;
+    out.push(hit.c); used.add(hit.c.id); i+=hit.len;
   }
-  return top.c;
+  return i>=token.length?out:null;
 }
 function quickFill(team,text,noteEl){
-  const parts=text.split(/[\s,，、/]+/).filter(Boolean).slice(0,5);
-  const notFound=[], hits=[];
-  parts.forEach((p,i)=>{ const c=findByName(p); if(c){ team[i]=c.id; hits.push(`${esc(p)}→${esc(c.name['zh-TW'])}`); } else notFound.push(p); });
-  if(noteEl) noteEl.innerHTML=(hits.length?'辨識：'+hits.join('、'):'')+(notFound.length?` <span style="color:var(--bad)">找不到：${esc(notFound.join('、'))}</span>`:'')+(hits.length?' <span class="muted">（簡稱對到多個版本時優先你擁有的；不對就點該格換人）</span>':'');
+  let parts=text.split(/[\s,，、/]+/).filter(Boolean);
+  const notFound=[], hits=[]; const used=new Set(); const picked=[];
+  for(const p of parts){
+    if(picked.length>=5) break;
+    const c=findByName(p,used);
+    if(c){ picked.push(c); used.add(c.id); hits.push(`${esc(p)}→${esc(c.name['zh-TW'])}`); continue; }
+    const seg=segmentNames(p,new Set(used)); // 整個對不到才當縮寫串拆解（例如「諾諾餅灰米」）
+    if(seg&&seg.length>1){ seg.forEach(x=>{ if(picked.length<5){ picked.push(x); used.add(x.id); } }); hits.push(`${esc(p)}→${esc(seg.map(x=>x.name['zh-TW']).join('＋'))}`); continue; }
+    notFound.push(p);
+  }
+  picked.slice(0,5).forEach((c,i)=>{ team[i]=c.id; });
+  if(noteEl) noteEl.innerHTML=(hits.length?'辨識：'+hits.join('、'):'')+(notFound.length?` <span style="color:var(--bad)">找不到：${esc(notFound.join('、'))}</span>`:'')+(hits.length?' <span class="muted">（有珍藏版一律預設珍藏，要一般版加「一般」；不對就點該格換人）</span>':'');
   else if(notFound.length) alert('找不到：'+notFound.join('、')+'\n可以改用英文名或先在選角視窗搜尋看看正確譯名。');
 }
 
