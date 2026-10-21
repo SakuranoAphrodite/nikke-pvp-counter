@@ -425,9 +425,13 @@ const DECK  = __DECK__;
 const ARENA_IDX=new Map((ARENA.teams||[]).map((t,i)=>[t[0],i]));
 const anyName=id=>byId[id]?byId[id].name['zh-TW']:((ARENA.names&&ARENA.names[id])||id);
 const teamKey=ids=>[...ids].sort().join(',');
+// 忽略珍藏版差異的後備索引（nikkeari 把珍藏記成收藏等級，有些回合沒標記）
+const stripT=id=>id==='laplace-ultimate-hero'?'laplace':id.replace(/-treasure$/,'');
+const teamKeyNT=ids=>[...ids].map(stripT).sort().join(',');
+const ARENA_IDX_NT=new Map(); (ARENA.teams||[]).forEach((t,i)=>{ const k=teamKeyNT(t[0].split(',')); if(!ARENA_IDX_NT.has(k)||ARENA.teams[ARENA_IDX_NT.get(k)][1]<t[1]) ARENA_IDX_NT.set(k,i); });
 const pct=(w,m)=>m?Math.round(w/m*100):null;
 function rowStats(row){ const ids=row[0].split(','); return {key:row[0],ids,m:row[1],w:row[2],am:row[3],aw:row[4],dm:row[5],dw:row[6],wr:pct(row[2],row[1]),awr:pct(row[4],row[3]),dwr:pct(row[6],row[5])}; }
-function arenaTeam(ids){ const i=ARENA_IDX.get(teamKey(ids)); return i===undefined?null:{idx:i,row:ARENA.teams[i]}; }
+function arenaTeam(ids){ let i=ARENA_IDX.get(teamKey(ids)); if(i!==undefined) return {idx:i,row:ARENA.teams[i],exact:true}; i=ARENA_IDX_NT.get(teamKeyNT(ids)); return i===undefined?null:{idx:i,row:ARENA.teams[i],exact:false}; }
 function arenaSimilar(ids,minOverlap){ const set=new Set(ids), out=[]; for(let i=0;i<ARENA.teams.length;i++){ const row=ARENA.teams[i]; const ov=row[0].split(',').filter(x=>set.has(x)).length; if(ov>=minOverlap) out.push({idx:i,row,ov}); } return out.sort((a,b)=>b.ov-a.ov||b.row[1]-a.row[1]).slice(0,5); }
 function beatenBy(idx){ return (ARENA.beatenBy[String(idx)]||[]).map(([j,n])=>({idx:j,row:ARENA.teams[j],n})); }
 function archVsRecord(myArch,enemyArchs){ let w=0,l=0; for(const e of enemyArchs){ w+=ARENA.archVs[myArch+'>'+e]||0; l+=ARENA.archVs[e+'>'+myArch]||0; } return {w,l}; }
@@ -437,7 +441,7 @@ function posInfo(id){ const c=ARENA.charPos&&ARENA.charPos[id]; if(!c||!c.n) ret
 function arenaBlock(ids){
   if(!ARENA.teams||!ARENA.teams.length) return '';
   const t=arenaTeam(ids); let h='';
-  if(t){ const s=rowStats(t.row); h+=`<div>這 5 人組合在冠軍競技場出場 <b>${s.m}</b> 場，勝率 <b>${s.wr}%</b>（進攻 ${s.awr==null?'–':s.awr}%／防守 ${s.dwr==null?'–':s.dwr}%）</div>`; }
+  if(t){ const s=rowStats(t.row); h+=`<div>這 5 人組合在冠軍競技場出場 <b>${s.m}</b> 場，勝率 <b>${s.wr}%</b>（進攻 ${s.awr==null?'–':s.awr}%／防守 ${s.dwr==null?'–':s.dwr}%）${t.exact?'':`<div class="muted">（資料中的組合為 ${teamLine(s)}，已忽略珍藏版差異；nikkeari 有些回合沒記錄珍藏標記）</div>`}</div>`; }
   else { const sim=arenaSimilar(ids,4); if(sim.length) h+=`<div class="muted">沒有完全相同的 5 人組合；相近隊伍（4 人相同）：</div>`+sim.map(x=>{ const s=rowStats(x.row); return `<div class="muted">・${teamLine(s)}：${s.m} 場，勝率 ${s.wr}%</div>`; }).join(''); else h+=`<div class="muted">冠軍競技場資料裡沒有相同或 4 人相同的隊伍。</div>`; }
   const archs=detectArchetypes(ids).map(a=>a.arch).filter(a=>ARENA.arch[a]&&ARENA.arch[a].m>=20);
   if(archs.length) h+=`<div class="muted" style="margin-top:4px">含同樣核心角的隊伍整體勝率：`+archs.map(a=>{ const s=ARENA.arch[a]; return `${ARCH_NAME[a]||a} ${pct(s.w,s.m)}%（${s.m} 場）`; }).join('、')+`</div>`;
@@ -446,7 +450,7 @@ function arenaBlock(ids){
 function beatenBlock(ids){
   if(!ARENA.teams||!ARENA.teams.length) return '';
   let t=arenaTeam(ids), list=[], title='';
-  if(t){ list=beatenBy(t.idx); title='實戰中打贏過這隊的隊伍'; }
+  if(t){ list=beatenBy(t.idx); title=t.exact?'實戰中打贏過這隊的隊伍':'實戰中打贏過這隊（忽略珍藏版差異）的隊伍'; }
   else { const sim=arenaSimilar(ids,4); const agg={}; for(const x of sim) for(const b of beatenBy(x.idx)) agg[b.idx]=(agg[b.idx]||0)+b.n; list=Object.entries(agg).map(([j,n])=>({idx:+j,row:ARENA.teams[+j],n})).sort((a,b)=>b.n-a.n).slice(0,6); title='實戰中打贏過相近隊伍（4 人相同）的隊伍'; }
   if(!list.length) return '';
   return `<h3>${title} ${srcBadges(['ari'])}</h3>`+list.map(b=>{ const s=rowStats(b.row); const own=owned.size?s.ids.filter(i=>byId[i]&&owned.has(i)).length:null; return `<div class="rec"><span class="badge good">贏 ${b.n} 次</span><span class="t">${teamLine(s)} <span class="muted">（該隊整體 ${s.m} 場，勝率 ${s.wr}%${own!==null?'；你有 '+own+'/5':''}）</span></span>${s.ids.every(i=>byId[i])?`<button class="btn" data-arena-apply="${b.idx}" style="font-size:11px;padding:2px 8px">帶入試算</button>`:''}</div>`; }).join('')+`<div class="muted">資料裡站位不固定，帶入後請自行調整 P1～P5；勝場數來自 JP／KR／國際服合計，環境可能與台港澳服有差。</div>`;
