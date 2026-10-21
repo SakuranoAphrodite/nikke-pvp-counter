@@ -35,6 +35,22 @@
    "date": "2024"
   },
   {
+   "title": "社群打法：對超級巨星阿妮斯隊用更慢的超級巨星阿妮斯後手鏡像",
+   "url": "https://nikke.gg/anis-star-analysis-should-you-pull/",
+   "source": "社群經驗＋nikke.gg 技能分析", "kind": "打法",
+   "enemy": ["anis-star-system"], "my": ["anis-star-system"], "units": ["anis-star"],
+   "note": "她的強度集中在爆裂後 10 秒的流星與防禦加成；自己慢一階後開，對方窗口先結束就站得比她久。連結是技能數值出處，打法本身為玩家經驗",
+   "date": "2026-10"
+  },
+  {
+   "title": "Prydwen：Meta Teams and Archetypes，夏日阿妮斯鏡像（後手）的段落",
+   "url": "https://www.prydwen.gg/nikke/guides/pvp-sp-arena-teams",
+   "source": "Prydwen", "kind": "攻略",
+   "enemy": ["sanis-stall"], "my": ["sanis-stall"], "units": ["anis-sparkling-summer"],
+   "note": "用帶諾伊斯的鏡像隊打夏日阿妮斯隊，自己的夏日阿妮斯會治得比對方多；社群實戰做法是刻意慢一階讓自己後開、窗口更持久",
+   "date": "2024"
+  },
+  {
    "title": "Prydwen：Meta Teams and Archetypes，復活隊的解法段落",
    "url": "https://www.prydwen.gg/nikke/guides/pvp-sp-arena-teams",
    "source": "Prydwen", "kind": "攻略",
