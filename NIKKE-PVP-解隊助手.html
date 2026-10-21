@@ -514,9 +514,19 @@ function beatenBlock(ids){
   if(!ARENA.teams||!ARENA.teams.length) return '';
   let t=arenaTeam(ids), list=[], title='';
   if(t){ list=beatenBy(t.idx); title=t.exact?'實戰中打贏過這隊的隊伍':'實戰中打贏過這隊（忽略珍藏版差異）的隊伍'; }
-  else { const sim=arenaSimilar(ids,4); const agg={}, smp={}; for(const x of sim) for(const b of beatenBy(x.idx)){ agg[b.idx]=(agg[b.idx]||0)+b.n; smp[b.idx]=(smp[b.idx]||[]).concat(b.samples).slice(0,2); } list=Object.entries(agg).map(([j,n])=>({idx:+j,row:ARENA.teams[+j],n,samples:smp[j]||[]})).sort((a,b)=>b.n-a.n).slice(0,6); title='實戰中打贏過相近隊伍（4 人相同）的隊伍'; }
-  if(!list.length) return '';
-  return `<h3>${title} ${srcBadges(['ari'])}</h3>`+list.map(b=>{ const s=rowStats(b.row); const own=owned.size?s.ids.filter(i=>byId[i]&&owned.has(i)).length:null; b.samples=b.samples||[]; const prov=b.samples.length?`<br><span class="muted">出處：${b.samples.map(sampleText).join('；')}${b.n>b.samples.length?`；另 ${b.n-b.samples.length} 場`:''}</span>`:''; return `<div class="rec"><span class="badge good">贏 ${b.n} 次</span><span class="t">${teamLine(s)} <span class="muted">（該隊整體 ${s.m} 場，勝率 ${s.wr}%${own!==null?'；你有 '+own+'/5':''}）</span>${prov}</span>${s.ids.every(i=>byId[i])?`<button class="btn" data-arena-apply="${b.idx}" style="font-size:11px;padding:2px 8px">帶入試算</button>`:''}</div>`; }).join('')+`<div class="muted">出處是 nikkeari 資料中的賽季與輪次；該站沒有單場對局的網頁，回放只能在遊戲內看。資料裡站位不固定，帶入後請自行調整 P1～P5；勝場數來自 JP／KR／國際服合計。</div>`;
+  const renderWinner=b=>{ const s=rowStats(b.row); const own=owned.size?s.ids.filter(i=>byId[i]&&owned.has(i)).length:null; b.samples=b.samples||[]; const prov=b.samples.length?`<br><span class="muted">出處：${b.samples.map(sampleText).join('；')}${b.n>b.samples.length?`；另 ${b.n-b.samples.length} 場`:''}</span>`:''; return `<div class="rec"><span class="badge good">贏 ${b.n} 次</span><span class="t">${teamLine(s)} <span class="muted">（該隊整體 ${s.m} 場，勝率 ${s.wr}%${own!==null?'；你有 '+own+'/5':''}）</span>${prov}</span>${s.ids.every(i=>byId[i])?`<button class="btn" data-arena-apply="${b.idx}" style="font-size:11px;padding:2px 8px">帶入試算</button>`:''}</div>`; };
+  const foot=`<div class="muted">出處是 nikkeari 資料中的賽季與輪次；該站沒有單場對局的網頁，回放只能在遊戲內看。資料裡站位不固定，帶入後請自行調整 P1～P5；勝場數來自 JP／KR／國際服合計。</div>`;
+  if(t){ if(!list.length) return ''; return `<h3>${title} ${srcBadges(['ari'])}</h3>`+list.map(renderWinner).join('')+foot; }
+  // 沒有完全相同的隊伍：依每一支相近隊分組，標明它是誰、和你輸入的差在哪
+  const sim=arenaSimilar(ids,4); if(!sim.length) return '';
+  const mySet=new Set(ids.map(stripT)); let h=`<h3>實戰中打贏過相近隊伍（4 人相同）的隊伍 ${srcBadges(['ari'])}</h3><div class="muted">資料裡沒有完全相同的 5 人組合，以下每一組先寫出對方的相近隊是誰，再列打贏它的隊伍。</div>`;
+  let any=false;
+  for(const x of sim){
+    const s=rowStats(x.row); const winners=beatenBy(x.idx).slice(0,4); if(!winners.length) continue; any=true;
+    const theirs=s.ids.find(i=>!mySet.has(stripT(i))); const mine_=ids.find(i=>!s.ids.map(stripT).includes(stripT(i)));
+    h+=`<div style="margin:8px 0 2px"><span class="badge warn">相近隊</span> <b>${teamLine(s)}</b> <span class="muted">（${s.m} 場，勝率 ${s.wr}%；和你輸入的差：對方多 ${theirs?anyName(theirs):'—'}、少 ${mine_?nameOf(mine_):'—'}）</span></div>`+winners.map(renderWinner).join('');
+  }
+  return any?h+foot:'';
 }
 function renderArenaNote(){ const el=$('#arenaDataNote'); if(!el) return; const sv=ARENA.servers||{}; el.textContent=`來源：にけあり！（nikkeari.cc）公開的冠軍競技場對戰資料，抓取日期 ${ARENA.fetched||'未知'}，賽季 ${(ARENA.seasons||[]).join('、')}，共 ${ARENA.rounds||0} 回合（`+Object.entries(sv).map(([k,v])=>`${k} ${v.rounds} 回合`).join('、')+`）。資料由志願玩家提供截圖整理，非官方；冠軍競技場全員同步 400、無戰力懲罰，所以勝率反映的是純陣容相剋。執行 build/fetch_arena_stats.py --refresh 可更新。`; }
 
