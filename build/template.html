@@ -317,7 +317,9 @@ details.mods summary{color:var(--muted)}
     </ol>
     <details><summary><b>名字簡稱表</b>（點開看）</summary>
     <p class="muted">快速輸入與選角搜尋認得的綽號、簡稱與單字縮寫。這些是從社群常見寫法（巴哈、PTT、KR／JP 隊伍縮寫如「諾帽餅」「노노비수라」）整理的，<b>沒有統計來源</b>，不是使用頻率排名；要增補請改 <code>build/data/nicknames.json</code> 再執行 build.py。簡體名由上游資料提供，不列在這裡。</p>
-    <div class="row"><input type="text" id="nickSearch" placeholder="搜尋角色或簡稱" style="flex:1;min-width:200px"></div>
+    <p class="muted">單字輸入的規則：先看有沒有角色的綽號剛好是這個字（白→布蘭兒、諾→諾雅），沒有的話取名字以這個字開頭的角色，多位同首字時選 PVP 階級高、冠軍競技場出場多的那位，有珍藏版一律珍藏版。下面「單字對應」列出每個首字實際會對到誰；想改對應就在 nicknames.json 給想要的角色加上那個單字。</p>
+    <details><summary>單字對應（打一個字會對到誰）</summary><div id="charTable" style="margin-top:6px"></div></details>
+    <div class="row" style="margin-top:8px"><input type="text" id="nickSearch" placeholder="搜尋角色或簡稱" style="flex:1;min-width:200px"></div>
     <div id="nickTable" style="margin-top:6px"></div>
     </details>
     <h3>冠軍競技場實戰數據怎麼來的</h3>
@@ -1003,12 +1005,13 @@ function findByName(q,exclude){
     if(exclude&&exclude.has(c.id)) continue;
     const names=namesOf(c).map(norm);
     let s=0;
-    for(const n of names){ if(n===nq){s=100;break;} if(n.startsWith(nq)) s=Math.max(s,80-(n.length-nq.length)); else if(n.includes(nq)) s=Math.max(s,60-(n.length-nq.length)); }
+    names.forEach((n,k)=>{ if(s>=100) return; if(n===nq){s=100;return;} if(n.startsWith(nq)) s=Math.max(s,nq.length===1?(k<5?80:76):80-(n.length-nq.length)); else if(n.includes(nq)) s=Math.max(s,60-(n.length-nq.length)); }); // 單字時正式名開頭（k<5）優先於綽號開頭：「小」→小紅帽而不是「小紅帽拉毗」
     if(s>0) scored.push({c,s});
   }
   if(!scored.length) return null;
-  const tier=c=>TIER_RANK[c.pvpTier]||0;
-  scored.sort((a,b)=>b.s-a.s||tier(b.c)-tier(a.c));
+  // 單字（或多人同樣開頭）時：綽號完全相同最優先，再來 PVP 階級高、冠軍競技場出場多的角色（「娜」→娜由塔而不是娜嘉）
+  const tier=c=>TIER_RANK[c.pvpTier]||0, usage=c=>(ARENA.charPos&&ARENA.charPos[c.id]&&ARENA.charPos[c.id].n)||0;
+  scored.sort((a,b)=>b.s-a.s||tier(b.c)-tier(a.c)||usage(b.c)-usage(a.c));
   let top=scored[0].c;
   // 有珍藏版就預設珍藏版（除非寫「一般」）；珍藏版本身被選到時維持
   if(!wantBase&&!top.id.endsWith('-treasure')){ const t=byId[top.id+'-treasure']; if(t&&!(exclude&&exclude.has(t.id))) top=t; }
@@ -1324,7 +1327,14 @@ function renderNickTable(){
   const rows=CHARACTERS.filter(c=>(NICK[c.id]||[]).length).filter(c=>!q||namesOf(c).some(n=>String(n).toLowerCase().includes(q)));
   el.innerHTML=rows.length?`<table><tr><th>角色</th><th>簡稱／綽號</th></tr>`+rows.map(c=>`<tr><td>${avatar(c.id,'s')} ${esc(c.name['zh-TW'])}<div class="muted" style="font-size:10px">${esc(c.name.en)}</div></td><td>${NICK[c.id].map(n=>`<span class="badge">${esc(n)}</span>`).join(' ')}</td></tr>`).join('')+`</table>`:'<div class="muted">沒有符合的角色。</div>';
 }
-function switchTab(name){ document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x.dataset.tab===name)); document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active')); $('#tab-'+name).classList.add('active'); if(name==='roster') renderRoster(); if(name==='help') renderNickTable(); window.scrollTo(0,0); }
+function renderCharTable(){
+  const el=$('#charTable'); if(!el) return;
+  const firsts=new Map(); // 首字 -> 以它開頭的角色（含綽號），只列 PVP 有用的角色（階級 B 以上）
+  for(const c of CHARACTERS){ if((TIER_RANK[c.pvpTier]||0)<(TIER_RANK['B']||0)) continue; for(const n of namesOf(c)){ const ch=String(n).trim()[0]; if(ch&&/[㐀-鿿]/.test(ch)){ if(!firsts.has(ch)) firsts.set(ch,new Set()); firsts.get(ch).add(c); } } }
+  const rows=[...firsts.entries()].map(([ch,set])=>{ const hit=findByName(ch); const others=[...set].filter(c=>hit&&c.id!==hit.id&&c.id!==hit.id.replace(/-treasure$/,'')).map(c=>c.name['zh-TW']); return {ch,hit,others}; }).filter(r=>r.hit).sort((a,b)=>a.ch.localeCompare(b.ch,'zh-Hant'));
+  el.innerHTML=`<table><tr><th>字</th><th>對到</th><th>其他同首字（要指定請打兩個字）</th></tr>`+rows.map(r=>`<tr><td><b>${esc(r.ch)}</b></td><td>${avatar(r.hit.id,'s')} ${esc(r.hit.name['zh-TW'])}</td><td class="muted">${esc(r.others.join('、'))}</td></tr>`).join('')+`</table>`;
+}
+function switchTab(name){ document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x.dataset.tab===name)); document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active')); $('#tab-'+name).classList.add('active'); if(name==='roster') renderRoster(); if(name==='help'){ renderNickTable(); renderCharTable(); } window.scrollTo(0,0); }
 
 /* ====================== 事件 ====================== */
 document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>switchTab(b.dataset.tab));
