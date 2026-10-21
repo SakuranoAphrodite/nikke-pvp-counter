@@ -39,6 +39,9 @@ def build():
     tpls = json.loads((DATA / "templates.json").read_text(encoding="utf-8"))
     extra_file = DATA / "templates-extra.json"  # 本工具自行補充的模板（獨立嵌入，線上更新上游模板後再合併）
     extra = json.loads(extra_file.read_text(encoding="utf-8")) if extra_file.exists() else []
+    mined_file = DATA / "templates-mined.json"  # 由 mine_templates.py 從冠軍競技場資料挖出的模板
+    if mined_file.exists():
+        extra = extra + json.loads(mined_file.read_text(encoding="utf-8"))
     ver_file = DATA / "version.json"
     ver = json.loads(ver_file.read_text(encoding="utf-8"))["fetched"] if ver_file.exists() else datetime.date.today().isoformat()
     html = (HERE / "template.html").read_text(encoding="utf-8")

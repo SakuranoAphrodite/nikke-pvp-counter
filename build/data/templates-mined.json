@@ -1,0 +1,3038 @@
+[
+ {
+  "id": "mined-0",
+  "name": {
+   "en": "Anis: Star + Biscuit + Blanc (data-mined)",
+   "zh-TW": "阿妮斯:超級巨星＋餅乾＋布蘭兒（資料挖掘）",
+   "zh-CN": "阿妮斯:超級巨星＋餅乾＋布蘭兒（数据挖掘）",
+   "ja": "Anis: Star + Biscuit + Blanc（データ）"
+  },
+  "archetype": "mined-0",
+  "mode": "both",
+  "required": [
+   "anis-star",
+   "biscuit",
+   "blanc"
+  ],
+  "flex": [
+   {
+    "slot": 2,
+    "options": [
+     "privaty-treasure",
+     "anis-sparkling-summer",
+     "vesti-tactical-upgrade",
+     "snow-white-heavy-arms",
+     "privaty",
+     "ada"
+    ]
+   },
+   {
+    "slot": 4,
+    "options": [
+     "maiden-ice-rose",
+     "cinderella",
+     "mihara-bonding-chain",
+     "neon-vision-eye",
+     "snow-white-heavy-arms",
+     "emilia"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "I",
+   "II",
+   "III",
+   "II",
+   "III"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [
+   "mined-7",
+   "mined-6",
+   "mined-2",
+   "mined-3",
+   "mined-21",
+   "mined-16",
+   "mined-9",
+   "mined-5",
+   "mined-10",
+   "mined-20",
+   "mined-14",
+   "helm-carry",
+   "nayuta-carry",
+   "nayuta-rush",
+   "rosanna-counter",
+   "sg-burst",
+   "noah-stall",
+   "scarlet-nuke",
+   "vesti-tu",
+   "cinderella-carry",
+   "moran-system",
+   "mermaid-disrupt",
+   "blanc-indom",
+   "share-wall"
+  ],
+  "counteredBy": [
+   "mined-1",
+   "mined-4",
+   "mined-13"
+  ],
+  "priority": 2,
+  "_stats": {
+   "matches": 4835,
+   "winRate": 72.1,
+   "vs": [
+    {
+     "vs": "mined-7",
+     "games": 150,
+     "win": 88
+    },
+    {
+     "vs": "mined-6",
+     "games": 145,
+     "win": 66
+    },
+    {
+     "vs": "mined-2",
+     "games": 282,
+     "win": 70
+    },
+    {
+     "vs": "mined-3",
+     "games": 230,
+     "win": 63
+    },
+    {
+     "vs": "mined-21",
+     "games": 38,
+     "win": 63
+    },
+    {
+     "vs": "mined-16",
+     "games": 67,
+     "win": 82
+    },
+    {
+     "vs": "mined-9",
+     "games": 127,
+     "win": 69
+    },
+    {
+     "vs": "mined-5",
+     "games": 186,
+     "win": 77
+    },
+    {
+     "vs": "mined-10",
+     "games": 76,
+     "win": 89
+    },
+    {
+     "vs": "mined-20",
+     "games": 34,
+     "win": 71
+    },
+    {
+     "vs": "mined-14",
+     "games": 64,
+     "win": 62
+    }
+   ],
+   "vsArch": [
+    {
+     "vs": "helm-carry",
+     "games": 802,
+     "win": 72
+    },
+    {
+     "vs": "nayuta-carry",
+     "games": 942,
+     "win": 77
+    },
+    {
+     "vs": "nayuta-rush",
+     "games": 615,
+     "win": 74
+    },
+    {
+     "vs": "rosanna-counter",
+     "games": 374,
+     "win": 96
+    },
+    {
+     "vs": "sg-burst",
+     "games": 374,
+     "win": 96
+    },
+    {
+     "vs": "noah-stall",
+     "games": 143,
+     "win": 62
+    },
+    {
+     "vs": "scarlet-nuke",
+     "games": 309,
+     "win": 81
+    },
+    {
+     "vs": "vesti-tu",
+     "games": 902,
+     "win": 84
+    },
+    {
+     "vs": "cinderella-carry",
+     "games": 356,
+     "win": 65
+    },
+    {
+     "vs": "moran-system",
+     "games": 827,
+     "win": 73
+    },
+    {
+     "vs": "mermaid-disrupt",
+     "games": 127,
+     "win": 77
+    },
+    {
+     "vs": "blanc-indom",
+     "games": 344,
+     "win": 70
+    },
+    {
+     "vs": "share-wall",
+     "games": 34,
+     "win": 79
+    }
+   ]
+  },
+  "notes": {
+   "en": "Data-mined from 4835 Champion Arena rounds, win rate 72%. Flex options are the most common teammates per position.",
+   "zh-TW": "由 nikkeari 冠軍競技場 4835 回合統計而來（整體勝率 72%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-CN": "数据挖掘：4835 回合，胜率 72%。",
+   "ja": "データ：4835回合、勝率 72%。"
+  }
+ },
+ {
+  "id": "mined-1",
+  "name": {
+   "en": "Centi: Treasure + Laplace: Ultimate Hero + Trina (data-mined)",
+   "zh-TW": "桑迪 珍藏＋拉普拉斯:究極英雄＋特蕾娜（資料挖掘）",
+   "zh-CN": "桑迪 珍藏＋拉普拉斯:究極英雄＋特蕾娜（数据挖掘）",
+   "ja": "Centi: Treasure + Laplace: Ultimate Hero + Trina（データ）"
+  },
+  "archetype": "mined-1",
+  "mode": "both",
+  "required": [
+   "centi-treasure",
+   "laplace-ultimate-hero",
+   "trina"
+  ],
+  "flex": [
+   {
+    "slot": 1,
+    "options": [
+     "soda",
+     "sakura",
+     "anis",
+     "rumani",
+     "noah",
+     "jackal"
+    ]
+   },
+   {
+    "slot": 4,
+    "options": [
+     "anis",
+     "jackal",
+     "rumani",
+     "sakura",
+     "helm-treasure",
+     "snow-white-heavy-arms"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "II",
+   "I",
+   "II",
+   "III",
+   "II"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [
+   "mined-7",
+   "mined-0",
+   "mined-8",
+   "mined-6",
+   "mined-12",
+   "mined-9",
+   "mined-17",
+   "rosanna-counter",
+   "sg-burst",
+   "vesti-tu",
+   "mermaid-disrupt",
+   "moran-system",
+   "cinderella-carry",
+   "anis-star-system",
+   "noah-stall",
+   "blanc-indom",
+   "scarlet-nuke"
+  ],
+  "counteredBy": [
+   "mined-3",
+   "mined-10",
+   "mined-14",
+   "mined-19",
+   "mined-20",
+   "mined-23",
+   "helm-carry",
+   "nayuta-rush"
+  ],
+  "priority": 2,
+  "_stats": {
+   "matches": 3261,
+   "winRate": 61.5,
+   "vs": [
+    {
+     "vs": "mined-7",
+     "games": 58,
+     "win": 76
+    },
+    {
+     "vs": "mined-0",
+     "games": 312,
+     "win": 81
+    },
+    {
+     "vs": "mined-8",
+     "games": 66,
+     "win": 92
+    },
+    {
+     "vs": "mined-6",
+     "games": 99,
+     "win": 87
+    },
+    {
+     "vs": "mined-12",
+     "games": 77,
+     "win": 62
+    },
+    {
+     "vs": "mined-9",
+     "games": 86,
+     "win": 77
+    },
+    {
+     "vs": "mined-17",
+     "games": 51,
+     "win": 73
+    }
+   ],
+   "vsArch": [
+    {
+     "vs": "rosanna-counter",
+     "games": 57,
+     "win": 75
+    },
+    {
+     "vs": "sg-burst",
+     "games": 57,
+     "win": 75
+    },
+    {
+     "vs": "vesti-tu",
+     "games": 631,
+     "win": 61
+    },
+    {
+     "vs": "mermaid-disrupt",
+     "games": 46,
+     "win": 87
+    },
+    {
+     "vs": "moran-system",
+     "games": 671,
+     "win": 65
+    },
+    {
+     "vs": "cinderella-carry",
+     "games": 199,
+     "win": 88
+    },
+    {
+     "vs": "anis-star-system",
+     "games": 502,
+     "win": 76
+    },
+    {
+     "vs": "noah-stall",
+     "games": 99,
+     "win": 72
+    },
+    {
+     "vs": "blanc-indom",
+     "games": 181,
+     "win": 66
+    },
+    {
+     "vs": "scarlet-nuke",
+     "games": 106,
+     "win": 75
+    }
+   ]
+  },
+  "notes": {
+   "en": "Data-mined from 3261 Champion Arena rounds, win rate 62%. Flex options are the most common teammates per position.",
+   "zh-TW": "由 nikkeari 冠軍競技場 3261 回合統計而來（整體勝率 62%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-CN": "数据挖掘：3261 回合，胜率 62%。",
+   "ja": "データ：3261回合、勝率 62%。"
+  }
+ },
+ {
+  "id": "mined-2",
+  "name": {
+   "en": "Moran: Treasure + Neon: Vision Eye + Noah (data-mined)",
+   "zh-TW": "牡丹 珍藏＋尼恩:透視之眼＋諾雅（資料挖掘）",
+   "zh-CN": "牡丹 珍藏＋尼恩:透視之眼＋諾雅（数据挖掘）",
+   "ja": "Moran: Treasure + Neon: Vision Eye + Noah（データ）"
+  },
+  "archetype": "mined-2",
+  "mode": "both",
+  "required": [
+   "moran-treasure",
+   "neon-vision-eye",
+   "noah"
+  ],
+  "flex": [
+   {
+    "slot": 1,
+    "options": [
+     "noise",
+     "rumani",
+     "anis-star",
+     "jackal",
+     "label",
+     "little-mermaid"
+    ]
+   },
+   {
+    "slot": 4,
+    "options": [
+     "jackal",
+     "rumani",
+     "snow-white-heavy-arms",
+     "trina",
+     "helm-treasure",
+     "mihara-bonding-chain"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "I",
+   "I",
+   "III",
+   "II",
+   "I"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [
+   "mined-3",
+   "mined-19",
+   "mined-20",
+   "mined-14",
+   "mined-18",
+   "vesti-tu",
+   "blanc-indom",
+   "scarlet-nuke",
+   "helm-carry",
+   "nayuta-carry",
+   "nayuta-rush",
+   "rosanna-counter",
+   "sg-burst",
+   "mermaid-disrupt"
+  ],
+  "counteredBy": [
+   "mined-0",
+   "mined-6",
+   "mined-8",
+   "mined-9",
+   "mined-10",
+   "anis-star-system",
+   "noah-stall"
+  ],
+  "priority": 2,
+  "_stats": {
+   "matches": 2551,
+   "winRate": 58.4,
+   "vs": [
+    {
+     "vs": "mined-3",
+     "games": 182,
+     "win": 69
+    },
+    {
+     "vs": "mined-19",
+     "games": 36,
+     "win": 75
+    },
+    {
+     "vs": "mined-20",
+     "games": 42,
+     "win": 64
+    },
+    {
+     "vs": "mined-14",
+     "games": 37,
+     "win": 70
+    },
+    {
+     "vs": "mined-18",
+     "games": 47,
+     "win": 66
+    }
+   ],
+   "vsArch": [
+    {
+     "vs": "vesti-tu",
+     "games": 463,
+     "win": 68
+    },
+    {
+     "vs": "blanc-indom",
+     "games": 154,
+     "win": 61
+    },
+    {
+     "vs": "scarlet-nuke",
+     "games": 96,
+     "win": 91
+    },
+    {
+     "vs": "helm-carry",
+     "games": 529,
+     "win": 68
+    },
+    {
+     "vs": "nayuta-carry",
+     "games": 489,
+     "win": 69
+    },
+    {
+     "vs": "nayuta-rush",
+     "games": 385,
+     "win": 69
+    },
+    {
+     "vs": "rosanna-counter",
+     "games": 73,
+     "win": 88
+    },
+    {
+     "vs": "sg-burst",
+     "games": 73,
+     "win": 88
+    },
+    {
+     "vs": "mermaid-disrupt",
+     "games": 39,
+     "win": 74
+    }
+   ]
+  },
+  "notes": {
+   "en": "Data-mined from 2551 Champion Arena rounds, win rate 58%. Flex options are the most common teammates per position.",
+   "zh-TW": "由 nikkeari 冠軍競技場 2551 回合統計而來（整體勝率 58%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-CN": "数据挖掘：2551 回合，胜率 58%。",
+   "ja": "データ：2551回合、勝率 58%。"
+  }
+ },
+ {
+  "id": "mined-3",
+  "name": {
+   "en": "Helm: Treasure + Nayuta + Snow White: Heavy Arms (data-mined)",
+   "zh-TW": "海倫 珍藏＋娜由塔＋白雪公主:重型武裝（資料挖掘）",
+   "zh-CN": "海倫 珍藏＋娜由塔＋白雪公主:重型武裝（数据挖掘）",
+   "ja": "Helm: Treasure + Nayuta + Snow White: Heavy Arms（データ）"
+  },
+  "archetype": "mined-3",
+  "mode": "both",
+  "required": [
+   "helm-treasure",
+   "nayuta",
+   "snow-white-heavy-arms"
+  ],
+  "flex": [
+   {
+    "slot": 2,
+    "options": [
+     "laplace-ultimate-hero",
+     "emilia",
+     "red-hood",
+     "anis-star",
+     "privaty-treasure",
+     "liberalio"
+    ]
+   },
+   {
+    "slot": 3,
+    "options": [
+     "red-hood",
+     "emilia",
+     "laplace-ultimate-hero",
+     "label",
+     "rosanna-treasure",
+     "rosanna"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "II",
+   "III",
+   "III",
+   "Λ",
+   "III"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [
+   "mined-1",
+   "mined-4",
+   "mined-13",
+   "nayuta-carry",
+   "nayuta-rush",
+   "rosanna-counter",
+   "sg-burst",
+   "blanc-indom",
+   "vesti-tu",
+   "scarlet-nuke",
+   "mermaid-disrupt"
+  ],
+  "counteredBy": [
+   "mined-0",
+   "mined-2",
+   "mined-6",
+   "mined-9",
+   "mined-10",
+   "mined-12",
+   "mined-18",
+   "mined-19",
+   "anis-star-system",
+   "noah-stall"
+  ],
+  "priority": 2,
+  "_stats": {
+   "matches": 2258,
+   "winRate": 63.7,
+   "vs": [
+    {
+     "vs": "mined-1",
+     "games": 225,
+     "win": 73
+    },
+    {
+     "vs": "mined-4",
+     "games": 146,
+     "win": 76
+    },
+    {
+     "vs": "mined-13",
+     "games": 41,
+     "win": 85
+    }
+   ],
+   "vsArch": [
+    {
+     "vs": "nayuta-carry",
+     "games": 433,
+     "win": 64
+    },
+    {
+     "vs": "nayuta-rush",
+     "games": 352,
+     "win": 63
+    },
+    {
+     "vs": "rosanna-counter",
+     "games": 90,
+     "win": 92
+    },
+    {
+     "vs": "sg-burst",
+     "games": 90,
+     "win": 92
+    },
+    {
+     "vs": "blanc-indom",
+     "games": 142,
+     "win": 66
+    },
+    {
+     "vs": "vesti-tu",
+     "games": 434,
+     "win": 84
+    },
+    {
+     "vs": "scarlet-nuke",
+     "games": 117,
+     "win": 86
+    },
+    {
+     "vs": "mermaid-disrupt",
+     "games": 45,
+     "win": 89
+    }
+   ]
+  },
+  "notes": {
+   "en": "Data-mined from 2258 Champion Arena rounds, win rate 64%. Flex options are the most common teammates per position.",
+   "zh-TW": "由 nikkeari 冠軍競技場 2258 回合統計而來（整體勝率 64%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-CN": "数据挖掘：2258 回合，胜率 64%。",
+   "ja": "データ：2258回合、勝率 64%。"
+  }
+ },
+ {
+  "id": "mined-4",
+  "name": {
+   "en": "Anis + Laplace: Ultimate Hero + Soda (data-mined)",
+   "zh-TW": "阿妮斯＋拉普拉斯:究極英雄＋索達（資料挖掘）",
+   "zh-CN": "阿妮斯＋拉普拉斯:究極英雄＋索達（数据挖掘）",
+   "ja": "Anis + Laplace: Ultimate Hero + Soda（データ）"
+  },
+  "archetype": "mined-4",
+  "mode": "both",
+  "required": [
+   "anis",
+   "laplace-ultimate-hero",
+   "soda"
+  ],
+  "flex": [
+   {
+    "slot": 0,
+    "options": [
+     "trina",
+     "centi-treasure",
+     "noah",
+     "helm-treasure",
+     "bay-treasure"
+    ]
+   },
+   {
+    "slot": 2,
+    "options": [
+     "centi-treasure",
+     "trina",
+     "rumani",
+     "noah",
+     "maxwell-ordinary-mechanic",
+     "jackal"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "II",
+   "I",
+   "II",
+   "III",
+   "II"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [
+   "mined-9",
+   "mined-17",
+   "mined-0",
+   "mined-8",
+   "mined-7",
+   "mined-6",
+   "mermaid-disrupt",
+   "vesti-tu",
+   "moran-system",
+   "anis-star-system",
+   "scarlet-nuke",
+   "cinderella-carry",
+   "blanc-indom",
+   "noah-stall",
+   "rosanna-counter",
+   "sg-burst"
+  ],
+  "counteredBy": [
+   "mined-3",
+   "mined-10",
+   "mined-19",
+   "mined-20",
+   "helm-carry",
+   "nayuta-rush"
+  ],
+  "priority": 2,
+  "_stats": {
+   "matches": 2207,
+   "winRate": 61.1,
+   "vs": [
+    {
+     "vs": "mined-9",
+     "games": 67,
+     "win": 76
+    },
+    {
+     "vs": "mined-17",
+     "games": 40,
+     "win": 70
+    },
+    {
+     "vs": "mined-0",
+     "games": 222,
+     "win": 80
+    },
+    {
+     "vs": "mined-8",
+     "games": 46,
+     "win": 91
+    },
+    {
+     "vs": "mined-7",
+     "games": 42,
+     "win": 71
+    },
+    {
+     "vs": "mined-6",
+     "games": 73,
+     "win": 81
+    }
+   ],
+   "vsArch": [
+    {
+     "vs": "mermaid-disrupt",
+     "games": 36,
+     "win": 86
+    },
+    {
+     "vs": "vesti-tu",
+     "games": 415,
+     "win": 61
+    },
+    {
+     "vs": "moran-system",
+     "games": 454,
+     "win": 66
+    },
+    {
+     "vs": "anis-star-system",
+     "games": 354,
+     "win": 78
+    },
+    {
+     "vs": "scarlet-nuke",
+     "games": 67,
+     "win": 75
+    },
+    {
+     "vs": "cinderella-carry",
+     "games": 127,
+     "win": 90
+    },
+    {
+     "vs": "blanc-indom",
+     "games": 119,
+     "win": 62
+    },
+    {
+     "vs": "noah-stall",
+     "games": 67,
+     "win": 85
+    },
+    {
+     "vs": "rosanna-counter",
+     "games": 40,
+     "win": 68
+    },
+    {
+     "vs": "sg-burst",
+     "games": 40,
+     "win": 68
+    }
+   ]
+  },
+  "notes": {
+   "en": "Data-mined from 2207 Champion Arena rounds, win rate 61%. Flex options are the most common teammates per position.",
+   "zh-TW": "由 nikkeari 冠軍競技場 2207 回合統計而來（整體勝率 61%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-CN": "数据挖掘：2207 回合，胜率 61%。",
+   "ja": "データ：2207回合、勝率 61%。"
+  }
+ },
+ {
+  "id": "mined-5",
+  "name": {
+   "en": "Blanc + Jackal + Noise (data-mined)",
+   "zh-TW": "布蘭兒＋豺狼＋諾伊斯（資料挖掘）",
+   "zh-CN": "布蘭兒＋豺狼＋諾伊斯（数据挖掘）",
+   "ja": "Blanc + Jackal + Noise（データ）"
+  },
+  "archetype": "mined-5",
+  "mode": "both",
+  "required": [
+   "blanc",
+   "jackal",
+   "noise"
+  ],
+  "flex": [
+   {
+    "slot": 1,
+    "options": [
+     "snow-white-heavy-arms",
+     "vesti-tactical-upgrade",
+     "scarlet",
+     "liberalio",
+     "cinderella",
+     "anis-sparkling-summer"
+    ]
+   },
+   {
+    "slot": 2,
+    "options": [
+     "maiden-ice-rose",
+     "rumani",
+     "ada",
+     "cinderella",
+     "emilia",
+     "snow-white-heavy-arms"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "I",
+   "III",
+   "III",
+   "II",
+   "I"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [
+   "mined-20",
+   "mined-12",
+   "mined-18",
+   "helm-carry",
+   "nayuta-carry",
+   "nayuta-rush",
+   "vesti-tu",
+   "scarlet-nuke",
+   "rosanna-counter",
+   "sg-burst",
+   "mermaid-disrupt"
+  ],
+  "counteredBy": [
+   "mined-0",
+   "mined-6",
+   "mined-7",
+   "mined-8",
+   "mined-9",
+   "cinderella-carry",
+   "anis-star-system",
+   "noah-stall"
+  ],
+  "priority": 2,
+  "_stats": {
+   "matches": 2013,
+   "winRate": 58.2,
+   "vs": [
+    {
+     "vs": "mined-20",
+     "games": 34,
+     "win": 62
+    },
+    {
+     "vs": "mined-12",
+     "games": 46,
+     "win": 93
+    },
+    {
+     "vs": "mined-18",
+     "games": 33,
+     "win": 91
+    }
+   ],
+   "vsArch": [
+    {
+     "vs": "helm-carry",
+     "games": 346,
+     "win": 61
+    },
+    {
+     "vs": "nayuta-carry",
+     "games": 362,
+     "win": 68
+    },
+    {
+     "vs": "nayuta-rush",
+     "games": 254,
+     "win": 62
+    },
+    {
+     "vs": "vesti-tu",
+     "games": 406,
+     "win": 61
+    },
+    {
+     "vs": "scarlet-nuke",
+     "games": 108,
+     "win": 69
+    },
+    {
+     "vs": "rosanna-counter",
+     "games": 98,
+     "win": 77
+    },
+    {
+     "vs": "sg-burst",
+     "games": 98,
+     "win": 77
+    },
+    {
+     "vs": "mermaid-disrupt",
+     "games": 38,
+     "win": 82
+    }
+   ]
+  },
+  "notes": {
+   "en": "Data-mined from 2013 Champion Arena rounds, win rate 58%. Flex options are the most common teammates per position.",
+   "zh-TW": "由 nikkeari 冠軍競技場 2013 回合統計而來（整體勝率 58%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-CN": "数据挖掘：2013 回合，胜率 58%。",
+   "ja": "データ：2013回合、勝率 58%。"
+  }
+ },
+ {
+  "id": "mined-6",
+  "name": {
+   "en": "Anis: Star + Maiden: Ice Rose + Privaty: Treasure (data-mined)",
+   "zh-TW": "阿妮斯:超級巨星＋梅登:冰玫瑰＋普麗瓦蒂 珍藏（資料挖掘）",
+   "zh-CN": "阿妮斯:超級巨星＋梅登:冰玫瑰＋普麗瓦蒂 珍藏（数据挖掘）",
+   "ja": "Anis: Star + Maiden: Ice Rose + Privaty: Treasure（データ）"
+  },
+  "archetype": "mined-6",
+  "mode": "both",
+  "required": [
+   "anis-star",
+   "maiden-ice-rose",
+   "privaty-treasure"
+  ],
+  "flex": [
+   {
+    "slot": 1,
+    "options": [
+     "blanc",
+     "bay-treasure",
+     "noah",
+     "biscuit",
+     "crown",
+     "mint"
+    ]
+   },
+   {
+    "slot": 3,
+    "options": [
+     "biscuit",
+     "blanc",
+     "anis-sparkling-summer",
+     "neon-vision-eye",
+     "laplace-ultimate-hero",
+     "maxwell-ordinary-mechanic"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "I",
+   "II",
+   "III",
+   "II",
+   "III"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [
+   "mined-3",
+   "mined-9",
+   "mined-7",
+   "mined-5",
+   "mined-2",
+   "cinderella-carry",
+   "rosanna-counter",
+   "sg-burst",
+   "vesti-tu",
+   "helm-carry",
+   "nayuta-carry",
+   "nayuta-rush",
+   "scarlet-nuke",
+   "moran-system",
+   "blanc-indom",
+   "mermaid-disrupt"
+  ],
+  "counteredBy": [
+   "mined-0",
+   "mined-1",
+   "mined-4",
+   "mined-8"
+  ],
+  "priority": 2,
+  "_stats": {
+   "matches": 1401,
+   "winRate": 68.5,
+   "vs": [
+    {
+     "vs": "mined-3",
+     "games": 62,
+     "win": 68
+    },
+    {
+     "vs": "mined-9",
+     "games": 41,
+     "win": 68
+    },
+    {
+     "vs": "mined-7",
+     "games": 40,
+     "win": 88
+    },
+    {
+     "vs": "mined-5",
+     "games": 64,
+     "win": 72
+    },
+    {
+     "vs": "mined-2",
+     "games": 94,
+     "win": 76
+    }
+   ],
+   "vsArch": [
+    {
+     "vs": "cinderella-carry",
+     "games": 105,
+     "win": 61
+    },
+    {
+     "vs": "rosanna-counter",
+     "games": 93,
+     "win": 96
+    },
+    {
+     "vs": "sg-burst",
+     "games": 93,
+     "win": 96
+    },
+    {
+     "vs": "vesti-tu",
+     "games": 265,
+     "win": 83
+    },
+    {
+     "vs": "helm-carry",
+     "games": 256,
+     "win": 75
+    },
+    {
+     "vs": "nayuta-carry",
+     "games": 257,
+     "win": 76
+    },
+    {
+     "vs": "nayuta-rush",
+     "games": 193,
+     "win": 77
+    },
+    {
+     "vs": "scarlet-nuke",
+     "games": 79,
+     "win": 77
+    },
+    {
+     "vs": "moran-system",
+     "games": 265,
+     "win": 80
+    },
+    {
+     "vs": "blanc-indom",
+     "games": 99,
+     "win": 61
+    },
+    {
+     "vs": "mermaid-disrupt",
+     "games": 41,
+     "win": 78
+    }
+   ]
+  },
+  "notes": {
+   "en": "Data-mined from 1401 Champion Arena rounds, win rate 69%. Flex options are the most common teammates per position.",
+   "zh-TW": "由 nikkeari 冠軍競技場 1401 回合統計而來（整體勝率 69%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-CN": "数据挖掘：1401 回合，胜率 69%。",
+   "ja": "データ：1401回合、勝率 69%。"
+  }
+ },
+ {
+  "id": "mined-7",
+  "name": {
+   "en": "Noah + Noise + Snow White: Heavy Arms (data-mined)",
+   "zh-TW": "諾雅＋諾伊斯＋白雪公主:重型武裝（資料挖掘）",
+   "zh-CN": "諾雅＋諾伊斯＋白雪公主:重型武裝（数据挖掘）",
+   "ja": "Noah + Noise + Snow White: Heavy Arms（データ）"
+  },
+  "archetype": "mined-7",
+  "mode": "both",
+  "required": [
+   "noah",
+   "noise",
+   "snow-white-heavy-arms"
+  ],
+  "flex": [
+   {
+    "slot": 0,
+    "options": [
+     "moran-treasure",
+     "moran",
+     "neon-vision-eye"
+    ]
+   },
+   {
+    "slot": 4,
+    "options": [
+     "ada",
+     "rumani",
+     "jackal",
+     "centi-treasure",
+     "liberalio",
+     "laplace-ultimate-hero"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "I",
+   "I",
+   "III",
+   "II",
+   "III"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [
+   "mined-5",
+   "scarlet-nuke",
+   "helm-carry",
+   "nayuta-carry",
+   "nayuta-rush",
+   "vesti-tu",
+   "rosanna-counter",
+   "sg-burst",
+   "mermaid-disrupt"
+  ],
+  "counteredBy": [
+   "mined-0",
+   "mined-1",
+   "mined-4",
+   "mined-6",
+   "mined-8",
+   "anis-star-system",
+   "noah-stall",
+   "cinderella-carry"
+  ],
+  "priority": 2,
+  "_stats": {
+   "matches": 1402,
+   "winRate": 58.9,
+   "vs": [
+    {
+     "vs": "mined-5",
+     "games": 64,
+     "win": 62
+    }
+   ],
+   "vsArch": [
+    {
+     "vs": "scarlet-nuke",
+     "games": 121,
+     "win": 83
+    },
+    {
+     "vs": "helm-carry",
+     "games": 228,
+     "win": 62
+    },
+    {
+     "vs": "nayuta-carry",
+     "games": 282,
+     "win": 63
+    },
+    {
+     "vs": "nayuta-rush",
+     "games": 176,
+     "win": 61
+    },
+    {
+     "vs": "vesti-tu",
+     "games": 265,
+     "win": 63
+    },
+    {
+     "vs": "rosanna-counter",
+     "games": 134,
+     "win": 86
+    },
+    {
+     "vs": "sg-burst",
+     "games": 134,
+     "win": 86
+    },
+    {
+     "vs": "mermaid-disrupt",
+     "games": 31,
+     "win": 94
+    }
+   ]
+  },
+  "notes": {
+   "en": "Data-mined from 1402 Champion Arena rounds, win rate 59%. Flex options are the most common teammates per position.",
+   "zh-TW": "由 nikkeari 冠軍競技場 1402 回合統計而來（整體勝率 59%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-CN": "数据挖掘：1402 回合，胜率 59%。",
+   "ja": "データ：1402回合、勝率 59%。"
+  }
+ },
+ {
+  "id": "mined-8",
+  "name": {
+   "en": "Biscuit + Cinderella + Mihara: Bonding Chain (data-mined)",
+   "zh-TW": "餅乾＋灰姑娘＋米哈拉:靈魂鎖鏈（資料挖掘）",
+   "zh-CN": "餅乾＋灰姑娘＋米哈拉:靈魂鎖鏈（数据挖掘）",
+   "ja": "Biscuit + Cinderella + Mihara: Bonding Chain（データ）"
+  },
+  "archetype": "mined-8",
+  "mode": "both",
+  "required": [
+   "biscuit",
+   "cinderella",
+   "mihara-bonding-chain"
+  ],
+  "flex": [
+   {
+    "slot": 1,
+    "options": [
+     "anis-star",
+     "blanc",
+     "bay-treasure",
+     "bay",
+     "moran-treasure",
+     "moran"
+    ]
+   },
+   {
+    "slot": 2,
+    "options": [
+     "blanc",
+     "bay-treasure",
+     "bay",
+     "anis-star",
+     "rumani",
+     "noah"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "III",
+   "I",
+   "II",
+   "II",
+   "III"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [
+   "mined-6",
+   "mined-7",
+   "mined-5",
+   "mined-2",
+   "helm-carry",
+   "nayuta-carry",
+   "nayuta-rush",
+   "mermaid-disrupt",
+   "noah-stall",
+   "scarlet-nuke",
+   "rosanna-counter",
+   "sg-burst",
+   "vesti-tu",
+   "cinderella-carry",
+   "blanc-indom"
+  ],
+  "counteredBy": [
+   "mined-1",
+   "mined-4"
+  ],
+  "priority": 2,
+  "_stats": {
+   "matches": 1132,
+   "winRate": 66.8,
+   "vs": [
+    {
+     "vs": "mined-6",
+     "games": 34,
+     "win": 68
+    },
+    {
+     "vs": "mined-7",
+     "games": 34,
+     "win": 74
+    },
+    {
+     "vs": "mined-5",
+     "games": 42,
+     "win": 81
+    },
+    {
+     "vs": "mined-2",
+     "games": 62,
+     "win": 63
+    }
+   ],
+   "vsArch": [
+    {
+     "vs": "helm-carry",
+     "games": 168,
+     "win": 60
+    },
+    {
+     "vs": "nayuta-carry",
+     "games": 208,
+     "win": 71
+    },
+    {
+     "vs": "nayuta-rush",
+     "games": 122,
+     "win": 64
+    },
+    {
+     "vs": "mermaid-disrupt",
+     "games": 34,
+     "win": 71
+    },
+    {
+     "vs": "noah-stall",
+     "games": 36,
+     "win": 69
+    },
+    {
+     "vs": "scarlet-nuke",
+     "games": 80,
+     "win": 76
+    },
+    {
+     "vs": "rosanna-counter",
+     "games": 95,
+     "win": 95
+    },
+    {
+     "vs": "sg-burst",
+     "games": 95,
+     "win": 95
+    },
+    {
+     "vs": "vesti-tu",
+     "games": 209,
+     "win": 82
+    },
+    {
+     "vs": "cinderella-carry",
+     "games": 89,
+     "win": 67
+    },
+    {
+     "vs": "blanc-indom",
+     "games": 73,
+     "win": 71
+    }
+   ]
+  },
+  "notes": {
+   "en": "Data-mined from 1132 Champion Arena rounds, win rate 67%. Flex options are the most common teammates per position.",
+   "zh-TW": "由 nikkeari 冠軍競技場 1132 回合統計而來（整體勝率 67%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-CN": "数据挖掘：1132 回合，胜率 67%。",
+   "ja": "データ：1132回合、勝率 67%。"
+  }
+ },
+ {
+  "id": "mined-9",
+  "name": {
+   "en": "Bay: Treasure + Biscuit + Moran: Treasure (data-mined)",
+   "zh-TW": "貝伊 珍藏＋餅乾＋牡丹 珍藏（資料挖掘）",
+   "zh-CN": "貝伊 珍藏＋餅乾＋牡丹 珍藏（数据挖掘）",
+   "ja": "Bay: Treasure + Biscuit + Moran: Treasure（データ）"
+  },
+  "archetype": "mined-9",
+  "mode": "both",
+  "required": [
+   "bay-treasure",
+   "biscuit",
+   "moran-treasure"
+  ],
+  "flex": [
+   {
+    "slot": 3,
+    "options": [
+     "snow-white-heavy-arms",
+     "anis-star",
+     "neon-vision-eye",
+     "vesti-tactical-upgrade",
+     "helm-treasure",
+     "liberalio"
+    ]
+   },
+   {
+    "slot": 4,
+    "options": [
+     "neon-vision-eye",
+     "anis-star",
+     "snow-white-heavy-arms",
+     "cinderella",
+     "maiden-ice-rose",
+     "ada"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "I",
+   "II",
+   "II",
+   "III",
+   "III"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [
+   "mined-5",
+   "mined-10",
+   "mined-3",
+   "mined-2",
+   "nayuta-carry",
+   "helm-carry",
+   "nayuta-rush",
+   "rosanna-counter",
+   "sg-burst",
+   "vesti-tu",
+   "moran-system"
+  ],
+  "counteredBy": [
+   "mined-0",
+   "mined-1",
+   "mined-4",
+   "mined-6",
+   "anis-star-system",
+   "noah-stall"
+  ],
+  "priority": 2,
+  "_stats": {
+   "matches": 1184,
+   "winRate": 63.7,
+   "vs": [
+    {
+     "vs": "mined-5",
+     "games": 62,
+     "win": 74
+    },
+    {
+     "vs": "mined-10",
+     "games": 30,
+     "win": 87
+    },
+    {
+     "vs": "mined-3",
+     "games": 59,
+     "win": 61
+    },
+    {
+     "vs": "mined-2",
+     "games": 64,
+     "win": 72
+    }
+   ],
+   "vsArch": [
+    {
+     "vs": "nayuta-carry",
+     "games": 225,
+     "win": 73
+    },
+    {
+     "vs": "helm-carry",
+     "games": 242,
+     "win": 70
+    },
+    {
+     "vs": "nayuta-rush",
+     "games": 183,
+     "win": 74
+    },
+    {
+     "vs": "rosanna-counter",
+     "games": 86,
+     "win": 92
+    },
+    {
+     "vs": "sg-burst",
+     "games": 86,
+     "win": 92
+    },
+    {
+     "vs": "vesti-tu",
+     "games": 228,
+     "win": 78
+    },
+    {
+     "vs": "moran-system",
+     "games": 214,
+     "win": 66
+    }
+   ]
+  },
+  "notes": {
+   "en": "Data-mined from 1184 Champion Arena rounds, win rate 64%. Flex options are the most common teammates per position.",
+   "zh-TW": "由 nikkeari 冠軍競技場 1184 回合統計而來（整體勝率 64%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-CN": "数据挖掘：1184 回合，胜率 64%。",
+   "ja": "データ：1184回合、勝率 64%。"
+  }
+ },
+ {
+  "id": "mined-10",
+  "name": {
+   "en": "Blanc + Maiden: Ice Rose + Snow White: Heavy Arms (data-mined)",
+   "zh-TW": "布蘭兒＋梅登:冰玫瑰＋白雪公主:重型武裝（資料挖掘）",
+   "zh-CN": "布蘭兒＋梅登:冰玫瑰＋白雪公主:重型武裝（数据挖掘）",
+   "ja": "Blanc + Maiden: Ice Rose + Snow White: Heavy Arms（データ）"
+  },
+  "archetype": "mined-10",
+  "mode": "both",
+  "required": [
+   "blanc",
+   "maiden-ice-rose",
+   "snow-white-heavy-arms"
+  ],
+  "flex": [
+   {
+    "slot": 0,
+    "options": [
+     "noise",
+     "jackal",
+     "anis-star",
+     "moran-treasure",
+     "sakura",
+     "label"
+    ]
+   },
+   {
+    "slot": 4,
+    "options": [
+     "jackal",
+     "ada",
+     "drake-treasure",
+     "cinderella",
+     "little-mermaid",
+     "rumani"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "I",
+   "III",
+   "III",
+   "II",
+   "I"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [
+   "mined-1",
+   "mined-3",
+   "mined-2",
+   "mined-4",
+   "scarlet-nuke",
+   "vesti-tu",
+   "nayuta-carry",
+   "helm-carry",
+   "nayuta-rush"
+  ],
+  "counteredBy": [
+   "mined-0",
+   "mined-9",
+   "cinderella-carry",
+   "anis-star-system"
+  ],
+  "priority": 2,
+  "_stats": {
+   "matches": 842,
+   "winRate": 62.7,
+   "vs": [
+    {
+     "vs": "mined-1",
+     "games": 99,
+     "win": 67
+    },
+    {
+     "vs": "mined-3",
+     "games": 40,
+     "win": 68
+    },
+    {
+     "vs": "mined-2",
+     "games": 78,
+     "win": 64
+    },
+    {
+     "vs": "mined-4",
+     "games": 70,
+     "win": 67
+    }
+   ],
+   "vsArch": [
+    {
+     "vs": "scarlet-nuke",
+     "games": 49,
+     "win": 67
+    },
+    {
+     "vs": "vesti-tu",
+     "games": 168,
+     "win": 61
+    },
+    {
+     "vs": "nayuta-carry",
+     "games": 151,
+     "win": 77
+    },
+    {
+     "vs": "helm-carry",
+     "games": 145,
+     "win": 75
+    },
+    {
+     "vs": "nayuta-rush",
+     "games": 104,
+     "win": 72
+    }
+   ]
+  },
+  "notes": {
+   "en": "Data-mined from 842 Champion Arena rounds, win rate 63%. Flex options are the most common teammates per position.",
+   "zh-TW": "由 nikkeari 冠軍競技場 842 回合統計而來（整體勝率 63%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-CN": "数据挖掘：842 回合，胜率 63%。",
+   "ja": "データ：842回合、勝率 63%。"
+  }
+ },
+ {
+  "id": "mined-11",
+  "name": {
+   "en": "Biscuit + Maiden: Ice Rose + Noah (data-mined)",
+   "zh-TW": "餅乾＋梅登:冰玫瑰＋諾雅（資料挖掘）",
+   "zh-CN": "餅乾＋梅登:冰玫瑰＋諾雅（数据挖掘）",
+   "ja": "Biscuit + Maiden: Ice Rose + Noah（データ）"
+  },
+  "archetype": "mined-11",
+  "mode": "both",
+  "required": [
+   "biscuit",
+   "maiden-ice-rose",
+   "noah"
+  ],
+  "flex": [
+   {
+    "slot": 1,
+    "options": [
+     "anis-star",
+     "quiry",
+     "neon-vision-eye",
+     "anis-sparkling-summer",
+     "noise",
+     "moran-treasure"
+    ]
+   },
+   {
+    "slot": 3,
+    "options": [
+     "anis-sparkling-summer",
+     "privaty-treasure",
+     "quiry",
+     "neon-vision-eye",
+     "privaty",
+     "ada"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "II",
+   "I",
+   "II",
+   "III",
+   "III"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [
+   "scarlet-nuke",
+   "helm-carry",
+   "nayuta-carry",
+   "nayuta-rush",
+   "cinderella-carry",
+   "vesti-tu",
+   "moran-system",
+   "rosanna-counter",
+   "sg-burst"
+  ],
+  "counteredBy": [],
+  "priority": 2,
+  "_stats": {
+   "matches": 623,
+   "winRate": 77.8,
+   "vsArch": [
+    {
+     "vs": "scarlet-nuke",
+     "games": 56,
+     "win": 89
+    },
+    {
+     "vs": "helm-carry",
+     "games": 91,
+     "win": 85
+    },
+    {
+     "vs": "nayuta-carry",
+     "games": 115,
+     "win": 93
+    },
+    {
+     "vs": "nayuta-rush",
+     "games": 62,
+     "win": 89
+    },
+    {
+     "vs": "cinderella-carry",
+     "games": 51,
+     "win": 61
+    },
+    {
+     "vs": "vesti-tu",
+     "games": 115,
+     "win": 80
+    },
+    {
+     "vs": "moran-system",
+     "games": 88,
+     "win": 77
+    },
+    {
+     "vs": "rosanna-counter",
+     "games": 55,
+     "win": 98
+    },
+    {
+     "vs": "sg-burst",
+     "games": 55,
+     "win": 98
+    }
+   ]
+  },
+  "notes": {
+   "en": "Data-mined from 623 Champion Arena rounds, win rate 78%. Flex options are the most common teammates per position.",
+   "zh-TW": "由 nikkeari 冠軍競技場 623 回合統計而來（整體勝率 78%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-CN": "数据挖掘：623 回合，胜率 78%。",
+   "ja": "データ：623回合、勝率 78%。"
+  }
+ },
+ {
+  "id": "mined-12",
+  "name": {
+   "en": "Anis: Star + Laplace: Ultimate Hero + Nayuta (data-mined)",
+   "zh-TW": "阿妮斯:超級巨星＋拉普拉斯:究極英雄＋娜由塔（資料挖掘）",
+   "zh-CN": "阿妮斯:超級巨星＋拉普拉斯:究極英雄＋娜由塔（数据挖掘）",
+   "ja": "Anis: Star + Laplace: Ultimate Hero + Nayuta（データ）"
+  },
+  "archetype": "mined-12",
+  "mode": "both",
+  "required": [
+   "anis-star",
+   "laplace-ultimate-hero",
+   "nayuta"
+  ],
+  "flex": [
+   {
+    "slot": 1,
+    "options": [
+     "privaty-treasure",
+     "anis",
+     "crown",
+     "helm-treasure",
+     "soda-twinkling-bunny",
+     "vesti-tactical-upgrade"
+    ]
+   },
+   {
+    "slot": 2,
+    "options": [
+     "emilia",
+     "privaty-treasure",
+     "helm-treasure",
+     "snow-white-heavy-arms",
+     "centi-treasure",
+     "trina"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "II",
+   "III",
+   "III",
+   "I",
+   "III"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [
+   "mined-3",
+   "moran-system",
+   "cinderella-carry",
+   "vesti-tu",
+   "nayuta-carry",
+   "nayuta-rush"
+  ],
+  "counteredBy": [
+   "mined-1",
+   "mined-5",
+   "blanc-indom"
+  ],
+  "priority": 2,
+  "_stats": {
+   "matches": 731,
+   "winRate": 59.4,
+   "vs": [
+    {
+     "vs": "mined-3",
+     "games": 34,
+     "win": 62
+    }
+   ],
+   "vsArch": [
+    {
+     "vs": "moran-system",
+     "games": 148,
+     "win": 62
+    },
+    {
+     "vs": "cinderella-carry",
+     "games": 43,
+     "win": 65
+    },
+    {
+     "vs": "vesti-tu",
+     "games": 140,
+     "win": 75
+    },
+    {
+     "vs": "nayuta-carry",
+     "games": 139,
+     "win": 68
+    },
+    {
+     "vs": "nayuta-rush",
+     "games": 97,
+     "win": 69
+    }
+   ]
+  },
+  "notes": {
+   "en": "Data-mined from 731 Champion Arena rounds, win rate 59%. Flex options are the most common teammates per position.",
+   "zh-TW": "由 nikkeari 冠軍競技場 731 回合統計而來（整體勝率 59%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-CN": "数据挖掘：731 回合，胜率 59%。",
+   "ja": "データ：731回合、勝率 59%。"
+  }
+ },
+ {
+  "id": "mined-13",
+  "name": {
+   "en": "Centi: Treasure + Jackal + Soda (data-mined)",
+   "zh-TW": "桑迪 珍藏＋豺狼＋索達（資料挖掘）",
+   "zh-CN": "桑迪 珍藏＋豺狼＋索達（数据挖掘）",
+   "ja": "Centi: Treasure + Jackal + Soda（データ）"
+  },
+  "archetype": "mined-13",
+  "mode": "both",
+  "required": [
+   "centi-treasure",
+   "jackal",
+   "soda"
+  ],
+  "flex": [
+   {
+    "slot": 1,
+    "options": [
+     "laplace-ultimate-hero",
+     "trina",
+     "noah",
+     "rumani",
+     "anis",
+     "noise"
+    ]
+   },
+   {
+    "slot": 2,
+    "options": [
+     "trina",
+     "laplace-ultimate-hero",
+     "anis",
+     "noah",
+     "rumani",
+     "vesti-tactical-upgrade"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "I",
+   "III",
+   "II",
+   "II",
+   "I"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [
+   "mined-0",
+   "moran-system",
+   "cinderella-carry",
+   "anis-star-system",
+   "blanc-indom"
+  ],
+  "counteredBy": [
+   "mined-3",
+   "helm-carry",
+   "nayuta-carry",
+   "nayuta-rush"
+  ],
+  "priority": 2,
+  "_stats": {
+   "matches": 696,
+   "winRate": 57.8,
+   "vs": [
+    {
+     "vs": "mined-0",
+     "games": 68,
+     "win": 71
+    }
+   ],
+   "vsArch": [
+    {
+     "vs": "moran-system",
+     "games": 130,
+     "win": 65
+    },
+    {
+     "vs": "cinderella-carry",
+     "games": 43,
+     "win": 72
+    },
+    {
+     "vs": "anis-star-system",
+     "games": 110,
+     "win": 72
+    },
+    {
+     "vs": "blanc-indom",
+     "games": 39,
+     "win": 62
+    }
+   ]
+  },
+  "notes": {
+   "en": "Data-mined from 696 Champion Arena rounds, win rate 58%. Flex options are the most common teammates per position.",
+   "zh-TW": "由 nikkeari 冠軍競技場 696 回合統計而來（整體勝率 58%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-CN": "数据挖掘：696 回合，胜率 58%。",
+   "ja": "データ：696回合、勝率 58%。"
+  }
+ },
+ {
+  "id": "mined-14",
+  "name": {
+   "en": "Laplace: Ultimate Hero + Red Hood + Snow White: Heavy Arms (data-mined)",
+   "zh-TW": "拉普拉斯:究極英雄＋小紅帽＋白雪公主:重型武裝（資料挖掘）",
+   "zh-CN": "拉普拉斯:究極英雄＋小紅帽＋白雪公主:重型武裝（数据挖掘）",
+   "ja": "Laplace: Ultimate Hero + Red Hood + Snow White: Heavy Arms（データ）"
+  },
+  "archetype": "mined-14",
+  "mode": "both",
+  "required": [
+   "laplace-ultimate-hero",
+   "red-hood",
+   "snow-white-heavy-arms"
+  ],
+  "flex": [
+   {
+    "slot": 0,
+    "options": [
+     "nayuta",
+     "jackal"
+    ]
+   },
+   {
+    "slot": 1,
+    "options": [
+     "helm-treasure",
+     "centi",
+     "neon-vision-eye",
+     "moran-treasure",
+     "centi-treasure"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "II",
+   "III",
+   "III",
+   "Λ",
+   "III"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [
+   "mined-1",
+   "vesti-tu",
+   "scarlet-nuke",
+   "cinderella-carry",
+   "rosanna-counter",
+   "sg-burst"
+  ],
+  "counteredBy": [
+   "mined-0",
+   "mined-2",
+   "moran-system",
+   "anis-star-system"
+  ],
+  "priority": 2,
+  "_stats": {
+   "matches": 565,
+   "winRate": 62.7,
+   "vs": [
+    {
+     "vs": "mined-1",
+     "games": 44,
+     "win": 68
+    }
+   ],
+   "vsArch": [
+    {
+     "vs": "vesti-tu",
+     "games": 108,
+     "win": 82
+    },
+    {
+     "vs": "scarlet-nuke",
+     "games": 30,
+     "win": 93
+    },
+    {
+     "vs": "cinderella-carry",
+     "games": 40,
+     "win": 68
+    },
+    {
+     "vs": "rosanna-counter",
+     "games": 31,
+     "win": 94
+    },
+    {
+     "vs": "sg-burst",
+     "games": 31,
+     "win": 94
+    }
+   ]
+  },
+  "notes": {
+   "en": "Data-mined from 565 Champion Arena rounds, win rate 63%. Flex options are the most common teammates per position.",
+   "zh-TW": "由 nikkeari 冠軍競技場 565 回合統計而來（整體勝率 63%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-CN": "数据挖掘：565 回合，胜率 63%。",
+   "ja": "データ：565回合、勝率 63%。"
+  }
+ },
+ {
+  "id": "mined-15",
+  "name": {
+   "en": "Anis: Sparkling Summer + Anis: Star + Noah (data-mined)",
+   "zh-TW": "阿妮斯:閃耀夏日＋阿妮斯:超級巨星＋諾雅（資料挖掘）",
+   "zh-CN": "阿妮斯:閃耀夏日＋阿妮斯:超級巨星＋諾雅（数据挖掘）",
+   "ja": "Anis: Sparkling Summer + Anis: Star + Noah（データ）"
+  },
+  "archetype": "mined-15",
+  "mode": "both",
+  "required": [
+   "anis-sparkling-summer",
+   "anis-star",
+   "noah"
+  ],
+  "flex": [
+   {
+    "slot": 2,
+    "options": [
+     "biscuit",
+     "privaty-treasure",
+     "bay-treasure",
+     "privaty",
+     "vesti-tactical-upgrade",
+     "mana"
+    ]
+   },
+   {
+    "slot": 4,
+    "options": [
+     "maiden-ice-rose",
+     "soda-twinkling-bunny",
+     "noir",
+     "liberalio",
+     "laplace-ultimate-hero",
+     "centi-treasure"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "II",
+   "I",
+   "II",
+   "III",
+   "III"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [
+   "helm-carry",
+   "nayuta-carry",
+   "nayuta-rush",
+   "vesti-tu",
+   "scarlet-nuke",
+   "cinderella-carry",
+   "moran-system",
+   "rosanna-counter",
+   "sg-burst"
+  ],
+  "counteredBy": [],
+  "priority": 2,
+  "_stats": {
+   "matches": 445,
+   "winRate": 74.2,
+   "vsArch": [
+    {
+     "vs": "helm-carry",
+     "games": 65,
+     "win": 82
+    },
+    {
+     "vs": "nayuta-carry",
+     "games": 80,
+     "win": 91
+    },
+    {
+     "vs": "nayuta-rush",
+     "games": 39,
+     "win": 87
+    },
+    {
+     "vs": "vesti-tu",
+     "games": 82,
+     "win": 74
+    },
+    {
+     "vs": "scarlet-nuke",
+     "games": 41,
+     "win": 80
+    },
+    {
+     "vs": "cinderella-carry",
+     "games": 45,
+     "win": 67
+    },
+    {
+     "vs": "moran-system",
+     "games": 70,
+     "win": 77
+    },
+    {
+     "vs": "rosanna-counter",
+     "games": 40,
+     "win": 98
+    },
+    {
+     "vs": "sg-burst",
+     "games": 40,
+     "win": 98
+    }
+   ]
+  },
+  "notes": {
+   "en": "Data-mined from 445 Champion Arena rounds, win rate 74%. Flex options are the most common teammates per position.",
+   "zh-TW": "由 nikkeari 冠軍競技場 445 回合統計而來（整體勝率 74%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-CN": "数据挖掘：445 回合，胜率 74%。",
+   "ja": "データ：445回合、勝率 74%。"
+  }
+ },
+ {
+  "id": "mined-16",
+  "name": {
+   "en": "Emilia + Helm + Nayuta (data-mined)",
+   "zh-TW": "愛蜜莉雅＋海倫＋娜由塔（資料挖掘）",
+   "zh-CN": "愛蜜莉雅＋海倫＋娜由塔（数据挖掘）",
+   "ja": "Emilia + Helm + Nayuta（データ）"
+  },
+  "archetype": "mined-16",
+  "mode": "both",
+  "required": [
+   "emilia",
+   "helm",
+   "nayuta"
+  ],
+  "flex": [
+   {
+    "slot": 2,
+    "options": [
+     "laplace",
+     "red-hood",
+     "snow-white-heavy-arms",
+     "anis-star",
+     "maiden-ice-rose",
+     "centi"
+    ]
+   },
+   {
+    "slot": 3,
+    "options": [
+     "red-hood",
+     "laplace",
+     "label",
+     "anis",
+     "anis-star",
+     "vesti-tactical-upgrade"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "II",
+   "III",
+   "III",
+   "Λ",
+   "III"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [
+   "scarlet-nuke",
+   "vesti-tu",
+   "rosanna-counter",
+   "sg-burst"
+  ],
+  "counteredBy": [
+   "mined-0",
+   "anis-star-system",
+   "cinderella-carry"
+  ],
+  "priority": 2,
+  "_stats": {
+   "matches": 559,
+   "winRate": 59.0,
+   "vsArch": [
+    {
+     "vs": "scarlet-nuke",
+     "games": 78,
+     "win": 82
+    },
+    {
+     "vs": "vesti-tu",
+     "games": 108,
+     "win": 63
+    },
+    {
+     "vs": "rosanna-counter",
+     "games": 86,
+     "win": 83
+    },
+    {
+     "vs": "sg-burst",
+     "games": 86,
+     "win": 83
+    }
+   ]
+  },
+  "notes": {
+   "en": "Data-mined from 559 Champion Arena rounds, win rate 59%. Flex options are the most common teammates per position.",
+   "zh-TW": "由 nikkeari 冠軍競技場 559 回合統計而來（整體勝率 59%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-CN": "数据挖掘：559 回合，胜率 59%。",
+   "ja": "データ：559回合、勝率 59%。"
+  }
+ },
+ {
+  "id": "mined-17",
+  "name": {
+   "en": "Anis: Star + Bay: Treasure + Neon: Vision Eye (data-mined)",
+   "zh-TW": "阿妮斯:超級巨星＋貝伊 珍藏＋尼恩:透視之眼（資料挖掘）",
+   "zh-CN": "阿妮斯:超級巨星＋貝伊 珍藏＋尼恩:透視之眼（数据挖掘）",
+   "ja": "Anis: Star + Bay: Treasure + Neon: Vision Eye（データ）"
+  },
+  "archetype": "mined-17",
+  "mode": "both",
+  "required": [
+   "anis-star",
+   "bay-treasure",
+   "neon-vision-eye"
+  ],
+  "flex": [
+   {
+    "slot": 0,
+    "options": [
+     "moran-treasure",
+     "blanc"
+    ]
+   },
+   {
+    "slot": 2,
+    "options": [
+     "biscuit",
+     "helm-treasure",
+     "laplace-ultimate-hero"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "I",
+   "II",
+   "II",
+   "I",
+   "III"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [
+   "moran-system",
+   "vesti-tu",
+   "helm-carry",
+   "nayuta-carry",
+   "nayuta-rush"
+  ],
+  "counteredBy": [
+   "mined-1",
+   "mined-4"
+  ],
+  "priority": 2,
+  "_stats": {
+   "matches": 395,
+   "winRate": 73.7,
+   "vsArch": [
+    {
+     "vs": "moran-system",
+     "games": 69,
+     "win": 87
+    },
+    {
+     "vs": "vesti-tu",
+     "games": 80,
+     "win": 85
+    },
+    {
+     "vs": "helm-carry",
+     "games": 67,
+     "win": 90
+    },
+    {
+     "vs": "nayuta-carry",
+     "games": 66,
+     "win": 92
+    },
+    {
+     "vs": "nayuta-rush",
+     "games": 52,
+     "win": 94
+    }
+   ]
+  },
+  "notes": {
+   "en": "Data-mined from 395 Champion Arena rounds, win rate 74%. Flex options are the most common teammates per position.",
+   "zh-TW": "由 nikkeari 冠軍競技場 395 回合統計而來（整體勝率 74%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-CN": "数据挖掘：395 回合，胜率 74%。",
+   "ja": "データ：395回合、勝率 74%。"
+  }
+ },
+ {
+  "id": "mined-18",
+  "name": {
+   "en": "Emilia + Laplace: Ultimate Hero + Privaty: Treasure (data-mined)",
+   "zh-TW": "愛蜜莉雅＋拉普拉斯:究極英雄＋普麗瓦蒂 珍藏（資料挖掘）",
+   "zh-CN": "愛蜜莉雅＋拉普拉斯:究極英雄＋普麗瓦蒂 珍藏（数据挖掘）",
+   "ja": "Emilia + Laplace: Ultimate Hero + Privaty: Treasure（データ）"
+  },
+  "archetype": "mined-18",
+  "mode": "both",
+  "required": [
+   "emilia",
+   "laplace-ultimate-hero",
+   "privaty-treasure"
+  ],
+  "flex": [
+   {
+    "slot": 0,
+    "options": [
+     "nayuta",
+     "noise",
+     "noah"
+    ]
+   },
+   {
+    "slot": 3,
+    "options": [
+     "anis-star",
+     "red-hood"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "II",
+   "III",
+   "III",
+   "I",
+   "III"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [
+   "mined-3",
+   "vesti-tu",
+   "nayuta-carry",
+   "nayuta-rush"
+  ],
+  "counteredBy": [
+   "mined-2",
+   "mined-5",
+   "blanc-indom",
+   "anis-star-system"
+  ],
+  "priority": 2,
+  "_stats": {
+   "matches": 506,
+   "winRate": 56.3,
+   "vs": [
+    {
+     "vs": "mined-3",
+     "games": 31,
+     "win": 61
+    }
+   ],
+   "vsArch": [
+    {
+     "vs": "vesti-tu",
+     "games": 96,
+     "win": 74
+    },
+    {
+     "vs": "nayuta-carry",
+     "games": 98,
+     "win": 67
+    },
+    {
+     "vs": "nayuta-rush",
+     "games": 68,
+     "win": 71
+    }
+   ]
+  },
+  "notes": {
+   "en": "Data-mined from 506 Champion Arena rounds, win rate 56%. Flex options are the most common teammates per position.",
+   "zh-TW": "由 nikkeari 冠軍競技場 506 回合統計而來（整體勝率 56%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-CN": "数据挖掘：506 回合，胜率 56%。",
+   "ja": "データ：506回合、勝率 56%。"
+  }
+ },
+ {
+  "id": "mined-19",
+  "name": {
+   "en": "Emilia + Moran: Treasure + Snow White: Heavy Arms (data-mined)",
+   "zh-TW": "愛蜜莉雅＋牡丹 珍藏＋白雪公主:重型武裝（資料挖掘）",
+   "zh-CN": "愛蜜莉雅＋牡丹 珍藏＋白雪公主:重型武裝（数据挖掘）",
+   "ja": "Emilia + Moran: Treasure + Snow White: Heavy Arms（データ）"
+  },
+  "archetype": "mined-19",
+  "mode": "both",
+  "required": [
+   "emilia",
+   "moran-treasure",
+   "snow-white-heavy-arms"
+  ],
+  "flex": [
+   {
+    "slot": 0,
+    "options": [
+     "nayuta",
+     "noah",
+     "mihara-bonding-chain"
+    ]
+   },
+   {
+    "slot": 1,
+    "options": [
+     "helm-treasure",
+     "noah",
+     "rumani",
+     "bay-treasure",
+     "nayuta",
+     "noise"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "II",
+   "III",
+   "III",
+   "III",
+   "I"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [
+   "mined-1",
+   "mined-4",
+   "mined-3",
+   "blanc-indom",
+   "vesti-tu",
+   "helm-carry",
+   "nayuta-carry",
+   "nayuta-rush"
+  ],
+  "counteredBy": [
+   "mined-2"
+  ],
+  "priority": 2,
+  "_stats": {
+   "matches": 384,
+   "winRate": 68.2,
+   "vs": [
+    {
+     "vs": "mined-1",
+     "games": 47,
+     "win": 77
+    },
+    {
+     "vs": "mined-4",
+     "games": 31,
+     "win": 74
+    },
+    {
+     "vs": "mined-3",
+     "games": 37,
+     "win": 73
+    }
+   ],
+   "vsArch": [
+    {
+     "vs": "blanc-indom",
+     "games": 37,
+     "win": 78
+    },
+    {
+     "vs": "vesti-tu",
+     "games": 79,
+     "win": 90
+    },
+    {
+     "vs": "helm-carry",
+     "games": 77,
+     "win": 74
+    },
+    {
+     "vs": "nayuta-carry",
+     "games": 75,
+     "win": 80
+    },
+    {
+     "vs": "nayuta-rush",
+     "games": 60,
+     "win": 82
+    }
+   ]
+  },
+  "notes": {
+   "en": "Data-mined from 384 Champion Arena rounds, win rate 68%. Flex options are the most common teammates per position.",
+   "zh-TW": "由 nikkeari 冠軍競技場 384 回合統計而來（整體勝率 68%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-CN": "数据挖掘：384 回合，胜率 68%。",
+   "ja": "データ：384回合、勝率 68%。"
+  }
+ },
+ {
+  "id": "mined-20",
+  "name": {
+   "en": "Helm: Treasure + Moran: Treasure + Rumani (data-mined)",
+   "zh-TW": "海倫 珍藏＋牡丹 珍藏＋魯瑪妮（資料挖掘）",
+   "zh-CN": "海倫 珍藏＋牡丹 珍藏＋魯瑪妮（数据挖掘）",
+   "ja": "Helm: Treasure + Moran: Treasure + Rumani（データ）"
+  },
+  "archetype": "mined-20",
+  "mode": "both",
+  "required": [
+   "helm-treasure",
+   "moran-treasure",
+   "rumani"
+  ],
+  "flex": [
+   {
+    "slot": 1,
+    "options": [
+     "neon-vision-eye",
+     "noah",
+     "bay-treasure",
+     "centi-treasure",
+     "nayuta"
+    ]
+   },
+   {
+    "slot": 3,
+    "options": [
+     "noah",
+     "laplace-ultimate-hero",
+     "trina",
+     "emilia",
+     "biscuit",
+     "drake-great-villain"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "I",
+   "III",
+   "III",
+   "II",
+   "I"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [
+   "mined-1",
+   "mined-4",
+   "helm-carry",
+   "nayuta-carry",
+   "nayuta-rush",
+   "vesti-tu"
+  ],
+  "counteredBy": [
+   "mined-0",
+   "mined-2",
+   "mined-5",
+   "anis-star-system"
+  ],
+  "priority": 2,
+  "_stats": {
+   "matches": 385,
+   "winRate": 65.7,
+   "vs": [
+    {
+     "vs": "mined-1",
+     "games": 43,
+     "win": 91
+    },
+    {
+     "vs": "mined-4",
+     "games": 32,
+     "win": 94
+    }
+   ],
+   "vsArch": [
+    {
+     "vs": "helm-carry",
+     "games": 88,
+     "win": 84
+    },
+    {
+     "vs": "nayuta-carry",
+     "games": 87,
+     "win": 93
+    },
+    {
+     "vs": "nayuta-rush",
+     "games": 61,
+     "win": 93
+    },
+    {
+     "vs": "vesti-tu",
+     "games": 60,
+     "win": 63
+    }
+   ]
+  },
+  "notes": {
+   "en": "Data-mined from 385 Champion Arena rounds, win rate 66%. Flex options are the most common teammates per position.",
+   "zh-TW": "由 nikkeari 冠軍競技場 385 回合統計而來（整體勝率 66%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-CN": "数据挖掘：385 回合，胜率 66%。",
+   "ja": "データ：385回合、勝率 66%。"
+  }
+ },
+ {
+  "id": "mined-21",
+  "name": {
+   "en": "Blanc + Emilia + Vesti: Tactical Upgrade (data-mined)",
+   "zh-TW": "布蘭兒＋愛蜜莉雅＋貝斯蒂:戰術升級（資料挖掘）",
+   "zh-CN": "布蘭兒＋愛蜜莉雅＋貝斯蒂:戰術升級（数据挖掘）",
+   "ja": "Blanc + Emilia + Vesti: Tactical Upgrade（データ）"
+  },
+  "archetype": "mined-21",
+  "mode": "both",
+  "required": [
+   "blanc",
+   "emilia",
+   "vesti-tactical-upgrade"
+  ],
+  "flex": [
+   {
+    "slot": 2,
+    "options": [
+     "biscuit",
+     "anis-star",
+     "maiden-ice-rose",
+     "ada",
+     "laplace-ultimate-hero",
+     "helm-treasure"
+    ]
+   },
+   {
+    "slot": 4,
+    "options": [
+     "anis-star",
+     "jackal",
+     "neon-vision-eye",
+     "maiden-ice-rose",
+     "rumani",
+     "laplace"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "II",
+   "III",
+   "II",
+   "III",
+   "I"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [
+   "blanc-indom",
+   "vesti-tu",
+   "moran-system"
+  ],
+  "counteredBy": [
+   "mined-0"
+  ],
+  "priority": 2,
+  "_stats": {
+   "matches": 334,
+   "winRate": 61.4,
+   "vsArch": [
+    {
+     "vs": "blanc-indom",
+     "games": 30,
+     "win": 60
+    },
+    {
+     "vs": "vesti-tu",
+     "games": 62,
+     "win": 68
+    },
+    {
+     "vs": "moran-system",
+     "games": 58,
+     "win": 64
+    }
+   ]
+  },
+  "notes": {
+   "en": "Data-mined from 334 Champion Arena rounds, win rate 61%. Flex options are the most common teammates per position.",
+   "zh-TW": "由 nikkeari 冠軍競技場 334 回合統計而來（整體勝率 61%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-CN": "数据挖掘：334 回合，胜率 61%。",
+   "ja": "データ：334回合、勝率 61%。"
+  }
+ },
+ {
+  "id": "mined-22",
+  "name": {
+   "en": "Ada + Moran + Snow White: Heavy Arms (data-mined)",
+   "zh-TW": "艾達·王＋牡丹＋白雪公主:重型武裝（資料挖掘）",
+   "zh-CN": "艾達·王＋牡丹＋白雪公主:重型武裝（数据挖掘）",
+   "ja": "Ada + Moran + Snow White: Heavy Arms（データ）"
+  },
+  "archetype": "mined-22",
+  "mode": "both",
+  "required": [
+   "ada",
+   "moran",
+   "snow-white-heavy-arms"
+  ],
+  "flex": [
+   {
+    "slot": 1,
+    "options": [
+     "noise",
+     "noah",
+     "bay",
+     "rumani",
+     "mihara-bonding-chain",
+     "liberalio"
+    ]
+   },
+   {
+    "slot": 3,
+    "options": [
+     "noah",
+     "label",
+     "liberalio",
+     "rapunzel",
+     "noise",
+     "rumani"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "I",
+   "I",
+   "III",
+   "II",
+   "III"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [
+   "nayuta-carry",
+   "rosanna-counter",
+   "sg-burst",
+   "scarlet-nuke",
+   "vesti-tu"
+  ],
+  "counteredBy": [
+   "anis-star-system"
+  ],
+  "priority": 2,
+  "_stats": {
+   "matches": 307,
+   "winRate": 66.8,
+   "vsArch": [
+    {
+     "vs": "nayuta-carry",
+     "games": 60,
+     "win": 63
+    },
+    {
+     "vs": "rosanna-counter",
+     "games": 52,
+     "win": 83
+    },
+    {
+     "vs": "sg-burst",
+     "games": 52,
+     "win": 83
+    },
+    {
+     "vs": "scarlet-nuke",
+     "games": 32,
+     "win": 91
+    },
+    {
+     "vs": "vesti-tu",
+     "games": 63,
+     "win": 67
+    }
+   ]
+  },
+  "notes": {
+   "en": "Data-mined from 307 Champion Arena rounds, win rate 67%. Flex options are the most common teammates per position.",
+   "zh-TW": "由 nikkeari 冠軍競技場 307 回合統計而來（整體勝率 67%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-CN": "数据挖掘：307 回合，胜率 67%。",
+   "ja": "データ：307回合、勝率 67%。"
+  }
+ },
+ {
+  "id": "mined-23",
+  "name": {
+   "en": "Laplace: Ultimate Hero + Noah + Sakura (data-mined)",
+   "zh-TW": "拉普拉斯:究極英雄＋諾雅＋櫻花（資料挖掘）",
+   "zh-CN": "拉普拉斯:究極英雄＋諾雅＋櫻花（数据挖掘）",
+   "ja": "Laplace: Ultimate Hero + Noah + Sakura（データ）"
+  },
+  "archetype": "mined-23",
+  "mode": "both",
+  "required": [
+   "laplace-ultimate-hero",
+   "noah",
+   "sakura"
+  ],
+  "flex": [
+   {
+    "slot": 1,
+    "options": [
+     "centi-treasure",
+     "trina",
+     "anis"
+    ]
+   },
+   {
+    "slot": 4,
+    "options": [
+     "trina",
+     "centi-treasure",
+     "jackal",
+     "anis",
+     "snow-white-heavy-arms",
+     "noise"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "II",
+   "II",
+   "I",
+   "III",
+   "II"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [
+   "mined-1",
+   "nayuta-carry",
+   "vesti-tu",
+   "helm-carry",
+   "nayuta-rush",
+   "anis-star-system",
+   "moran-system"
+  ],
+  "counteredBy": [],
+  "priority": 2,
+  "_stats": {
+   "matches": 279,
+   "winRate": 73.1,
+   "vs": [
+    {
+     "vs": "mined-1",
+     "games": 38,
+     "win": 84
+    }
+   ],
+   "vsArch": [
+    {
+     "vs": "nayuta-carry",
+     "games": 51,
+     "win": 92
+    },
+    {
+     "vs": "vesti-tu",
+     "games": 54,
+     "win": 61
+    },
+    {
+     "vs": "helm-carry",
+     "games": 49,
+     "win": 73
+    },
+    {
+     "vs": "nayuta-rush",
+     "games": 35,
+     "win": 89
+    },
+    {
+     "vs": "anis-star-system",
+     "games": 48,
+     "win": 71
+    },
+    {
+     "vs": "moran-system",
+     "games": 55,
+     "win": 67
+    }
+   ]
+  },
+  "notes": {
+   "en": "Data-mined from 279 Champion Arena rounds, win rate 73%. Flex options are the most common teammates per position.",
+   "zh-TW": "由 nikkeari 冠軍競技場 279 回合統計而來（整體勝率 73%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-CN": "数据挖掘：279 回合，胜率 73%。",
+   "ja": "データ：279回合、勝率 73%。"
+  }
+ }
+]
