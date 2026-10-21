@@ -707,7 +707,7 @@ function fillTemplate(t,ownedSet,allowSub,exclude){
       const need=t.burstSlots[f.slot];
       const pool=CHARACTERS.filter(c=>!used.has(c.id)&&(!ownedSet||ownedSet.has(c.id))&&(c.burst===need||c.burst==='Λ')&&!(exclude&&exclude.has(c.id)))
         .sort((a,b)=>(TIER_RANK[b.pvpTier]||0)-(TIER_RANK[a.pvpTier]||0)||b.burstGen.attack['3RL']-a.burstGen.attack['3RL']);
-      if(pool.length){ slots[f.slot]=pool[0].id; kind[f.slot]='sub'; used.add(pool[0].id); alts[f.slot]=pool.slice(1,4).map(c=>c.id); }
+      if(pool.length){ slots[f.slot]=pool[0].id; kind[f.slot]='sub'; used.add(pool[0].id); alts[f.slot]=pool.slice(1,4).map(c=>c.id); skipped[f.slot]=f.options.filter(o=>byId[o]).slice(0,4); }
       else { kind[f.slot]='miss'; }
     } else { kind[f.slot]='miss'; }
   }
@@ -775,7 +775,7 @@ function buildCounters(enemyIds,mode,ownedSet,allowSub){
     else if(dc>0){ score+=150; why.push(`速度 ${sp.tier} 比對方 ${eSpeed.tier} 快，先開爆裂`); }
     else if(dc===0){ score+=40; why.push(`速度 ${sp.tier} 與對方同階，結果不穩，靠體系壓制`); }
     else { score+= STALL_ARCH.has(t.archetype)? -40 : -140; warn.push(`速度 ${sp.tier}${ch.stages>3?'（四段軸）':''} 比對方 ${eSpeed.tier}${eChain.stages>3?'（四段軸）':''} 慢`+(STALL_ARCH.has(t.archetype)?'（持久體系可接受，但要扛得住第一波）':'，會被先手')); }
-    const subs=f.kind.filter(k=>k==='sub').length; if(subs){ score-=60*subs; warn.push(`${subs} 格為非模板替補`); }
+    const subs=f.kind.filter(k=>k==='sub').length; if(subs){ score-=60*subs; f.kind.forEach((k,i)=>{ if(k==='sub'){ const want=(f.skipped&&f.skipped[i]&&f.skipped[i].length)?`，模板原本要 ${f.skipped[i].map(nameOf).join('／')}`:''; warn.push(`P${i+1} 的 ${nameOf(f.slots[i])} 是非模板替補：模板列的人選你都沒有，改用同爆裂段、階級最高的角色${want}；效果未經驗證`); } }); }
     const offK=offChainKey(f.slots); if(offK.length){ score-=120*offK.length; warn.push(`${offK.map(nameOf).join('、')}在軸外，第一輪不會開爆裂（等於浪費一個關鍵角）`); }
     // 紅蓮反擊檢查
     if(['scarlet','scarlet-black-shadow'].some(x=>enemyIds.includes(x))){ const hi=f.slots.filter(i=>['SG','SMG','MG'].includes(byId[i].weapon)); if(hi.length){ score-=80*hi.length; warn.push('帶了高射速武器（'+hi.map(nameOf).join('、')+'）會被紅蓮 S2 反擊'); } }
