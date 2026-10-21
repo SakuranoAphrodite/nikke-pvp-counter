@@ -4,7 +4,7 @@
 規則：
 - 英文名對應到 characters.json 的 id；對不到的角色整隊略過並列出。
 - required = 階級最高的 2～3 位（SSS/SS 優先），其餘為彈性位，人選只放原角色，缺角時由工具的替補機制處理。
-- burstSlots 依來源順序；來源沒給順序時依「坦 P1/P5、火力 P3/P4」粗排。
+- burstSlots 依來源順序；來源沒給順序時依序用：冠軍競技場同樣 5 人最常用的排法 → 各角色最常站的位置 → 「坦 P1/P5、火力 P3/P4」粗排。
 - preferredSpeed 由來源速度換算（2.5RL→5SG、3.5RL→7SG、unknown→3RL）。
 - 模板名稱標示（社群）與來源站，notes 保留原文摘要與打得贏／輸給誰。
 """
@@ -37,6 +37,43 @@ def main():
         by_en[norm(c["name"]["en"])] = c["id"]
     src = json.loads((DATA / "community-teams.json").read_text(encoding="utf-8"))
     out, skipped = [], []
+    # 來源沒給站位時的排法：① 冠軍競技場同樣 5 人最常用的順序；② 各角色最常站的位置；③ 坦 P1/P5、火力 P3/P4 粗排
+    import re, collections, glob
+    RAW = DATA / "raw"
+    def _norm(x): return re.sub(r"[\s:：・･·\-_＋+()（）]", "", x or "").lower()
+    by_ja = {}
+    for c in chars:
+        by_ja.setdefault(_norm(c["name"]["ja"]), c["id"]); by_ja.setdefault(_norm(c["name"]["en"]), c["id"])
+    ari2my = {}
+    if (RAW / "ari_characters.json").exists():
+        ari2my = {a["id"]: by_ja.get(_norm(a["name"])) for a in json.loads((RAW / "ari_characters.json").read_text(encoding="utf-8"))}
+    nt = lambda i: i[:-9] if i.endswith("-treasure") else i
+    order_count = collections.defaultdict(collections.Counter)  # frozenset(nt ids) -> Counter(tuple of nt ids in order)
+    for f in glob.glob(str(RAW / "ari_matchups_*.json")):
+        for r in json.loads(Path(f).read_text(encoding="utf-8")).get("matchups", []):
+            for team in (r["attacker_team"], r["defender_team"]):
+                m = [ari2my.get(i) for i in team]
+                if None in m or len(m) != 5: continue
+                m = tuple(nt(x) for x in m)
+                order_count[frozenset(m)][m] += 1
+    arena = json.loads((DATA / "arena-stats.json").read_text(encoding="utf-8")) if (DATA / "arena-stats.json").exists() else {}
+    char_pos = arena.get("charPos", {})
+    def order_units(ids):
+        """回傳 (排好的 ids, 說明)"""
+        key = frozenset(nt(i) for i in ids)
+        if key in order_count:
+            best, cnt = order_count[key].most_common(1)[0]
+            back = {nt(i): i for i in ids}
+            return [back[x] for x in best], f"站位依冠軍競技場同樣 5 人最常用的排法（{cnt} 回合）"
+        if all(nt(i) in char_pos or i in char_pos for i in ids):
+            slots = [None] * 5
+            pref = {i: (char_pos.get(i) or char_pos.get(nt(i)))["pos"] for i in ids}
+            for i in sorted(ids, key=lambda i: -max(p[0] for p in pref[i])):
+                for pidx in sorted(range(5), key=lambda k: -pref[i][k][0]):
+                    if slots[pidx] is None:
+                        slots[pidx] = i; break
+            return slots, "站位依各角色在冠軍競技場最常站的位置"
+        return None, ""
     for n, t in enumerate(src["teams"]):
         ids = []
         for u in t["units"]:
@@ -51,13 +88,17 @@ def main():
             ids.append(mid)
         if not ids:
             continue
+        order_note = ""
         if not t.get("ordered"):
-            tank = lambda i: by_id[i]["role"] == "defender"
-            atk = lambda i: by_id[i]["role"] == "attacker"
-            order = [i for i in ids if tank(i)][:1] + [i for i in ids if not tank(i) and not atk(i)] + [i for i in ids if atk(i)] + [i for i in ids if tank(i)][1:]
-            seen = set(); ids = [i for i in order if not (i in seen or seen.add(i))]
-            if len(ids) == 5 and tank(ids[-1]) is False and sum(tank(i) for i in ids) >= 2:
-                pass
+            ordered, order_note = order_units(ids)
+            if ordered:
+                ids = ordered
+            else:
+                tank = lambda i: by_id[i]["role"] == "defender"
+                atk = lambda i: by_id[i]["role"] == "attacker"
+                order = [i for i in ids if tank(i)][:1] + [i for i in ids if not tank(i) and not atk(i)] + [i for i in ids if atk(i)] + [i for i in ids if tank(i)][1:]
+                seen = set(); ids = [i for i in order if not (i in seen or seen.add(i))]
+                order_note = "來源未給站位，順序為工具粗排"
         ranked = sorted(ids, key=lambda i: -TIER.get(by_id[i].get("pvpTier"), 0))
         required = ranked[:3] if TIER.get(by_id[ranked[2]].get("pvpTier"), 0) >= 6 else ranked[:2]
         flex = [{"slot": p, "options": [i]} for p, i in enumerate(ids) if i not in required]
@@ -69,7 +110,7 @@ def main():
         notes_zh = f"{arena}・{host(t['source'])}（{t.get('date','')}）：{t.get('role','')}"
         if t.get("beats"): notes_zh += f"｜打得贏：{'、'.join(t['beats'])}"
         if t.get("losesTo"): notes_zh += f"｜輸給：{'、'.join(t['losesTo'])}"
-        if not t.get("ordered"): notes_zh += "｜來源未給站位，順序為工具粗排"
+        if order_note: notes_zh += "｜" + order_note
         out.append({
             "id": f"community-{n}",
             "name": {"en": f"{' / '.join(by_id[i]['name']['en'] for i in ids)} (community)", "zh-TW": f"{zh}（社群）", "zh-CN": f"{zh}（社群）", "ja": f"{zh}（コミュニティ）"},
