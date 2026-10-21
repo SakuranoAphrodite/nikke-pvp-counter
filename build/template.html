@@ -401,7 +401,7 @@ const ARCH_NAME = {
   'tactical-trio':'戰術三人組（爆裂前擊殺）','sg-burst':'霰彈集火隊','anis-star-system':'超級巨星阿妮斯體系','privaty-stun':'普麗瓦蒂暈眩鎖','share-wall':'豺狼＋貝伊分攤牆','nayuta-rush':'娜由塔一閃（2RL 速攻）'
 };
 // 資料挖掘模板的體系名直接用模板名；其餘查表
-const archName=a=>ARCH_NAME[a]||(a.startsWith('mined-')?((TEMPLATES.find(t=>t.archetype===a)||{}).name||{})['zh-TW']||a:a);
+const archName=a=>ARCH_NAME[a]||((a.startsWith('mined-')||a.startsWith('community-'))?((TEMPLATES.find(t=>t.archetype===a)||{}).name||{})['zh-TW']||a:a);
 // 耗血持久型原型：慢一點也可以接受
 const STALL_ARCH = new Set(['noah-stall','moran-system','cat-team','share-wall','blanc-indom','sanis-stall','alice-revive','anis-star-system']);
 
@@ -464,7 +464,7 @@ const ARENA_IDX=new Map((ARENA.teams||[]).map((t,i)=>[t[0],i]));
 const anyName=id=>byId[id]?byId[id].name['zh-TW']:((ARENA.names&&ARENA.names[id])||id);
 const teamKey=ids=>[...ids].sort().join(',');
 // 忽略珍藏版差異的後備索引（nikkeari 把珍藏記成收藏等級，有些回合沒標記）
-const stripT=id=>id==='laplace-ultimate-hero'?'laplace':id.replace(/-treasure$/,'');
+const stripT=id=>id.replace(/-treasure$/,'');
 const teamKeyNT=ids=>[...ids].map(stripT).sort().join(',');
 const ARENA_IDX_NT=new Map(); (ARENA.teams||[]).forEach((t,i)=>{ const k=teamKeyNT(t[0].split(',')); if(!ARENA_IDX_NT.has(k)||ARENA.teams[ARENA_IDX_NT.get(k)][1]<t[1]) ARENA_IDX_NT.set(k,i); });
 const pct=(w,m)=>m?Math.round(w/m*100):null;
@@ -673,7 +673,7 @@ function ctxOf(ids,mode){
 }
 
 /* 珍藏版視為可填一般版的位置（模板多寫一般版 id） */
-const TREASURE_OF={'laplace':'laplace-ultimate-hero'};
+const TREASURE_OF={};
 function resolveOwned(o,ownedSet){ if(!ownedSet||ownedSet.has(o)) return o; const t=TREASURE_OF[o]||(o+'-treasure'); if(byId[t]&&ownedSet.has(t)) return t; return null; }
 /* 用角色庫填模板 */
 function fillTemplate(t,ownedSet,allowSub,exclude){

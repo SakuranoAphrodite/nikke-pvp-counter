@@ -136,7 +136,7 @@ def main():
         time.sleep(1)
 
         my_ids = {c["id"] for c in chars}
-        TREASURE_ALIAS = {"laplace": "laplace-ultimate-hero"}  # 珍藏版在本工具是獨立角色名
+        TREASURE_ALIAS = {}  # 珍藏版一律為 <id>-treasure（拉普拉斯珍藏與究極英雄是不同角色）
         def key_of(ari_ids, cols):
             mids = []
             for i, col in zip(ari_ids, list(cols or []) + [None] * 5):

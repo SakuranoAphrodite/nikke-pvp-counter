@@ -1,0 +1,1807 @@
+[
+ {
+  "id": "community-0",
+  "name": {
+   "en": "Anis: Star / Blanc / Helm: Treasure / Vesti: Tactical Upgrade / Nayuta (community)",
+   "zh-TW": "阿妮斯:超級巨星／布蘭兒／海倫 珍藏／貝斯蒂:戰術升級／娜由塔（社群）",
+   "zh-CN": "阿妮斯:超級巨星／布蘭兒／海倫 珍藏／貝斯蒂:戰術升級／娜由塔（社群）",
+   "ja": "阿妮斯:超級巨星／布蘭兒／海倫 珍藏／貝斯蒂:戰術升級／娜由塔（コミュニティ）"
+  },
+  "archetype": "community-0",
+  "mode": "attack",
+  "arena": "rookie",
+  "required": [
+   "anis-star",
+   "blanc",
+   "helm-treasure"
+  ],
+  "flex": [
+   {
+    "slot": 3,
+    "options": [
+     "vesti-tactical-upgrade"
+    ]
+   },
+   {
+    "slot": 4,
+    "options": [
+     "nayuta"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "I",
+   "II",
+   "III",
+   "III",
+   "II"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [],
+  "counteredBy": [],
+  "priority": 2,
+  "source": "https://arca.live/b/nikketgv/170007909",
+  "date": "2026-05",
+  "notes": {
+   "en": "新人競技場進攻隊（截圖解讀）：超級巨星阿妮斯坦、布蘭兒不屈、海倫珍藏／貝斯蒂爆裂，娜由塔收割",
+   "zh-TW": "新人競技場・KR arca（2026-05）：新人競技場進攻隊（截圖解讀）：超級巨星阿妮斯坦、布蘭兒不屈、海倫珍藏／貝斯蒂爆裂，娜由塔收割｜打得贏：同型鏡像（後排先死，餅乾型保護仍成立）｜輸給：極快的娜由塔隊；留言者說 阿妮斯／海倫／貝斯蒂／餅乾／娜由塔 即使戰力高 10% 也能險勝它",
+   "zh-CN": "新人競技場・KR arca（2026-05）：新人競技場進攻隊（截圖解讀）：超級巨星阿妮斯坦、布蘭兒不屈、海倫珍藏／貝斯蒂爆裂，娜由塔收割｜打得贏：同型鏡像（後排先死，餅乾型保護仍成立）｜輸給：極快的娜由塔隊；留言者說 阿妮斯／海倫／貝斯蒂／餅乾／娜由塔 即使戰力高 10% 也能險勝它",
+   "ja": "新人競技場・KR arca（2026-05）：新人競技場進攻隊（截圖解讀）：超級巨星阿妮斯坦、布蘭兒不屈、海倫珍藏／貝斯蒂爆裂，娜由塔收割｜打得贏：同型鏡像（後排先死，餅乾型保護仍成立）｜輸給：極快的娜由塔隊；留言者說 阿妮斯／海倫／貝斯蒂／餅乾／娜由塔 即使戰力高 10% 也能險勝它"
+  }
+ },
+ {
+  "id": "community-1",
+  "name": {
+   "en": "Blanc / Helm: Treasure / Vesti: Tactical Upgrade / Nayuta / Anis: Star (community)",
+   "zh-TW": "布蘭兒／海倫 珍藏／貝斯蒂:戰術升級／娜由塔／阿妮斯:超級巨星（社群）",
+   "zh-CN": "布蘭兒／海倫 珍藏／貝斯蒂:戰術升級／娜由塔／阿妮斯:超級巨星（社群）",
+   "ja": "布蘭兒／海倫 珍藏／貝斯蒂:戰術升級／娜由塔／阿妮斯:超級巨星（コミュニティ）"
+  },
+  "archetype": "community-1",
+  "mode": "defense",
+  "arena": "rookie",
+  "required": [
+   "blanc",
+   "helm-treasure",
+   "vesti-tactical-upgrade"
+  ],
+  "flex": [
+   {
+    "slot": 3,
+    "options": [
+     "nayuta"
+    ]
+   },
+   {
+    "slot": 4,
+    "options": [
+     "anis-star"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "II",
+   "III",
+   "III",
+   "II",
+   "I"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [],
+  "counteredBy": [],
+  "priority": 2,
+  "source": "https://arca.live/b/nikketgv/170007909",
+  "date": "2026-05",
+  "notes": {
+   "en": "新人競技場防守隊，同 5 人但阿妮斯改放 P5；作者以此上到挑戰者 1，並註明「特殊競技場別用」",
+   "zh-TW": "新人競技場・KR arca（2026-05）：新人競技場防守隊，同 5 人但阿妮斯改放 P5；作者以此上到挑戰者 1，並註明「特殊競技場別用」｜打得贏：多數新人競技場進攻隊（留言者打不下來）｜輸給：超快娜由塔一閃",
+   "zh-CN": "新人競技場・KR arca（2026-05）：新人競技場防守隊，同 5 人但阿妮斯改放 P5；作者以此上到挑戰者 1，並註明「特殊競技場別用」｜打得贏：多數新人競技場進攻隊（留言者打不下來）｜輸給：超快娜由塔一閃",
+   "ja": "新人競技場・KR arca（2026-05）：新人競技場防守隊，同 5 人但阿妮斯改放 P5；作者以此上到挑戰者 1，並註明「特殊競技場別用」｜打得贏：多數新人競技場進攻隊（留言者打不下來）｜輸給：超快娜由塔一閃"
+  }
+ },
+ {
+  "id": "community-2",
+  "name": {
+   "en": "Noah / Anis: Star / Biscuit / Snow White: Heavy Arms / Helm (community)",
+   "zh-TW": "諾雅／阿妮斯:超級巨星／餅乾／白雪公主:重型武裝／海倫（社群）",
+   "zh-CN": "諾雅／阿妮斯:超級巨星／餅乾／白雪公主:重型武裝／海倫（社群）",
+   "ja": "諾雅／阿妮斯:超級巨星／餅乾／白雪公主:重型武裝／海倫（コミュニティ）"
+  },
+  "archetype": "community-2",
+  "mode": "defense",
+  "arena": "rookie",
+  "required": [
+   "noah",
+   "anis-star",
+   "snow-white-heavy-arms"
+  ],
+  "flex": [
+   {
+    "slot": 2,
+    "options": [
+     "biscuit"
+    ]
+   },
+   {
+    "slot": 4,
+    "options": [
+     "helm"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "II",
+   "I",
+   "II",
+   "III",
+   "III"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [],
+  "counteredBy": [],
+  "priority": 2,
+  "source": "https://detail.chiebukuro.yahoo.co.jp/qa/question_detail/q14327627819",
+  "date": "2026-04",
+  "notes": {
+   "en": "新人競技場打不下來的防守隊：諾雅無敵＋阿妮斯／餅乾無敵＋白雪重武／海倫爆裂",
+   "zh-TW": "新人競技場・Yahoo知恵袋（2026-04）：新人競技場打不下來的防守隊：諾雅無敵＋阿妮斯／餅乾無敵＋白雪重武／海倫爆裂｜打得贏：一般新人進攻隊｜輸給：最佳解答：阿妮斯／貝斯蒂／布蘭兒／餅乾／海倫",
+   "zh-CN": "新人競技場・Yahoo知恵袋（2026-04）：新人競技場打不下來的防守隊：諾雅無敵＋阿妮斯／餅乾無敵＋白雪重武／海倫爆裂｜打得贏：一般新人進攻隊｜輸給：最佳解答：阿妮斯／貝斯蒂／布蘭兒／餅乾／海倫",
+   "ja": "新人競技場・Yahoo知恵袋（2026-04）：新人競技場打不下來的防守隊：諾雅無敵＋阿妮斯／餅乾無敵＋白雪重武／海倫爆裂｜打得贏：一般新人進攻隊｜輸給：最佳解答：阿妮斯／貝斯蒂／布蘭兒／餅乾／海倫"
+  }
+ },
+ {
+  "id": "community-3",
+  "name": {
+   "en": "Anis: Star / Vesti: Tactical Upgrade / Blanc / Biscuit / Helm (community)",
+   "zh-TW": "阿妮斯:超級巨星／貝斯蒂:戰術升級／布蘭兒／餅乾／海倫（社群）",
+   "zh-CN": "阿妮斯:超級巨星／貝斯蒂:戰術升級／布蘭兒／餅乾／海倫（社群）",
+   "ja": "阿妮斯:超級巨星／貝斯蒂:戰術升級／布蘭兒／餅乾／海倫（コミュニティ）"
+  },
+  "archetype": "community-3",
+  "mode": "attack",
+  "arena": "rookie",
+  "required": [
+   "anis-star",
+   "vesti-tactical-upgrade",
+   "blanc"
+  ],
+  "flex": [
+   {
+    "slot": 3,
+    "options": [
+     "biscuit"
+    ]
+   },
+   {
+    "slot": 4,
+    "options": [
+     "helm"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "I",
+   "III",
+   "II",
+   "II",
+   "III"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [],
+  "counteredBy": [],
+  "priority": 2,
+  "source": "https://detail.chiebukuro.yahoo.co.jp/qa/question_detail/q14327627819",
+  "date": "2026-04",
+  "notes": {
+   "en": "對「諾雅／阿妮斯／餅乾／白雪重武／海倫」的最佳解答；海倫與餅乾帶遺物魔方，貝斯蒂可用 Relic Bear",
+   "zh-TW": "新人競技場・Yahoo知恵袋（2026-04）：對「諾雅／阿妮斯／餅乾／白雪重武／海倫」的最佳解答；海倫與餅乾帶遺物魔方，貝斯蒂可用 Relic Bear｜打得贏：諾雅、超級巨星阿妮斯、餅乾、白雪重武、海倫",
+   "zh-CN": "新人競技場・Yahoo知恵袋（2026-04）：對「諾雅／阿妮斯／餅乾／白雪重武／海倫」的最佳解答；海倫與餅乾帶遺物魔方，貝斯蒂可用 Relic Bear｜打得贏：諾雅、超級巨星阿妮斯、餅乾、白雪重武、海倫",
+   "ja": "新人競技場・Yahoo知恵袋（2026-04）：對「諾雅／阿妮斯／餅乾／白雪重武／海倫」的最佳解答；海倫與餅乾帶遺物魔方，貝斯蒂可用 Relic Bear｜打得贏：諾雅、超級巨星阿妮斯、餅乾、白雪重武、海倫"
+  }
+ },
+ {
+  "id": "community-4",
+  "name": {
+   "en": "Noah / Little Mermaid / Snow White: Heavy Arms / Biscuit / Helm: Treasure (community)",
+   "zh-TW": "諾雅／小美人魚／白雪公主:重型武裝／餅乾／海倫 珍藏（社群）",
+   "zh-CN": "諾雅／小美人魚／白雪公主:重型武裝／餅乾／海倫 珍藏（社群）",
+   "ja": "諾雅／小美人魚／白雪公主:重型武裝／餅乾／海倫 珍藏（コミュニティ）"
+  },
+  "archetype": "community-4",
+  "mode": "defense",
+  "arena": "rookie",
+  "required": [
+   "noah",
+   "little-mermaid",
+   "helm-treasure"
+  ],
+  "flex": [
+   {
+    "slot": 2,
+    "options": [
+     "snow-white-heavy-arms"
+    ]
+   },
+   {
+    "slot": 3,
+    "options": [
+     "biscuit"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "II",
+   "I",
+   "III",
+   "II",
+   "III"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [],
+  "counteredBy": [],
+  "priority": 2,
+  "source": "https://detail.chiebukuro.yahoo.co.jp/qa/question_detail/q10327379510",
+  "date": "2026-04",
+  "notes": {
+   "en": "新人競技場卡關的防守隊：諾雅＋小美人魚暈眩＋餅乾無敵，白雪重武／海倫珍藏爆裂",
+   "zh-TW": "新人競技場・Yahoo知恵袋（2026-04）：新人競技場卡關的防守隊：諾雅＋小美人魚暈眩＋餅乾無敵，白雪重武／海倫珍藏爆裂｜打得贏：一般新人進攻隊｜輸給：解答建議：牡丹／諾雅／餅乾／白雪重武／海倫，或 魯瑪妮／布蘭兒／餅乾／灰姑娘／米哈拉",
+   "zh-CN": "新人競技場・Yahoo知恵袋（2026-04）：新人競技場卡關的防守隊：諾雅＋小美人魚暈眩＋餅乾無敵，白雪重武／海倫珍藏爆裂｜打得贏：一般新人進攻隊｜輸給：解答建議：牡丹／諾雅／餅乾／白雪重武／海倫，或 魯瑪妮／布蘭兒／餅乾／灰姑娘／米哈拉",
+   "ja": "新人競技場・Yahoo知恵袋（2026-04）：新人競技場卡關的防守隊：諾雅＋小美人魚暈眩＋餅乾無敵，白雪重武／海倫珍藏爆裂｜打得贏：一般新人進攻隊｜輸給：解答建議：牡丹／諾雅／餅乾／白雪重武／海倫，或 魯瑪妮／布蘭兒／餅乾／灰姑娘／米哈拉"
+  }
+ },
+ {
+  "id": "community-5",
+  "name": {
+   "en": "Moran / Noah / Biscuit / Snow White: Heavy Arms / Helm (community)",
+   "zh-TW": "牡丹／諾雅／餅乾／白雪公主:重型武裝／海倫（社群）",
+   "zh-CN": "牡丹／諾雅／餅乾／白雪公主:重型武裝／海倫（社群）",
+   "ja": "牡丹／諾雅／餅乾／白雪公主:重型武裝／海倫（コミュニティ）"
+  },
+  "archetype": "community-5",
+  "mode": "both",
+  "arena": "rookie",
+  "required": [
+   "moran",
+   "noah",
+   "snow-white-heavy-arms"
+  ],
+  "flex": [
+   {
+    "slot": 2,
+    "options": [
+     "biscuit"
+    ]
+   },
+   {
+    "slot": 4,
+    "options": [
+     "helm"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "I",
+   "II",
+   "II",
+   "III",
+   "III"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [],
+  "counteredBy": [],
+  "priority": 2,
+  "source": "https://detail.chiebukuro.yahoo.co.jp/qa/question_detail/q10327379510",
+  "date": "2026-04",
+  "notes": {
+   "en": "牡丹耐久＋諾雅無敵，白雪重武爆裂；牡丹沒珍藏也夠用",
+   "zh-TW": "新人競技場・Yahoo知恵袋（2026-04）：牡丹耐久＋諾雅無敵，白雪重武爆裂；牡丹沒珍藏也夠用｜打得贏：諾雅／小美人魚／白雪重武／餅乾／海倫（解答建議）｜輸給：不屈隊（略）",
+   "zh-CN": "新人競技場・Yahoo知恵袋（2026-04）：牡丹耐久＋諾雅無敵，白雪重武爆裂；牡丹沒珍藏也夠用｜打得贏：諾雅／小美人魚／白雪重武／餅乾／海倫（解答建議）｜輸給：不屈隊（略）",
+   "ja": "新人競技場・Yahoo知恵袋（2026-04）：牡丹耐久＋諾雅無敵，白雪重武爆裂；牡丹沒珍藏也夠用｜打得贏：諾雅／小美人魚／白雪重武／餅乾／海倫（解答建議）｜輸給：不屈隊（略）"
+  }
+ },
+ {
+  "id": "community-6",
+  "name": {
+   "en": "Crown / Nayuta / Helm: Treasure / Snow White: Heavy Arms / Anis: Star (community)",
+   "zh-TW": "皇冠／娜由塔／海倫 珍藏／白雪公主:重型武裝／阿妮斯:超級巨星（社群）",
+   "zh-CN": "皇冠／娜由塔／海倫 珍藏／白雪公主:重型武裝／阿妮斯:超級巨星（社群）",
+   "ja": "皇冠／娜由塔／海倫 珍藏／白雪公主:重型武裝／阿妮斯:超級巨星（コミュニティ）"
+  },
+  "archetype": "community-6",
+  "mode": "defense",
+  "arena": "rookie",
+  "required": [
+   "helm-treasure",
+   "snow-white-heavy-arms",
+   "anis-star"
+  ],
+  "flex": [
+   {
+    "slot": 0,
+    "options": [
+     "crown"
+    ]
+   },
+   {
+    "slot": 1,
+    "options": [
+     "nayuta"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "II",
+   "II",
+   "III",
+   "III",
+   "I"
+  ],
+  "preferredSpeed": "2RL",
+  "counters": [],
+  "counteredBy": [],
+  "priority": 2,
+  "source": "https://wikiwiki.jp/fpo2w6pt/（NIKKE）アリーナ攻略",
+  "date": "2026-10",
+  "notes": {
+   "en": "新人競技場常見：娜由塔自不屈＋皇冠增傷，海倫／白雪重武 2RL 爆裂",
+   "zh-TW": "新人競技場・JP wikiwiki（2026-10）：新人競技場常見：娜由塔自不屈＋皇冠增傷，海倫／白雪重武 2RL 爆裂｜輸給：諾雅／餅乾／海倫珍藏／羅珊娜／白雪重武（2RL）｜來源未給站位，順序為工具粗排",
+   "zh-CN": "新人競技場・JP wikiwiki（2026-10）：新人競技場常見：娜由塔自不屈＋皇冠增傷，海倫／白雪重武 2RL 爆裂｜輸給：諾雅／餅乾／海倫珍藏／羅珊娜／白雪重武（2RL）｜來源未給站位，順序為工具粗排",
+   "ja": "新人競技場・JP wikiwiki（2026-10）：新人競技場常見：娜由塔自不屈＋皇冠增傷，海倫／白雪重武 2RL 爆裂｜輸給：諾雅／餅乾／海倫珍藏／羅珊娜／白雪重武（2RL）｜來源未給站位，順序為工具粗排"
+  }
+ },
+ {
+  "id": "community-7",
+  "name": {
+   "en": "Nayuta / Anis: Star / Helm / Cinderella / Snow White: Heavy Arms (community)",
+   "zh-TW": "娜由塔／阿妮斯:超級巨星／海倫／灰姑娘／白雪公主:重型武裝（社群）",
+   "zh-CN": "娜由塔／阿妮斯:超級巨星／海倫／灰姑娘／白雪公主:重型武裝（社群）",
+   "ja": "娜由塔／阿妮斯:超級巨星／海倫／灰姑娘／白雪公主:重型武裝（コミュニティ）"
+  },
+  "archetype": "community-7",
+  "mode": "defense",
+  "arena": "rookie",
+  "required": [
+   "nayuta",
+   "anis-star",
+   "snow-white-heavy-arms"
+  ],
+  "flex": [
+   {
+    "slot": 2,
+    "options": [
+     "helm"
+    ]
+   },
+   {
+    "slot": 3,
+    "options": [
+     "cinderella"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "II",
+   "I",
+   "III",
+   "III",
+   "III"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [],
+  "counteredBy": [],
+  "priority": 2,
+  "source": "https://gall.dcinside.com/mgallery/board/view/?id=gov&no=5454466",
+  "date": "2026-05",
+  "notes": {
+   "en": "新人競技場防守隊（發文者求解，未見解答）",
+   "zh-TW": "新人競技場・KR dcinside（2026-05）：新人競技場防守隊（發文者求解，未見解答）",
+   "zh-CN": "新人競技場・KR dcinside（2026-05）：新人競技場防守隊（發文者求解，未見解答）",
+   "ja": "新人競技場・KR dcinside（2026-05）：新人競技場防守隊（發文者求解，未見解答）"
+  }
+ },
+ {
+  "id": "community-9",
+  "name": {
+   "en": "Anis: Star / Biscuit / Vesti: Tactical Upgrade / Blanc / Anis (community)",
+   "zh-TW": "阿妮斯:超級巨星／餅乾／貝斯蒂:戰術升級／布蘭兒／阿妮斯（社群）",
+   "zh-CN": "阿妮斯:超級巨星／餅乾／貝斯蒂:戰術升級／布蘭兒／阿妮斯（社群）",
+   "ja": "阿妮斯:超級巨星／餅乾／貝斯蒂:戰術升級／布蘭兒／阿妮斯（コミュニティ）"
+  },
+  "archetype": "community-9",
+  "mode": "both",
+  "arena": "special",
+  "required": [
+   "anis-star",
+   "vesti-tactical-upgrade",
+   "blanc"
+  ],
+  "flex": [
+   {
+    "slot": 1,
+    "options": [
+     "biscuit"
+    ]
+   },
+   {
+    "slot": 4,
+    "options": [
+     "anis"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "I",
+   "II",
+   "III",
+   "II",
+   "II"
+  ],
+  "preferredSpeed": "2RL",
+  "counters": [],
+  "counteredBy": [],
+  "priority": 2,
+  "source": "https://wikiwiki.jp/fpo2w6pt/（NIKKE）アリーナ攻略",
+  "date": "2026-10",
+  "notes": {
+   "en": "特殊競技場範本隊 1／3（新手指南）：阿妮斯坦＋餅乾無敵、布蘭兒不屈、貝斯蒂爆裂、SR 阿妮斯補速度",
+   "zh-TW": "特殊競技場・JP wikiwiki（2026-10）：特殊競技場範本隊 1／3（新手指南）：阿妮斯坦＋餅乾無敵、布蘭兒不屈、貝斯蒂爆裂、SR 阿妮斯補速度｜來源未給站位，順序為工具粗排",
+   "zh-CN": "特殊競技場・JP wikiwiki（2026-10）：特殊競技場範本隊 1／3（新手指南）：阿妮斯坦＋餅乾無敵、布蘭兒不屈、貝斯蒂爆裂、SR 阿妮斯補速度｜來源未給站位，順序為工具粗排",
+   "ja": "特殊競技場・JP wikiwiki（2026-10）：特殊競技場範本隊 1／3（新手指南）：阿妮斯坦＋餅乾無敵、布蘭兒不屈、貝斯蒂爆裂、SR 阿妮斯補速度｜來源未給站位，順序為工具粗排"
+  }
+ },
+ {
+  "id": "community-10",
+  "name": {
+   "en": "Moran / Trina / Helm: Treasure / Noah / Cinderella (community)",
+   "zh-TW": "牡丹／特蕾娜／海倫 珍藏／諾雅／灰姑娘（社群）",
+   "zh-CN": "牡丹／特蕾娜／海倫 珍藏／諾雅／灰姑娘（社群）",
+   "ja": "牡丹／特蕾娜／海倫 珍藏／諾雅／灰姑娘（コミュニティ）"
+  },
+  "archetype": "community-10",
+  "mode": "both",
+  "arena": "special",
+  "required": [
+   "moran",
+   "helm-treasure",
+   "noah"
+  ],
+  "flex": [
+   {
+    "slot": 1,
+    "options": [
+     "trina"
+    ]
+   },
+   {
+    "slot": 4,
+    "options": [
+     "cinderella"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "I",
+   "II",
+   "III",
+   "II",
+   "III"
+  ],
+  "preferredSpeed": "2RL",
+  "counters": [],
+  "counteredBy": [],
+  "priority": 2,
+  "source": "https://wikiwiki.jp/fpo2w6pt/（NIKKE）アリーナ攻略",
+  "date": "2026-10",
+  "notes": {
+   "en": "特殊競技場範本隊 2／3：牡丹／諾雅耐久、海倫珍藏吸血爆裂、灰姑娘一閃",
+   "zh-TW": "特殊競技場・JP wikiwiki（2026-10）：特殊競技場範本隊 2／3：牡丹／諾雅耐久、海倫珍藏吸血爆裂、灰姑娘一閃｜來源未給站位，順序為工具粗排",
+   "zh-CN": "特殊競技場・JP wikiwiki（2026-10）：特殊競技場範本隊 2／3：牡丹／諾雅耐久、海倫珍藏吸血爆裂、灰姑娘一閃｜來源未給站位，順序為工具粗排",
+   "ja": "特殊競技場・JP wikiwiki（2026-10）：特殊競技場範本隊 2／3：牡丹／諾雅耐久、海倫珍藏吸血爆裂、灰姑娘一閃｜來源未給站位，順序為工具粗排"
+  }
+ },
+ {
+  "id": "community-11",
+  "name": {
+   "en": "Centi / Nayuta / Snow White: Heavy Arms / Liberalio / Jackal (community)",
+   "zh-TW": "桑迪／娜由塔／白雪公主:重型武裝／莉貝雷利奧(水母)／豺狼（社群）",
+   "zh-CN": "桑迪／娜由塔／白雪公主:重型武裝／莉貝雷利奧(水母)／豺狼（社群）",
+   "ja": "桑迪／娜由塔／白雪公主:重型武裝／莉貝雷利奧(水母)／豺狼（コミュニティ）"
+  },
+  "archetype": "community-11",
+  "mode": "both",
+  "arena": "special",
+  "required": [
+   "nayuta",
+   "snow-white-heavy-arms",
+   "jackal"
+  ],
+  "flex": [
+   {
+    "slot": 0,
+    "options": [
+     "centi"
+    ]
+   },
+   {
+    "slot": 3,
+    "options": [
+     "liberalio"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "II",
+   "II",
+   "III",
+   "III",
+   "I"
+  ],
+  "preferredSpeed": "2RL",
+  "counters": [],
+  "counteredBy": [],
+  "priority": 2,
+  "source": "https://wikiwiki.jp/fpo2w6pt/（NIKKE）アリーナ攻略",
+  "date": "2026-10",
+  "notes": {
+   "en": "特殊競技場範本隊 3／3：娜由塔不屈＋桑迪／豺狼充能，白雪重武／莉貝雷利奧 AOE 爆裂",
+   "zh-TW": "特殊競技場・JP wikiwiki（2026-10）：特殊競技場範本隊 3／3：娜由塔不屈＋桑迪／豺狼充能，白雪重武／莉貝雷利奧 AOE 爆裂｜來源未給站位，順序為工具粗排",
+   "zh-CN": "特殊競技場・JP wikiwiki（2026-10）：特殊競技場範本隊 3／3：娜由塔不屈＋桑迪／豺狼充能，白雪重武／莉貝雷利奧 AOE 爆裂｜來源未給站位，順序為工具粗排",
+   "ja": "特殊競技場・JP wikiwiki（2026-10）：特殊競技場範本隊 3／3：娜由塔不屈＋桑迪／豺狼充能，白雪重武／莉貝雷利奧 AOE 爆裂｜來源未給站位，順序為工具粗排"
+  }
+ },
+ {
+  "id": "community-12",
+  "name": {
+   "en": "Nayuta / Vesti: Tactical Upgrade / Laplace: Ultimate Hero / Rosanna / Helm: Treasure (community)",
+   "zh-TW": "娜由塔／貝斯蒂:戰術升級／拉普拉斯:究極英雄／羅珊娜／海倫 珍藏（社群）",
+   "zh-CN": "娜由塔／貝斯蒂:戰術升級／拉普拉斯:究極英雄／羅珊娜／海倫 珍藏（社群）",
+   "ja": "娜由塔／貝斯蒂:戰術升級／拉普拉斯:究極英雄／羅珊娜／海倫 珍藏（コミュニティ）"
+  },
+  "archetype": "community-12",
+  "mode": "defense",
+  "arena": "special",
+  "required": [
+   "vesti-tactical-upgrade",
+   "laplace-ultimate-hero",
+   "helm-treasure"
+  ],
+  "flex": [
+   {
+    "slot": 0,
+    "options": [
+     "nayuta"
+    ]
+   },
+   {
+    "slot": 3,
+    "options": [
+     "rosanna"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "II",
+   "III",
+   "III",
+   "I",
+   "III"
+  ],
+  "preferredSpeed": "5SG",
+  "counters": [],
+  "counteredBy": [],
+  "priority": 2,
+  "source": "https://wikiwiki.jp/fpo2w6pt/（NIKKE）アリーナ攻略",
+  "date": "2026-10",
+  "notes": {
+   "en": "常見的特殊競技場第 3 隊：娜由塔不屈、羅珊娜倒地充能、貝斯蒂／拉普拉斯核爆",
+   "zh-TW": "特殊競技場・JP wikiwiki（2026-10）：常見的特殊競技場第 3 隊：娜由塔不屈、羅珊娜倒地充能、貝斯蒂／拉普拉斯核爆｜輸給：牡丹／諾雅／餅乾／白雪重武／蕾貝兒（2.5RL）｜來源未給站位，順序為工具粗排",
+   "zh-CN": "特殊競技場・JP wikiwiki（2026-10）：常見的特殊競技場第 3 隊：娜由塔不屈、羅珊娜倒地充能、貝斯蒂／拉普拉斯核爆｜輸給：牡丹／諾雅／餅乾／白雪重武／蕾貝兒（2.5RL）｜來源未給站位，順序為工具粗排",
+   "ja": "特殊競技場・JP wikiwiki（2026-10）：常見的特殊競技場第 3 隊：娜由塔不屈、羅珊娜倒地充能、貝斯蒂／拉普拉斯核爆｜輸給：牡丹／諾雅／餅乾／白雪重武／蕾貝兒（2.5RL）｜來源未給站位，順序為工具粗排"
+  }
+ },
+ {
+  "id": "community-13",
+  "name": {
+   "en": "Moran / Biscuit / Trina / Snow White: Heavy Arms / Noah (community)",
+   "zh-TW": "牡丹／餅乾／特蕾娜／白雪公主:重型武裝／諾雅（社群）",
+   "zh-CN": "牡丹／餅乾／特蕾娜／白雪公主:重型武裝／諾雅（社群）",
+   "ja": "牡丹／餅乾／特蕾娜／白雪公主:重型武裝／諾雅（コミュニティ）"
+  },
+  "archetype": "community-13",
+  "mode": "both",
+  "arena": "special",
+  "required": [
+   "moran",
+   "snow-white-heavy-arms",
+   "noah"
+  ],
+  "flex": [
+   {
+    "slot": 1,
+    "options": [
+     "biscuit"
+    ]
+   },
+   {
+    "slot": 2,
+    "options": [
+     "trina"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "I",
+   "II",
+   "II",
+   "III",
+   "II"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [],
+  "counteredBy": [],
+  "priority": 2,
+  "source": "https://arca.live/b/nikketgv/165480983",
+  "date": "2026-03",
+  "notes": {
+   "en": "「목노비스트」：熱門 목베비스 的變體；特蕾娜穩住牡丹，對羅珊娜時特蕾娜換蕾貝兒，貝伊練好後諾雅換貝伊",
+   "zh-TW": "特殊競技場・KR arca（2026-03）：「목노비스트」：熱門 목베비스 的變體；特蕾娜穩住牡丹，對羅珊娜時特蕾娜換蕾貝兒，貝伊練好後諾雅換貝伊｜輸給：羅珊娜（除非放蕾貝兒）｜來源未給站位，順序為工具粗排",
+   "zh-CN": "特殊競技場・KR arca（2026-03）：「목노비스트」：熱門 목베비스 的變體；特蕾娜穩住牡丹，對羅珊娜時特蕾娜換蕾貝兒，貝伊練好後諾雅換貝伊｜輸給：羅珊娜（除非放蕾貝兒）｜來源未給站位，順序為工具粗排",
+   "ja": "特殊競技場・KR arca（2026-03）：「목노비스트」：熱門 목베비스 的變體；特蕾娜穩住牡丹，對羅珊娜時特蕾娜換蕾貝兒，貝伊練好後諾雅換貝伊｜輸給：羅珊娜（除非放蕾貝兒）｜來源未給站位，順序為工具粗排"
+  }
+ },
+ {
+  "id": "community-14",
+  "name": {
+   "en": "Nayuta / Helm / Red Hood / Laplace: Ultimate Hero / Centi (community)",
+   "zh-TW": "娜由塔／海倫／小紅帽／拉普拉斯:究極英雄／桑迪（社群）",
+   "zh-CN": "娜由塔／海倫／小紅帽／拉普拉斯:究極英雄／桑迪（社群）",
+   "ja": "娜由塔／海倫／小紅帽／拉普拉斯:究極英雄／桑迪（コミュニティ）"
+  },
+  "archetype": "community-14",
+  "mode": "attack",
+  "arena": "special",
+  "required": [
+   "nayuta",
+   "laplace-ultimate-hero"
+  ],
+  "flex": [
+   {
+    "slot": 1,
+    "options": [
+     "helm"
+    ]
+   },
+   {
+    "slot": 2,
+    "options": [
+     "red-hood"
+    ]
+   },
+   {
+    "slot": 4,
+    "options": [
+     "centi"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "II",
+   "III",
+   "Λ",
+   "III",
+   "II"
+  ],
+  "preferredSpeed": "2RL",
+  "counters": [],
+  "counteredBy": [],
+  "priority": 2,
+  "source": "https://arca.live/b/nikketgv/165480983",
+  "date": "2026-03",
+  "notes": {
+   "en": "「娜由塔一閃」：務必到 2RL；桑迪當 B2 充能；原則是對方出豺狼布蘭兒隊就帶這隊",
+   "zh-TW": "特殊競技場・KR arca（2026-03）：「娜由塔一閃」：務必到 2RL；桑迪當 B2 充能；原則是對方出豺狼布蘭兒隊就帶這隊｜打得贏：豺狼／布蘭兒（자블）隊｜輸給：小美人魚（沒超頻充能必輸）、諾雅擋住爆裂",
+   "zh-CN": "特殊競技場・KR arca（2026-03）：「娜由塔一閃」：務必到 2RL；桑迪當 B2 充能；原則是對方出豺狼布蘭兒隊就帶這隊｜打得贏：豺狼／布蘭兒（자블）隊｜輸給：小美人魚（沒超頻充能必輸）、諾雅擋住爆裂",
+   "ja": "特殊競技場・KR arca（2026-03）：「娜由塔一閃」：務必到 2RL；桑迪當 B2 充能；原則是對方出豺狼布蘭兒隊就帶這隊｜打得贏：豺狼／布蘭兒（자블）隊｜輸給：小美人魚（沒超頻充能必輸）、諾雅擋住爆裂"
+  }
+ },
+ {
+  "id": "community-15",
+  "name": {
+   "en": "Jackal / Vesti: Tactical Upgrade / Red Hood / Blanc / Drake (community)",
+   "zh-TW": "豺狼／貝斯蒂:戰術升級／小紅帽／布蘭兒／德雷克（社群）",
+   "zh-CN": "豺狼／貝斯蒂:戰術升級／小紅帽／布蘭兒／德雷克（社群）",
+   "ja": "豺狼／貝斯蒂:戰術升級／小紅帽／布蘭兒／德雷克（コミュニティ）"
+  },
+  "archetype": "community-15",
+  "mode": "attack",
+  "arena": "special",
+  "required": [
+   "jackal",
+   "vesti-tactical-upgrade",
+   "blanc"
+  ],
+  "flex": [
+   {
+    "slot": 2,
+    "options": [
+     "red-hood"
+    ]
+   },
+   {
+    "slot": 4,
+    "options": [
+     "drake"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "I",
+   "III",
+   "Λ",
+   "II",
+   "III"
+  ],
+  "preferredSpeed": "5SG",
+  "counters": [],
+  "counteredBy": [],
+  "priority": 2,
+  "source": "https://arca.live/b/nikketgv/165480983",
+  "date": "2026-03",
+  "notes": {
+   "en": "「자블베」：豺狼／布蘭兒／貝斯蒂固定，另兩位可換（P3 放小美人魚或梅登冰玫瑰）；維持 2.5RL；對方出諾雅隊就帶這隊",
+   "zh-TW": "特殊競技場・KR arca（2026-03）：「자블베」：豺狼／布蘭兒／貝斯蒂固定，另兩位可換（P3 放小美人魚或梅登冰玫瑰）；維持 2.5RL；對方出諾雅隊就帶這隊｜打得贏：諾雅隊｜輸給：娜由塔一閃隊、羅珊娜（其他文）",
+   "zh-CN": "特殊競技場・KR arca（2026-03）：「자블베」：豺狼／布蘭兒／貝斯蒂固定，另兩位可換（P3 放小美人魚或梅登冰玫瑰）；維持 2.5RL；對方出諾雅隊就帶這隊｜打得贏：諾雅隊｜輸給：娜由塔一閃隊、羅珊娜（其他文）",
+   "ja": "特殊競技場・KR arca（2026-03）：「자블베」：豺狼／布蘭兒／貝斯蒂固定，另兩位可換（P3 放小美人魚或梅登冰玫瑰）；維持 2.5RL；對方出諾雅隊就帶這隊｜打得贏：諾雅隊｜輸給：娜由塔一閃隊、羅珊娜（其他文）"
+  }
+ },
+ {
+  "id": "community-17",
+  "name": {
+   "en": "Moran / Biscuit / Snow White: Heavy Arms / Bay / Maiden: Ice Rose (community)",
+   "zh-TW": "牡丹／餅乾／白雪公主:重型武裝／貝伊／梅登:冰玫瑰（社群）",
+   "zh-CN": "牡丹／餅乾／白雪公主:重型武裝／貝伊／梅登:冰玫瑰（社群）",
+   "ja": "牡丹／餅乾／白雪公主:重型武裝／貝伊／梅登:冰玫瑰（コミュニティ）"
+  },
+  "archetype": "community-17",
+  "mode": "both",
+  "arena": "special",
+  "required": [
+   "moran",
+   "biscuit",
+   "snow-white-heavy-arms"
+  ],
+  "flex": [
+   {
+    "slot": 3,
+    "options": [
+     "bay"
+    ]
+   },
+   {
+    "slot": 4,
+    "options": [
+     "maiden-ice-rose"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "I",
+   "II",
+   "III",
+   "II",
+   "III"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [],
+  "counteredBy": [],
+  "priority": 2,
+  "source": "https://arca.live/b/nikketgv/165480983",
+  "date": "2026-03",
+  "notes": {
+   "en": "「목베비스클」：作者認為有愛蜜莉雅時最強的三隊之一（另兩隊：豺狼／貝斯蒂／愛蜜莉雅／布蘭兒／Wong，娜由塔／海倫／拉普拉斯／小紅帽／桑迪）",
+   "zh-TW": "特殊競技場・KR arca（2026-03）：「목베비스클」：作者認為有愛蜜莉雅時最強的三隊之一（另兩隊：豺狼／貝斯蒂／愛蜜莉雅／布蘭兒／Wong，娜由塔／海倫／拉普拉斯／小紅帽／桑迪）｜來源未給站位，順序為工具粗排",
+   "zh-CN": "特殊競技場・KR arca（2026-03）：「목베비스클」：作者認為有愛蜜莉雅時最強的三隊之一（另兩隊：豺狼／貝斯蒂／愛蜜莉雅／布蘭兒／Wong，娜由塔／海倫／拉普拉斯／小紅帽／桑迪）｜來源未給站位，順序為工具粗排",
+   "ja": "特殊競技場・KR arca（2026-03）：「목베비스클」：作者認為有愛蜜莉雅時最強的三隊之一（另兩隊：豺狼／貝斯蒂／愛蜜莉雅／布蘭兒／Wong，娜由塔／海倫／拉普拉斯／小紅帽／桑迪）｜來源未給站位，順序為工具粗排"
+  }
+ },
+ {
+  "id": "community-18",
+  "name": {
+   "en": "Moran / Noah / Vesti: Tactical Upgrade / Helm / Ada (community)",
+   "zh-TW": "牡丹／諾雅／貝斯蒂:戰術升級／海倫／艾達·王（社群）",
+   "zh-CN": "牡丹／諾雅／貝斯蒂:戰術升級／海倫／艾達·王（社群）",
+   "ja": "牡丹／諾雅／貝斯蒂:戰術升級／海倫／艾達·王（コミュニティ）"
+  },
+  "archetype": "community-18",
+  "mode": "both",
+  "arena": "special",
+  "required": [
+   "moran",
+   "noah",
+   "vesti-tactical-upgrade"
+  ],
+  "flex": [
+   {
+    "slot": 3,
+    "options": [
+     "helm"
+    ]
+   },
+   {
+    "slot": 4,
+    "options": [
+     "ada"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "I",
+   "II",
+   "III",
+   "III",
+   "III"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [],
+  "counteredBy": [],
+  "priority": 2,
+  "source": "https://arca.live/b/nikketgv/160711100",
+  "date": "2026-02",
+  "notes": {
+   "en": "諾雅隊：牡丹嘲諷＋諾雅 3 秒無敵，貝斯蒂一閃，艾達副 C（餅乾可代艾達）",
+   "zh-TW": "特殊競技場・KR arca（2026-02）：諾雅隊：牡丹嘲諷＋諾雅 3 秒無敵，貝斯蒂一閃，艾達副 C（餅乾可代艾達）｜輸給：賽蓮暈諾雅",
+   "zh-CN": "特殊競技場・KR arca（2026-02）：諾雅隊：牡丹嘲諷＋諾雅 3 秒無敵，貝斯蒂一閃，艾達副 C（餅乾可代艾達）｜輸給：賽蓮暈諾雅",
+   "ja": "特殊競技場・KR arca（2026-02）：諾雅隊：牡丹嘲諷＋諾雅 3 秒無敵，貝斯蒂一閃，艾達副 C（餅乾可代艾達）｜輸給：賽蓮暈諾雅"
+  }
+ },
+ {
+  "id": "community-19",
+  "name": {
+   "en": "Nayuta / Mihara: Bonding Chain / Soda: Twinkling Bunny / Rosanna / Drake (community)",
+   "zh-TW": "娜由塔／米哈拉:靈魂鎖鏈／索達:閃亮兔女郎／羅珊娜／德雷克（社群）",
+   "zh-CN": "娜由塔／米哈拉:靈魂鎖鏈／索達:閃亮兔女郎／羅珊娜／德雷克（社群）",
+   "ja": "娜由塔／米哈拉:靈魂鎖鏈／索達:閃亮兔女郎／羅珊娜／德雷克（コミュニティ）"
+  },
+  "archetype": "community-19",
+  "mode": "attack",
+  "arena": "special",
+  "required": [
+   "nayuta",
+   "mihara-bonding-chain",
+   "soda-twinkling-bunny"
+  ],
+  "flex": [
+   {
+    "slot": 3,
+    "options": [
+     "rosanna"
+    ]
+   },
+   {
+    "slot": 4,
+    "options": [
+     "drake"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "II",
+   "III",
+   "III",
+   "I",
+   "III"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [],
+  "counteredBy": [],
+  "priority": 2,
+  "source": "https://arca.live/b/nikketgv/160711100",
+  "date": "2026-02",
+  "notes": {
+   "en": "娜由塔／羅珊娜霰彈隊：米哈拉自殺餵羅珊娜充能，霰彈在娜由塔 9 秒不屈內先打掉 P5",
+   "zh-TW": "特殊競技場・KR arca（2026-02）：娜由塔／羅珊娜霰彈隊：米哈拉自殺餵羅珊娜充能，霰彈在娜由塔 9 秒不屈內先打掉 P5｜打得贏：慢的耐久隊｜輸給：賽蓮暈眩、拖長的戰鬥",
+   "zh-CN": "特殊競技場・KR arca（2026-02）：娜由塔／羅珊娜霰彈隊：米哈拉自殺餵羅珊娜充能，霰彈在娜由塔 9 秒不屈內先打掉 P5｜打得贏：慢的耐久隊｜輸給：賽蓮暈眩、拖長的戰鬥",
+   "ja": "特殊競技場・KR arca（2026-02）：娜由塔／羅珊娜霰彈隊：米哈拉自殺餵羅珊娜充能，霰彈在娜由塔 9 秒不屈內先打掉 P5｜打得贏：慢的耐久隊｜輸給：賽蓮暈眩、拖長的戰鬥"
+  }
+ },
+ {
+  "id": "community-20",
+  "name": {
+   "en": "Trina / Scarlet / Helm: Treasure / Rosanna / Drake (community)",
+   "zh-TW": "特蕾娜／紅蓮／海倫 珍藏／羅珊娜／德雷克（社群）",
+   "zh-CN": "特蕾娜／紅蓮／海倫 珍藏／羅珊娜／德雷克（社群）",
+   "ja": "特蕾娜／紅蓮／海倫 珍藏／羅珊娜／德雷克（コミュニティ）"
+  },
+  "archetype": "community-20",
+  "mode": "defense",
+  "arena": "special",
+  "required": [
+   "trina",
+   "scarlet",
+   "helm-treasure"
+  ],
+  "flex": [
+   {
+    "slot": 3,
+    "options": [
+     "rosanna"
+    ]
+   },
+   {
+    "slot": 4,
+    "options": [
+     "drake"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "II",
+   "III",
+   "III",
+   "I",
+   "III"
+  ],
+  "preferredSpeed": "2RL",
+  "counters": [],
+  "counteredBy": [],
+  "priority": 2,
+  "source": "https://arca.live/b/nikketgv/170722623",
+  "date": "2026-05",
+  "notes": {
+   "en": "「홍트」紅蓮特蕾娜防守隊：海倫 21% 充能速度＋羅珊娜（戰力夠就用桑迪代德雷克）；作者的第 3 防守隊",
+   "zh-TW": "特殊競技場・KR arca（2026-05）：「홍트」紅蓮特蕾娜防守隊：海倫 21% 充能速度＋羅珊娜（戰力夠就用桑迪代德雷克）；作者的第 3 防守隊｜輸給：諾雅隊（除非羅珊娜放 P2 狙諾雅）｜來源未給站位，順序為工具粗排",
+   "zh-CN": "特殊競技場・KR arca（2026-05）：「홍트」紅蓮特蕾娜防守隊：海倫 21% 充能速度＋羅珊娜（戰力夠就用桑迪代德雷克）；作者的第 3 防守隊｜輸給：諾雅隊（除非羅珊娜放 P2 狙諾雅）｜來源未給站位，順序為工具粗排",
+   "ja": "特殊競技場・KR arca（2026-05）：「홍트」紅蓮特蕾娜防守隊：海倫 21% 充能速度＋羅珊娜（戰力夠就用桑迪代德雷克）；作者的第 3 防守隊｜輸給：諾雅隊（除非羅珊娜放 P2 狙諾雅）｜來源未給站位，順序為工具粗排"
+  }
+ },
+ {
+  "id": "community-21",
+  "name": {
+   "en": "Nayuta / Helm / Red Hood / Laplace: Ultimate Hero / Trina (community)",
+   "zh-TW": "娜由塔／海倫／小紅帽／拉普拉斯:究極英雄／特蕾娜（社群）",
+   "zh-CN": "娜由塔／海倫／小紅帽／拉普拉斯:究極英雄／特蕾娜（社群）",
+   "ja": "娜由塔／海倫／小紅帽／拉普拉斯:究極英雄／特蕾娜（コミュニティ）"
+  },
+  "archetype": "community-21",
+  "mode": "attack",
+  "arena": "special",
+  "required": [
+   "nayuta",
+   "laplace-ultimate-hero",
+   "trina"
+  ],
+  "flex": [
+   {
+    "slot": 1,
+    "options": [
+     "helm"
+    ]
+   },
+   {
+    "slot": 2,
+    "options": [
+     "red-hood"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "II",
+   "III",
+   "Λ",
+   "III",
+   "II"
+  ],
+  "preferredSpeed": "2RL",
+  "counters": [],
+  "counteredBy": [],
+  "priority": 2,
+  "source": "https://arca.live/b/nikketgv/170722623",
+  "date": "2026-05",
+  "notes": {
+   "en": "「나헬레랖트」速攻一閃；最省的充能速度配置：海倫 8%、特蕾娜 18%、拉普拉斯 11%、小紅帽 5%；「夠快理論上無敵」",
+   "zh-TW": "特殊競技場・KR arca（2026-05）：「나헬레랖트」速攻一閃；最省的充能速度配置：海倫 8%、特蕾娜 18%、拉普拉斯 11%、小紅帽 5%；「夠快理論上無敵」｜打得贏：先開就贏幾乎所有隊｜輸給：諾雅擋爆裂、賽蓮暈眩",
+   "zh-CN": "特殊競技場・KR arca（2026-05）：「나헬레랖트」速攻一閃；最省的充能速度配置：海倫 8%、特蕾娜 18%、拉普拉斯 11%、小紅帽 5%；「夠快理論上無敵」｜打得贏：先開就贏幾乎所有隊｜輸給：諾雅擋爆裂、賽蓮暈眩",
+   "ja": "特殊競技場・KR arca（2026-05）：「나헬레랖트」速攻一閃；最省的充能速度配置：海倫 8%、特蕾娜 18%、拉普拉斯 11%、小紅帽 5%；「夠快理論上無敵」｜打得贏：先開就贏幾乎所有隊｜輸給：諾雅擋爆裂、賽蓮暈眩"
+  }
+ },
+ {
+  "id": "community-22",
+  "name": {
+   "en": "Moran / Vesti: Tactical Upgrade / Ada / Noah / Jackal (community)",
+   "zh-TW": "牡丹／貝斯蒂:戰術升級／艾達·王／諾雅／豺狼（社群）",
+   "zh-CN": "牡丹／貝斯蒂:戰術升級／艾達·王／諾雅／豺狼（社群）",
+   "ja": "牡丹／貝斯蒂:戰術升級／艾達·王／諾雅／豺狼（コミュニティ）"
+  },
+  "archetype": "community-22",
+  "mode": "both",
+  "arena": "special",
+  "required": [
+   "moran",
+   "vesti-tactical-upgrade",
+   "noah"
+  ],
+  "flex": [
+   {
+    "slot": 2,
+    "options": [
+     "ada"
+    ]
+   },
+   {
+    "slot": 4,
+    "options": [
+     "jackal"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "I",
+   "III",
+   "III",
+   "II",
+   "I"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [],
+  "counteredBy": [],
+  "priority": 2,
+  "source": "https://gall.dcinside.com/mgallery/board/view/?id=gov&no=5473491",
+  "date": "2026-05",
+  "notes": {
+   "en": "新手特殊競技場隊 1：諾雅爆裂要在對方一閃落地前開；牡丹 B1 搶在對方之前；艾達是最佳副 C（普麗瓦蒂／梅登冰玫瑰／貝斯蒂可代）",
+   "zh-TW": "特殊競技場・KR dcinside（2026-05）：新手特殊競技場隊 1：諾雅爆裂要在對方一閃落地前開；牡丹 B1 搶在對方之前；艾達是最佳副 C（普麗瓦蒂／梅登冰玫瑰／貝斯蒂可代）｜打得贏：快的 小紅帽／娜由塔／海倫 一閃隊",
+   "zh-CN": "特殊競技場・KR dcinside（2026-05）：新手特殊競技場隊 1：諾雅爆裂要在對方一閃落地前開；牡丹 B1 搶在對方之前；艾達是最佳副 C（普麗瓦蒂／梅登冰玫瑰／貝斯蒂可代）｜打得贏：快的 小紅帽／娜由塔／海倫 一閃隊",
+   "ja": "特殊競技場・KR dcinside（2026-05）：新手特殊競技場隊 1：諾雅爆裂要在對方一閃落地前開；牡丹 B1 搶在對方之前；艾達是最佳副 C（普麗瓦蒂／梅登冰玫瑰／貝斯蒂可代）｜打得贏：快的 小紅帽／娜由塔／海倫 一閃隊"
+  }
+ },
+ {
+  "id": "community-23",
+  "name": {
+   "en": "Anis: Star / Blanc / Neon: Vision Eye / Biscuit / Anis: Sparkling Summer (community)",
+   "zh-TW": "阿妮斯:超級巨星／布蘭兒／尼恩:透視之眼／餅乾／阿妮斯:閃耀夏日（社群）",
+   "zh-CN": "阿妮斯:超級巨星／布蘭兒／尼恩:透視之眼／餅乾／阿妮斯:閃耀夏日（社群）",
+   "ja": "阿妮斯:超級巨星／布蘭兒／尼恩:透視之眼／餅乾／阿妮斯:閃耀夏日（コミュニティ）"
+  },
+  "archetype": "community-23",
+  "mode": "defense",
+  "arena": "special",
+  "required": [
+   "anis-star",
+   "blanc",
+   "neon-vision-eye"
+  ],
+  "flex": [
+   {
+    "slot": 3,
+    "options": [
+     "biscuit"
+    ]
+   },
+   {
+    "slot": 4,
+    "options": [
+     "anis-sparkling-summer"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "I",
+   "II",
+   "III",
+   "II",
+   "III"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [],
+  "counteredBy": [],
+  "priority": 2,
+  "source": "https://gall.dcinside.com/mgallery/board/view/?id=gov&no=5473491",
+  "date": "2026-05",
+  "notes": {
+   "en": "後開不屈隊：布蘭兒的不屈刻意給餅乾，讓餅乾無敵撐到 3RL 爆裂",
+   "zh-TW": "特殊競技場・KR dcinside（2026-05）：後開不屈隊：布蘭兒的不屈刻意給餅乾，讓餅乾無敵撐到 3RL 爆裂｜輸給：故意把布蘭兒不屈逼到餅乾身上的對手",
+   "zh-CN": "特殊競技場・KR dcinside（2026-05）：後開不屈隊：布蘭兒的不屈刻意給餅乾，讓餅乾無敵撐到 3RL 爆裂｜輸給：故意把布蘭兒不屈逼到餅乾身上的對手",
+   "ja": "特殊競技場・KR dcinside（2026-05）：後開不屈隊：布蘭兒的不屈刻意給餅乾，讓餅乾無敵撐到 3RL 爆裂｜輸給：故意把布蘭兒不屈逼到餅乾身上的對手"
+  }
+ },
+ {
+  "id": "community-24",
+  "name": {
+   "en": "Jackal / Vesti: Tactical Upgrade / Anis: Star / Blanc / Neon: Vision Eye (community)",
+   "zh-TW": "豺狼／貝斯蒂:戰術升級／阿妮斯:超級巨星／布蘭兒／尼恩:透視之眼（社群）",
+   "zh-CN": "豺狼／貝斯蒂:戰術升級／阿妮斯:超級巨星／布蘭兒／尼恩:透視之眼（社群）",
+   "ja": "豺狼／貝斯蒂:戰術升級／阿妮斯:超級巨星／布蘭兒／尼恩:透視之眼（コミュニティ）"
+  },
+  "archetype": "community-24",
+  "mode": "attack",
+  "arena": "special",
+  "required": [
+   "vesti-tactical-upgrade",
+   "anis-star",
+   "blanc"
+  ],
+  "flex": [
+   {
+    "slot": 0,
+    "options": [
+     "jackal"
+    ]
+   },
+   {
+    "slot": 4,
+    "options": [
+     "neon-vision-eye"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "I",
+   "III",
+   "I",
+   "II",
+   "III"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [],
+  "counteredBy": [],
+  "priority": 2,
+  "source": "https://gall.dcinside.com/mgallery/board/view/?id=gov&no=5575052",
+  "date": "2026-06",
+  "notes": {
+   "en": "新手特殊競技場進攻隊 1（P5 換賽蓮的變體約 174 幀，逼對方在 174 幀到賽蓮暈眩 196 幀之間開）",
+   "zh-TW": "特殊競技場・KR dcinside（2026-06）：新手特殊競技場進攻隊 1（P5 換賽蓮的變體約 174 幀，逼對方在 174 幀到賽蓮暈眩 196 幀之間開）｜打得贏：後開的 阿妮斯／布蘭兒／餅乾 隊",
+   "zh-CN": "特殊競技場・KR dcinside（2026-06）：新手特殊競技場進攻隊 1（P5 換賽蓮的變體約 174 幀，逼對方在 174 幀到賽蓮暈眩 196 幀之間開）｜打得贏：後開的 阿妮斯／布蘭兒／餅乾 隊",
+   "ja": "特殊競技場・KR dcinside（2026-06）：新手特殊競技場進攻隊 1（P5 換賽蓮的變體約 174 幀，逼對方在 174 幀到賽蓮暈眩 196 幀之間開）｜打得贏：後開的 阿妮斯／布蘭兒／餅乾 隊"
+  }
+ },
+ {
+  "id": "community-25",
+  "name": {
+   "en": "Noah / Trina / Biscuit / Vesti: Tactical Upgrade / Moran (community)",
+   "zh-TW": "諾雅／特蕾娜／餅乾／貝斯蒂:戰術升級／牡丹（社群）",
+   "zh-CN": "諾雅／特蕾娜／餅乾／貝斯蒂:戰術升級／牡丹（社群）",
+   "ja": "諾雅／特蕾娜／餅乾／貝斯蒂:戰術升級／牡丹（コミュニティ）"
+  },
+  "archetype": "community-25",
+  "mode": "attack",
+  "arena": "special",
+  "required": [
+   "noah",
+   "vesti-tactical-upgrade",
+   "moran"
+  ],
+  "flex": [
+   {
+    "slot": 1,
+    "options": [
+     "trina"
+    ]
+   },
+   {
+    "slot": 2,
+    "options": [
+     "biscuit"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "II",
+   "II",
+   "II",
+   "III",
+   "I"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [],
+  "counteredBy": [],
+  "priority": 2,
+  "source": "https://gall.dcinside.com/mgallery/board/view/?id=gov&no=5575052",
+  "date": "2026-06",
+  "notes": {
+   "en": "新手特殊競技場進攻隊 2；對賽蓮或特蕾娜太早死時改 牡丹、諾雅、特蕾娜、貝斯蒂、餅乾；防守版 牡丹、諾雅、餅乾、貝斯蒂、海倫珍藏",
+   "zh-TW": "特殊競技場・KR dcinside（2026-06）：新手特殊競技場進攻隊 2；對賽蓮或特蕾娜太早死時改 牡丹、諾雅、特蕾娜、貝斯蒂、餅乾；防守版 牡丹、諾雅、餅乾、貝斯蒂、海倫珍藏｜輸給：賽蓮（諾雅被暈）、羅珊娜（主要威脅）",
+   "zh-CN": "特殊競技場・KR dcinside（2026-06）：新手特殊競技場進攻隊 2；對賽蓮或特蕾娜太早死時改 牡丹、諾雅、特蕾娜、貝斯蒂、餅乾；防守版 牡丹、諾雅、餅乾、貝斯蒂、海倫珍藏｜輸給：賽蓮（諾雅被暈）、羅珊娜（主要威脅）",
+   "ja": "特殊競技場・KR dcinside（2026-06）：新手特殊競技場進攻隊 2；對賽蓮或特蕾娜太早死時改 牡丹、諾雅、特蕾娜、貝斯蒂、餅乾；防守版 牡丹、諾雅、餅乾、貝斯蒂、海倫珍藏｜輸給：賽蓮（諾雅被暈）、羅珊娜（主要威脅）"
+  }
+ },
+ {
+  "id": "community-26",
+  "name": {
+   "en": "Nayuta / Centi / Helm: Treasure / Red Hood / Laplace: Ultimate Hero (community)",
+   "zh-TW": "娜由塔／桑迪／海倫 珍藏／小紅帽／拉普拉斯:究極英雄（社群）",
+   "zh-CN": "娜由塔／桑迪／海倫 珍藏／小紅帽／拉普拉斯:究極英雄（社群）",
+   "ja": "娜由塔／桑迪／海倫 珍藏／小紅帽／拉普拉斯:究極英雄（コミュニティ）"
+  },
+  "archetype": "community-26",
+  "mode": "defense",
+  "arena": "special",
+  "required": [
+   "nayuta",
+   "helm-treasure",
+   "laplace-ultimate-hero"
+  ],
+  "flex": [
+   {
+    "slot": 1,
+    "options": [
+     "centi"
+    ]
+   },
+   {
+    "slot": 3,
+    "options": [
+     "red-hood"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "II",
+   "II",
+   "III",
+   "Λ",
+   "III"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [],
+  "counteredBy": [],
+  "priority": 2,
+  "source": "https://gall.dcinside.com/mgallery/board/view/?id=gov&no=5575052",
+  "date": "2026-06",
+  "notes": {
+   "en": "便宜的第 3 隊湊數（約 172 幀，偏慢）；特蕾娜可代拉普拉斯；目的是讓進攻方多花一隊",
+   "zh-TW": "特殊競技場・KR dcinside（2026-06）：便宜的第 3 隊湊數（約 172 幀，偏慢）；特蕾娜可代拉普拉斯；目的是讓進攻方多花一隊｜輸給：快的 小紅帽／娜由塔／海倫 隊",
+   "zh-CN": "特殊競技場・KR dcinside（2026-06）：便宜的第 3 隊湊數（約 172 幀，偏慢）；特蕾娜可代拉普拉斯；目的是讓進攻方多花一隊｜輸給：快的 小紅帽／娜由塔／海倫 隊",
+   "ja": "特殊競技場・KR dcinside（2026-06）：便宜的第 3 隊湊數（約 172 幀，偏慢）；特蕾娜可代拉普拉斯；目的是讓進攻方多花一隊｜輸給：快的 小紅帽／娜由塔／海倫 隊"
+  }
+ },
+ {
+  "id": "community-27",
+  "name": {
+   "en": "Blanc / Biscuit / Mihara: Bonding Chain / Anis: Star / Cinderella (community)",
+   "zh-TW": "布蘭兒／餅乾／米哈拉:靈魂鎖鏈／阿妮斯:超級巨星／灰姑娘（社群）",
+   "zh-CN": "布蘭兒／餅乾／米哈拉:靈魂鎖鏈／阿妮斯:超級巨星／灰姑娘（社群）",
+   "ja": "布蘭兒／餅乾／米哈拉:靈魂鎖鏈／阿妮斯:超級巨星／灰姑娘（コミュニティ）"
+  },
+  "archetype": "community-27",
+  "mode": "defense",
+  "arena": "special",
+  "required": [
+   "blanc",
+   "biscuit",
+   "anis-star"
+  ],
+  "flex": [
+   {
+    "slot": 2,
+    "options": [
+     "mihara-bonding-chain"
+    ]
+   },
+   {
+    "slot": 4,
+    "options": [
+     "cinderella"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "II",
+   "II",
+   "III",
+   "I",
+   "III"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [],
+  "counteredBy": [],
+  "priority": 2,
+  "source": "https://gall.dcinside.com/mgallery/board/view/?id=gov&no=5471697",
+  "date": "2026-05",
+  "notes": {
+   "en": "「아블비」防守範例：阿妮斯＋餅乾無敵＋布蘭兒不屈，米哈拉毒，灰姑娘爆裂",
+   "zh-TW": "特殊競技場・KR dcinside（2026-05）：「아블비」防守範例：阿妮斯＋餅乾無敵＋布蘭兒不屈，米哈拉毒，灰姑娘爆裂｜打得贏：沒針對的進攻隊｜輸給：用灰姑娘誘餌提早逼出布蘭兒爆裂、縮短無敵窗口的針對打法｜來源未給站位，順序為工具粗排",
+   "zh-CN": "特殊競技場・KR dcinside（2026-05）：「아블비」防守範例：阿妮斯＋餅乾無敵＋布蘭兒不屈，米哈拉毒，灰姑娘爆裂｜打得贏：沒針對的進攻隊｜輸給：用灰姑娘誘餌提早逼出布蘭兒爆裂、縮短無敵窗口的針對打法｜來源未給站位，順序為工具粗排",
+   "ja": "特殊競技場・KR dcinside（2026-05）：「아블비」防守範例：阿妮斯＋餅乾無敵＋布蘭兒不屈，米哈拉毒，灰姑娘爆裂｜打得贏：沒針對的進攻隊｜輸給：用灰姑娘誘餌提早逼出布蘭兒爆裂、縮短無敵窗口的針對打法｜來源未給站位，順序為工具粗排"
+  }
+ },
+ {
+  "id": "community-28",
+  "name": {
+   "en": "Blanc / Scarlet / Red Hood / Centi / Jackal (community)",
+   "zh-TW": "布蘭兒／紅蓮／小紅帽／桑迪／豺狼（社群）",
+   "zh-CN": "布蘭兒／紅蓮／小紅帽／桑迪／豺狼（社群）",
+   "ja": "布蘭兒／紅蓮／小紅帽／桑迪／豺狼（コミュニティ）"
+  },
+  "archetype": "community-28",
+  "mode": "both",
+  "arena": "special",
+  "required": [
+   "blanc",
+   "scarlet",
+   "jackal"
+  ],
+  "flex": [
+   {
+    "slot": 2,
+    "options": [
+     "red-hood"
+    ]
+   },
+   {
+    "slot": 3,
+    "options": [
+     "centi"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "II",
+   "III",
+   "Λ",
+   "II",
+   "I"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [],
+  "counteredBy": [],
+  "priority": 2,
+  "source": "https://bbs.ruliweb.com/game/86188/read/2288",
+  "date": "2026-01",
+  "notes": {
+   "en": "回文推薦的特殊競技場隊 1：紅蓮核爆＋布蘭兒不屈，桑迪／豺狼充能",
+   "zh-TW": "特殊競技場・KR ruliweb（2026-01）：回文推薦的特殊競技場隊 1：紅蓮核爆＋布蘭兒不屈，桑迪／豺狼充能｜來源未給站位，順序為工具粗排",
+   "zh-CN": "特殊競技場・KR ruliweb（2026-01）：回文推薦的特殊競技場隊 1：紅蓮核爆＋布蘭兒不屈，桑迪／豺狼充能｜來源未給站位，順序為工具粗排",
+   "ja": "特殊競技場・KR ruliweb（2026-01）：回文推薦的特殊競技場隊 1：紅蓮核爆＋布蘭兒不屈，桑迪／豺狼充能｜來源未給站位，順序為工具粗排"
+  }
+ },
+ {
+  "id": "community-30",
+  "name": {
+   "en": "Noah / Biscuit / Rapunzel / Red Hood / Rapi: Red Hood (community)",
+   "zh-TW": "諾雅／餅乾／長髮公主／小紅帽／拉毗:小紅帽（社群）",
+   "zh-CN": "諾雅／餅乾／長髮公主／小紅帽／拉毗:小紅帽（社群）",
+   "ja": "諾雅／餅乾／長髮公主／小紅帽／拉毗:小紅帽（コミュニティ）"
+  },
+  "archetype": "community-30",
+  "mode": "defense",
+  "arena": "special",
+  "required": [
+   "noah",
+   "biscuit",
+   "rapi-red-hood"
+  ],
+  "flex": [
+   {
+    "slot": 2,
+    "options": [
+     "rapunzel"
+    ]
+   },
+   {
+    "slot": 3,
+    "options": [
+     "red-hood"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "II",
+   "II",
+   "I",
+   "Λ",
+   "III"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [],
+  "counteredBy": [],
+  "priority": 2,
+  "source": "https://www.gamemeca.com/en/view.php?gid=1764749",
+  "date": "2025-08",
+  "notes": {
+   "en": "特殊競技場第 11 名「Toscan」的防守隊：小紅帽 B1 增傷兼輸出、拉毗副 C、諾雅／餅乾／長髮公主維持",
+   "zh-TW": "特殊競技場・Gamemeca（2025-08）：特殊競技場第 11 名「Toscan」的防守隊：小紅帽 B1 增傷兼輸出、拉毗副 C、諾雅／餅乾／長髮公主維持｜來源未給站位，順序為工具粗排",
+   "zh-CN": "特殊競技場・Gamemeca（2025-08）：特殊競技場第 11 名「Toscan」的防守隊：小紅帽 B1 增傷兼輸出、拉毗副 C、諾雅／餅乾／長髮公主維持｜來源未給站位，順序為工具粗排",
+   "ja": "特殊競技場・Gamemeca（2025-08）：特殊競技場第 11 名「Toscan」的防守隊：小紅帽 B1 增傷兼輸出、拉毗副 C、諾雅／餅乾／長髮公主維持｜來源未給站位，順序為工具粗排"
+  }
+ },
+ {
+  "id": "community-31",
+  "name": {
+   "en": "Scarlet / Moran / Cinderella / Nayuta / Helm (community)",
+   "zh-TW": "紅蓮／牡丹／灰姑娘／娜由塔／海倫（社群）",
+   "zh-CN": "紅蓮／牡丹／灰姑娘／娜由塔／海倫（社群）",
+   "ja": "紅蓮／牡丹／灰姑娘／娜由塔／海倫（コミュニティ）"
+  },
+  "archetype": "community-31",
+  "mode": "defense",
+  "arena": "special",
+  "required": [
+   "scarlet",
+   "moran",
+   "cinderella"
+  ],
+  "flex": [
+   {
+    "slot": 3,
+    "options": [
+     "nayuta"
+    ]
+   },
+   {
+    "slot": 4,
+    "options": [
+     "helm"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "III",
+   "I",
+   "III",
+   "II",
+   "III"
+  ],
+  "preferredSpeed": "7SG",
+  "counters": [],
+  "counteredBy": [],
+  "priority": 2,
+  "source": "https://detail.chiebukuro.yahoo.co.jp/qa/question_detail/q11328137496",
+  "date": "2026-05",
+  "notes": {
+   "en": "發問者的特殊競技場防守 2；解答：加速才能用，現在 2RL 是基準，3RL 以上「對現在的競技場太慢」",
+   "zh-TW": "特殊競技場・Yahoo知恵袋（2026-05）：發問者的特殊競技場防守 2；解答：加速才能用，現在 2RL 是基準，3RL 以上「對現在的競技場太慢」｜輸給：任何先開的 2RL／2.5RL 隊",
+   "zh-CN": "特殊競技場・Yahoo知恵袋（2026-05）：發問者的特殊競技場防守 2；解答：加速才能用，現在 2RL 是基準，3RL 以上「對現在的競技場太慢」｜輸給：任何先開的 2RL／2.5RL 隊",
+   "ja": "特殊競技場・Yahoo知恵袋（2026-05）：發問者的特殊競技場防守 2；解答：加速才能用，現在 2RL 是基準，3RL 以上「對現在的競技場太慢」｜輸給：任何先開的 2RL／2.5RL 隊"
+  }
+ },
+ {
+  "id": "community-32",
+  "name": {
+   "en": "Anis: Star / Biscuit / Helm: Treasure / Snow White: Heavy Arms / Blanc (community)",
+   "zh-TW": "阿妮斯:超級巨星／餅乾／海倫 珍藏／白雪公主:重型武裝／布蘭兒（社群）",
+   "zh-CN": "阿妮斯:超級巨星／餅乾／海倫 珍藏／白雪公主:重型武裝／布蘭兒（社群）",
+   "ja": "阿妮斯:超級巨星／餅乾／海倫 珍藏／白雪公主:重型武裝／布蘭兒（コミュニティ）"
+  },
+  "archetype": "community-32",
+  "mode": "defense",
+  "arena": "any",
+  "required": [
+   "anis-star",
+   "helm-treasure",
+   "blanc"
+  ],
+  "flex": [
+   {
+    "slot": 1,
+    "options": [
+     "biscuit"
+    ]
+   },
+   {
+    "slot": 3,
+    "options": [
+     "snow-white-heavy-arms"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "I",
+   "II",
+   "III",
+   "III",
+   "II"
+  ],
+  "preferredSpeed": "2RL",
+  "counters": [],
+  "counteredBy": [],
+  "priority": 2,
+  "source": "https://wikiwiki.jp/fpo2w6pt/（NIKKE）アリーナ攻略",
+  "date": "2026-10",
+  "notes": {
+   "en": "阿妮斯（防禦者）靠餅乾無敵活下來，布蘭兒不屈延長，海倫爆裂吸血磨贏",
+   "zh-TW": "通用・JP wikiwiki（2026-10）：阿妮斯（防禦者）靠餅乾無敵活下來，布蘭兒不屈延長，海倫爆裂吸血磨贏｜打得贏：打不穿無敵＋不屈的一閃隊｜輸給：諾雅／超級巨星阿妮斯／海倫珍藏／白雪重武／牡丹（2RL）｜來源未給站位，順序為工具粗排",
+   "zh-CN": "通用・JP wikiwiki（2026-10）：阿妮斯（防禦者）靠餅乾無敵活下來，布蘭兒不屈延長，海倫爆裂吸血磨贏｜打得贏：打不穿無敵＋不屈的一閃隊｜輸給：諾雅／超級巨星阿妮斯／海倫珍藏／白雪重武／牡丹（2RL）｜來源未給站位，順序為工具粗排",
+   "ja": "通用・JP wikiwiki（2026-10）：阿妮斯（防禦者）靠餅乾無敵活下來，布蘭兒不屈延長，海倫爆裂吸血磨贏｜打得贏：打不穿無敵＋不屈的一閃隊｜輸給：諾雅／超級巨星阿妮斯／海倫珍藏／白雪重武／牡丹（2RL）｜來源未給站位，順序為工具粗排"
+  }
+ },
+ {
+  "id": "community-33",
+  "name": {
+   "en": "Rapunzel / Trina / Soline: Frost Ticket / Scarlet / Helm: Treasure (community)",
+   "zh-TW": "長髮公主／特蕾娜／索林:霜雪車票／紅蓮／海倫 珍藏（社群）",
+   "zh-CN": "長髮公主／特蕾娜／索林:霜雪車票／紅蓮／海倫 珍藏（社群）",
+   "ja": "長髮公主／特蕾娜／索林:霜雪車票／紅蓮／海倫 珍藏（コミュニティ）"
+  },
+  "archetype": "community-33",
+  "mode": "attack",
+  "arena": "any",
+  "required": [
+   "rapunzel",
+   "trina",
+   "helm-treasure"
+  ],
+  "flex": [
+   {
+    "slot": 2,
+    "options": [
+     "soline-frost-ticket"
+    ]
+   },
+   {
+    "slot": 3,
+    "options": [
+     "scarlet"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "I",
+   "II",
+   "I",
+   "III",
+   "III"
+  ],
+  "preferredSpeed": "2RL",
+  "counters": [],
+  "counteredBy": [],
+  "priority": 2,
+  "source": "https://wikiwiki.jp/fpo2w6pt/（NIKKE）アリーナ攻略",
+  "date": "2026-10",
+  "notes": {
+   "en": "香格里拉紅蓮：以 HP 門檻觸發達到最高速度；進攻用（冠軍競技場也可）",
+   "zh-TW": "通用・JP wikiwiki（2026-10）：香格里拉紅蓮：以 HP 門檻觸發達到最高速度；進攻用（冠軍競技場也可）｜打得贏：較慢的隊｜輸給：諾伊斯／諾雅／海倫珍藏／餅乾／魯瑪妮（2RL）｜來源未給站位，順序為工具粗排",
+   "zh-CN": "通用・JP wikiwiki（2026-10）：香格里拉紅蓮：以 HP 門檻觸發達到最高速度；進攻用（冠軍競技場也可）｜打得贏：較慢的隊｜輸給：諾伊斯／諾雅／海倫珍藏／餅乾／魯瑪妮（2RL）｜來源未給站位，順序為工具粗排",
+   "ja": "通用・JP wikiwiki（2026-10）：香格里拉紅蓮：以 HP 門檻觸發達到最高速度；進攻用（冠軍競技場也可）｜打得贏：較慢的隊｜輸給：諾伊斯／諾雅／海倫珍藏／餅乾／魯瑪妮（2RL）｜來源未給站位，順序為工具粗排"
+  }
+ },
+ {
+  "id": "community-34",
+  "name": {
+   "en": "Mast / Emma: Tactical Upgrade / Soline: Frost Ticket / Eunhwa: Tactical Upgrade / Vesti: Tactical Upgrade (community)",
+   "zh-TW": "馬斯特／艾瑪:戰術升級／索林:霜雪車票／銀華:戰術升級／貝斯蒂:戰術升級（社群）",
+   "zh-CN": "馬斯特／艾瑪:戰術升級／索林:霜雪車票／銀華:戰術升級／貝斯蒂:戰術升級（社群）",
+   "ja": "馬斯特／艾瑪:戰術升級／索林:霜雪車票／銀華:戰術升級／貝斯蒂:戰術升級（コミュニティ）"
+  },
+  "archetype": "community-34",
+  "mode": "both",
+  "arena": "any",
+  "required": [
+   "soline-frost-ticket",
+   "eunhwa-tactical-upgrade",
+   "vesti-tactical-upgrade"
+  ],
+  "flex": [
+   {
+    "slot": 0,
+    "options": [
+     "mast"
+    ]
+   },
+   {
+    "slot": 1,
+    "options": [
+     "emma-tactical-upgrade"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "II",
+   "I",
+   "I",
+   "II",
+   "III"
+  ],
+  "preferredSpeed": "5RL",
+  "counters": [],
+  "counteredBy": [],
+  "priority": 2,
+  "source": "https://wikiwiki.jp/fpo2w6pt/（NIKKE）アリーナ攻略",
+  "date": "2026-10",
+  "notes": {
+   "en": "「Absolute」增益疊加隊（一般馬斯特＋戰術升級艾瑪／銀華／貝斯蒂）；非常慢但能破桑迪／豺狼防守",
+   "zh-TW": "通用・JP wikiwiki（2026-10）：「Absolute」增益疊加隊（一般馬斯特＋戰術升級艾瑪／銀華／貝斯蒂）；非常慢但能破桑迪／豺狼防守｜打得贏：索達拉普拉斯速攻、桑迪／豺狼型防守｜輸給：諾伊斯／諾雅／灰姑娘／餅乾／魯瑪妮（3RL）、娜由塔＋兩個犧牲角＋羅珊娜＋B3（2RL）｜來源未給站位，順序為工具粗排",
+   "zh-CN": "通用・JP wikiwiki（2026-10）：「Absolute」增益疊加隊（一般馬斯特＋戰術升級艾瑪／銀華／貝斯蒂）；非常慢但能破桑迪／豺狼防守｜打得贏：索達拉普拉斯速攻、桑迪／豺狼型防守｜輸給：諾伊斯／諾雅／灰姑娘／餅乾／魯瑪妮（3RL）、娜由塔＋兩個犧牲角＋羅珊娜＋B3（2RL）｜來源未給站位，順序為工具粗排",
+   "ja": "通用・JP wikiwiki（2026-10）：「Absolute」增益疊加隊（一般馬斯特＋戰術升級艾瑪／銀華／貝斯蒂）；非常慢但能破桑迪／豺狼防守｜打得贏：索達拉普拉斯速攻、桑迪／豺狼型防守｜輸給：諾伊斯／諾雅／灰姑娘／餅乾／魯瑪妮（3RL）、娜由塔＋兩個犧牲角＋羅珊娜＋B3（2RL）｜來源未給站位，順序為工具粗排"
+  }
+ },
+ {
+  "id": "community-35",
+  "name": {
+   "en": "Jackal / Vesti: Tactical Upgrade / Helm: Treasure / Maiden: Ice Rose / Blanc (community)",
+   "zh-TW": "豺狼／貝斯蒂:戰術升級／海倫 珍藏／梅登:冰玫瑰／布蘭兒（社群）",
+   "zh-CN": "豺狼／貝斯蒂:戰術升級／海倫 珍藏／梅登:冰玫瑰／布蘭兒（社群）",
+   "ja": "豺狼／貝斯蒂:戰術升級／海倫 珍藏／梅登:冰玫瑰／布蘭兒（コミュニティ）"
+  },
+  "archetype": "community-35",
+  "mode": "both",
+  "arena": "any",
+  "required": [
+   "vesti-tactical-upgrade",
+   "helm-treasure",
+   "blanc"
+  ],
+  "flex": [
+   {
+    "slot": 0,
+    "options": [
+     "jackal"
+    ]
+   },
+   {
+    "slot": 3,
+    "options": [
+     "maiden-ice-rose"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "I",
+   "III",
+   "III",
+   "III",
+   "II"
+  ],
+  "preferredSpeed": "2RL",
+  "counters": [],
+  "counteredBy": [],
+  "priority": 2,
+  "source": "https://wikiwiki.jp/fpo2w6pt/（NIKKE）アリーナ攻略",
+  "date": "2026-10",
+  "notes": {
+   "en": "豺狼連結貝斯蒂核爆＋布蘭兒不屈＋梅登冰玫瑰；同 5 人（含 Exia 變體）在 2026-05 冠軍競技場並列第 5",
+   "zh-TW": "通用・JP wikiwiki（2026-10）：豺狼連結貝斯蒂核爆＋布蘭兒不屈＋梅登冰玫瑰；同 5 人（含 Exia 變體）在 2026-05 冠軍競技場並列第 5｜打得贏：諾伊斯／諾雅／餅乾／魯瑪妮／灰姑娘持久、尼羅／牡丹控場｜輸給：紅蓮／特蕾娜／索達／桑迪／豺狼（2RL）、諾雅／餅乾／阿妮斯／羅珊娜／白雪重武（2RL）｜來源未給站位，順序為工具粗排",
+   "zh-CN": "通用・JP wikiwiki（2026-10）：豺狼連結貝斯蒂核爆＋布蘭兒不屈＋梅登冰玫瑰；同 5 人（含 Exia 變體）在 2026-05 冠軍競技場並列第 5｜打得贏：諾伊斯／諾雅／餅乾／魯瑪妮／灰姑娘持久、尼羅／牡丹控場｜輸給：紅蓮／特蕾娜／索達／桑迪／豺狼（2RL）、諾雅／餅乾／阿妮斯／羅珊娜／白雪重武（2RL）｜來源未給站位，順序為工具粗排",
+   "ja": "通用・JP wikiwiki（2026-10）：豺狼連結貝斯蒂核爆＋布蘭兒不屈＋梅登冰玫瑰；同 5 人（含 Exia 變體）在 2026-05 冠軍競技場並列第 5｜打得贏：諾伊斯／諾雅／餅乾／魯瑪妮／灰姑娘持久、尼羅／牡丹控場｜輸給：紅蓮／特蕾娜／索達／桑迪／豺狼（2RL）、諾雅／餅乾／阿妮斯／羅珊娜／白雪重武（2RL）｜來源未給站位，順序為工具粗排"
+  }
+ },
+ {
+  "id": "community-36",
+  "name": {
+   "en": "Anis: Star / Blanc / Emilia / Biscuit / Cinderella (community)",
+   "zh-TW": "阿妮斯:超級巨星／布蘭兒／愛蜜莉雅／餅乾／灰姑娘（社群）",
+   "zh-CN": "阿妮斯:超級巨星／布蘭兒／愛蜜莉雅／餅乾／灰姑娘（社群）",
+   "ja": "阿妮斯:超級巨星／布蘭兒／愛蜜莉雅／餅乾／灰姑娘（コミュニティ）"
+  },
+  "archetype": "community-36",
+  "mode": "both",
+  "arena": "any",
+  "required": [
+   "anis-star",
+   "blanc",
+   "emilia"
+  ],
+  "flex": [
+   {
+    "slot": 3,
+    "options": [
+     "biscuit"
+    ]
+   },
+   {
+    "slot": 4,
+    "options": [
+     "cinderella"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "I",
+   "II",
+   "III",
+   "II",
+   "III"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [],
+  "counteredBy": [],
+  "priority": 2,
+  "source": "https://gamewith.jp/nikke/article/show/379079",
+  "date": "2026-10",
+  "notes": {
+   "en": "GameWith「不屈型」：布蘭兒不屈給愛蜜莉雅讓她撐過對方爆裂；餅乾可換成最左的尼恩透視之眼",
+   "zh-TW": "通用・GameWith（2026-10）：GameWith「不屈型」：布蘭兒不屈給愛蜜莉雅讓她撐過對方爆裂；餅乾可換成最左的尼恩透視之眼",
+   "zh-CN": "通用・GameWith（2026-10）：GameWith「不屈型」：布蘭兒不屈給愛蜜莉雅讓她撐過對方爆裂；餅乾可換成最左的尼恩透視之眼",
+   "ja": "通用・GameWith（2026-10）：GameWith「不屈型」：布蘭兒不屈給愛蜜莉雅讓她撐過對方爆裂；餅乾可換成最左的尼恩透視之眼"
+  }
+ },
+ {
+  "id": "community-37",
+  "name": {
+   "en": "Moran / Noah / Trina / Vesti: Tactical Upgrade / Maiden: Ice Rose (community)",
+   "zh-TW": "牡丹／諾雅／特蕾娜／貝斯蒂:戰術升級／梅登:冰玫瑰（社群）",
+   "zh-CN": "牡丹／諾雅／特蕾娜／貝斯蒂:戰術升級／梅登:冰玫瑰（社群）",
+   "ja": "牡丹／諾雅／特蕾娜／貝斯蒂:戰術升級／梅登:冰玫瑰（コミュニティ）"
+  },
+  "archetype": "community-37",
+  "mode": "defense",
+  "arena": "any",
+  "required": [
+   "moran",
+   "noah",
+   "vesti-tactical-upgrade"
+  ],
+  "flex": [
+   {
+    "slot": 2,
+    "options": [
+     "trina"
+    ]
+   },
+   {
+    "slot": 4,
+    "options": [
+     "maiden-ice-rose"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "I",
+   "II",
+   "II",
+   "III",
+   "III"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [],
+  "counteredBy": [],
+  "priority": 2,
+  "source": "https://gamewith.jp/nikke/article/show/379079",
+  "date": "2026-10",
+  "notes": {
+   "en": "GameWith「牡丹耐久型」：牡丹＋諾雅撐到貝斯蒂 AOE；牡丹可換諾伊斯、梅登換艾達增傷",
+   "zh-TW": "通用・GameWith（2026-10）：GameWith「牡丹耐久型」：牡丹＋諾雅撐到貝斯蒂 AOE；牡丹可換諾伊斯、梅登換艾達增傷",
+   "zh-CN": "通用・GameWith（2026-10）：GameWith「牡丹耐久型」：牡丹＋諾雅撐到貝斯蒂 AOE；牡丹可換諾伊斯、梅登換艾達增傷",
+   "ja": "通用・GameWith（2026-10）：GameWith「牡丹耐久型」：牡丹＋諾雅撐到貝斯蒂 AOE；牡丹可換諾伊斯、梅登換艾達增傷"
+  }
+ },
+ {
+  "id": "community-38",
+  "name": {
+   "en": "Nayuta / Helm / Laplace: Ultimate Hero / Red Hood / Snow White: Heavy Arms (community)",
+   "zh-TW": "娜由塔／海倫／拉普拉斯:究極英雄／小紅帽／白雪公主:重型武裝（社群）",
+   "zh-CN": "娜由塔／海倫／拉普拉斯:究極英雄／小紅帽／白雪公主:重型武裝（社群）",
+   "ja": "娜由塔／海倫／拉普拉斯:究極英雄／小紅帽／白雪公主:重型武裝（コミュニティ）"
+  },
+  "archetype": "community-38",
+  "mode": "attack",
+  "arena": "any",
+  "required": [
+   "nayuta",
+   "laplace-ultimate-hero",
+   "snow-white-heavy-arms"
+  ],
+  "flex": [
+   {
+    "slot": 1,
+    "options": [
+     "helm"
+    ]
+   },
+   {
+    "slot": 3,
+    "options": [
+     "red-hood"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "II",
+   "III",
+   "III",
+   "Λ",
+   "III"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [],
+  "counteredBy": [],
+  "priority": 2,
+  "source": "https://gamewith.jp/nikke/article/show/379079",
+  "date": "2026-10",
+  "notes": {
+   "en": "GameWith「速攻型」：娜由塔不屈坦、海倫爆裂攻擊兼治療、拉普拉斯／白雪重武核爆；同核心（含愛蜜莉雅）是 2026-05 冠軍競技場第 1 名隊（8.6%）",
+   "zh-TW": "通用・GameWith（2026-10）：GameWith「速攻型」：娜由塔不屈坦、海倫爆裂攻擊兼治療、拉普拉斯／白雪重武核爆；同核心（含愛蜜莉雅）是 2026-05 冠軍競技場第 1 名隊（8.6%）｜打得贏：較慢的隊｜輸給：算準時間開的諾雅無敵",
+   "zh-CN": "通用・GameWith（2026-10）：GameWith「速攻型」：娜由塔不屈坦、海倫爆裂攻擊兼治療、拉普拉斯／白雪重武核爆；同核心（含愛蜜莉雅）是 2026-05 冠軍競技場第 1 名隊（8.6%）｜打得贏：較慢的隊｜輸給：算準時間開的諾雅無敵",
+   "ja": "通用・GameWith（2026-10）：GameWith「速攻型」：娜由塔不屈坦、海倫爆裂攻擊兼治療、拉普拉斯／白雪重武核爆；同核心（含愛蜜莉雅）是 2026-05 冠軍競技場第 1 名隊（8.6%）｜打得贏：較慢的隊｜輸給：算準時間開的諾雅無敵"
+  }
+ }
+]

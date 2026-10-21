@@ -19,7 +19,7 @@ RAW = DATA / "raw"
 MIN_MATCHES = 80       # 核心至少出場回合數
 MIN_WIN = 0.56         # 核心整體勝率下限
 MAX_TEMPLATES = 24
-TREASURE_ALIAS = {"laplace": "laplace-ultimate-hero"}
+TREASURE_ALIAS = {}
 
 
 def norm(s):

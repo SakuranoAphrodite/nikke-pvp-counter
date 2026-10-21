@@ -291,8 +291,8 @@
   ],
   "priority": 2,
   "_stats": {
-   "matches": 3261,
-   "winRate": 61.5,
+   "matches": 3226,
+   "winRate": 61.9,
    "vs": [
     {
      "vs": "mined-7",
@@ -301,8 +301,8 @@
     },
     {
      "vs": "mined-0",
-     "games": 312,
-     "win": 81
+     "games": 311,
+     "win": 82
     },
     {
      "vs": "mined-8",
@@ -321,8 +321,8 @@
     },
     {
      "vs": "mined-9",
-     "games": 86,
-     "win": 77
+     "games": 85,
+     "win": 76
     },
     {
      "vs": "mined-17",
@@ -333,17 +333,17 @@
    "vsArch": [
     {
      "vs": "rosanna-counter",
-     "games": 57,
+     "games": 56,
      "win": 75
     },
     {
      "vs": "sg-burst",
-     "games": 57,
+     "games": 56,
      "win": 75
     },
     {
      "vs": "vesti-tu",
-     "games": 631,
+     "games": 628,
      "win": 61
     },
     {
@@ -353,18 +353,18 @@
     },
     {
      "vs": "moran-system",
-     "games": 671,
+     "games": 667,
      "win": 65
     },
     {
      "vs": "cinderella-carry",
-     "games": 199,
+     "games": 198,
      "win": 88
     },
     {
      "vs": "anis-star-system",
-     "games": 502,
-     "win": 76
+     "games": 501,
+     "win": 77
     },
     {
      "vs": "noah-stall",
@@ -373,21 +373,21 @@
     },
     {
      "vs": "blanc-indom",
-     "games": 181,
+     "games": 180,
      "win": 66
     },
     {
      "vs": "scarlet-nuke",
-     "games": 106,
-     "win": 75
+     "games": 104,
+     "win": 77
     }
    ]
   },
   "notes": {
-   "en": "Data-mined from 3261 Champion Arena rounds, win rate 62%. Flex options are the most common teammates per position.",
-   "zh-TW": "由 nikkeari 冠軍競技場 3261 回合統計而來（整體勝率 62%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
-   "zh-CN": "数据挖掘：3261 回合，胜率 62%。",
-   "ja": "データ：3261回合、勝率 62%。"
+   "en": "Data-mined from 3226 Champion Arena rounds, win rate 62%. Flex options are the most common teammates per position.",
+   "zh-TW": "由 nikkeari 冠軍競技場 3226 回合統計而來（整體勝率 62%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-CN": "数据挖掘：3226 回合，胜率 62%。",
+   "ja": "データ：3226回合、勝率 62%。"
   }
  },
  {
@@ -567,7 +567,7 @@
    {
     "slot": 2,
     "options": [
-     "laplace-ultimate-hero",
+     "laplace-treasure",
      "emilia",
      "red-hood",
      "anis-star",
@@ -580,7 +580,7 @@
     "options": [
      "red-hood",
      "emilia",
-     "laplace-ultimate-hero",
+     "laplace-treasure",
      "label",
      "rosanna-treasure",
      "rosanna"
@@ -627,7 +627,7 @@
    "vs": [
     {
      "vs": "mined-1",
-     "games": 225,
+     "games": 223,
      "win": 73
     },
     {
@@ -765,13 +765,13 @@
   ],
   "priority": 2,
   "_stats": {
-   "matches": 2207,
-   "winRate": 61.1,
+   "matches": 2205,
+   "winRate": 61.2,
    "vs": [
     {
      "vs": "mined-9",
-     "games": 67,
-     "win": 76
+     "games": 66,
+     "win": 77
     },
     {
      "vs": "mined-17",
@@ -812,7 +812,7 @@
     },
     {
      "vs": "moran-system",
-     "games": 454,
+     "games": 453,
      "win": 66
     },
     {
@@ -853,10 +853,10 @@
    ]
   },
   "notes": {
-   "en": "Data-mined from 2207 Champion Arena rounds, win rate 61%. Flex options are the most common teammates per position.",
-   "zh-TW": "由 nikkeari 冠軍競技場 2207 回合統計而來（整體勝率 61%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
-   "zh-CN": "数据挖掘：2207 回合，胜率 61%。",
-   "ja": "データ：2207回合、勝率 61%。"
+   "en": "Data-mined from 2205 Champion Arena rounds, win rate 61%. Flex options are the most common teammates per position.",
+   "zh-TW": "由 nikkeari 冠軍競技場 2205 回合統計而來（整體勝率 61%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-CN": "数据挖掘：2205 回合，胜率 61%。",
+   "ja": "データ：2205回合、勝率 61%。"
   }
  },
  {
@@ -1034,7 +1034,7 @@
      "blanc",
      "anis-sparkling-summer",
      "neon-vision-eye",
-     "laplace-ultimate-hero",
+     "laplace-treasure",
      "maxwell-ordinary-mechanic"
     ]
    }
@@ -1199,7 +1199,7 @@
      "jackal",
      "centi-treasure",
      "liberalio",
-     "laplace-ultimate-hero"
+     "laplace-treasure"
     ]
    }
   ],
@@ -1837,16 +1837,16 @@
  {
   "id": "mined-12",
   "name": {
-   "en": "Anis: Star + Laplace: Ultimate Hero + Nayuta (data-mined)",
-   "zh-TW": "阿妮斯:超級巨星＋拉普拉斯:究極英雄＋娜由塔（資料挖掘）",
-   "zh-CN": "阿妮斯:超級巨星＋拉普拉斯:究極英雄＋娜由塔（数据挖掘）",
-   "ja": "Anis: Star + Laplace: Ultimate Hero + Nayuta（データ）"
+   "en": "Anis: Star + Laplace: Treasure + Nayuta (data-mined)",
+   "zh-TW": "阿妮斯:超級巨星＋拉普拉斯 珍藏＋娜由塔（資料挖掘）",
+   "zh-CN": "阿妮斯:超級巨星＋拉普拉斯 珍藏＋娜由塔（数据挖掘）",
+   "ja": "Anis: Star + Laplace: Treasure + Nayuta（データ）"
   },
   "archetype": "mined-12",
   "mode": "both",
   "required": [
    "anis-star",
-   "laplace-ultimate-hero",
+   "laplace-treasure",
    "nayuta"
   ],
   "flex": [
@@ -1892,11 +1892,12 @@
   "counteredBy": [
    "mined-1",
    "mined-5",
-   "blanc-indom"
+   "blanc-indom",
+   "anis-star-system"
   ],
   "priority": 2,
   "_stats": {
-   "matches": 731,
+   "matches": 727,
    "winRate": 59.4,
    "vs": [
     {
@@ -1908,36 +1909,36 @@
    "vsArch": [
     {
      "vs": "moran-system",
-     "games": 148,
-     "win": 62
+     "games": 147,
+     "win": 63
     },
     {
      "vs": "cinderella-carry",
-     "games": 43,
-     "win": 65
+     "games": 41,
+     "win": 63
     },
     {
      "vs": "vesti-tu",
-     "games": 140,
+     "games": 138,
      "win": 75
     },
     {
      "vs": "nayuta-carry",
-     "games": 139,
+     "games": 138,
      "win": 68
     },
     {
      "vs": "nayuta-rush",
-     "games": 97,
-     "win": 69
+     "games": 96,
+     "win": 70
     }
    ]
   },
   "notes": {
-   "en": "Data-mined from 731 Champion Arena rounds, win rate 59%. Flex options are the most common teammates per position.",
-   "zh-TW": "由 nikkeari 冠軍競技場 731 回合統計而來（整體勝率 59%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
-   "zh-CN": "数据挖掘：731 回合，胜率 59%。",
-   "ja": "データ：731回合、勝率 59%。"
+   "en": "Data-mined from 727 Champion Arena rounds, win rate 59%. Flex options are the most common teammates per position.",
+   "zh-TW": "由 nikkeari 冠軍競技場 727 回合統計而來（整體勝率 59%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-CN": "数据挖掘：727 回合，胜率 59%。",
+   "ja": "データ：727回合、勝率 59%。"
   }
  },
  {
@@ -2044,15 +2045,15 @@
  {
   "id": "mined-14",
   "name": {
-   "en": "Laplace: Ultimate Hero + Red Hood + Snow White: Heavy Arms (data-mined)",
-   "zh-TW": "拉普拉斯:究極英雄＋小紅帽＋白雪公主:重型武裝（資料挖掘）",
-   "zh-CN": "拉普拉斯:究極英雄＋小紅帽＋白雪公主:重型武裝（数据挖掘）",
-   "ja": "Laplace: Ultimate Hero + Red Hood + Snow White: Heavy Arms（データ）"
+   "en": "Laplace: Treasure + Red Hood + Snow White: Heavy Arms (data-mined)",
+   "zh-TW": "拉普拉斯 珍藏＋小紅帽＋白雪公主:重型武裝（資料挖掘）",
+   "zh-CN": "拉普拉斯 珍藏＋小紅帽＋白雪公主:重型武裝（数据挖掘）",
+   "ja": "Laplace: Treasure + Red Hood + Snow White: Heavy Arms（データ）"
   },
   "archetype": "mined-14",
   "mode": "both",
   "required": [
-   "laplace-ultimate-hero",
+   "laplace-treasure",
    "red-hood",
    "snow-white-heavy-arms"
   ],
@@ -2070,7 +2071,6 @@
      "helm-treasure",
      "centi",
      "neon-vision-eye",
-     "moran-treasure",
      "centi-treasure"
     ]
    }
@@ -2086,7 +2086,6 @@
   "counters": [
    "mined-1",
    "vesti-tu",
-   "scarlet-nuke",
    "cinderella-carry",
    "rosanna-counter",
    "sg-burst"
@@ -2099,13 +2098,13 @@
   ],
   "priority": 2,
   "_stats": {
-   "matches": 565,
+   "matches": 563,
    "winRate": 62.7,
    "vs": [
     {
      "vs": "mined-1",
-     "games": 44,
-     "win": 68
+     "games": 43,
+     "win": 70
     }
    ],
    "vsArch": [
@@ -2113,11 +2112,6 @@
      "vs": "vesti-tu",
      "games": 108,
      "win": 82
-    },
-    {
-     "vs": "scarlet-nuke",
-     "games": 30,
-     "win": 93
     },
     {
      "vs": "cinderella-carry",
@@ -2137,10 +2131,10 @@
    ]
   },
   "notes": {
-   "en": "Data-mined from 565 Champion Arena rounds, win rate 63%. Flex options are the most common teammates per position.",
-   "zh-TW": "由 nikkeari 冠軍競技場 565 回合統計而來（整體勝率 63%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
-   "zh-CN": "数据挖掘：565 回合，胜率 63%。",
-   "ja": "データ：565回合、勝率 63%。"
+   "en": "Data-mined from 563 Champion Arena rounds, win rate 63%. Flex options are the most common teammates per position.",
+   "zh-TW": "由 nikkeari 冠軍競技場 563 回合統計而來（整體勝率 63%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-CN": "数据挖掘：563 回合，胜率 63%。",
+   "ja": "データ：563回合、勝率 63%。"
   }
  },
  {
@@ -2177,7 +2171,7 @@
      "soda-twinkling-bunny",
      "noir",
      "liberalio",
-     "laplace-ultimate-hero",
+     "laplace-treasure",
      "centi-treasure"
     ]
    }
@@ -2381,7 +2375,7 @@
     "options": [
      "biscuit",
      "helm-treasure",
-     "laplace-ultimate-hero"
+     "laplace-treasure"
     ]
    }
   ],
@@ -2446,16 +2440,16 @@
  {
   "id": "mined-18",
   "name": {
-   "en": "Emilia + Laplace: Ultimate Hero + Privaty: Treasure (data-mined)",
-   "zh-TW": "愛蜜莉雅＋拉普拉斯:究極英雄＋普麗瓦蒂 珍藏（資料挖掘）",
-   "zh-CN": "愛蜜莉雅＋拉普拉斯:究極英雄＋普麗瓦蒂 珍藏（数据挖掘）",
-   "ja": "Emilia + Laplace: Ultimate Hero + Privaty: Treasure（データ）"
+   "en": "Emilia + Laplace: Treasure + Privaty: Treasure (data-mined)",
+   "zh-TW": "愛蜜莉雅＋拉普拉斯 珍藏＋普麗瓦蒂 珍藏（資料挖掘）",
+   "zh-CN": "愛蜜莉雅＋拉普拉斯 珍藏＋普麗瓦蒂 珍藏（数据挖掘）",
+   "ja": "Emilia + Laplace: Treasure + Privaty: Treasure（データ）"
   },
   "archetype": "mined-18",
   "mode": "both",
   "required": [
    "emilia",
-   "laplace-ultimate-hero",
+   "laplace-treasure",
    "privaty-treasure"
   ],
   "flex": [
@@ -2674,8 +2668,8 @@
     "slot": 3,
     "options": [
      "noah",
-     "laplace-ultimate-hero",
      "trina",
+     "laplace-treasure",
      "emilia",
      "biscuit",
      "drake-great-villain"
@@ -2773,7 +2767,7 @@
      "anis-star",
      "maiden-ice-rose",
      "ada",
-     "laplace-ultimate-hero",
+     "laplace-treasure",
      "helm-treasure"
     ]
    },
@@ -2986,8 +2980,8 @@
   "counteredBy": [],
   "priority": 2,
   "_stats": {
-   "matches": 279,
-   "winRate": 73.1,
+   "matches": 278,
+   "winRate": 73.4,
    "vs": [
     {
      "vs": "mined-1",
@@ -3018,8 +3012,8 @@
     },
     {
      "vs": "anis-star-system",
-     "games": 48,
-     "win": 71
+     "games": 47,
+     "win": 72
     },
     {
      "vs": "moran-system",
@@ -3029,10 +3023,10 @@
    ]
   },
   "notes": {
-   "en": "Data-mined from 279 Champion Arena rounds, win rate 73%. Flex options are the most common teammates per position.",
-   "zh-TW": "由 nikkeari 冠軍競技場 279 回合統計而來（整體勝率 73%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
-   "zh-CN": "数据挖掘：279 回合，胜率 73%。",
-   "ja": "データ：279回合、勝率 73%。"
+   "en": "Data-mined from 278 Champion Arena rounds, win rate 73%. Flex options are the most common teammates per position.",
+   "zh-TW": "由 nikkeari 冠軍競技場 278 回合統計而來（整體勝率 73%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-CN": "数据挖掘：278 回合，胜率 73%。",
+   "ja": "データ：278回合、勝率 73%。"
   }
  }
 ]
