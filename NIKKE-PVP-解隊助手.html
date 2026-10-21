@@ -172,6 +172,7 @@ details.mods summary{color:var(--muted)}
     <div class="row" style="margin-top:10px">
       <input type="text" id="quickMy" placeholder="快速輸入 5 個名字，按 Enter" style="flex:1;min-width:260px">
       <button class="btn" id="btnQuickMy">套用</button>
+      <button class="btn" id="btnArrangeMy" title="關鍵爆裂角排進軸內、防禦者放 P1／P5、火力放 P3／P4">自動排軸</button>
       <button class="btn danger" id="btnClearMy">清空</button>
     </div>
     <div id="myEval" class="muted" style="margin-top:10px">排好 5 人後自動評估對戰。</div>
@@ -233,7 +234,7 @@ details.mods summary{color:var(--muted)}
     <ul class="tips">
       <li>競技場是全自動戰鬥，不能手動選目標；你能控制的只有「帶誰、站哪、多快」。</li>
       <li>爆裂鏈一定要有 B1、B2、B3 各一（小紅帽的 Λ 可以補任何一段），缺一段就永遠開不了全爆裂。</li>
-      <li>同一段爆裂由「位置編號最小」的那位先開，所以排位順序會改變實際開爆裂的人。</li>
+      <li>同一段爆裂由「位置編號最小」的那位先開，所以排位順序會改變實際開爆裂的人。第一輪會開的三位是「軸內」，其餘是「軸外」：軸外角色的爆裂技能（無敵、不屈、復活、核爆）第一輪不會發動。工具會在逐位威脅標出「開 B1／B2／B3」或「軸外」，對方的關鍵角在軸外時相關提示會略過；⑤ 的「自動排軸」會把關鍵角排進軸內、防禦者放 P1／P5、火力放 P3／P4。</li>
       <li>P1 與 P5 承受最多攻擊、P3 與 P4 最安全：坦克放 P1/P5，主 C 放 P3/P4。</li>
       <li>戰力低於對方 84.6% 會吃到屬性懲罰，差太多時陣容再對也打不贏。</li>
       <li>充能數值是以「對方不動（防守 AI）」的理論值估算，實戰會因掩體、射偏、目標切換而有誤差，把它當作相對快慢的參考。</li>
@@ -550,6 +551,32 @@ function chainOf(ids){
   const b1=find('I'),b2=find('II'),b3=find('III');
   return {valid,missing:missing.map(m=>'B'+({I:1,II:2,III:3})[m]),b1,b2,b3};
 }
+/* 軸：第一輪會開爆裂的三位；其餘為軸外（爆裂技能不會發動） */
+const BURST_TAGS=new Set(['AOE核爆','核爆','單體爆裂','爆裂主C','持續爆裂輸出','全隊無敵','不屈','復活','防禦者免疫','全體暈眩','全體嘲諷','雙目標','無視嘲諷','Λ萬用爆裂']);
+function chainSet(ids){ const ch=chainOf(ids); return new Set([ch.b1,ch.b2,ch.b3].filter(Boolean).map(x=>x.c.id)); }
+function chainRole(ids,id){ const ch=chainOf(ids); if(ch.b1&&ch.b1.c.id===id) return 'B1'; if(ch.b2&&ch.b2.c.id===id) return 'B2'; if(ch.b3&&ch.b3.c.id===id) return 'B3'; return null; }
+function burstDependent(id){ return (UNIT_TAGS[id]||[]).some(t=>BURST_TAGS.has(t)); }
+function offChainKey(ids){ const cs=chainSet(ids); return ids.filter(i=>i&&byId[i]&&!cs.has(i)&&burstDependent(i)); }
+/* 自動排軸：關鍵爆裂角排進軸內（同類型中位置最小）、防禦者 P1/P5、火力 P3/P4 */
+function autoArrange(ids){
+  const list=ids.filter(i=>i&&byId[i]); if(list.length<5) return ids;
+  const prio=i=>(burstDependent(i)?10:0)+(TIER_RANK[byId[i].pvpTier]||0);
+  const chosen={}; // 每個爆裂類型選一位「該開」的人
+  for(const i of list){ const b=byId[i].burst; if(b==='Λ') continue; if(!chosen[b]||prio(i)>prio(chosen[b])) chosen[b]=i; }
+  const isKey=i=>Object.values(chosen).includes(i);
+  const slots=new Array(5).fill(null); const rest=[...list];
+  const take=pred=>{ const k=rest.findIndex(pred); return k<0?null:rest.splice(k,1)[0]; };
+  // P1、P5 放防禦者或嘲諷（非關鍵軸角優先，避免被跳過時斷軸）
+  const tank=i=>byId[i].role==='defender'||(UNIT_TAGS[i]||[]).some(t=>['嘲諷','坦克','承傷坦'].includes(t));
+  slots[0]=take(i=>tank(i)&&!isKey(i))||take(tank)||null;
+  slots[4]=take(i=>tank(i)&&!isKey(i))||take(tank)||null;
+  // P3、P4 放火力
+  slots[2]=take(i=>byId[i].role==='attacker')||null; slots[3]=take(i=>byId[i].role==='attacker')||null;
+  for(let k=0;k<5;k++) if(!slots[k]) slots[k]=rest.shift()||null;
+  // 軸內修正：同爆裂類型若「該開」的人在較後位置，與前面同類型者對調
+  for(const b of ['I','II','III']){ const key=chosen[b]; if(!key) continue; const ki=slots.indexOf(key); const fi=slots.findIndex(i=>i&&byId[i].burst===b); if(fi>=0&&fi<ki){ [slots[fi],slots[ki]]=[slots[ki],slots[fi]]; } }
+  return slots;
+}
 function detectArchetypes(ids){
   const set=new Set(ids); const out={};
   for(const t of TEMPLATES){
@@ -603,7 +630,7 @@ function fillTemplate(t,ownedSet,allowSub,exclude){
 
 /* 鏡像對局：雙方都有「強度集中在爆裂窗口」的同一角色時，慢一階反而有利（後手開、窗口更持久） */
 const MIRROR_UNITS=['blanc','anis-sparkling-summer']; // 布蘭兒（10 秒不屈：誰先開誰先到期）、夏日阿妮斯（10 秒自回血＋雙目標）
-function mirrorUnit(enemyIds,mySlots){ return MIRROR_UNITS.find(u=>enemyIds.includes(u)&&mySlots.includes(u))||null; }
+function mirrorUnit(enemyIds,mySlots){ const ec=chainSet(enemyIds), mc=chainSet(mySlots); return MIRROR_UNITS.find(u=>ec.has(u)&&mc.has(u))||null; } // 雙方都要在軸內才算鏡像
 function mirrorJudge(mySlots,myTier,enemyIds,enemyTier){
   const u=mirrorUnit(enemyIds,mySlots); if(!u) return null; const n=nameOf(u);
   const d=TIERS.indexOf(myTier)-TIERS.indexOf(enemyTier);
@@ -817,7 +844,9 @@ function renderAnalysis(){
   if(heur.length) h+=`<div class="muted" style="margin-top:4px">特徵：${heur.join('、')}</div>`;
   h+=arenaBlock(enemy);
   h+=`<h3>逐位威脅</h3>`;
-  h+=enemy.map((id,i)=>{ const c=byId[id]; const pos=i===0||i===4?'<span class="badge warn" title="最常被集火">承傷位</span>':(i===2||i===3?'<span class="badge good" title="最安全">安全位</span>':''); return `<div class="threat"><span class="p">P${i+1}</span><div>${unitLine(id)} ${pos} ${posInfo(id)}<div>${tagBadges(id)||'<span class="muted">一般角色</span>'}</div></div></div>`; }).join('');
+  h+=enemy.map((id,i)=>{ const c=byId[id]; const pos=i===0||i===4?'<span class="badge warn" title="最常被集火">承傷位</span>':(i===2||i===3?'<span class="badge good" title="最安全">安全位</span>':''); const cr=chainRole(enemy,id); const axis=cr?`<span class="badge good" title="第一輪會開這段爆裂">開 ${cr}</span>`:(burstDependent(id)?`<span class="badge bad" title="同類型有人排在更前面，第一輪不會開爆裂">軸外：爆裂不會開</span>`:`<span class="badge" title="第一輪不開爆裂，只靠普攻與被動">軸外</span>`); return `<div class="threat"><span class="p">P${i+1}</span><div>${unitLine(id)} ${pos} ${axis} ${posInfo(id)}<div>${tagBadges(id)||'<span class="muted">一般角色</span>'}</div></div></div>`; }).join('');
+  const off=offChainKey(enemy);
+  if(off.length) h+=`<div class="muted" style="margin-top:6px">⚠ 對方的 ${off.map(nameOf).join('、')} 在軸外：第一輪不會開爆裂，下方關於她們爆裂效果的提示要等第二輪（冷卻後、且軸內同類型角陣亡或輪替）才成立。</div>`;
   el.innerHTML=h;
   return ctx;
 }
@@ -827,11 +856,15 @@ function renderCounters(ctx){
   el.className='';
   const arch=detectArchetypes(enemy);
   let h='';
-  const fired=RULES.filter(r=>r.when(ctx));
+  const offSet=new Set(offChainKey(enemy));
+  const ctxIn={...ctx,has:(...a)=>a.some(x=>ctx.set.has(x)&&!offSet.has(x))}; // 依賴爆裂的角色在軸外時，視為不存在
+  const fired=RULES.filter(r=>r.when(ctxIn));
+  const skipped=RULES.filter(r=>!r.when(ctxIn)&&r.when(ctx));
   const st=recordStats(enemy,null);
   if(st.same.n||st.arch.n){ h+=`<h3>你的戰績</h3><div>`+(st.same.n?`<span class="badge ${st.same.win>=st.same.loss?'good':'bad'}">同一隊 ${st.same.win} 勝 ${st.same.loss} 負</span> `:'')+(st.arch.n?`<span class="badge">同體系 ${st.arch.win} 勝 ${st.arch.loss} 負</span>`:'')+` <span class="muted">來自你在⑥記錄的對戰</span></div>`; }
   h+=beatenBlock(enemy);
   if(fired.length){ h+=`<h3>針對對方特徵</h3><ul class="tips">`+fired.map(r=>`<li><span class="badge ${r.level}">${typeof r.title==='function'?r.title(ctx):r.title}</span> ${typeof r.text==='function'?r.text(ctx):r.text} ${srcBadges(RULE_SRC[r.id]||['tool'])}</li>`).join('')+`</ul>`; }
+  if(skipped.length) h+=`<div class="muted">略過的提示（相關角色在對方軸外，第一輪不會開爆裂）：${skipped.map(r=>typeof r.title==='function'?r.title(ctx):r.title).join('、')}</div>`;
   if(arch.length){
     const cb=new Set(); const dont=new Set();
     arch.forEach(a=>{ a.tpl.counteredBy.forEach(x=>cb.add(x)); a.tpl.counters.forEach(x=>dont.add(x)); TEMPLATES.filter(t=>t.counters.includes(a.arch)).forEach(t=>cb.add(t.archetype)); });
@@ -842,11 +875,12 @@ function renderCounters(ctx){
   h+=refList(refs,'這個對手體系的參考對局／資料')+`<div style="margin-top:4px">${searchLinks(enemy.filter(i=>(TIER_RANK[byId[i].pvpTier]||0)>=6).slice(0,3).length?enemy.filter(i=>(TIER_RANK[byId[i].pvpTier]||0)>=6).slice(0,3):enemy.slice(0,3))}</div>`;
   h+=`<h3>通用原則</h3><ul class="tips"><li>要嘛比對方快一階先開爆裂，要嘛確定扛得住對方第一波再反打；兩個都做不到就換體系。 ${srcBadges(['teams'])}</li><li>冠軍競技場數據裡，進攻方與防守方的勝率差不大（同一隊伍兩邊各約一半），不要假設進攻方必勝；影響較大的是進攻／防守時霰彈槍的目標位置不同。 ${srcBadges(['ari','mech'])}</li><li>目標順序：${mode==='attack'?'你的 SMG／MG／AR／SG／RL 第一發打對方 P5、之後集中打 P1，SR 一直打 P5；對方防守的 SG 會集中打你的 P5，其餘武器打你的 P1':'對方進攻的 SMG／MG／AR／SG／RL 會集中打你的 P1，SR 打你的 P5；你防守的 SG 集中打對方 P5，其餘打對方 P1'}。RL／SR 攻擊間隔會被視為進掩體而被跳過，所以諾伊斯、諾雅這類 RL 不適合單獨當 P1 坦。 ${srcBadges(['mech'])}</li><li>戰力差超過 15.4%（低於對方 84.6%）會吃屬性懲罰，先確認戰力再談陣容。 ${srcBadges(['mech'])}</li></ul>`;
   el.innerHTML=h;
-  el.querySelectorAll('[data-arena-apply]').forEach(b=>b.onclick=()=>{ const s=rowStats(ARENA.teams[+b.dataset.arenaApply]); mine=[...s.ids]; save(); refresh(); $('#mySlots').scrollIntoView({behavior:'smooth'}); });
+  el.querySelectorAll('[data-arena-apply]').forEach(b=>b.onclick=()=>{ const s=rowStats(ARENA.teams[+b.dataset.arenaApply]); mine=autoArrange([...s.ids]); save(); refresh(); $('#mySlots').scrollIntoView({behavior:'smooth'}); });
 }
 function teamCard(r,eSpeed,idx){
   const t=r.tpl;
-  const members=r.slots.map((id,i)=>{ const c=byId[id]; const k=r.kind[i]; const alt=(r.alts&&r.alts[i]&&r.alts[i].length)?`<div class="alt">替補：${r.alts[i].map(nameOf).join('／')}</div>`:''; return `<div class="m ${k}"><div class="pos">P${i+1} ${k==='req'?'核心':k==='sub'?'替補':'彈性'}</div><b>${esc(c.name['zh-TW'])}</b><div>${burstBadge(c.burst)}<span class="badge">${c.weapon}</span></div>${alt}</div>`; }).join('');
+  const members=r.slots.map((id,i)=>{ const c=byId[id]; const k=r.kind[i]; const cr=chainRole(r.slots,id); const alt=(r.alts&&r.alts[i]&&r.alts[i].length)?`<div class="alt">替補：${r.alts[i].map(nameOf).join('／')}</div>`:''; return `<div class="m ${k}"><div class="pos">P${i+1} ${k==='req'?'核心':k==='sub'?'替補':'彈性'} ${cr?'<span class="badge good" style="font-size:10px;padding:0 4px">開'+cr+'</span>':'<span class="badge" style="font-size:10px;padding:0 4px">軸外</span>'}</div><b>${esc(c.name['zh-TW'])}</b><div>${burstBadge(c.burst)}<span class="badge">${c.weapon}</span></div>${alt}</div>`; }).join('');
+  const offMine=offChainKey(r.slots); if(offMine.length) r.warn=[...r.warn,`${offMine.map(nameOf).join('、')}在軸外，第一輪不會開爆裂`];
   const cmp = r.variant?'':(r.speed.cycles<eSpeed.cycles?'<span class="badge good">比對方快</span>':r.speed.cycles===eSpeed.cycles?'<span class="badge warn">同速</span>':'<span class="badge bad">比對方慢</span>');
   const eArchs=detectArchetypes(enemy).map(a=>a.arch);
   const refs=refsFor(eArchs,enemy,t.archetype);
@@ -883,7 +917,8 @@ function renderMyEval(ctx){
   if(ids.length<5){ el.className='muted'; el.textContent=`已排 ${ids.length}/5。`; return; }
   el.className='';
   const mySp=speedOf(mine,mode,mineMods); const myCh=chainOf(mine); const myArch=detectArchetypes(mine); const myHeur=heuristicArchetypes(mine);
-  let h=`<div class="grid2"><div><h3>我方速度</h3>${speedBlock(mySp,'我方')}</div><div><h3>我方爆裂鏈</h3>${chainBlock(myCh)}<h3>我方體系</h3>${myArch.length?myArch.map(a=>`<span class="badge good">${ARCH_NAME[a.arch]||a.arch}</span>`).join(' '):'<span class="muted">不屬於主流模板</span>'}${myHeur.length?`<div class="muted">特徵：${myHeur.join('、')}</div>`:''}</div></div>`;
+  const offMine=offChainKey(mine);
+  let h=`<div class="grid2"><div><h3>我方速度</h3>${speedBlock(mySp,'我方')}</div><div><h3>我方爆裂鏈</h3>${chainBlock(myCh)}${offMine.length?`<div class="muted">⚠ ${offMine.map(nameOf).join('、')}在軸外，第一輪不會開爆裂；按「自動排軸」或手動調整順序。</div>`:''}<h3>我方體系</h3>${myArch.length?myArch.map(a=>`<span class="badge good">${ARCH_NAME[a.arch]||a.arch}</span>`).join(' '):'<span class="muted">不屬於主流模板</span>'}${myHeur.length?`<div class="muted">特徵：${myHeur.join('、')}</div>`:''}</div></div>`;
   if(!myCh.valid){ h=`<div class="verdict bad">爆裂鏈不完整（缺 ${myCh.missing.join('、')}），這隊永遠開不了全爆裂。</div>`+h; el.innerHTML=h; return; }
   if(!ctx){ el.innerHTML=h+'<div class="muted">填滿對方隊伍後會顯示對戰判斷。</div>'; return; }
   const eArch=detectArchetypes(enemy); let pts=0; const good=[],bad=[];
@@ -930,6 +965,7 @@ $('#btnQuickMy').onclick=()=>{ quickFill(mine,$('#quickMy').value); save(); refr
 $('#quickMy').addEventListener('keydown',e=>{ if(e.key==='Enter') $('#btnQuickMy').click(); });
 $('#btnClearEnemy').onclick=()=>{ enemy=[null,null,null,null,null]; save(); refresh(); };
 $('#btnClearMy').onclick=()=>{ mine=[null,null,null,null,null]; save(); refresh(); };
+$('#btnArrangeMy').onclick=()=>{ if(mine.filter(Boolean).length<5) return alert('先排滿 5 人'); mine=autoArrange(mine); save(); refresh(); };
 $('#btnSaveEnemy').onclick=()=>{ if(enemy.some(x=>!x)) return alert('先填滿 5 個角色'); if(!history.some(h=>h.join()===enemy.join())) history.unshift([...enemy]); history=history.slice(0,20); save(); renderHistory(); };
 $('#chkOnlyOwned').onchange=refresh; $('#chkAllowSub').onchange=refresh;
 $('#pickerClose').onclick=closePicker; $('#picker').addEventListener('click',e=>{ if(e.target.id==='picker') closePicker(); });
