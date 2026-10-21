@@ -891,14 +891,15 @@ function buildCounters(enemyIds,mode,ownedSet,allowSub){
     const prBad=pr&&pr.n>=20&&pr.r<=0.4, prGood=pr&&pr.n>=20&&pr.r>=0.6;
     const cOK=[],cNo=[],cEven=[];
     for(const a of countersEnemy){ const ck=claimCheck(t.archetype,a); const nm=archName(a); if(ck.state==='contra') cNo.push(nm+ck.text); else if(ck.state==='even') cEven.push(nm+ck.text); else cOK.push(nm+(ck.text||vsStat(t,a)||vsStat(TEMPLATES.find(x=>x.archetype===a),t.archetype,true))); }
-    if(cOK.length&&!prBad){ score+=400*cOK.length; why.push('克制對方的「'+cOK.join('」「')+'」'); }
+    const prOK=!!(pr&&pr.n>=20);
+    if(cOK.length){ if(!prOK) score+=400*cOK.length; why.push((prOK?'（參考）':'')+'克制對方的「'+cOK.join('」「')+'」'); }
     if(cEven.length) why.push('模板寫克制對方的「'+cEven.join('」「')+'」，但實戰五五波，不加分');
     if(cNo.length) warn.push('模板寫克制對方的「'+cNo.join('」「')+'」，但實戰相反，不採用');
     const bOK=[],bNo=[];
     for(const a of counteredByEnemy){ const ck=claimCheck(a,t.archetype); const nm=archName(a); if(ck.state==='contra') bNo.push(nm+`（實戰：我方 ${ck.ar.l} 勝 ${ck.ar.w} 負）`); else if(ck.state!=='even') bOK.push(nm+(ck.text?`（實戰：我方 ${ck.ar.l} 勝 ${ck.ar.w} 負）`:'')); }
-    if(bOK.length&&!prGood){ score-=300*bOK.length; warn.push('會被對方的「'+bOK.join('」「')+'」克制'); }
+    if(bOK.length){ if(!prOK) score-=300*bOK.length; warn.push((prOK?'（參考）':'')+'會被對方的「'+bOK.join('」「')+'」克制'); }
     if(bNo.length) why.push('模板寫會被對方的「'+bNo.join('」「')+'」克制，但實戰相反，不採用');
-    if(pr&&pr.n>=20){ score+=Math.round((pr.r-0.5)*1600); const t=pairText(pr); if(prGood) why.push(t+(counteredByEnemy.length?'；模板寫的「被克制」與實戰相反，以實戰為準':'')); else if(prBad) warn.push(t+(countersEnemy.length?'；模板寫的「克制」與實戰相反，以實戰為準，不採用克制加分':'')); else why.push(t+'，五五波'); }
+    if(prOK){ score+=Math.round((pr.r-0.5)*2400); const t=pairText(pr)+'。有直接對位資料時以它為準，模板克制只列參考'; if(prGood) why.push(t); else if(prBad) warn.push(t); else warn.push(t.replace('。','，五五波。')); }
     const dc=(eSpeed.cycles+eChain.extraSec)-(sp.cycles+ch.extraSec); // 再入延遲以秒計入（1 輪 RL 約 1 秒）
     const mj=eChain.valid?mirrorJudge(f.slots,sp.tier,enemyIds,eSpeed.tier):null;
     if(ch.stages>3) warn.push(`${ch.stages} 段軸（${ch.reNote}），全爆裂晚約 ${ch.extraSec.toFixed(1)} 秒，已計入速度比較`);
@@ -1218,20 +1219,20 @@ function evalMatch(myIds,enemyIds,myMods,eMods){
       const ck=claimCheck(m.arch,e.arch); const base=`我方「${archName(m.arch)}」克制對方「${archName(e.arch)}」`;
       if(ck.state==='contra') cBad.push(`模板寫${base}，但實戰相反${ck.text}，不採用`);
       else if(ck.state==='even') cGood.push(`模板寫${base}，實戰五五波${ck.text}，不加分`);
-      else { cPts+=2; cGood.push(base+(ck.text||vsStat(m.tpl,e.arch)||vsStat(e.tpl,m.arch,true))); }
+      else { if(!prOK) cPts+=2; cGood.push((prOK?'（參考）':'')+base+(ck.text||vsStat(m.tpl,e.arch)||vsStat(e.tpl,m.arch,true))); }
     }
     if(e.tpl.counters.includes(m.arch)||m.tpl.counteredBy.includes(e.arch)){
       const ck=claimCheck(e.arch,m.arch); const base=`對方「${archName(e.arch)}」克制我方「${archName(m.arch)}」`;
       if(ck.state==='contra') cGood.push(`模板寫${base}，但實戰相反（含兩邊核心的隊伍對位我方 ${ck.ar.l} 勝 ${ck.ar.w} 負），不採用`);
       else if(ck.state==='even') cBad.push(`模板寫${base}，實戰五五波（我方 ${ck.ar.l} 勝 ${ck.ar.w} 負），不扣分`);
-      else { cPts-=2; cBad.push(base+(ck.text?`（實戰：我方 ${ck.ar.l} 勝 ${ck.ar.w} 負）`:(vsStat(e.tpl,m.arch,true)||vsStat(m.tpl,e.arch)))); }
+      else { if(!prOK) cPts-=2; cBad.push((prOK?'（參考）':'')+base+(ck.text?`（實戰：我方 ${ck.ar.l} 勝 ${ck.ar.w} 負）`:(vsStat(e.tpl,m.arch,true)||vsStat(m.tpl,e.arch)))); }
     }
   }
   if(prOK){
-    const t=pairText(pr);
-    if(pr.r>=0.6){ pts+=2; good.push(t); if(cPts<0){ cBad.length=0; cPts=0; good.push('模板寫的「被克制」與直接對位的實戰結果相反，以實戰為準'); } }
-    else if(pr.r<=0.4){ pts-=2; bad.push(t); if(cPts>0){ cGood.length=0; cPts=0; bad.push('模板寫的「克制」與直接對位的實戰結果相反，以實戰為準，不採用模板的克制加分'); } }
-    else good.push(t+'，五五波');
+    const t=pairText(pr)+'。有直接對位資料時勝負判定以它為準，模板克制與速度只列出參考';
+    if(pr.r>=0.6){ pts+=4; good.push(t); }
+    else if(pr.r<=0.4){ pts-=4; bad.push(t); }
+    else { good.push(t.replace('。','，五五波。')); }
   }
   pts+=cPts; good.push(...cGood); bad.push(...cBad);
   for(const cm of chainMisses(myIds)) bad.push('我方'+cm.text);
@@ -1262,7 +1263,7 @@ function evalMatch(myIds,enemyIds,myMods,eMods){
     const b3=myIds.filter(i=>byId[i]&&byId[i].burst==='III').length; if(b3>2) posWarn.push(`帶了 ${b3} 個 B3，超過兩個會互相搶爆裂且降低速度`);
     if(myIds[1]&&byId[myIds[1]].role==='attacker'&&!burstDependent(myIds[1])&&(TIER_RANK[byId[myIds[1]].pvpTier]||0)>=6) posWarn.push(`${nameOf(myIds[1])} 放 P2：P2 是最容易死的位置（P1 火箭濺射＋P1 進掩體時被集火）`);
     if(posWarn.length){ pts-=0.5*posWarn.length; posWarn.forEach(w=>bad.push('站位：'+w)); } }
-  const verdict=pts>=2?'good':pts<=-1.5?'bad':'warn';
+  const verdict=prOK?(pr.r>=0.6?'good':pr.r<=0.4?'bad':'warn'):(pts>=2?'good':pts<=-1.5?'bad':'warn');
   const st=recordStats(enemyIds,myIds);
   let p={good:0.75,warn:0.5,bad:0.25}[verdict];
   if(pr&&pr.n>=20) p=(p+pr.r)/2; // 有直接對位資料時與它平均
