@@ -51,6 +51,10 @@ def build():
     dump = lambda o: json.dumps(o, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
     refs_file = HERE.parent / "references.json"
     refs = json.loads(refs_file.read_text(encoding="utf-8")) if refs_file.exists() else {"updated": "", "items": []}
+    nick_file = DATA / "nicknames.json"  # 角色綽號（搜尋用）
+    nick = json.loads(nick_file.read_text(encoding="utf-8")) if nick_file.exists() else {}
+    known = {c["id"] for c in chars}
+    nick = {k: v for k, v in nick.items() if k in known and isinstance(v, list)}
     arena_file, deck_file = DATA / "arena-stats.json", DATA / "deck-speed.json"
     arena = json.loads(arena_file.read_text(encoding="utf-8")) if arena_file.exists() else {"teams": [], "beatenBy": {}, "arch": {}, "archVs": {}, "charPos": {}, "names": {}, "rounds": 0}
     deck = json.loads(deck_file.read_text(encoding="utf-8")) if deck_file.exists() else {"units": {}, "quantumLv7": 4.66}
@@ -58,6 +62,7 @@ def build():
                 .replace("__TEMPLATES__", dump(tpls))
                 .replace("__TEMPLATES_EXTRA__", dump(extra))
                 .replace("__REFERENCES__", dump(refs))
+                .replace("__NICKNAMES__", dump(nick))
                 .replace("__ARENA__", dump(arena))
                 .replace("__DECK__", dump(deck))
                 .replace("__DATA_DATE__", ver))
