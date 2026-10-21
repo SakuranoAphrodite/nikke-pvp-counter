@@ -1,0 +1,93 @@
+[
+ {
+  "id": "anis-star-biscuit-core",
+  "name": {"en": "Anis: Star + Biscuit core (2026 CA meta)", "zh-TW": "超級巨星阿妮斯＋餅乾核心（2026 冠軍環境）", "zh-CN": "超级巨星阿妮斯＋饼干核心", "ja": "アニス：スター＋ビスケット"},
+  "archetype": "anis-star-system",
+  "mode": "both",
+  "required": ["anis-star", "biscuit"],
+  "flex": [
+   {"slot": 1, "options": ["blanc", "noah", "bay-treasure", "bay", "nayuta", "trina"]},
+   {"slot": 2, "options": ["helm-treasure", "cinderella", "maiden-ice-rose", "snow-white-heavy-arms", "privaty-treasure", "laplace-ultimate-hero", "neon-vision-eye", "liberalio", "emilia", "scarlet"]},
+   {"slot": 3, "options": ["privaty-treasure", "mihara-bonding-chain", "snow-white-heavy-arms", "maiden-ice-rose", "cinderella", "helm-treasure", "laplace-ultimate-hero", "neon-vision-eye", "liberalio", "scarlet-black-shadow"]}
+  ],
+  "burstSlots": ["I", "II", "III", "III", "II"],
+  "preferredSpeed": "3RL",
+  "counters": ["scarlet-nuke", "cinderella-carry", "mermaid-disrupt", "blanc-indom"],
+  "counteredBy": ["rosanna-counter", "tactical-trio", "sg-burst"],
+  "priority": 1,
+  "notes": {
+   "en": "2026 Champion Arena core: Anis: Star B1 battery/tank at P1, a B2 protector (Blanc / Noah / Bay), two B3 DPS, Biscuit at P5 to make the Defender invulnerable. Source: dcinside 2026-05 CA meta, nikkeari top teams.",
+   "zh-TW": "2026 冠軍競技場核心（本工具依 KR 環境文與 nikkeari 統計補充）：超級巨星阿妮斯 P1 當充能電池兼坦，P2 放保護型 B2（布蘭兒不屈／諾雅無敵／貝伊分攤），P3、P4 兩位 B3 主 C，餅乾 P5 給防禦者無敵。nikkeari 裡「阿妮斯／餅乾／布蘭兒／梅登冰玫瑰／普麗瓦蒂珍藏」1191 場勝率 71%。",
+   "zh-CN": "2026 冠军竞技场核心。",
+   "ja": "2026 チャンピオンアリーナの中核。"
+  }
+ },
+ {
+  "id": "nayuta-rush",
+  "name": {"en": "Nayuta rush (2RL)", "zh-TW": "娜由塔一閃（2RL 速攻）", "zh-CN": "娜由塔一闪", "ja": "ナユタ速攻"},
+  "archetype": "nayuta-rush",
+  "mode": "both",
+  "required": ["nayuta", "helm-treasure"],
+  "flex": [
+   {"slot": 0, "options": ["jackal", "rosanna-treasure", "rosanna", "anis-star", "little-mermaid"]},
+   {"slot": 3, "options": ["snow-white-heavy-arms", "laplace-ultimate-hero", "red-hood", "liberalio", "scarlet-black-shadow"]},
+   {"slot": 4, "options": ["centi-treasure", "centi", "trina", "bay-treasure", "takina"]}
+  ],
+  "burstSlots": ["I", "II", "III", "III", "II"],
+  "preferredSpeed": "2RL",
+  "counters": ["blanc-indom", "moran-system", "cat-team"],
+  "counteredBy": ["mermaid-disrupt", "noah-stall"],
+  "priority": 2,
+  "notes": {
+   "en": "2026 JP/KR rush: Nayuta's opening 9 s indomitability keeps her alive, Helm: Treasure full-charge +14.31% gauge makes it 2RL, SW:HA / Laplace nuke. Needs 2RL (charge-speed OL) or it loses to Little Mermaid.",
+   "zh-TW": "2026 JP／KR 速攻（本工具依 wikiwiki、arca 補充）：娜由塔開場 9 秒不屈撐住，海倫珍藏滿蓄 +14.31% 充能把隊伍拉到 2RL，白雪重武／拉普拉斯究極英雄收割。必須真的到 2RL（通常要充能速度超頻），否則會輸給小美人魚；對布蘭兒不屈隊與減傷坦牆有利。",
+   "zh-CN": "娜由塔速攻。",
+   "ja": "ナユタ速攻。"
+  }
+ },
+ {
+  "id": "jackal-vesti-blanc",
+  "name": {"en": "Jackal + Vesti TU under Blanc (2RL)", "zh-TW": "豺狼＋貝斯蒂戰術升級不屈核爆（2RL）", "zh-CN": "豺狼＋贝斯蒂战术升级", "ja": "ジャッカル＋TUベスティー"},
+  "archetype": "blanc-indom",
+  "mode": "both",
+  "required": ["vesti-tactical-upgrade", "blanc"],
+  "flex": [
+   {"slot": 0, "options": ["jackal", "anis-star", "rosanna-treasure", "rosanna"]},
+   {"slot": 2, "options": ["ada", "helm-treasure", "ein", "liberalio", "scarlet-black-shadow"]},
+   {"slot": 4, "options": ["helm-treasure", "centi-treasure", "centi", "trina", "takina"]}
+  ],
+  "burstSlots": ["I", "II", "III", "III", "III"],
+  "preferredSpeed": "2RL",
+  "counters": ["scarlet-nuke", "moran-system", "cat-team"],
+  "counteredBy": ["rosanna-counter", "mermaid-disrupt", "noah-stall"],
+  "priority": 2,
+  "notes": {
+   "en": "2026 JP wikiwiki: Jackal / Vesti TU / Ein / Blanc / Helm: Treasure. Blanc's indomitability protects Vesti TU whose 3-target RL ignores defense buffs.",
+   "zh-TW": "2026 JP wikiwiki 隊型（本工具補充）：豺狼／貝斯蒂戰術升級／愛因／布蘭兒／海倫珍藏。布蘭兒不屈保護貝斯蒂，她的火箭一發打 3 人、無視防禦增益；豺狼與海倫珍藏把速度拉到 2RL。",
+   "zh-CN": "豺狼＋贝斯蒂战术升级。",
+   "ja": "ジャッカル／TUベスティー／エイダ／ブラン／宝物ヘルム。"
+  }
+ },
+ {
+  "id": "noah-noise-biscuit-cinderella",
+  "name": {"en": "Noah + Noise + Biscuit + Cinderella (3RL)", "zh-TW": "諾雅＋諾伊斯＋餅乾＋灰姑娘持久（3RL）", "zh-CN": "诺雅＋诺伊斯＋饼干＋灰姑娘", "ja": "ノア／ノイズ／ビスケット／シンデレラ"},
+  "archetype": "noah-stall",
+  "mode": "both",
+  "required": ["noah", "biscuit", "cinderella"],
+  "flex": [
+   {"slot": 0, "options": ["noise", "moran-treasure", "moran", "rapunzel", "anis-star"]},
+   {"slot": 4, "options": ["rumani", "anis-star", "rapunzel", "centi-treasure", "centi"]}
+  ],
+  "burstSlots": ["I", "II", "III", "II", "I"],
+  "preferredSpeed": "3RL",
+  "counters": ["scarlet-nuke", "cinderella-carry", "nayuta-rush"],
+  "counteredBy": ["sanis-stall", "rosanna-counter", "tactical-trio"],
+  "priority": 2,
+  "notes": {
+   "en": "2026 JP wikiwiki: double taunt (Noise + Noah) and double invulnerability (Noah burst + Biscuit on a Defender), then Cinderella's 10-hit nuke.",
+   "zh-TW": "2026 JP wikiwiki 隊型（本工具補充）：諾伊斯與諾雅雙嘲諷、諾雅爆裂無敵與餅乾給防禦者無敵雙保險，撐過對方第一波後由灰姑娘連段核爆收割。灰姑娘放 P3 避免被目標跳過。",
+   "zh-CN": "诺雅诺伊斯饼干灰姑娘。",
+   "ja": "ノア／ノイズ／ビスケット／ルマニ／シンデレラ。"
+  }
+ }
+]

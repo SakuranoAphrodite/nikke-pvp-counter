@@ -59,7 +59,8 @@
 | `build/template.html` | 頁面原始碼，含解法規則與威脅標籤 |
 | `build/build.py` | 建置腳本，把資料嵌進頁面 |
 | `build/data/characters.json` | 209 名角色資料、繁中譯名、充能數值、PVP 階級 |
-| `build/data/templates.json` | 23 個主流隊伍模板與互剋關係 |
+| `build/data/templates.json` | 上游的 23 個主流隊伍模板與互剋關係 |
+| `build/data/templates-extra.json` | 本工具補充的 2026 體系模板（超級巨星阿妮斯＋餅乾核心、娜由塔一閃、豺狼＋貝斯蒂不屈、諾雅諾伊斯餅乾灰姑娘），獨立嵌入，線上更新上游模板後仍會合併 |
 
 ## 新角色出來怎麼辦
 

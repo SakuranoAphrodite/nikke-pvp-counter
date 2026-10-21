@@ -50,6 +50,9 @@ def norm(s):
 def main():
     chars = json.loads((DATA / "characters.json").read_text(encoding="utf-8"))
     tpls = json.loads((DATA / "templates.json").read_text(encoding="utf-8"))
+    extra_file = DATA / "templates-extra.json"
+    if extra_file.exists():
+        tpls = tpls + json.loads(extra_file.read_text(encoding="utf-8"))
 
     # ---------- nikkeari 角色對應（日文名） ----------
     ari_chars = cached("ari_characters.json", lambda: get(ARI + "/api/characters"))
