@@ -1,0 +1,3562 @@
+[
+{
+"tpl": "moran-system-atk",
+"arch": "moran-system",
+"kind": "counters",
+"vs": "scarlet-nuke",
+"games": 484,
+"win": 62
+},
+{
+"tpl": "moran-system-atk",
+"arch": "moran-system",
+"kind": "counteredBy",
+"vs": "sanis-stall",
+"games": 90,
+"win": 18
+},
+{
+"tpl": "moran-system-atk",
+"arch": "moran-system",
+"kind": "counteredBy",
+"vs": "alice-carry",
+"games": 0,
+"win": null
+},
+{
+"tpl": "moran-system-atk",
+"arch": "moran-system",
+"kind": "counteredBy",
+"vs": "tactical-trio",
+"games": 0,
+"win": null
+},
+{
+"tpl": "moran-system-atk",
+"arch": "moran-system",
+"kind": "counteredBy",
+"vs": "sg-burst",
+"games": 1346,
+"win": 72
+},
+{
+"tpl": "moran-system-def",
+"arch": "moran-system",
+"kind": "counters",
+"vs": "scarlet-nuke",
+"games": 484,
+"win": 62
+},
+{
+"tpl": "moran-system-def",
+"arch": "moran-system",
+"kind": "counters",
+"vs": "mermaid-disrupt",
+"games": 312,
+"win": 85
+},
+{
+"tpl": "moran-system-def",
+"arch": "moran-system",
+"kind": "counteredBy",
+"vs": "sanis-stall",
+"games": 90,
+"win": 18
+},
+{
+"tpl": "moran-system-def",
+"arch": "moran-system",
+"kind": "counteredBy",
+"vs": "rosanna-counter",
+"games": 1346,
+"win": 72
+},
+{
+"tpl": "moran-system-def",
+"arch": "moran-system",
+"kind": "counteredBy",
+"vs": "alice-carry",
+"games": 0,
+"win": null
+},
+{
+"tpl": "moran-system-def",
+"arch": "moran-system",
+"kind": "counteredBy",
+"vs": "tactical-trio",
+"games": 0,
+"win": null
+},
+{
+"tpl": "moran-system-def",
+"arch": "moran-system",
+"kind": "counteredBy",
+"vs": "sg-burst",
+"games": 1346,
+"win": 72
+},
+{
+"tpl": "blanc-emt",
+"arch": "blanc-indom",
+"kind": "counters",
+"vs": "scarlet-nuke",
+"games": 88,
+"win": 34
+},
+{
+"tpl": "blanc-emt",
+"arch": "blanc-indom",
+"kind": "counters",
+"vs": "mermaid-disrupt",
+"games": 65,
+"win": 88
+},
+{
+"tpl": "blanc-emt",
+"arch": "blanc-indom",
+"kind": "counteredBy",
+"vs": "rosanna-counter",
+"games": 280,
+"win": 64
+},
+{
+"tpl": "blanc-emt",
+"arch": "blanc-indom",
+"kind": "counteredBy",
+"vs": "sanis-stall",
+"games": 12,
+"win": 75
+},
+{
+"tpl": "blanc-emt",
+"arch": "blanc-indom",
+"kind": "counteredBy",
+"vs": "noah-stall",
+"games": 57,
+"win": 65
+},
+{
+"tpl": "blanc-emt",
+"arch": "blanc-indom",
+"kind": "counteredBy",
+"vs": "mermaid-disrupt",
+"games": 65,
+"win": 88
+},
+{
+"tpl": "blanc-emt",
+"arch": "blanc-indom",
+"kind": "counteredBy",
+"vs": "alice-revive",
+"games": 0,
+"win": null
+},
+{
+"tpl": "noah-biscuit-stall",
+"arch": "noah-stall",
+"kind": "counters",
+"vs": "scarlet-nuke",
+"games": 54,
+"win": 83
+},
+{
+"tpl": "noah-biscuit-stall",
+"arch": "noah-stall",
+"kind": "counters",
+"vs": "blanc-indom",
+"games": 57,
+"win": 35
+},
+{
+"tpl": "noah-biscuit-stall",
+"arch": "noah-stall",
+"kind": "counteredBy",
+"vs": "sanis-stall",
+"games": 4,
+"win": 50
+},
+{
+"tpl": "noah-biscuit-stall",
+"arch": "noah-stall",
+"kind": "counteredBy",
+"vs": "rosanna-counter",
+"games": 110,
+"win": 85
+},
+{
+"tpl": "noah-biscuit-stall",
+"arch": "noah-stall",
+"kind": "counteredBy",
+"vs": "tactical-trio",
+"games": 0,
+"win": null
+},
+{
+"tpl": "scarlet-jackal-nuke",
+"arch": "scarlet-nuke",
+"kind": "counters",
+"vs": "mermaid-disrupt",
+"games": 51,
+"win": 80
+},
+{
+"tpl": "scarlet-jackal-nuke",
+"arch": "scarlet-nuke",
+"kind": "counteredBy",
+"vs": "noah-stall",
+"games": 54,
+"win": 17
+},
+{
+"tpl": "scarlet-jackal-nuke",
+"arch": "scarlet-nuke",
+"kind": "counteredBy",
+"vs": "moran-system",
+"games": 484,
+"win": 38
+},
+{
+"tpl": "scarlet-jackal-nuke",
+"arch": "scarlet-nuke",
+"kind": "counteredBy",
+"vs": "blanc-indom",
+"games": 88,
+"win": 66
+},
+{
+"tpl": "scarlet-jackal-nuke",
+"arch": "scarlet-nuke",
+"kind": "counteredBy",
+"vs": "alice-carry",
+"games": 0,
+"win": null
+},
+{
+"tpl": "scarlet-jackal-nuke",
+"arch": "scarlet-nuke",
+"kind": "counteredBy",
+"vs": "mermaid-disrupt",
+"games": 51,
+"win": 80
+},
+{
+"tpl": "scarlet-jackal-nuke",
+"arch": "scarlet-nuke",
+"kind": "counteredBy",
+"vs": "rosanna-counter",
+"games": 191,
+"win": 55
+},
+{
+"tpl": "scarlet-jackal-nuke",
+"arch": "scarlet-nuke",
+"kind": "counteredBy",
+"vs": "rapi-rh",
+"games": 3,
+"win": 100
+},
+{
+"tpl": "scarlet-jackal-nuke",
+"arch": "scarlet-nuke",
+"kind": "counteredBy",
+"vs": "alice-revive",
+"games": 0,
+"win": null
+},
+{
+"tpl": "scarlet-jackal-nuke",
+"arch": "scarlet-nuke",
+"kind": "counteredBy",
+"vs": "cat-team",
+"games": 13,
+"win": 100
+},
+{
+"tpl": "moran-scarlet",
+"arch": "moran-scarlet",
+"kind": "counters",
+"vs": "mermaid-disrupt",
+"games": 5,
+"win": 100
+},
+{
+"tpl": "moran-scarlet",
+"arch": "moran-scarlet",
+"kind": "counteredBy",
+"vs": "noah-stall",
+"games": 0,
+"win": null
+},
+{
+"tpl": "moran-scarlet",
+"arch": "moran-scarlet",
+"kind": "counteredBy",
+"vs": "sanis-stall",
+"games": 0,
+"win": null
+},
+{
+"tpl": "blanc-scarlet-nuke",
+"arch": "blanc-indom",
+"kind": "counters",
+"vs": "mermaid-disrupt",
+"games": 65,
+"win": 88
+},
+{
+"tpl": "blanc-scarlet-nuke",
+"arch": "blanc-indom",
+"kind": "counteredBy",
+"vs": "rosanna-counter",
+"games": 280,
+"win": 64
+},
+{
+"tpl": "blanc-scarlet-nuke",
+"arch": "blanc-indom",
+"kind": "counteredBy",
+"vs": "sanis-stall",
+"games": 12,
+"win": 75
+},
+{
+"tpl": "blanc-scarlet-nuke",
+"arch": "blanc-indom",
+"kind": "counteredBy",
+"vs": "noah-stall",
+"games": 57,
+"win": 65
+},
+{
+"tpl": "blanc-scarlet-nuke",
+"arch": "blanc-indom",
+"kind": "counteredBy",
+"vs": "mermaid-disrupt",
+"games": 65,
+"win": 88
+},
+{
+"tpl": "blanc-scarlet-nuke",
+"arch": "blanc-indom",
+"kind": "counteredBy",
+"vs": "alice-revive",
+"games": 0,
+"win": null
+},
+{
+"tpl": "alice-noah-carry",
+"arch": "alice-carry",
+"kind": "counters",
+"vs": "moran-system",
+"games": 0,
+"win": null
+},
+{
+"tpl": "alice-noah-carry",
+"arch": "alice-carry",
+"kind": "counters",
+"vs": "scarlet-nuke",
+"games": 0,
+"win": null
+},
+{
+"tpl": "alice-noah-carry",
+"arch": "alice-carry",
+"kind": "counteredBy",
+"vs": "sanis-stall",
+"games": 0,
+"win": null
+},
+{
+"tpl": "alice-noah-carry",
+"arch": "alice-carry",
+"kind": "counteredBy",
+"vs": "rosanna-counter",
+"games": 0,
+"win": null
+},
+{
+"tpl": "sanis-stall",
+"arch": "sanis-stall",
+"kind": "counters",
+"vs": "alice-carry",
+"games": 0,
+"win": null
+},
+{
+"tpl": "sanis-stall",
+"arch": "sanis-stall",
+"kind": "counters",
+"vs": "noah-stall",
+"games": 4,
+"win": 50
+},
+{
+"tpl": "sanis-stall",
+"arch": "sanis-stall",
+"kind": "counters",
+"vs": "moran-system",
+"games": 90,
+"win": 82
+},
+{
+"tpl": "sanis-stall",
+"arch": "sanis-stall",
+"kind": "counteredBy",
+"vs": "scarlet-nuke",
+"games": 32,
+"win": 84
+},
+{
+"tpl": "sanis-stall",
+"arch": "sanis-stall",
+"kind": "counteredBy",
+"vs": "blanc-indom",
+"games": 12,
+"win": 25
+},
+{
+"tpl": "sanis-stall",
+"arch": "sanis-stall",
+"kind": "counteredBy",
+"vs": "vesti-tu",
+"games": 39,
+"win": 72
+},
+{
+"tpl": "little-mermaid-disrupt",
+"arch": "mermaid-disrupt",
+"kind": "counters",
+"vs": "scarlet-nuke",
+"games": 51,
+"win": 20
+},
+{
+"tpl": "little-mermaid-disrupt",
+"arch": "mermaid-disrupt",
+"kind": "counters",
+"vs": "blanc-indom",
+"games": 65,
+"win": 12
+},
+{
+"tpl": "little-mermaid-disrupt",
+"arch": "mermaid-disrupt",
+"kind": "counteredBy",
+"vs": "moran-system",
+"games": 312,
+"win": 15
+},
+{
+"tpl": "little-mermaid-disrupt",
+"arch": "mermaid-disrupt",
+"kind": "counteredBy",
+"vs": "noah-stall",
+"games": 23,
+"win": 13
+},
+{
+"tpl": "little-mermaid-disrupt",
+"arch": "mermaid-disrupt",
+"kind": "counteredBy",
+"vs": "blanc-indom",
+"games": 65,
+"win": 12
+},
+{
+"tpl": "little-mermaid-disrupt",
+"arch": "mermaid-disrupt",
+"kind": "counteredBy",
+"vs": "scarlet-nuke",
+"games": 51,
+"win": 20
+},
+{
+"tpl": "little-mermaid-disrupt",
+"arch": "mermaid-disrupt",
+"kind": "counteredBy",
+"vs": "moran-scarlet",
+"games": 5,
+"win": 0
+},
+{
+"tpl": "helm-treasure-carry",
+"arch": "helm-carry",
+"kind": "counteredBy",
+"vs": "scarlet-nuke",
+"games": 268,
+"win": 75
+},
+{
+"tpl": "rosanna-counter",
+"arch": "rosanna-counter",
+"kind": "counters",
+"vs": "blanc-indom",
+"games": 280,
+"win": 36
+},
+{
+"tpl": "rosanna-counter",
+"arch": "rosanna-counter",
+"kind": "counters",
+"vs": "scarlet-nuke",
+"games": 191,
+"win": 45
+},
+{
+"tpl": "rosanna-counter",
+"arch": "rosanna-counter",
+"kind": "counteredBy",
+"vs": "moran-system",
+"games": 1346,
+"win": 28
+},
+{
+"tpl": "rapi-rh-carry",
+"arch": "rapi-rh",
+"kind": "counters",
+"vs": "scarlet-nuke",
+"games": 3,
+"win": 0
+},
+{
+"tpl": "rapi-rh-carry",
+"arch": "rapi-rh",
+"kind": "counteredBy",
+"vs": "moran-system",
+"games": 42,
+"win": 10
+},
+{
+"tpl": "vesti-tu-carry",
+"arch": "vesti-tu",
+"kind": "counters",
+"vs": "sanis-stall",
+"games": 39,
+"win": 28
+},
+{
+"tpl": "vesti-tu-carry",
+"arch": "vesti-tu",
+"kind": "counteredBy",
+"vs": "scarlet-nuke",
+"games": 221,
+"win": 47
+},
+{
+"tpl": "nayuta-carry",
+"arch": "nayuta-carry",
+"kind": "counteredBy",
+"vs": "scarlet-nuke",
+"games": 248,
+"win": 78
+},
+{
+"tpl": "alice-rapunzel-revive",
+"arch": "alice-revive",
+"kind": "counters",
+"vs": "scarlet-nuke",
+"games": 0,
+"win": null
+},
+{
+"tpl": "alice-rapunzel-revive",
+"arch": "alice-revive",
+"kind": "counters",
+"vs": "blanc-indom",
+"games": 0,
+"win": null
+},
+{
+"tpl": "alice-rapunzel-revive",
+"arch": "alice-revive",
+"kind": "counteredBy",
+"vs": "sanis-stall",
+"games": 0,
+"win": null
+},
+{
+"tpl": "cinderella-carry",
+"arch": "cinderella-carry",
+"kind": "counteredBy",
+"vs": "scarlet-nuke",
+"games": 115,
+"win": 71
+},
+{
+"tpl": "cat-team",
+"arch": "cat-team",
+"kind": "counters",
+"vs": "scarlet-nuke",
+"games": 13,
+"win": 0
+},
+{
+"tpl": "cat-team",
+"arch": "cat-team",
+"kind": "counters",
+"vs": "blanc-indom",
+"games": 16,
+"win": 31
+},
+{
+"tpl": "cat-team",
+"arch": "cat-team",
+"kind": "counteredBy",
+"vs": "sanis-stall",
+"games": 0,
+"win": null
+},
+{
+"tpl": "cat-team",
+"arch": "cat-team",
+"kind": "counteredBy",
+"vs": "tactical-trio",
+"games": 0,
+"win": null
+},
+{
+"tpl": "tactical-trio",
+"arch": "tactical-trio",
+"kind": "counters",
+"vs": "moran-system",
+"games": 0,
+"win": null
+},
+{
+"tpl": "tactical-trio",
+"arch": "tactical-trio",
+"kind": "counters",
+"vs": "cat-team",
+"games": 0,
+"win": null
+},
+{
+"tpl": "tactical-trio",
+"arch": "tactical-trio",
+"kind": "counters",
+"vs": "noah-stall",
+"games": 0,
+"win": null
+},
+{
+"tpl": "tactical-trio",
+"arch": "tactical-trio",
+"kind": "counteredBy",
+"vs": "scarlet-nuke",
+"games": 0,
+"win": null
+},
+{
+"tpl": "sg-burst",
+"arch": "sg-burst",
+"kind": "counters",
+"vs": "moran-system",
+"games": 1346,
+"win": 28
+},
+{
+"tpl": "sg-burst",
+"arch": "sg-burst",
+"kind": "counters",
+"vs": "cat-team",
+"games": 26,
+"win": 27
+},
+{
+"tpl": "sg-burst",
+"arch": "sg-burst",
+"kind": "counteredBy",
+"vs": "noah-stall",
+"games": 110,
+"win": 15
+},
+{
+"tpl": "sg-burst",
+"arch": "sg-burst",
+"kind": "counteredBy",
+"vs": "blanc-indom",
+"games": 280,
+"win": 36
+},
+{
+"tpl": "anis-star-neon",
+"arch": "anis-star-system",
+"kind": "counters",
+"vs": "scarlet-nuke",
+"games": 250,
+"win": 85
+},
+{
+"tpl": "anis-star-neon",
+"arch": "anis-star-system",
+"kind": "counters",
+"vs": "blanc-indom",
+"games": 272,
+"win": 70
+},
+{
+"tpl": "anis-star-neon",
+"arch": "anis-star-system",
+"kind": "counteredBy",
+"vs": "mermaid-disrupt",
+"games": 131,
+"win": 83
+},
+{
+"tpl": "anis-star-neon",
+"arch": "anis-star-system",
+"kind": "counteredBy",
+"vs": "sanis-stall",
+"games": 26,
+"win": 65
+},
+{
+"tpl": "privaty-stun",
+"arch": "privaty-stun",
+"kind": "counters",
+"vs": "scarlet-nuke",
+"games": 0,
+"win": null
+},
+{
+"tpl": "privaty-stun",
+"arch": "privaty-stun",
+"kind": "counters",
+"vs": "blanc-indom",
+"games": 0,
+"win": null
+},
+{
+"tpl": "privaty-stun",
+"arch": "privaty-stun",
+"kind": "counteredBy",
+"vs": "noah-stall",
+"games": 0,
+"win": null
+},
+{
+"tpl": "privaty-stun",
+"arch": "privaty-stun",
+"kind": "counteredBy",
+"vs": "moran-system",
+"games": 0,
+"win": null
+},
+{
+"tpl": "jackal-bay-share",
+"arch": "share-wall",
+"kind": "counters",
+"vs": "scarlet-nuke",
+"games": 16,
+"win": 44
+},
+{
+"tpl": "jackal-bay-share",
+"arch": "share-wall",
+"kind": "counters",
+"vs": "blanc-indom",
+"games": 15,
+"win": 20
+},
+{
+"tpl": "jackal-bay-share",
+"arch": "share-wall",
+"kind": "counteredBy",
+"vs": "noah-stall",
+"games": 10,
+"win": 0
+},
+{
+"tpl": "jackal-bay-share",
+"arch": "share-wall",
+"kind": "counteredBy",
+"vs": "mermaid-disrupt",
+"games": 13,
+"win": 85
+},
+{
+"tpl": "anis-star-biscuit-core",
+"arch": "anis-star-system",
+"kind": "counters",
+"vs": "scarlet-nuke",
+"games": 250,
+"win": 85
+},
+{
+"tpl": "anis-star-biscuit-core",
+"arch": "anis-star-system",
+"kind": "counters",
+"vs": "cinderella-carry",
+"games": 204,
+"win": 77
+},
+{
+"tpl": "anis-star-biscuit-core",
+"arch": "anis-star-system",
+"kind": "counters",
+"vs": "mermaid-disrupt",
+"games": 131,
+"win": 83
+},
+{
+"tpl": "anis-star-biscuit-core",
+"arch": "anis-star-system",
+"kind": "counters",
+"vs": "blanc-indom",
+"games": 272,
+"win": 70
+},
+{
+"tpl": "anis-star-biscuit-core",
+"arch": "anis-star-system",
+"kind": "counteredBy",
+"vs": "rosanna-counter",
+"games": 710,
+"win": 96
+},
+{
+"tpl": "anis-star-biscuit-core",
+"arch": "anis-star-system",
+"kind": "counteredBy",
+"vs": "tactical-trio",
+"games": 0,
+"win": null
+},
+{
+"tpl": "anis-star-biscuit-core",
+"arch": "anis-star-system",
+"kind": "counteredBy",
+"vs": "sg-burst",
+"games": 710,
+"win": 96
+},
+{
+"tpl": "nayuta-rush",
+"arch": "nayuta-rush",
+"kind": "counters",
+"vs": "blanc-indom",
+"games": 223,
+"win": 66
+},
+{
+"tpl": "nayuta-rush",
+"arch": "nayuta-rush",
+"kind": "counters",
+"vs": "moran-system",
+"games": 1122,
+"win": 54
+},
+{
+"tpl": "nayuta-rush",
+"arch": "nayuta-rush",
+"kind": "counters",
+"vs": "cat-team",
+"games": 16,
+"win": 62
+},
+{
+"tpl": "nayuta-rush",
+"arch": "nayuta-rush",
+"kind": "counteredBy",
+"vs": "anis-star-system",
+"games": 519,
+"win": 25
+},
+{
+"tpl": "nayuta-rush",
+"arch": "nayuta-rush",
+"kind": "counteredBy",
+"vs": "mermaid-disrupt",
+"games": 123,
+"win": 88
+},
+{
+"tpl": "nayuta-rush",
+"arch": "nayuta-rush",
+"kind": "counteredBy",
+"vs": "noah-stall",
+"games": 72,
+"win": 32
+},
+{
+"tpl": "jackal-vesti-blanc",
+"arch": "blanc-indom",
+"kind": "counters",
+"vs": "scarlet-nuke",
+"games": 88,
+"win": 34
+},
+{
+"tpl": "jackal-vesti-blanc",
+"arch": "blanc-indom",
+"kind": "counters",
+"vs": "moran-system",
+"games": 712,
+"win": 55
+},
+{
+"tpl": "jackal-vesti-blanc",
+"arch": "blanc-indom",
+"kind": "counters",
+"vs": "cat-team",
+"games": 16,
+"win": 69
+},
+{
+"tpl": "jackal-vesti-blanc",
+"arch": "blanc-indom",
+"kind": "counteredBy",
+"vs": "rosanna-counter",
+"games": 280,
+"win": 64
+},
+{
+"tpl": "jackal-vesti-blanc",
+"arch": "blanc-indom",
+"kind": "counteredBy",
+"vs": "mermaid-disrupt",
+"games": 65,
+"win": 88
+},
+{
+"tpl": "jackal-vesti-blanc",
+"arch": "blanc-indom",
+"kind": "counteredBy",
+"vs": "noah-stall",
+"games": 57,
+"win": 65
+},
+{
+"tpl": "noah-noise-biscuit-cinderella",
+"arch": "noah-stall",
+"kind": "counters",
+"vs": "scarlet-nuke",
+"games": 54,
+"win": 83
+},
+{
+"tpl": "noah-noise-biscuit-cinderella",
+"arch": "noah-stall",
+"kind": "counters",
+"vs": "cinderella-carry",
+"games": 71,
+"win": 39
+},
+{
+"tpl": "noah-noise-biscuit-cinderella",
+"arch": "noah-stall",
+"kind": "counters",
+"vs": "nayuta-rush",
+"games": 72,
+"win": 68
+},
+{
+"tpl": "noah-noise-biscuit-cinderella",
+"arch": "noah-stall",
+"kind": "counteredBy",
+"vs": "sanis-stall",
+"games": 4,
+"win": 50
+},
+{
+"tpl": "noah-noise-biscuit-cinderella",
+"arch": "noah-stall",
+"kind": "counteredBy",
+"vs": "rosanna-counter",
+"games": 110,
+"win": 85
+},
+{
+"tpl": "noah-noise-biscuit-cinderella",
+"arch": "noah-stall",
+"kind": "counteredBy",
+"vs": "tactical-trio",
+"games": 0,
+"win": null
+},
+{
+"tpl": "mined-0",
+"arch": "mined-0",
+"kind": "counters",
+"vs": "mined-7",
+"games": 75,
+"win": 97
+},
+{
+"tpl": "mined-0",
+"arch": "mined-0",
+"kind": "counters",
+"vs": "mined-6",
+"games": 36,
+"win": 94
+},
+{
+"tpl": "mined-0",
+"arch": "mined-0",
+"kind": "counters",
+"vs": "mined-2",
+"games": 158,
+"win": 80
+},
+{
+"tpl": "mined-0",
+"arch": "mined-0",
+"kind": "counters",
+"vs": "mined-3",
+"games": 101,
+"win": 71
+},
+{
+"tpl": "mined-0",
+"arch": "mined-0",
+"kind": "counters",
+"vs": "mined-21",
+"games": 13,
+"win": 85
+},
+{
+"tpl": "mined-0",
+"arch": "mined-0",
+"kind": "counters",
+"vs": "mined-16",
+"games": 189,
+"win": 78
+},
+{
+"tpl": "mined-0",
+"arch": "mined-0",
+"kind": "counters",
+"vs": "mined-9",
+"games": 80,
+"win": 86
+},
+{
+"tpl": "mined-0",
+"arch": "mined-0",
+"kind": "counters",
+"vs": "mined-5",
+"games": 92,
+"win": 87
+},
+{
+"tpl": "mined-0",
+"arch": "mined-0",
+"kind": "counters",
+"vs": "mined-10",
+"games": 50,
+"win": 92
+},
+{
+"tpl": "mined-0",
+"arch": "mined-0",
+"kind": "counters",
+"vs": "mined-20",
+"games": 14,
+"win": 79
+},
+{
+"tpl": "mined-0",
+"arch": "mined-0",
+"kind": "counters",
+"vs": "mined-14",
+"games": 32,
+"win": 59
+},
+{
+"tpl": "mined-0",
+"arch": "mined-0",
+"kind": "counters",
+"vs": "helm-carry",
+"games": 443,
+"win": 83
+},
+{
+"tpl": "mined-0",
+"arch": "mined-0",
+"kind": "counters",
+"vs": "nayuta-carry",
+"games": 480,
+"win": 83
+},
+{
+"tpl": "mined-0",
+"arch": "mined-0",
+"kind": "counters",
+"vs": "nayuta-rush",
+"games": 355,
+"win": 81
+},
+{
+"tpl": "mined-0",
+"arch": "mined-0",
+"kind": "counters",
+"vs": "rosanna-counter",
+"games": 455,
+"win": 97
+},
+{
+"tpl": "mined-0",
+"arch": "mined-0",
+"kind": "counters",
+"vs": "sg-burst",
+"games": 455,
+"win": 97
+},
+{
+"tpl": "mined-0",
+"arch": "mined-0",
+"kind": "counters",
+"vs": "noah-stall",
+"games": 84,
+"win": 90
+},
+{
+"tpl": "mined-0",
+"arch": "mined-0",
+"kind": "counters",
+"vs": "scarlet-nuke",
+"games": 158,
+"win": 93
+},
+{
+"tpl": "mined-0",
+"arch": "mined-0",
+"kind": "counters",
+"vs": "vesti-tu",
+"games": 416,
+"win": 93
+},
+{
+"tpl": "mined-0",
+"arch": "mined-0",
+"kind": "counters",
+"vs": "cinderella-carry",
+"games": 91,
+"win": 90
+},
+{
+"tpl": "mined-0",
+"arch": "mined-0",
+"kind": "counters",
+"vs": "moran-system",
+"games": 1006,
+"win": 87
+},
+{
+"tpl": "mined-0",
+"arch": "mined-0",
+"kind": "counters",
+"vs": "mermaid-disrupt",
+"games": 73,
+"win": 90
+},
+{
+"tpl": "mined-0",
+"arch": "mined-0",
+"kind": "counters",
+"vs": "blanc-indom",
+"games": 168,
+"win": 88
+},
+{
+"tpl": "mined-0",
+"arch": "mined-0",
+"kind": "counters",
+"vs": "share-wall",
+"games": 25,
+"win": 96
+},
+{
+"tpl": "mined-0",
+"arch": "mined-0",
+"kind": "counteredBy",
+"vs": "mined-1",
+"games": 186,
+"win": 3
+},
+{
+"tpl": "mined-0",
+"arch": "mined-0",
+"kind": "counteredBy",
+"vs": "mined-4",
+"games": 154,
+"win": 3
+},
+{
+"tpl": "mined-0",
+"arch": "mined-0",
+"kind": "counteredBy",
+"vs": "mined-13",
+"games": 34,
+"win": 53
+},
+{
+"tpl": "mined-1",
+"arch": "mined-1",
+"kind": "counters",
+"vs": "mined-7",
+"games": 33,
+"win": 88
+},
+{
+"tpl": "mined-1",
+"arch": "mined-1",
+"kind": "counters",
+"vs": "mined-0",
+"games": 186,
+"win": 97
+},
+{
+"tpl": "mined-1",
+"arch": "mined-1",
+"kind": "counters",
+"vs": "mined-8",
+"games": 41,
+"win": 98
+},
+{
+"tpl": "mined-1",
+"arch": "mined-1",
+"kind": "counters",
+"vs": "mined-6",
+"games": 58,
+"win": 100
+},
+{
+"tpl": "mined-1",
+"arch": "mined-1",
+"kind": "counters",
+"vs": "mined-12",
+"games": 47,
+"win": 83
+},
+{
+"tpl": "mined-1",
+"arch": "mined-1",
+"kind": "counters",
+"vs": "mined-9",
+"games": 58,
+"win": 91
+},
+{
+"tpl": "mined-1",
+"arch": "mined-1",
+"kind": "counters",
+"vs": "mined-17",
+"games": 34,
+"win": 91
+},
+{
+"tpl": "mined-1",
+"arch": "mined-1",
+"kind": "counters",
+"vs": "rosanna-counter",
+"games": 343,
+"win": 72
+},
+{
+"tpl": "mined-1",
+"arch": "mined-1",
+"kind": "counters",
+"vs": "sg-burst",
+"games": 343,
+"win": 72
+},
+{
+"tpl": "mined-1",
+"arch": "mined-1",
+"kind": "counters",
+"vs": "vesti-tu",
+"games": 356,
+"win": 69
+},
+{
+"tpl": "mined-1",
+"arch": "mined-1",
+"kind": "counters",
+"vs": "mermaid-disrupt",
+"games": 29,
+"win": 100
+},
+{
+"tpl": "mined-1",
+"arch": "mined-1",
+"kind": "counters",
+"vs": "moran-system",
+"games": 732,
+"win": 80
+},
+{
+"tpl": "mined-1",
+"arch": "mined-1",
+"kind": "counters",
+"vs": "cinderella-carry",
+"games": 126,
+"win": 98
+},
+{
+"tpl": "mined-1",
+"arch": "mined-1",
+"kind": "counters",
+"vs": "anis-star-system",
+"games": 385,
+"win": 91
+},
+{
+"tpl": "mined-1",
+"arch": "mined-1",
+"kind": "counters",
+"vs": "noah-stall",
+"games": 72,
+"win": 83
+},
+{
+"tpl": "mined-1",
+"arch": "mined-1",
+"kind": "counters",
+"vs": "blanc-indom",
+"games": 96,
+"win": 90
+},
+{
+"tpl": "mined-1",
+"arch": "mined-1",
+"kind": "counters",
+"vs": "scarlet-nuke",
+"games": 49,
+"win": 98
+},
+{
+"tpl": "mined-1",
+"arch": "mined-1",
+"kind": "counteredBy",
+"vs": "mined-3",
+"games": 73,
+"win": 47
+},
+{
+"tpl": "mined-1",
+"arch": "mined-1",
+"kind": "counteredBy",
+"vs": "mined-10",
+"games": 82,
+"win": 34
+},
+{
+"tpl": "mined-1",
+"arch": "mined-1",
+"kind": "counteredBy",
+"vs": "mined-14",
+"games": 17,
+"win": 41
+},
+{
+"tpl": "mined-1",
+"arch": "mined-1",
+"kind": "counteredBy",
+"vs": "mined-19",
+"games": 16,
+"win": 19
+},
+{
+"tpl": "mined-1",
+"arch": "mined-1",
+"kind": "counteredBy",
+"vs": "mined-20",
+"games": 38,
+"win": 11
+},
+{
+"tpl": "mined-1",
+"arch": "mined-1",
+"kind": "counteredBy",
+"vs": "mined-23",
+"games": 2,
+"win": 100
+},
+{
+"tpl": "mined-1",
+"arch": "mined-1",
+"kind": "counteredBy",
+"vs": "helm-carry",
+"games": 277,
+"win": 55
+},
+{
+"tpl": "mined-1",
+"arch": "mined-1",
+"kind": "counteredBy",
+"vs": "nayuta-rush",
+"games": 196,
+"win": 57
+},
+{
+"tpl": "mined-2",
+"arch": "mined-2",
+"kind": "counters",
+"vs": "mined-3",
+"games": 70,
+"win": 77
+},
+{
+"tpl": "mined-2",
+"arch": "mined-2",
+"kind": "counters",
+"vs": "mined-19",
+"games": 17,
+"win": 88
+},
+{
+"tpl": "mined-2",
+"arch": "mined-2",
+"kind": "counters",
+"vs": "mined-20",
+"games": 13,
+"win": 100
+},
+{
+"tpl": "mined-2",
+"arch": "mined-2",
+"kind": "counters",
+"vs": "mined-14",
+"games": 9,
+"win": 78
+},
+{
+"tpl": "mined-2",
+"arch": "mined-2",
+"kind": "counters",
+"vs": "mined-18",
+"games": 26,
+"win": 69
+},
+{
+"tpl": "mined-2",
+"arch": "mined-2",
+"kind": "counters",
+"vs": "vesti-tu",
+"games": 212,
+"win": 66
+},
+{
+"tpl": "mined-2",
+"arch": "mined-2",
+"kind": "counters",
+"vs": "blanc-indom",
+"games": 81,
+"win": 60
+},
+{
+"tpl": "mined-2",
+"arch": "mined-2",
+"kind": "counters",
+"vs": "scarlet-nuke",
+"games": 47,
+"win": 94
+},
+{
+"tpl": "mined-2",
+"arch": "mined-2",
+"kind": "counters",
+"vs": "helm-carry",
+"games": 190,
+"win": 73
+},
+{
+"tpl": "mined-2",
+"arch": "mined-2",
+"kind": "counters",
+"vs": "nayuta-carry",
+"games": 223,
+"win": 75
+},
+{
+"tpl": "mined-2",
+"arch": "mined-2",
+"kind": "counters",
+"vs": "nayuta-rush",
+"games": 163,
+"win": 76
+},
+{
+"tpl": "mined-2",
+"arch": "mined-2",
+"kind": "counters",
+"vs": "rosanna-counter",
+"games": 179,
+"win": 74
+},
+{
+"tpl": "mined-2",
+"arch": "mined-2",
+"kind": "counters",
+"vs": "sg-burst",
+"games": 179,
+"win": 74
+},
+{
+"tpl": "mined-2",
+"arch": "mined-2",
+"kind": "counters",
+"vs": "mermaid-disrupt",
+"games": 31,
+"win": 87
+},
+{
+"tpl": "mined-2",
+"arch": "mined-2",
+"kind": "counteredBy",
+"vs": "mined-0",
+"games": 158,
+"win": 20
+},
+{
+"tpl": "mined-2",
+"arch": "mined-2",
+"kind": "counteredBy",
+"vs": "mined-6",
+"games": 67,
+"win": 0
+},
+{
+"tpl": "mined-2",
+"arch": "mined-2",
+"kind": "counteredBy",
+"vs": "mined-8",
+"games": 44,
+"win": 23
+},
+{
+"tpl": "mined-2",
+"arch": "mined-2",
+"kind": "counteredBy",
+"vs": "mined-9",
+"games": 37,
+"win": 27
+},
+{
+"tpl": "mined-2",
+"arch": "mined-2",
+"kind": "counteredBy",
+"vs": "mined-10",
+"games": 50,
+"win": 28
+},
+{
+"tpl": "mined-2",
+"arch": "mined-2",
+"kind": "counteredBy",
+"vs": "anis-star-system",
+"games": 274,
+"win": 32
+},
+{
+"tpl": "mined-2",
+"arch": "mined-2",
+"kind": "counteredBy",
+"vs": "noah-stall",
+"games": 37,
+"win": 78
+},
+{
+"tpl": "mined-3",
+"arch": "mined-3",
+"kind": "counters",
+"vs": "mined-1",
+"games": 73,
+"win": 53
+},
+{
+"tpl": "mined-3",
+"arch": "mined-3",
+"kind": "counters",
+"vs": "mined-4",
+"games": 28,
+"win": 43
+},
+{
+"tpl": "mined-3",
+"arch": "mined-3",
+"kind": "counters",
+"vs": "mined-13",
+"games": 16,
+"win": 81
+},
+{
+"tpl": "mined-3",
+"arch": "mined-3",
+"kind": "counters",
+"vs": "nayuta-carry",
+"games": 26,
+"win": 0
+},
+{
+"tpl": "mined-3",
+"arch": "mined-3",
+"kind": "counters",
+"vs": "nayuta-rush",
+"games": 18,
+"win": 0
+},
+{
+"tpl": "mined-3",
+"arch": "mined-3",
+"kind": "counters",
+"vs": "rosanna-counter",
+"games": 151,
+"win": 87
+},
+{
+"tpl": "mined-3",
+"arch": "mined-3",
+"kind": "counters",
+"vs": "sg-burst",
+"games": 151,
+"win": 87
+},
+{
+"tpl": "mined-3",
+"arch": "mined-3",
+"kind": "counters",
+"vs": "blanc-indom",
+"games": 61,
+"win": 80
+},
+{
+"tpl": "mined-3",
+"arch": "mined-3",
+"kind": "counters",
+"vs": "vesti-tu",
+"games": 158,
+"win": 87
+},
+{
+"tpl": "mined-3",
+"arch": "mined-3",
+"kind": "counters",
+"vs": "scarlet-nuke",
+"games": 55,
+"win": 85
+},
+{
+"tpl": "mined-3",
+"arch": "mined-3",
+"kind": "counters",
+"vs": "mermaid-disrupt",
+"games": 31,
+"win": 97
+},
+{
+"tpl": "mined-3",
+"arch": "mined-3",
+"kind": "counteredBy",
+"vs": "mined-0",
+"games": 101,
+"win": 29
+},
+{
+"tpl": "mined-3",
+"arch": "mined-3",
+"kind": "counteredBy",
+"vs": "mined-2",
+"games": 70,
+"win": 23
+},
+{
+"tpl": "mined-3",
+"arch": "mined-3",
+"kind": "counteredBy",
+"vs": "mined-6",
+"games": 36,
+"win": 0
+},
+{
+"tpl": "mined-3",
+"arch": "mined-3",
+"kind": "counteredBy",
+"vs": "mined-9",
+"games": 24,
+"win": 62
+},
+{
+"tpl": "mined-3",
+"arch": "mined-3",
+"kind": "counteredBy",
+"vs": "mined-10",
+"games": 21,
+"win": 19
+},
+{
+"tpl": "mined-3",
+"arch": "mined-3",
+"kind": "counteredBy",
+"vs": "mined-12",
+"games": 9,
+"win": 11
+},
+{
+"tpl": "mined-3",
+"arch": "mined-3",
+"kind": "counteredBy",
+"vs": "mined-18",
+"games": 10,
+"win": 20
+},
+{
+"tpl": "mined-3",
+"arch": "mined-3",
+"kind": "counteredBy",
+"vs": "mined-19",
+"games": 3,
+"win": 67
+},
+{
+"tpl": "mined-3",
+"arch": "mined-3",
+"kind": "counteredBy",
+"vs": "anis-star-system",
+"games": 159,
+"win": 37
+},
+{
+"tpl": "mined-3",
+"arch": "mined-3",
+"kind": "counteredBy",
+"vs": "noah-stall",
+"games": 17,
+"win": 53
+},
+{
+"tpl": "mined-4",
+"arch": "mined-4",
+"kind": "counters",
+"vs": "mined-9",
+"games": 50,
+"win": 88
+},
+{
+"tpl": "mined-4",
+"arch": "mined-4",
+"kind": "counters",
+"vs": "mined-17",
+"games": 30,
+"win": 87
+},
+{
+"tpl": "mined-4",
+"arch": "mined-4",
+"kind": "counters",
+"vs": "mined-0",
+"games": 154,
+"win": 97
+},
+{
+"tpl": "mined-4",
+"arch": "mined-4",
+"kind": "counters",
+"vs": "mined-8",
+"games": 32,
+"win": 100
+},
+{
+"tpl": "mined-4",
+"arch": "mined-4",
+"kind": "counters",
+"vs": "mined-7",
+"games": 26,
+"win": 96
+},
+{
+"tpl": "mined-4",
+"arch": "mined-4",
+"kind": "counters",
+"vs": "mined-6",
+"games": 50,
+"win": 94
+},
+{
+"tpl": "mined-4",
+"arch": "mined-4",
+"kind": "counters",
+"vs": "mermaid-disrupt",
+"games": 27,
+"win": 93
+},
+{
+"tpl": "mined-4",
+"arch": "mined-4",
+"kind": "counters",
+"vs": "vesti-tu",
+"games": 255,
+"win": 80
+},
+{
+"tpl": "mined-4",
+"arch": "mined-4",
+"kind": "counters",
+"vs": "moran-system",
+"games": 576,
+"win": 85
+},
+{
+"tpl": "mined-4",
+"arch": "mined-4",
+"kind": "counters",
+"vs": "anis-star-system",
+"games": 315,
+"win": 95
+},
+{
+"tpl": "mined-4",
+"arch": "mined-4",
+"kind": "counters",
+"vs": "scarlet-nuke",
+"games": 38,
+"win": 95
+},
+{
+"tpl": "mined-4",
+"arch": "mined-4",
+"kind": "counters",
+"vs": "cinderella-carry",
+"games": 96,
+"win": 99
+},
+{
+"tpl": "mined-4",
+"arch": "mined-4",
+"kind": "counters",
+"vs": "blanc-indom",
+"games": 70,
+"win": 96
+},
+{
+"tpl": "mined-4",
+"arch": "mined-4",
+"kind": "counters",
+"vs": "noah-stall",
+"games": 58,
+"win": 98
+},
+{
+"tpl": "mined-4",
+"arch": "mined-4",
+"kind": "counters",
+"vs": "rosanna-counter",
+"games": 243,
+"win": 80
+},
+{
+"tpl": "mined-4",
+"arch": "mined-4",
+"kind": "counters",
+"vs": "sg-burst",
+"games": 243,
+"win": 80
+},
+{
+"tpl": "mined-4",
+"arch": "mined-4",
+"kind": "counteredBy",
+"vs": "mined-3",
+"games": 28,
+"win": 57
+},
+{
+"tpl": "mined-4",
+"arch": "mined-4",
+"kind": "counteredBy",
+"vs": "mined-10",
+"games": 63,
+"win": 37
+},
+{
+"tpl": "mined-4",
+"arch": "mined-4",
+"kind": "counteredBy",
+"vs": "mined-19",
+"games": 4,
+"win": 75
+},
+{
+"tpl": "mined-4",
+"arch": "mined-4",
+"kind": "counteredBy",
+"vs": "mined-20",
+"games": 30,
+"win": 7
+},
+{
+"tpl": "mined-4",
+"arch": "mined-4",
+"kind": "counteredBy",
+"vs": "helm-carry",
+"games": 192,
+"win": 59
+},
+{
+"tpl": "mined-4",
+"arch": "mined-4",
+"kind": "counteredBy",
+"vs": "nayuta-rush",
+"games": 131,
+"win": 63
+},
+{
+"tpl": "mined-5",
+"arch": "mined-5",
+"kind": "counters",
+"vs": "mined-20",
+"games": 23,
+"win": 65
+},
+{
+"tpl": "mined-5",
+"arch": "mined-5",
+"kind": "counters",
+"vs": "mined-12",
+"games": 32,
+"win": 97
+},
+{
+"tpl": "mined-5",
+"arch": "mined-5",
+"kind": "counters",
+"vs": "mined-18",
+"games": 20,
+"win": 95
+},
+{
+"tpl": "mined-5",
+"arch": "mined-5",
+"kind": "counters",
+"vs": "helm-carry",
+"games": 161,
+"win": 70
+},
+{
+"tpl": "mined-5",
+"arch": "mined-5",
+"kind": "counters",
+"vs": "nayuta-carry",
+"games": 161,
+"win": 74
+},
+{
+"tpl": "mined-5",
+"arch": "mined-5",
+"kind": "counters",
+"vs": "nayuta-rush",
+"games": 112,
+"win": 64
+},
+{
+"tpl": "mined-5",
+"arch": "mined-5",
+"kind": "counters",
+"vs": "vesti-tu",
+"games": 155,
+"win": 64
+},
+{
+"tpl": "mined-5",
+"arch": "mined-5",
+"kind": "counters",
+"vs": "scarlet-nuke",
+"games": 33,
+"win": 82
+},
+{
+"tpl": "mined-5",
+"arch": "mined-5",
+"kind": "counters",
+"vs": "rosanna-counter",
+"games": 182,
+"win": 76
+},
+{
+"tpl": "mined-5",
+"arch": "mined-5",
+"kind": "counters",
+"vs": "sg-burst",
+"games": 182,
+"win": 76
+},
+{
+"tpl": "mined-5",
+"arch": "mined-5",
+"kind": "counters",
+"vs": "mermaid-disrupt",
+"games": 28,
+"win": 96
+},
+{
+"tpl": "mined-5",
+"arch": "mined-5",
+"kind": "counteredBy",
+"vs": "mined-0",
+"games": 92,
+"win": 13
+},
+{
+"tpl": "mined-5",
+"arch": "mined-5",
+"kind": "counteredBy",
+"vs": "mined-6",
+"games": 41,
+"win": 10
+},
+{
+"tpl": "mined-5",
+"arch": "mined-5",
+"kind": "counteredBy",
+"vs": "mined-7",
+"games": 30,
+"win": 43
+},
+{
+"tpl": "mined-5",
+"arch": "mined-5",
+"kind": "counteredBy",
+"vs": "mined-8",
+"games": 33,
+"win": 12
+},
+{
+"tpl": "mined-5",
+"arch": "mined-5",
+"kind": "counteredBy",
+"vs": "mined-9",
+"games": 18,
+"win": 61
+},
+{
+"tpl": "mined-5",
+"arch": "mined-5",
+"kind": "counteredBy",
+"vs": "cinderella-carry",
+"games": 59,
+"win": 36
+},
+{
+"tpl": "mined-5",
+"arch": "mined-5",
+"kind": "counteredBy",
+"vs": "anis-star-system",
+"games": 155,
+"win": 39
+},
+{
+"tpl": "mined-5",
+"arch": "mined-5",
+"kind": "counteredBy",
+"vs": "noah-stall",
+"games": 23,
+"win": 78
+},
+{
+"tpl": "mined-6",
+"arch": "mined-6",
+"kind": "counters",
+"vs": "mined-3",
+"games": 36,
+"win": 100
+},
+{
+"tpl": "mined-6",
+"arch": "mined-6",
+"kind": "counters",
+"vs": "mined-9",
+"games": 32,
+"win": 94
+},
+{
+"tpl": "mined-6",
+"arch": "mined-6",
+"kind": "counters",
+"vs": "mined-7",
+"games": 36,
+"win": 97
+},
+{
+"tpl": "mined-6",
+"arch": "mined-6",
+"kind": "counters",
+"vs": "mined-5",
+"games": 41,
+"win": 90
+},
+{
+"tpl": "mined-6",
+"arch": "mined-6",
+"kind": "counters",
+"vs": "mined-2",
+"games": 67,
+"win": 100
+},
+{
+"tpl": "mined-6",
+"arch": "mined-6",
+"kind": "counters",
+"vs": "cinderella-carry",
+"games": 93,
+"win": 65
+},
+{
+"tpl": "mined-6",
+"arch": "mined-6",
+"kind": "counters",
+"vs": "rosanna-counter",
+"games": 192,
+"win": 98
+},
+{
+"tpl": "mined-6",
+"arch": "mined-6",
+"kind": "counters",
+"vs": "sg-burst",
+"games": 192,
+"win": 98
+},
+{
+"tpl": "mined-6",
+"arch": "mined-6",
+"kind": "counters",
+"vs": "vesti-tu",
+"games": 194,
+"win": 95
+},
+{
+"tpl": "mined-6",
+"arch": "mined-6",
+"kind": "counters",
+"vs": "helm-carry",
+"games": 191,
+"win": 93
+},
+{
+"tpl": "mined-6",
+"arch": "mined-6",
+"kind": "counters",
+"vs": "nayuta-carry",
+"games": 199,
+"win": 89
+},
+{
+"tpl": "mined-6",
+"arch": "mined-6",
+"kind": "counters",
+"vs": "nayuta-rush",
+"games": 156,
+"win": 92
+},
+{
+"tpl": "mined-6",
+"arch": "mined-6",
+"kind": "counters",
+"vs": "scarlet-nuke",
+"games": 60,
+"win": 92
+},
+{
+"tpl": "mined-6",
+"arch": "mined-6",
+"kind": "counters",
+"vs": "moran-system",
+"games": 412,
+"win": 98
+},
+{
+"tpl": "mined-6",
+"arch": "mined-6",
+"kind": "counters",
+"vs": "blanc-indom",
+"games": 64,
+"win": 81
+},
+{
+"tpl": "mined-6",
+"arch": "mined-6",
+"kind": "counters",
+"vs": "mermaid-disrupt",
+"games": 26,
+"win": 92
+},
+{
+"tpl": "mined-6",
+"arch": "mined-6",
+"kind": "counteredBy",
+"vs": "mined-0",
+"games": 36,
+"win": 6
+},
+{
+"tpl": "mined-6",
+"arch": "mined-6",
+"kind": "counteredBy",
+"vs": "mined-1",
+"games": 58,
+"win": 0
+},
+{
+"tpl": "mined-6",
+"arch": "mined-6",
+"kind": "counteredBy",
+"vs": "mined-4",
+"games": 50,
+"win": 6
+},
+{
+"tpl": "mined-6",
+"arch": "mined-6",
+"kind": "counteredBy",
+"vs": "mined-8",
+"games": 36,
+"win": 22
+},
+{
+"tpl": "mined-7",
+"arch": "mined-7",
+"kind": "counters",
+"vs": "mined-5",
+"games": 30,
+"win": 57
+},
+{
+"tpl": "mined-7",
+"arch": "mined-7",
+"kind": "counters",
+"vs": "scarlet-nuke",
+"games": 60,
+"win": 92
+},
+{
+"tpl": "mined-7",
+"arch": "mined-7",
+"kind": "counters",
+"vs": "helm-carry",
+"games": 110,
+"win": 64
+},
+{
+"tpl": "mined-7",
+"arch": "mined-7",
+"kind": "counters",
+"vs": "nayuta-carry",
+"games": 122,
+"win": 61
+},
+{
+"tpl": "mined-7",
+"arch": "mined-7",
+"kind": "counters",
+"vs": "nayuta-rush",
+"games": 75,
+"win": 56
+},
+{
+"tpl": "mined-7",
+"arch": "mined-7",
+"kind": "counters",
+"vs": "vesti-tu",
+"games": 127,
+"win": 72
+},
+{
+"tpl": "mined-7",
+"arch": "mined-7",
+"kind": "counters",
+"vs": "rosanna-counter",
+"games": 114,
+"win": 86
+},
+{
+"tpl": "mined-7",
+"arch": "mined-7",
+"kind": "counters",
+"vs": "sg-burst",
+"games": 114,
+"win": 86
+},
+{
+"tpl": "mined-7",
+"arch": "mined-7",
+"kind": "counters",
+"vs": "mermaid-disrupt",
+"games": 24,
+"win": 100
+},
+{
+"tpl": "mined-7",
+"arch": "mined-7",
+"kind": "counteredBy",
+"vs": "mined-0",
+"games": 75,
+"win": 3
+},
+{
+"tpl": "mined-7",
+"arch": "mined-7",
+"kind": "counteredBy",
+"vs": "mined-1",
+"games": 33,
+"win": 12
+},
+{
+"tpl": "mined-7",
+"arch": "mined-7",
+"kind": "counteredBy",
+"vs": "mined-4",
+"games": 26,
+"win": 4
+},
+{
+"tpl": "mined-7",
+"arch": "mined-7",
+"kind": "counteredBy",
+"vs": "mined-6",
+"games": 36,
+"win": 3
+},
+{
+"tpl": "mined-7",
+"arch": "mined-7",
+"kind": "counteredBy",
+"vs": "mined-8",
+"games": 18,
+"win": 6
+},
+{
+"tpl": "mined-7",
+"arch": "mined-7",
+"kind": "counteredBy",
+"vs": "anis-star-system",
+"games": 108,
+"win": 13
+},
+{
+"tpl": "mined-7",
+"arch": "mined-7",
+"kind": "counteredBy",
+"vs": "noah-stall",
+"games": 19,
+"win": 47
+},
+{
+"tpl": "mined-7",
+"arch": "mined-7",
+"kind": "counteredBy",
+"vs": "cinderella-carry",
+"games": 63,
+"win": 38
+},
+{
+"tpl": "mined-8",
+"arch": "mined-8",
+"kind": "counters",
+"vs": "mined-6",
+"games": 36,
+"win": 78
+},
+{
+"tpl": "mined-8",
+"arch": "mined-8",
+"kind": "counters",
+"vs": "mined-7",
+"games": 18,
+"win": 94
+},
+{
+"tpl": "mined-8",
+"arch": "mined-8",
+"kind": "counters",
+"vs": "mined-5",
+"games": 33,
+"win": 88
+},
+{
+"tpl": "mined-8",
+"arch": "mined-8",
+"kind": "counters",
+"vs": "mined-2",
+"games": 44,
+"win": 77
+},
+{
+"tpl": "mined-8",
+"arch": "mined-8",
+"kind": "counters",
+"vs": "helm-carry",
+"games": 100,
+"win": 83
+},
+{
+"tpl": "mined-8",
+"arch": "mined-8",
+"kind": "counters",
+"vs": "nayuta-carry",
+"games": 119,
+"win": 86
+},
+{
+"tpl": "mined-8",
+"arch": "mined-8",
+"kind": "counters",
+"vs": "nayuta-rush",
+"games": 86,
+"win": 81
+},
+{
+"tpl": "mined-8",
+"arch": "mined-8",
+"kind": "counters",
+"vs": "mermaid-disrupt",
+"games": 17,
+"win": 88
+},
+{
+"tpl": "mined-8",
+"arch": "mined-8",
+"kind": "counters",
+"vs": "noah-stall",
+"games": 28,
+"win": 100
+},
+{
+"tpl": "mined-8",
+"arch": "mined-8",
+"kind": "counters",
+"vs": "scarlet-nuke",
+"games": 57,
+"win": 88
+},
+{
+"tpl": "mined-8",
+"arch": "mined-8",
+"kind": "counters",
+"vs": "rosanna-counter",
+"games": 144,
+"win": 96
+},
+{
+"tpl": "mined-8",
+"arch": "mined-8",
+"kind": "counters",
+"vs": "sg-burst",
+"games": 144,
+"win": 96
+},
+{
+"tpl": "mined-8",
+"arch": "mined-8",
+"kind": "counters",
+"vs": "vesti-tu",
+"games": 146,
+"win": 95
+},
+{
+"tpl": "mined-8",
+"arch": "mined-8",
+"kind": "counters",
+"vs": "cinderella-carry",
+"games": 2,
+"win": 0
+},
+{
+"tpl": "mined-8",
+"arch": "mined-8",
+"kind": "counters",
+"vs": "blanc-indom",
+"games": 60,
+"win": 87
+},
+{
+"tpl": "mined-8",
+"arch": "mined-8",
+"kind": "counteredBy",
+"vs": "mined-1",
+"games": 41,
+"win": 2
+},
+{
+"tpl": "mined-8",
+"arch": "mined-8",
+"kind": "counteredBy",
+"vs": "mined-4",
+"games": 32,
+"win": 0
+},
+{
+"tpl": "mined-9",
+"arch": "mined-9",
+"kind": "counters",
+"vs": "mined-5",
+"games": 18,
+"win": 39
+},
+{
+"tpl": "mined-9",
+"arch": "mined-9",
+"kind": "counters",
+"vs": "mined-10",
+"games": 7,
+"win": 43
+},
+{
+"tpl": "mined-9",
+"arch": "mined-9",
+"kind": "counters",
+"vs": "mined-3",
+"games": 24,
+"win": 38
+},
+{
+"tpl": "mined-9",
+"arch": "mined-9",
+"kind": "counters",
+"vs": "mined-2",
+"games": 37,
+"win": 73
+},
+{
+"tpl": "mined-9",
+"arch": "mined-9",
+"kind": "counters",
+"vs": "nayuta-carry",
+"games": 113,
+"win": 52
+},
+{
+"tpl": "mined-9",
+"arch": "mined-9",
+"kind": "counters",
+"vs": "helm-carry",
+"games": 106,
+"win": 51
+},
+{
+"tpl": "mined-9",
+"arch": "mined-9",
+"kind": "counters",
+"vs": "nayuta-rush",
+"games": 80,
+"win": 50
+},
+{
+"tpl": "mined-9",
+"arch": "mined-9",
+"kind": "counters",
+"vs": "rosanna-counter",
+"games": 94,
+"win": 87
+},
+{
+"tpl": "mined-9",
+"arch": "mined-9",
+"kind": "counters",
+"vs": "sg-burst",
+"games": 94,
+"win": 87
+},
+{
+"tpl": "mined-9",
+"arch": "mined-9",
+"kind": "counters",
+"vs": "vesti-tu",
+"games": 104,
+"win": 68
+},
+{
+"tpl": "mined-9",
+"arch": "mined-9",
+"kind": "counters",
+"vs": "moran-system",
+"games": 74,
+"win": 0
+},
+{
+"tpl": "mined-9",
+"arch": "mined-9",
+"kind": "counteredBy",
+"vs": "mined-0",
+"games": 80,
+"win": 14
+},
+{
+"tpl": "mined-9",
+"arch": "mined-9",
+"kind": "counteredBy",
+"vs": "mined-1",
+"games": 58,
+"win": 9
+},
+{
+"tpl": "mined-9",
+"arch": "mined-9",
+"kind": "counteredBy",
+"vs": "mined-4",
+"games": 50,
+"win": 12
+},
+{
+"tpl": "mined-9",
+"arch": "mined-9",
+"kind": "counteredBy",
+"vs": "mined-6",
+"games": 32,
+"win": 6
+},
+{
+"tpl": "mined-9",
+"arch": "mined-9",
+"kind": "counteredBy",
+"vs": "anis-star-system",
+"games": 113,
+"win": 11
+},
+{
+"tpl": "mined-9",
+"arch": "mined-9",
+"kind": "counteredBy",
+"vs": "noah-stall",
+"games": 21,
+"win": 14
+},
+{
+"tpl": "mined-10",
+"arch": "mined-10",
+"kind": "counters",
+"vs": "mined-1",
+"games": 82,
+"win": 66
+},
+{
+"tpl": "mined-10",
+"arch": "mined-10",
+"kind": "counters",
+"vs": "mined-3",
+"games": 21,
+"win": 81
+},
+{
+"tpl": "mined-10",
+"arch": "mined-10",
+"kind": "counters",
+"vs": "mined-2",
+"games": 50,
+"win": 72
+},
+{
+"tpl": "mined-10",
+"arch": "mined-10",
+"kind": "counters",
+"vs": "mined-4",
+"games": 63,
+"win": 63
+},
+{
+"tpl": "mined-10",
+"arch": "mined-10",
+"kind": "counters",
+"vs": "scarlet-nuke",
+"games": 26,
+"win": 81
+},
+{
+"tpl": "mined-10",
+"arch": "mined-10",
+"kind": "counters",
+"vs": "vesti-tu",
+"games": 95,
+"win": 68
+},
+{
+"tpl": "mined-10",
+"arch": "mined-10",
+"kind": "counters",
+"vs": "nayuta-carry",
+"games": 94,
+"win": 87
+},
+{
+"tpl": "mined-10",
+"arch": "mined-10",
+"kind": "counters",
+"vs": "helm-carry",
+"games": 87,
+"win": 87
+},
+{
+"tpl": "mined-10",
+"arch": "mined-10",
+"kind": "counters",
+"vs": "nayuta-rush",
+"games": 62,
+"win": 82
+},
+{
+"tpl": "mined-10",
+"arch": "mined-10",
+"kind": "counteredBy",
+"vs": "mined-0",
+"games": 50,
+"win": 8
+},
+{
+"tpl": "mined-10",
+"arch": "mined-10",
+"kind": "counteredBy",
+"vs": "mined-9",
+"games": 7,
+"win": 57
+},
+{
+"tpl": "mined-10",
+"arch": "mined-10",
+"kind": "counteredBy",
+"vs": "cinderella-carry",
+"games": 33,
+"win": 24
+},
+{
+"tpl": "mined-10",
+"arch": "mined-10",
+"kind": "counteredBy",
+"vs": "anis-star-system",
+"games": 83,
+"win": 36
+},
+{
+"tpl": "mined-11",
+"arch": "mined-11",
+"kind": "counters",
+"vs": "scarlet-nuke",
+"games": 33,
+"win": 91
+},
+{
+"tpl": "mined-11",
+"arch": "mined-11",
+"kind": "counters",
+"vs": "helm-carry",
+"games": 47,
+"win": 87
+},
+{
+"tpl": "mined-11",
+"arch": "mined-11",
+"kind": "counters",
+"vs": "nayuta-carry",
+"games": 42,
+"win": 90
+},
+{
+"tpl": "mined-11",
+"arch": "mined-11",
+"kind": "counters",
+"vs": "nayuta-rush",
+"games": 29,
+"win": 86
+},
+{
+"tpl": "mined-11",
+"arch": "mined-11",
+"kind": "counters",
+"vs": "cinderella-carry",
+"games": 27,
+"win": 56
+},
+{
+"tpl": "mined-11",
+"arch": "mined-11",
+"kind": "counters",
+"vs": "vesti-tu",
+"games": 50,
+"win": 86
+},
+{
+"tpl": "mined-11",
+"arch": "mined-11",
+"kind": "counters",
+"vs": "moran-system",
+"games": 114,
+"win": 89
+},
+{
+"tpl": "mined-11",
+"arch": "mined-11",
+"kind": "counters",
+"vs": "rosanna-counter",
+"games": 39,
+"win": 92
+},
+{
+"tpl": "mined-11",
+"arch": "mined-11",
+"kind": "counters",
+"vs": "sg-burst",
+"games": 39,
+"win": 92
+},
+{
+"tpl": "mined-12",
+"arch": "mined-12",
+"kind": "counters",
+"vs": "mined-3",
+"games": 9,
+"win": 89
+},
+{
+"tpl": "mined-12",
+"arch": "mined-12",
+"kind": "counters",
+"vs": "moran-system",
+"games": 182,
+"win": 67
+},
+{
+"tpl": "mined-12",
+"arch": "mined-12",
+"kind": "counters",
+"vs": "cinderella-carry",
+"games": 19,
+"win": 74
+},
+{
+"tpl": "mined-12",
+"arch": "mined-12",
+"kind": "counters",
+"vs": "vesti-tu",
+"games": 81,
+"win": 83
+},
+{
+"tpl": "mined-12",
+"arch": "mined-12",
+"kind": "counters",
+"vs": "nayuta-carry",
+"games": 6,
+"win": 0
+},
+{
+"tpl": "mined-12",
+"arch": "mined-12",
+"kind": "counters",
+"vs": "nayuta-rush",
+"games": 32,
+"win": 84
+},
+{
+"tpl": "mined-12",
+"arch": "mined-12",
+"kind": "counteredBy",
+"vs": "mined-1",
+"games": 47,
+"win": 17
+},
+{
+"tpl": "mined-12",
+"arch": "mined-12",
+"kind": "counteredBy",
+"vs": "mined-5",
+"games": 32,
+"win": 3
+},
+{
+"tpl": "mined-12",
+"arch": "mined-12",
+"kind": "counteredBy",
+"vs": "blanc-indom",
+"games": 24,
+"win": 38
+},
+{
+"tpl": "mined-12",
+"arch": "mined-12",
+"kind": "counteredBy",
+"vs": "anis-star-system",
+"games": 35,
+"win": 74
+},
+{
+"tpl": "mined-13",
+"arch": "mined-13",
+"kind": "counters",
+"vs": "mined-0",
+"games": 34,
+"win": 47
+},
+{
+"tpl": "mined-13",
+"arch": "mined-13",
+"kind": "counters",
+"vs": "moran-system",
+"games": 100,
+"win": 70
+},
+{
+"tpl": "mined-13",
+"arch": "mined-13",
+"kind": "counters",
+"vs": "cinderella-carry",
+"games": 19,
+"win": 79
+},
+{
+"tpl": "mined-13",
+"arch": "mined-13",
+"kind": "counters",
+"vs": "anis-star-system",
+"games": 61,
+"win": 69
+},
+{
+"tpl": "mined-13",
+"arch": "mined-13",
+"kind": "counters",
+"vs": "blanc-indom",
+"games": 21,
+"win": 81
+},
+{
+"tpl": "mined-13",
+"arch": "mined-13",
+"kind": "counteredBy",
+"vs": "mined-3",
+"games": 16,
+"win": 19
+},
+{
+"tpl": "mined-13",
+"arch": "mined-13",
+"kind": "counteredBy",
+"vs": "helm-carry",
+"games": 68,
+"win": 41
+},
+{
+"tpl": "mined-13",
+"arch": "mined-13",
+"kind": "counteredBy",
+"vs": "nayuta-carry",
+"games": 71,
+"win": 32
+},
+{
+"tpl": "mined-13",
+"arch": "mined-13",
+"kind": "counteredBy",
+"vs": "nayuta-rush",
+"games": 49,
+"win": 24
+},
+{
+"tpl": "mined-14",
+"arch": "mined-14",
+"kind": "counters",
+"vs": "mined-1",
+"games": 17,
+"win": 59
+},
+{
+"tpl": "mined-14",
+"arch": "mined-14",
+"kind": "counters",
+"vs": "vesti-tu",
+"games": 58,
+"win": 88
+},
+{
+"tpl": "mined-14",
+"arch": "mined-14",
+"kind": "counters",
+"vs": "cinderella-carry",
+"games": 26,
+"win": 69
+},
+{
+"tpl": "mined-14",
+"arch": "mined-14",
+"kind": "counters",
+"vs": "rosanna-counter",
+"games": 58,
+"win": 90
+},
+{
+"tpl": "mined-14",
+"arch": "mined-14",
+"kind": "counters",
+"vs": "sg-burst",
+"games": 58,
+"win": 90
+},
+{
+"tpl": "mined-14",
+"arch": "mined-14",
+"kind": "counteredBy",
+"vs": "mined-0",
+"games": 32,
+"win": 41
+},
+{
+"tpl": "mined-14",
+"arch": "mined-14",
+"kind": "counteredBy",
+"vs": "mined-2",
+"games": 9,
+"win": 22
+},
+{
+"tpl": "mined-14",
+"arch": "mined-14",
+"kind": "counteredBy",
+"vs": "moran-system",
+"games": 64,
+"win": 62
+},
+{
+"tpl": "mined-14",
+"arch": "mined-14",
+"kind": "counteredBy",
+"vs": "anis-star-system",
+"games": 47,
+"win": 53
+},
+{
+"tpl": "mined-15",
+"arch": "mined-15",
+"kind": "counters",
+"vs": "helm-carry",
+"games": 40,
+"win": 90
+},
+{
+"tpl": "mined-15",
+"arch": "mined-15",
+"kind": "counters",
+"vs": "nayuta-carry",
+"games": 37,
+"win": 89
+},
+{
+"tpl": "mined-15",
+"arch": "mined-15",
+"kind": "counters",
+"vs": "nayuta-rush",
+"games": 28,
+"win": 89
+},
+{
+"tpl": "mined-15",
+"arch": "mined-15",
+"kind": "counters",
+"vs": "vesti-tu",
+"games": 37,
+"win": 76
+},
+{
+"tpl": "mined-15",
+"arch": "mined-15",
+"kind": "counters",
+"vs": "scarlet-nuke",
+"games": 30,
+"win": 87
+},
+{
+"tpl": "mined-15",
+"arch": "mined-15",
+"kind": "counters",
+"vs": "cinderella-carry",
+"games": 24,
+"win": 58
+},
+{
+"tpl": "mined-15",
+"arch": "mined-15",
+"kind": "counters",
+"vs": "moran-system",
+"games": 86,
+"win": 86
+},
+{
+"tpl": "mined-15",
+"arch": "mined-15",
+"kind": "counters",
+"vs": "rosanna-counter",
+"games": 32,
+"win": 81
+},
+{
+"tpl": "mined-15",
+"arch": "mined-15",
+"kind": "counters",
+"vs": "sg-burst",
+"games": 32,
+"win": 81
+},
+{
+"tpl": "mined-16",
+"arch": "mined-16",
+"kind": "counters",
+"vs": "scarlet-nuke",
+"games": 131,
+"win": 92
+},
+{
+"tpl": "mined-16",
+"arch": "mined-16",
+"kind": "counters",
+"vs": "vesti-tu",
+"games": 310,
+"win": 88
+},
+{
+"tpl": "mined-16",
+"arch": "mined-16",
+"kind": "counters",
+"vs": "rosanna-counter",
+"games": 251,
+"win": 91
+},
+{
+"tpl": "mined-16",
+"arch": "mined-16",
+"kind": "counters",
+"vs": "sg-burst",
+"games": 251,
+"win": 91
+},
+{
+"tpl": "mined-16",
+"arch": "mined-16",
+"kind": "counteredBy",
+"vs": "mined-0",
+"games": 189,
+"win": 22
+},
+{
+"tpl": "mined-16",
+"arch": "mined-16",
+"kind": "counteredBy",
+"vs": "anis-star-system",
+"games": 246,
+"win": 28
+},
+{
+"tpl": "mined-16",
+"arch": "mined-16",
+"kind": "counteredBy",
+"vs": "cinderella-carry",
+"games": 102,
+"win": 56
+},
+{
+"tpl": "mined-17",
+"arch": "mined-17",
+"kind": "counters",
+"vs": "moran-system",
+"games": 20,
+"win": 70
+},
+{
+"tpl": "mined-17",
+"arch": "mined-17",
+"kind": "counters",
+"vs": "vesti-tu",
+"games": 34,
+"win": 88
+},
+{
+"tpl": "mined-17",
+"arch": "mined-17",
+"kind": "counters",
+"vs": "helm-carry",
+"games": 21,
+"win": 81
+},
+{
+"tpl": "mined-17",
+"arch": "mined-17",
+"kind": "counters",
+"vs": "nayuta-carry",
+"games": 25,
+"win": 72
+},
+{
+"tpl": "mined-17",
+"arch": "mined-17",
+"kind": "counters",
+"vs": "nayuta-rush",
+"games": 15,
+"win": 73
+},
+{
+"tpl": "mined-17",
+"arch": "mined-17",
+"kind": "counteredBy",
+"vs": "mined-1",
+"games": 34,
+"win": 9
+},
+{
+"tpl": "mined-17",
+"arch": "mined-17",
+"kind": "counteredBy",
+"vs": "mined-4",
+"games": 30,
+"win": 13
+},
+{
+"tpl": "mined-18",
+"arch": "mined-18",
+"kind": "counters",
+"vs": "mined-3",
+"games": 10,
+"win": 80
+},
+{
+"tpl": "mined-18",
+"arch": "mined-18",
+"kind": "counters",
+"vs": "vesti-tu",
+"games": 53,
+"win": 87
+},
+{
+"tpl": "mined-18",
+"arch": "mined-18",
+"kind": "counters",
+"vs": "nayuta-carry",
+"games": 2,
+"win": 0
+},
+{
+"tpl": "mined-18",
+"arch": "mined-18",
+"kind": "counters",
+"vs": "nayuta-rush",
+"games": 28,
+"win": 93
+},
+{
+"tpl": "mined-18",
+"arch": "mined-18",
+"kind": "counteredBy",
+"vs": "mined-2",
+"games": 26,
+"win": 31
+},
+{
+"tpl": "mined-18",
+"arch": "mined-18",
+"kind": "counteredBy",
+"vs": "mined-5",
+"games": 20,
+"win": 5
+},
+{
+"tpl": "mined-18",
+"arch": "mined-18",
+"kind": "counteredBy",
+"vs": "blanc-indom",
+"games": 14,
+"win": 50
+},
+{
+"tpl": "mined-18",
+"arch": "mined-18",
+"kind": "counteredBy",
+"vs": "anis-star-system",
+"games": 24,
+"win": 88
+},
+{
+"tpl": "mined-19",
+"arch": "mined-19",
+"kind": "counters",
+"vs": "mined-1",
+"games": 16,
+"win": 81
+},
+{
+"tpl": "mined-19",
+"arch": "mined-19",
+"kind": "counters",
+"vs": "mined-4",
+"games": 4,
+"win": 25
+},
+{
+"tpl": "mined-19",
+"arch": "mined-19",
+"kind": "counters",
+"vs": "mined-3",
+"games": 3,
+"win": 33
+},
+{
+"tpl": "mined-19",
+"arch": "mined-19",
+"kind": "counters",
+"vs": "blanc-indom",
+"games": 19,
+"win": 79
+},
+{
+"tpl": "mined-19",
+"arch": "mined-19",
+"kind": "counters",
+"vs": "vesti-tu",
+"games": 28,
+"win": 89
+},
+{
+"tpl": "mined-19",
+"arch": "mined-19",
+"kind": "counters",
+"vs": "helm-carry",
+"games": 10,
+"win": 30
+},
+{
+"tpl": "mined-19",
+"arch": "mined-19",
+"kind": "counters",
+"vs": "nayuta-carry",
+"games": 7,
+"win": 57
+},
+{
+"tpl": "mined-19",
+"arch": "mined-19",
+"kind": "counters",
+"vs": "nayuta-rush",
+"games": 4,
+"win": 50
+},
+{
+"tpl": "mined-19",
+"arch": "mined-19",
+"kind": "counteredBy",
+"vs": "mined-2",
+"games": 17,
+"win": 12
+},
+{
+"tpl": "mined-20",
+"arch": "mined-20",
+"kind": "counters",
+"vs": "mined-1",
+"games": 38,
+"win": 89
+},
+{
+"tpl": "mined-20",
+"arch": "mined-20",
+"kind": "counters",
+"vs": "mined-4",
+"games": 30,
+"win": 93
+},
+{
+"tpl": "mined-20",
+"arch": "mined-20",
+"kind": "counters",
+"vs": "helm-carry",
+"games": 4,
+"win": 0
+},
+{
+"tpl": "mined-20",
+"arch": "mined-20",
+"kind": "counters",
+"vs": "nayuta-carry",
+"games": 58,
+"win": 98
+},
+{
+"tpl": "mined-20",
+"arch": "mined-20",
+"kind": "counters",
+"vs": "nayuta-rush",
+"games": 35,
+"win": 100
+},
+{
+"tpl": "mined-20",
+"arch": "mined-20",
+"kind": "counters",
+"vs": "vesti-tu",
+"games": 24,
+"win": 46
+},
+{
+"tpl": "mined-20",
+"arch": "mined-20",
+"kind": "counteredBy",
+"vs": "mined-0",
+"games": 14,
+"win": 21
+},
+{
+"tpl": "mined-20",
+"arch": "mined-20",
+"kind": "counteredBy",
+"vs": "mined-2",
+"games": 13,
+"win": 0
+},
+{
+"tpl": "mined-20",
+"arch": "mined-20",
+"kind": "counteredBy",
+"vs": "mined-5",
+"games": 23,
+"win": 35
+},
+{
+"tpl": "mined-20",
+"arch": "mined-20",
+"kind": "counteredBy",
+"vs": "anis-star-system",
+"games": 33,
+"win": 18
+},
+{
+"tpl": "mined-21",
+"arch": "mined-21",
+"kind": "counters",
+"vs": "blanc-indom",
+"games": 4,
+"win": 0
+},
+{
+"tpl": "mined-21",
+"arch": "mined-21",
+"kind": "counters",
+"vs": "vesti-tu",
+"games": 9,
+"win": 0
+},
+{
+"tpl": "mined-21",
+"arch": "mined-21",
+"kind": "counters",
+"vs": "moran-system",
+"games": 66,
+"win": 67
+},
+{
+"tpl": "mined-21",
+"arch": "mined-21",
+"kind": "counteredBy",
+"vs": "mined-0",
+"games": 13,
+"win": 15
+},
+{
+"tpl": "mined-22",
+"arch": "mined-22",
+"kind": "counters",
+"vs": "nayuta-carry",
+"games": 136,
+"win": 51
+},
+{
+"tpl": "mined-22",
+"arch": "mined-22",
+"kind": "counters",
+"vs": "rosanna-counter",
+"games": 120,
+"win": 79
+},
+{
+"tpl": "mined-22",
+"arch": "mined-22",
+"kind": "counters",
+"vs": "sg-burst",
+"games": 120,
+"win": 79
+},
+{
+"tpl": "mined-22",
+"arch": "mined-22",
+"kind": "counters",
+"vs": "scarlet-nuke",
+"games": 53,
+"win": 87
+},
+{
+"tpl": "mined-22",
+"arch": "mined-22",
+"kind": "counters",
+"vs": "vesti-tu",
+"games": 104,
+"win": 68
+},
+{
+"tpl": "mined-22",
+"arch": "mined-22",
+"kind": "counteredBy",
+"vs": "anis-star-system",
+"games": 106,
+"win": 17
+},
+{
+"tpl": "mined-23",
+"arch": "mined-23",
+"kind": "counters",
+"vs": "mined-1",
+"games": 2,
+"win": 0
+},
+{
+"tpl": "mined-23",
+"arch": "mined-23",
+"kind": "counters",
+"vs": "nayuta-carry",
+"games": 29,
+"win": 100
+},
+{
+"tpl": "mined-23",
+"arch": "mined-23",
+"kind": "counters",
+"vs": "vesti-tu",
+"games": 28,
+"win": 46
+},
+{
+"tpl": "mined-23",
+"arch": "mined-23",
+"kind": "counters",
+"vs": "helm-carry",
+"games": 27,
+"win": 78
+},
+{
+"tpl": "mined-23",
+"arch": "mined-23",
+"kind": "counters",
+"vs": "nayuta-rush",
+"games": 17,
+"win": 100
+},
+{
+"tpl": "mined-23",
+"arch": "mined-23",
+"kind": "counters",
+"vs": "anis-star-system",
+"games": 27,
+"win": 67
+},
+{
+"tpl": "mined-23",
+"arch": "mined-23",
+"kind": "counters",
+"vs": "moran-system",
+"games": 44,
+"win": 64
+}
+]

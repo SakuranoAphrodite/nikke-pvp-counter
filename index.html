@@ -552,6 +552,26 @@ function pairRecord(myIds,enemyIds){
   if(res&&res.n<10) res=null;
   _prCache.set(ck,res); return res;
 }
+/* 體系對位：含 A 體系任一模板必要角的隊 vs 含 B 體系任一模板必要角的隊（珍藏與一般版視為同一人）。用來驗證模板寫的克制宣稱 */
+const _tplMatch=new Map(), _arCache=new Map();
+function tplMatchSet(t){
+  if(_tplMatch.has(t.id)) return _tplMatch.get(t.id);
+  const nt=x=>x.replace(/-treasure$/,''); const req=t.required.map(nt); const out=new Set();
+  (ARENA.teams||[]).forEach((row,i)=>{ const u=new Set(row[0].split(',').map(nt)); if(req.every(r=>u.has(r))) out.add(i); });
+  _tplMatch.set(t.id,out); return out;
+}
+function archRecord(a,b){
+  const ck=a+'>'+b; if(_arCache.has(ck)) return _arCache.get(ck);
+  let w=0,l=0;
+  if(ARENA.teams&&ARENA.teams.length) for(const ta of TEMPLATES) if(ta.archetype===a) for(const tb of TEMPLATES) if(tb.archetype===b){
+    const sa=tplMatchSet(ta), sb=tplMatchSet(tb);
+    for(const e of sb) for(const [j,n] of (ARENA.beatenBy[String(e)]||[])) if(sa.has(j)&&!sb.has(j)) w+=n;
+    for(const m of sa) for(const [j,n] of (ARENA.beatenBy[String(m)]||[])) if(sb.has(j)&&!sa.has(j)) l+=n;
+  }
+  const r={w,l,n:w+l,r:w+l?w/(w+l):0.5}; _arCache.set(ck,r); return r;
+}
+/* 驗證一條「A 克制 B」的宣稱：support = 實戰支持（或沒資料）、contra = 實戰相反、even = 五五波 */
+function claimCheck(a,b){ const ar=archRecord(a,b); if(ar.n<30) return {state:'nodata',ar,text:''}; const text=`（實戰：含兩邊核心的隊伍對位 ${ar.w} 勝 ${ar.l} 負）`; return {state:ar.r>=0.55?'support':ar.r<=0.45?'contra':'even',ar,text}; }
 function pairText(pr,who){ return `冠軍競技場直接對位：含${who||'我方'} ${pr.k} 位相同角色的隊，對上含對方 ${pr.k} 位相同角色的隊 ${pr.w} 勝 ${pr.l} 負（勝率 ${Math.round(pr.r*100)}%）`; }
 const SIDE_ZH={A:'進攻方勝',D:'防守方勝'};
 const SERVER_ZH={G:'國際服',J:'JP',K:'KR',GLOBAL:'國際服',JP:'JP',KR:'KR'};
@@ -869,8 +889,15 @@ function buildCounters(enemyIds,mode,ownedSet,allowSub){
     const counteredByEnemy=[...eArchIds].filter(a=>t.counteredBy.includes(a)||eArch.some(e=>e.arch===a&&e.tpl.counters.includes(t.archetype)));
     const pr=pairRecord(f.slots,enemyIds);
     const prBad=pr&&pr.n>=20&&pr.r<=0.4, prGood=pr&&pr.n>=20&&pr.r>=0.6;
-    if(countersEnemy.length&&!prBad){ score+=400*countersEnemy.length; why.push('克制對方的「'+countersEnemy.map(a=>archName(a)+(vsStat(t,a)||vsStat(TEMPLATES.find(x=>x.archetype===a),t.archetype,true))).join('」「')+'」'); }
-    if(counteredByEnemy.length&&!prGood){ score-=300*counteredByEnemy.length; warn.push('會被對方的「'+counteredByEnemy.map(a=>archName(a)).join('」「')+'」克制'); }
+    const cOK=[],cNo=[],cEven=[];
+    for(const a of countersEnemy){ const ck=claimCheck(t.archetype,a); const nm=archName(a); if(ck.state==='contra') cNo.push(nm+ck.text); else if(ck.state==='even') cEven.push(nm+ck.text); else cOK.push(nm+(ck.text||vsStat(t,a)||vsStat(TEMPLATES.find(x=>x.archetype===a),t.archetype,true))); }
+    if(cOK.length&&!prBad){ score+=400*cOK.length; why.push('克制對方的「'+cOK.join('」「')+'」'); }
+    if(cEven.length) why.push('模板寫克制對方的「'+cEven.join('」「')+'」，但實戰五五波，不加分');
+    if(cNo.length) warn.push('模板寫克制對方的「'+cNo.join('」「')+'」，但實戰相反，不採用');
+    const bOK=[],bNo=[];
+    for(const a of counteredByEnemy){ const ck=claimCheck(a,t.archetype); const nm=archName(a); if(ck.state==='contra') bNo.push(nm+`（實戰：我方 ${ck.ar.l} 勝 ${ck.ar.w} 負）`); else if(ck.state!=='even') bOK.push(nm+(ck.text?`（實戰：我方 ${ck.ar.l} 勝 ${ck.ar.w} 負）`:'')); }
+    if(bOK.length&&!prGood){ score-=300*bOK.length; warn.push('會被對方的「'+bOK.join('」「')+'」克制'); }
+    if(bNo.length) why.push('模板寫會被對方的「'+bNo.join('」「')+'」克制，但實戰相反，不採用');
     if(pr&&pr.n>=20){ score+=Math.round((pr.r-0.5)*1600); const t=pairText(pr); if(prGood) why.push(t+(counteredByEnemy.length?'；模板寫的「被克制」與實戰相反，以實戰為準':'')); else if(prBad) warn.push(t+(countersEnemy.length?'；模板寫的「克制」與實戰相反，以實戰為準，不採用克制加分':'')); else why.push(t+'，五五波'); }
     const dc=(eSpeed.cycles+eChain.extraSec)-(sp.cycles+ch.extraSec); // 再入延遲以秒計入（1 輪 RL 約 1 秒）
     const mj=eChain.valid?mirrorJudge(f.slots,sp.tier,enemyIds,eSpeed.tier):null;
@@ -1187,8 +1214,18 @@ function evalMatch(myIds,enemyIds,myMods,eMods){
   { const at=arenaTeam(myIds); if(at){ const s=rowStats(at.row); good.push(`這 5 人組合在冠軍競技場出場 ${s.m} 場，整體勝率 ${s.wr}%`); } }
   let cPts=0; const cGood=[],cBad=[];
   for(const m of myArch) for(const e of eArch){
-    if(m.tpl.counters.includes(e.arch)||e.tpl.counteredBy.includes(m.arch)){ cPts+=2; cGood.push(`我方「${archName(m.arch)}」克制對方「${archName(e.arch)}」${vsStat(m.tpl,e.arch)||vsStat(e.tpl,m.arch,true)}`); }
-    if(e.tpl.counters.includes(m.arch)||m.tpl.counteredBy.includes(e.arch)){ cPts-=2; cBad.push(`對方「${archName(e.arch)}」克制我方「${archName(m.arch)}」${vsStat(e.tpl,m.arch,true)||vsStat(m.tpl,e.arch)}`); }
+    if(m.tpl.counters.includes(e.arch)||e.tpl.counteredBy.includes(m.arch)){
+      const ck=claimCheck(m.arch,e.arch); const base=`我方「${archName(m.arch)}」克制對方「${archName(e.arch)}」`;
+      if(ck.state==='contra') cBad.push(`模板寫${base}，但實戰相反${ck.text}，不採用`);
+      else if(ck.state==='even') cGood.push(`模板寫${base}，實戰五五波${ck.text}，不加分`);
+      else { cPts+=2; cGood.push(base+(ck.text||vsStat(m.tpl,e.arch)||vsStat(e.tpl,m.arch,true))); }
+    }
+    if(e.tpl.counters.includes(m.arch)||m.tpl.counteredBy.includes(e.arch)){
+      const ck=claimCheck(e.arch,m.arch); const base=`對方「${archName(e.arch)}」克制我方「${archName(m.arch)}」`;
+      if(ck.state==='contra') cGood.push(`模板寫${base}，但實戰相反（含兩邊核心的隊伍對位我方 ${ck.ar.l} 勝 ${ck.ar.w} 負），不採用`);
+      else if(ck.state==='even') cBad.push(`模板寫${base}，實戰五五波（我方 ${ck.ar.l} 勝 ${ck.ar.w} 負），不扣分`);
+      else { cPts-=2; cBad.push(base+(ck.text?`（實戰：我方 ${ck.ar.l} 勝 ${ck.ar.w} 負）`:(vsStat(e.tpl,m.arch,true)||vsStat(m.tpl,e.arch)))); }
+    }
   }
   if(prOK){
     const t=pairText(pr);
