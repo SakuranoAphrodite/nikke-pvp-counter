@@ -468,7 +468,10 @@ const pct=(w,m)=>m?Math.round(w/m*100):null;
 function rowStats(row){ const ids=row[0].split(','); return {key:row[0],ids,m:row[1],w:row[2],am:row[3],aw:row[4],dm:row[5],dw:row[6],wr:pct(row[2],row[1]),awr:pct(row[4],row[3]),dwr:pct(row[6],row[5])}; }
 function arenaTeam(ids){ let i=ARENA_IDX.get(teamKey(ids)); if(i!==undefined) return {idx:i,row:ARENA.teams[i],exact:true}; i=ARENA_IDX_NT.get(teamKeyNT(ids)); return i===undefined?null:{idx:i,row:ARENA.teams[i],exact:false}; }
 function arenaSimilar(ids,minOverlap){ const set=new Set(ids), out=[]; for(let i=0;i<ARENA.teams.length;i++){ const row=ARENA.teams[i]; const ov=row[0].split(',').filter(x=>set.has(x)).length; if(ov>=minOverlap) out.push({idx:i,row,ov}); } return out.sort((a,b)=>b.ov-a.ov||b.row[1]-a.row[1]).slice(0,5); }
-function beatenBy(idx){ return (ARENA.beatenBy[String(idx)]||[]).map(([j,n])=>({idx:j,row:ARENA.teams[j],n})); }
+function beatenBy(idx){ return (ARENA.beatenBy[String(idx)]||[]).map(([j,n,s])=>({idx:j,row:ARENA.teams[j],n,samples:s||[]})); }
+const SIDE_ZH={A:'進攻方勝',D:'防守方勝'};
+const SERVER_ZH={G:'國際服',J:'JP',K:'KR',GLOBAL:'國際服',JP:'JP',KR:'KR'};
+function sampleText(s){ const [season,stage,side,server]=String(s).split('|'); return `${season} ${stage}（${SERVER_ZH[server]||server}，${SIDE_ZH[side]||side}）`; }
 function archVsRecord(myArch,enemyArchs){ let w=0,l=0; for(const e of enemyArchs){ w+=ARENA.archVs[myArch+'>'+e]||0; l+=ARENA.archVs[e+'>'+myArch]||0; } return {w,l}; }
 const teamLine=st=>st.ids.map(anyName).join('／');
 const deckRank=id=>{ const u=DECK.units&&DECK.units[id]; return u&&u.rank&&u.rank!=='N/A'?`<span class="badge" title="nikke-deck 的 PVP 階級（另一份獨立評價）">deck ${esc(u.rank)}</span>`:''; };
@@ -486,9 +489,9 @@ function beatenBlock(ids){
   if(!ARENA.teams||!ARENA.teams.length) return '';
   let t=arenaTeam(ids), list=[], title='';
   if(t){ list=beatenBy(t.idx); title=t.exact?'實戰中打贏過這隊的隊伍':'實戰中打贏過這隊（忽略珍藏版差異）的隊伍'; }
-  else { const sim=arenaSimilar(ids,4); const agg={}; for(const x of sim) for(const b of beatenBy(x.idx)) agg[b.idx]=(agg[b.idx]||0)+b.n; list=Object.entries(agg).map(([j,n])=>({idx:+j,row:ARENA.teams[+j],n})).sort((a,b)=>b.n-a.n).slice(0,6); title='實戰中打贏過相近隊伍（4 人相同）的隊伍'; }
+  else { const sim=arenaSimilar(ids,4); const agg={}, smp={}; for(const x of sim) for(const b of beatenBy(x.idx)){ agg[b.idx]=(agg[b.idx]||0)+b.n; smp[b.idx]=(smp[b.idx]||[]).concat(b.samples).slice(0,2); } list=Object.entries(agg).map(([j,n])=>({idx:+j,row:ARENA.teams[+j],n,samples:smp[j]||[]})).sort((a,b)=>b.n-a.n).slice(0,6); title='實戰中打贏過相近隊伍（4 人相同）的隊伍'; }
   if(!list.length) return '';
-  return `<h3>${title} ${srcBadges(['ari'])}</h3>`+list.map(b=>{ const s=rowStats(b.row); const own=owned.size?s.ids.filter(i=>byId[i]&&owned.has(i)).length:null; return `<div class="rec"><span class="badge good">贏 ${b.n} 次</span><span class="t">${teamLine(s)} <span class="muted">（該隊整體 ${s.m} 場，勝率 ${s.wr}%${own!==null?'；你有 '+own+'/5':''}）</span></span>${s.ids.every(i=>byId[i])?`<button class="btn" data-arena-apply="${b.idx}" style="font-size:11px;padding:2px 8px">帶入試算</button>`:''}</div>`; }).join('')+`<div class="muted">資料裡站位不固定，帶入後請自行調整 P1～P5；勝場數來自 JP／KR／國際服合計，環境可能與台港澳服有差。</div>`;
+  return `<h3>${title} ${srcBadges(['ari'])}</h3>`+list.map(b=>{ const s=rowStats(b.row); const own=owned.size?s.ids.filter(i=>byId[i]&&owned.has(i)).length:null; b.samples=b.samples||[]; const prov=b.samples.length?`<br><span class="muted">出處：${b.samples.map(sampleText).join('；')}${b.n>b.samples.length?`；另 ${b.n-b.samples.length} 場`:''}</span>`:''; return `<div class="rec"><span class="badge good">贏 ${b.n} 次</span><span class="t">${teamLine(s)} <span class="muted">（該隊整體 ${s.m} 場，勝率 ${s.wr}%${own!==null?'；你有 '+own+'/5':''}）</span>${prov}</span>${s.ids.every(i=>byId[i])?`<button class="btn" data-arena-apply="${b.idx}" style="font-size:11px;padding:2px 8px">帶入試算</button>`:''}</div>`; }).join('')+`<div class="muted">出處是 nikkeari 資料中的賽季與輪次；該站沒有單場對局的網頁，回放只能在遊戲內看。資料裡站位不固定，帶入後請自行調整 P1～P5；勝場數來自 JP／KR／國際服合計。</div>`;
 }
 function renderArenaNote(){ const el=$('#arenaDataNote'); if(!el) return; const sv=ARENA.servers||{}; el.textContent=`來源：にけあり！（nikkeari.cc）公開的冠軍競技場對戰資料，抓取日期 ${ARENA.fetched||'未知'}，賽季 ${(ARENA.seasons||[]).join('、')}，共 ${ARENA.rounds||0} 回合（`+Object.entries(sv).map(([k,v])=>`${k} ${v.rounds} 回合`).join('、')+`）。資料由志願玩家提供截圖整理，非官方；冠軍競技場全員同步 400、無戰力懲罰，所以勝率反映的是純陣容相剋。執行 build/fetch_arena_stats.py --refresh 可更新。`; }
 
@@ -666,18 +669,22 @@ function ctxOf(ids,mode){
     weaponCount:w=>ids.filter(i=>byId[i]&&byId[i].weapon===w).length};
 }
 
+/* 珍藏版視為可填一般版的位置（模板多寫一般版 id） */
+const TREASURE_OF={'laplace':'laplace-ultimate-hero'};
+function resolveOwned(o,ownedSet){ if(!ownedSet||ownedSet.has(o)) return o; const t=TREASURE_OF[o]||(o+'-treasure'); if(byId[t]&&ownedSet.has(t)) return t; return null; }
 /* 用角色庫填模板 */
 function fillTemplate(t,ownedSet,allowSub,exclude){
   const slots=new Array(5).fill(null), kind=new Array(5).fill('req');
   const flexIdx=t.flex.map(f=>f.slot);
   const reqIdx=[0,1,2,3,4].filter(i=>!flexIdx.includes(i));
   const used=new Set(); let missing=[];
-  t.required.forEach((r,i)=>{ if(ownedSet&&!ownedSet.has(r)) missing.push(r); slots[reqIdx[i]]=r; used.add(r); });
+  t.required.forEach((r,i)=>{ const rr=resolveOwned(r,ownedSet); if(!rr) missing.push(r); slots[reqIdx[i]]=rr||r; used.add(rr||r); });
   if(missing.length) return {tpl:t,ok:false,missing,slots,kind};
-  const alts={};
+  const alts={}, skipped={};
   for(const f of t.flex){
-    const opts=f.options.filter(o=>byId[o]&&!used.has(o)&&(!ownedSet||ownedSet.has(o)));
-    if(opts.length){ slots[f.slot]=opts[0]; kind[f.slot]='flex'; used.add(opts[0]); alts[f.slot]=opts.slice(1,4); }
+    const resolved=f.options.map(o=>({o,r:resolveOwned(o,ownedSet)})).filter(x=>byId[x.o]);
+    const opts=resolved.filter(x=>x.r&&!used.has(x.r)).map(x=>x.r);
+    if(opts.length){ slots[f.slot]=opts[0]; kind[f.slot]='flex'; used.add(opts[0]); alts[f.slot]=opts.slice(1,4); skipped[f.slot]=resolved.filter(x=>!x.r).map(x=>x.o).slice(0,3); const firstIdx=resolved.findIndex(x=>x.r===opts[0]); skipped[f.slot]=resolved.slice(0,firstIdx).filter(x=>!x.r||used.has(x.r)&&x.r!==opts[0]).map(x=>x.o); }
     else if(allowSub){
       const need=t.burstSlots[f.slot];
       const pool=CHARACTERS.filter(c=>!used.has(c.id)&&(!ownedSet||ownedSet.has(c.id))&&(c.burst===need||c.burst==='Λ')&&!(exclude&&exclude.has(c.id)))
@@ -687,7 +694,7 @@ function fillTemplate(t,ownedSet,allowSub,exclude){
     } else { kind[f.slot]='miss'; }
   }
   const ok=slots.every(Boolean);
-  return {tpl:t,ok,slots,kind,alts,missing:[]};
+  return {tpl:t,ok,slots,kind,alts,skipped,missing:[]};
 }
 
 /* 鏡像對局：雙方都有「強度集中在爆裂窗口」的同一角色時，慢一階反而有利（後手開、窗口更持久） */
@@ -946,7 +953,7 @@ function renderCounters(ctx){
 }
 function teamCard(r,eSpeed,idx){
   const t=r.tpl;
-  const members=r.slots.map((id,i)=>{ const c=byId[id]; const k=r.kind[i]; const cr=chainRole(r.slots,id); const alt=(r.alts&&r.alts[i]&&r.alts[i].length)?`<div class="alt">替補：${r.alts[i].map(nameOf).join('／')}</div>`:''; return `<div class="m ${k}"><div class="pos">P${i+1} ${k==='req'?'核心':k==='sub'?'替補':'彈性'} ${cr?'<span class="badge good" style="font-size:10px;padding:0 4px">開'+cr+'</span>':'<span class="badge" style="font-size:10px;padding:0 4px">軸外</span>'}</div><b>${esc(c.name['zh-TW'])}</b><div>${burstBadge(c.burst)}<span class="badge">${c.weapon}</span></div>${alt}</div>`; }).join('');
+  const members=r.slots.map((id,i)=>{ const c=byId[id]; const k=r.kind[i]; const cr=chainRole(r.slots,id); const alt=((r.alts&&r.alts[i]&&r.alts[i].length)?`<div class="alt">替補：${r.alts[i].map(nameOf).join('／')}</div>`:'')+((r.skipped&&r.skipped[i]&&r.skipped[i].length)?`<div class="alt" title="模板把這些角色排在前面，但你沒有（或已用在別格）">模板優先但缺：${r.skipped[i].map(nameOf).join('／')}</div>`:''); return `<div class="m ${k}"><div class="pos">P${i+1} ${k==='req'?'核心':k==='sub'?'替補':'彈性'} ${cr?'<span class="badge good" style="font-size:10px;padding:0 4px">開'+cr+'</span>':'<span class="badge" style="font-size:10px;padding:0 4px">軸外</span>'}</div><b>${esc(c.name['zh-TW'])}</b><div>${burstBadge(c.burst)}<span class="badge">${c.weapon}</span></div>${alt}</div>`; }).join('');
   const cmp = r.variant?'':(r.speed.cycles<eSpeed.cycles?'<span class="badge good">比對方快</span>':r.speed.cycles===eSpeed.cycles?'<span class="badge warn">同速</span>':'<span class="badge bad">比對方慢</span>');
   const eArchs=detectArchetypes(enemy).map(a=>a.arch);
   const refs=refsFor(eArchs,enemy,t.archetype);
