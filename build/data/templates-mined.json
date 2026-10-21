@@ -11,8 +11,8 @@
   "mode": "both",
   "required": [
    "anis-star",
-   "biscuit",
-   "blanc"
+   "blanc",
+   "biscuit"
   ],
   "flex": [
    {
@@ -78,6 +78,15 @@
    "mined-13"
   ],
   "priority": 2,
+  "chainRate": {
+   "anis-star": 100,
+   "biscuit": 0,
+   "blanc": 100
+  },
+  "chainCore": [
+   "anis-star",
+   "blanc"
+  ],
   "_stats": {
    "matches": 4835,
    "winRate": 72.1,
@@ -208,7 +217,7 @@
   },
   "notes": {
    "en": "Data-mined from 4835 Champion Arena rounds, win rate 72%. Flex options are the most common teammates per position.",
-   "zh-TW": "由 nikkeari 冠軍競技場 4835 回合統計而來（整體勝率 72%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-TW": "由 nikkeari 冠軍競技場 4835 回合統計而來（整體勝率 72%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這些對局裡實際開爆裂的核心角：阿妮斯:超級巨星 100%、餅乾 0%、布蘭兒 100%。這是統計結果，不是人工驗證的打法。",
    "zh-CN": "数据挖掘：4835 回合，胜率 72%。",
    "ja": "データ：4835回合、勝率 72%。"
   }
@@ -224,9 +233,9 @@
   "archetype": "mined-1",
   "mode": "both",
   "required": [
+   "trina",
    "centi-treasure",
-   "laplace-ultimate-hero",
-   "trina"
+   "laplace-ultimate-hero"
   ],
   "flex": [
    {
@@ -290,6 +299,15 @@
    "nayuta-rush"
   ],
   "priority": 2,
+  "chainRate": {
+   "centi-treasure": 14,
+   "laplace-ultimate-hero": 100,
+   "trina": 77
+  },
+  "chainCore": [
+   "laplace-ultimate-hero",
+   "trina"
+  ],
   "_stats": {
    "matches": 3226,
    "winRate": 61.9,
@@ -381,11 +399,23 @@
      "games": 104,
      "win": 77
     }
+   ],
+   "vsArchBad": [
+    {
+     "vs": "helm-carry",
+     "games": 637,
+     "win": 39
+    },
+    {
+     "vs": "nayuta-rush",
+     "games": 478,
+     "win": 39
+    }
    ]
   },
   "notes": {
    "en": "Data-mined from 3226 Champion Arena rounds, win rate 62%. Flex options are the most common teammates per position.",
-   "zh-TW": "由 nikkeari 冠軍競技場 3226 回合統計而來（整體勝率 62%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-TW": "由 nikkeari 冠軍競技場 3226 回合統計而來（整體勝率 62%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這些對局裡實際開爆裂的核心角：桑迪 珍藏 14%、拉普拉斯:究極英雄 100%、特蕾娜 77%。這是統計結果，不是人工驗證的打法。",
    "zh-CN": "数据挖掘：3226 回合，胜率 62%。",
    "ja": "データ：3226回合、勝率 62%。"
   }
@@ -463,6 +493,16 @@
    "noah-stall"
   ],
   "priority": 2,
+  "chainRate": {
+   "moran-treasure": 98,
+   "neon-vision-eye": 99,
+   "noah": 100
+  },
+  "chainCore": [
+   "moran-treasure",
+   "neon-vision-eye",
+   "noah"
+  ],
   "_stats": {
    "matches": 2551,
    "winRate": 58.4,
@@ -539,11 +579,23 @@
      "games": 39,
      "win": 74
     }
+   ],
+   "vsArchBad": [
+    {
+     "vs": "anis-star-system",
+     "games": 441,
+     "win": 32
+    },
+    {
+     "vs": "noah-stall",
+     "games": 101,
+     "win": 37
+    }
    ]
   },
   "notes": {
    "en": "Data-mined from 2551 Champion Arena rounds, win rate 58%. Flex options are the most common teammates per position.",
-   "zh-TW": "由 nikkeari 冠軍競技場 2551 回合統計而來（整體勝率 58%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-TW": "由 nikkeari 冠軍競技場 2551 回合統計而來（整體勝率 58%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這些對局裡實際開爆裂的核心角：牡丹 珍藏 98%、尼恩:透視之眼 99%、諾雅 100%。這是統計結果，不是人工驗證的打法。",
    "zh-CN": "数据挖掘：2551 回合，胜率 58%。",
    "ja": "データ：2551回合、勝率 58%。"
   }
@@ -559,8 +611,8 @@
   "archetype": "mined-3",
   "mode": "both",
   "required": [
-   "helm-treasure",
    "nayuta",
+   "helm-treasure",
    "snow-white-heavy-arms"
   ],
   "flex": [
@@ -621,6 +673,15 @@
    "noah-stall"
   ],
   "priority": 2,
+  "chainRate": {
+   "helm-treasure": 98,
+   "nayuta": 100,
+   "snow-white-heavy-arms": 0
+  },
+  "chainCore": [
+   "helm-treasure",
+   "nayuta"
+  ],
   "_stats": {
    "matches": 2258,
    "winRate": 63.7,
@@ -682,11 +743,23 @@
      "games": 45,
      "win": 89
     }
+   ],
+   "vsArchBad": [
+    {
+     "vs": "anis-star-system",
+     "games": 362,
+     "win": 33
+    },
+    {
+     "vs": "noah-stall",
+     "games": 66,
+     "win": 21
+    }
    ]
   },
   "notes": {
    "en": "Data-mined from 2258 Champion Arena rounds, win rate 64%. Flex options are the most common teammates per position.",
-   "zh-TW": "由 nikkeari 冠軍競技場 2258 回合統計而來（整體勝率 64%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-TW": "由 nikkeari 冠軍競技場 2258 回合統計而來（整體勝率 64%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這些對局裡實際開爆裂的核心角：海倫 珍藏 98%、娜由塔 100%、白雪公主:重型武裝 0%。這是統計結果，不是人工驗證的打法。",
    "zh-CN": "数据挖掘：2258 回合，胜率 64%。",
    "ja": "データ：2258回合、勝率 64%。"
   }
@@ -702,9 +775,9 @@
   "archetype": "mined-4",
   "mode": "both",
   "required": [
-   "anis",
+   "soda",
    "laplace-ultimate-hero",
-   "soda"
+   "anis"
   ],
   "flex": [
    {
@@ -764,6 +837,15 @@
    "nayuta-rush"
   ],
   "priority": 2,
+  "chainRate": {
+   "anis": 2,
+   "laplace-ultimate-hero": 100,
+   "soda": 100
+  },
+  "chainCore": [
+   "laplace-ultimate-hero",
+   "soda"
+  ],
   "_stats": {
    "matches": 2205,
    "winRate": 61.2,
@@ -850,11 +932,23 @@
      "games": 40,
      "win": 68
     }
+   ],
+   "vsArchBad": [
+    {
+     "vs": "helm-carry",
+     "games": 438,
+     "win": 39
+    },
+    {
+     "vs": "nayuta-rush",
+     "games": 335,
+     "win": 38
+    }
    ]
   },
   "notes": {
    "en": "Data-mined from 2205 Champion Arena rounds, win rate 61%. Flex options are the most common teammates per position.",
-   "zh-TW": "由 nikkeari 冠軍競技場 2205 回合統計而來（整體勝率 61%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-TW": "由 nikkeari 冠軍競技場 2205 回合統計而來（整體勝率 61%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這些對局裡實際開爆裂的核心角：阿妮斯 2%、拉普拉斯:究極英雄 100%、索達 100%。這是統計結果，不是人工驗證的打法。",
    "zh-CN": "数据挖掘：2205 回合，胜率 61%。",
    "ja": "データ：2205回合、勝率 61%。"
   }
@@ -870,9 +964,9 @@
   "archetype": "mined-5",
   "mode": "both",
   "required": [
+   "noise",
    "blanc",
-   "jackal",
-   "noise"
+   "jackal"
   ],
   "flex": [
    {
@@ -930,6 +1024,15 @@
    "noah-stall"
   ],
   "priority": 2,
+  "chainRate": {
+   "blanc": 100,
+   "jackal": 1,
+   "noise": 99
+  },
+  "chainCore": [
+   "blanc",
+   "noise"
+  ],
   "_stats": {
    "matches": 2013,
    "winRate": 58.2,
@@ -948,6 +1051,23 @@
      "vs": "mined-18",
      "games": 33,
      "win": 91
+    }
+   ],
+   "vsArchBad": [
+    {
+     "vs": "cinderella-carry",
+     "games": 124,
+     "win": 32
+    },
+    {
+     "vs": "anis-star-system",
+     "games": 306,
+     "win": 31
+    },
+    {
+     "vs": "noah-stall",
+     "games": 71,
+     "win": 34
     }
    ],
    "vsArch": [
@@ -995,7 +1115,7 @@
   },
   "notes": {
    "en": "Data-mined from 2013 Champion Arena rounds, win rate 58%. Flex options are the most common teammates per position.",
-   "zh-TW": "由 nikkeari 冠軍競技場 2013 回合統計而來（整體勝率 58%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-TW": "由 nikkeari 冠軍競技場 2013 回合統計而來（整體勝率 58%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這些對局裡實際開爆裂的核心角：布蘭兒 100%、豺狼 1%、諾伊斯 99%。這是統計結果，不是人工驗證的打法。",
    "zh-CN": "数据挖掘：2013 回合，胜率 58%。",
    "ja": "データ：2013回合、勝率 58%。"
   }
@@ -1012,8 +1132,8 @@
   "mode": "both",
   "required": [
    "anis-star",
-   "maiden-ice-rose",
-   "privaty-treasure"
+   "privaty-treasure",
+   "maiden-ice-rose"
   ],
   "flex": [
    {
@@ -1072,6 +1192,15 @@
    "mined-8"
   ],
   "priority": 2,
+  "chainRate": {
+   "anis-star": 100,
+   "maiden-ice-rose": 0,
+   "privaty-treasure": 100
+  },
+  "chainCore": [
+   "anis-star",
+   "privaty-treasure"
+  ],
   "_stats": {
    "matches": 1401,
    "winRate": 68.5,
@@ -1162,7 +1291,7 @@
   },
   "notes": {
    "en": "Data-mined from 1401 Champion Arena rounds, win rate 69%. Flex options are the most common teammates per position.",
-   "zh-TW": "由 nikkeari 冠軍競技場 1401 回合統計而來（整體勝率 69%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-TW": "由 nikkeari 冠軍競技場 1401 回合統計而來（整體勝率 69%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這些對局裡實際開爆裂的核心角：阿妮斯:超級巨星 100%、梅登:冰玫瑰 0%、普麗瓦蒂 珍藏 100%。這是統計結果，不是人工驗證的打法。",
    "zh-CN": "数据挖掘：1401 回合，胜率 69%。",
    "ja": "データ：1401回合、勝率 69%。"
   }
@@ -1178,9 +1307,9 @@
   "archetype": "mined-7",
   "mode": "both",
   "required": [
-   "noah",
    "noise",
-   "snow-white-heavy-arms"
+   "snow-white-heavy-arms",
+   "noah"
   ],
   "flex": [
    {
@@ -1233,6 +1362,15 @@
    "cinderella-carry"
   ],
   "priority": 2,
+  "chainRate": {
+   "noah": 100,
+   "noise": 25,
+   "snow-white-heavy-arms": 78
+  },
+  "chainCore": [
+   "noah",
+   "snow-white-heavy-arms"
+  ],
   "_stats": {
    "matches": 1402,
    "winRate": 58.9,
@@ -1241,6 +1379,23 @@
      "vs": "mined-5",
      "games": 64,
      "win": 62
+    }
+   ],
+   "vsArchBad": [
+    {
+     "vs": "anis-star-system",
+     "games": 218,
+     "win": 16
+    },
+    {
+     "vs": "noah-stall",
+     "games": 47,
+     "win": 32
+    },
+    {
+     "vs": "cinderella-carry",
+     "games": 115,
+     "win": 36
     }
    ],
    "vsArch": [
@@ -1288,7 +1443,7 @@
   },
   "notes": {
    "en": "Data-mined from 1402 Champion Arena rounds, win rate 59%. Flex options are the most common teammates per position.",
-   "zh-TW": "由 nikkeari 冠軍競技場 1402 回合統計而來（整體勝率 59%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-TW": "由 nikkeari 冠軍競技場 1402 回合統計而來（整體勝率 59%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這些對局裡實際開爆裂的核心角：諾雅 100%、諾伊斯 25%、白雪公主:重型武裝 78%。這是統計結果，不是人工驗證的打法。",
    "zh-CN": "数据挖掘：1402 回合，胜率 59%。",
    "ja": "データ：1402回合、勝率 59%。"
   }
@@ -1304,9 +1459,9 @@
   "archetype": "mined-8",
   "mode": "both",
   "required": [
+   "mihara-bonding-chain",
    "biscuit",
-   "cinderella",
-   "mihara-bonding-chain"
+   "cinderella"
   ],
   "flex": [
    {
@@ -1362,6 +1517,14 @@
    "mined-4"
   ],
   "priority": 2,
+  "chainRate": {
+   "biscuit": 1,
+   "cinderella": 24,
+   "mihara-bonding-chain": 76
+  },
+  "chainCore": [
+   "mihara-bonding-chain"
+  ],
   "_stats": {
    "matches": 1132,
    "winRate": 66.8,
@@ -1447,7 +1610,7 @@
   },
   "notes": {
    "en": "Data-mined from 1132 Champion Arena rounds, win rate 67%. Flex options are the most common teammates per position.",
-   "zh-TW": "由 nikkeari 冠軍競技場 1132 回合統計而來（整體勝率 67%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-TW": "由 nikkeari 冠軍競技場 1132 回合統計而來（整體勝率 67%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這些對局裡實際開爆裂的核心角：餅乾 1%、灰姑娘 24%、米哈拉:靈魂鎖鏈 76%。這是統計結果，不是人工驗證的打法。",
    "zh-CN": "数据挖掘：1132 回合，胜率 67%。",
    "ja": "データ：1132回合、勝率 67%。"
   }
@@ -1463,9 +1626,9 @@
   "archetype": "mined-9",
   "mode": "both",
   "required": [
+   "moran-treasure",
    "bay-treasure",
-   "biscuit",
-   "moran-treasure"
+   "biscuit"
   ],
   "flex": [
    {
@@ -1521,6 +1684,15 @@
    "noah-stall"
   ],
   "priority": 2,
+  "chainRate": {
+   "bay-treasure": 100,
+   "biscuit": 0,
+   "moran-treasure": 93
+  },
+  "chainCore": [
+   "bay-treasure",
+   "moran-treasure"
+  ],
   "_stats": {
    "matches": 1184,
    "winRate": 63.7,
@@ -1582,11 +1754,23 @@
      "games": 214,
      "win": 66
     }
+   ],
+   "vsArchBad": [
+    {
+     "vs": "anis-star-system",
+     "games": 210,
+     "win": 33
+    },
+    {
+     "vs": "noah-stall",
+     "games": 41,
+     "win": 34
+    }
    ]
   },
   "notes": {
    "en": "Data-mined from 1184 Champion Arena rounds, win rate 64%. Flex options are the most common teammates per position.",
-   "zh-TW": "由 nikkeari 冠軍競技場 1184 回合統計而來（整體勝率 64%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-TW": "由 nikkeari 冠軍競技場 1184 回合統計而來（整體勝率 64%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這些對局裡實際開爆裂的核心角：貝伊 珍藏 100%、餅乾 0%、牡丹 珍藏 93%。這是統計結果，不是人工驗證的打法。",
    "zh-CN": "数据挖掘：1184 回合，胜率 64%。",
    "ja": "データ：1184回合、勝率 64%。"
   }
@@ -1602,9 +1786,9 @@
   "archetype": "mined-10",
   "mode": "both",
   "required": [
-   "blanc",
+   "snow-white-heavy-arms",
    "maiden-ice-rose",
-   "snow-white-heavy-arms"
+   "blanc"
   ],
   "flex": [
    {
@@ -1656,6 +1840,15 @@
    "anis-star-system"
   ],
   "priority": 2,
+  "chainRate": {
+   "blanc": 100,
+   "maiden-ice-rose": 0,
+   "snow-white-heavy-arms": 98
+  },
+  "chainCore": [
+   "blanc",
+   "snow-white-heavy-arms"
+  ],
   "_stats": {
    "matches": 842,
    "winRate": 62.7,
@@ -1679,6 +1872,18 @@
      "vs": "mined-4",
      "games": 70,
      "win": 67
+    }
+   ],
+   "vsArchBad": [
+    {
+     "vs": "cinderella-carry",
+     "games": 50,
+     "win": 24
+    },
+    {
+     "vs": "anis-star-system",
+     "games": 126,
+     "win": 23
     }
    ],
    "vsArch": [
@@ -1711,7 +1916,7 @@
   },
   "notes": {
    "en": "Data-mined from 842 Champion Arena rounds, win rate 63%. Flex options are the most common teammates per position.",
-   "zh-TW": "由 nikkeari 冠軍競技場 842 回合統計而來（整體勝率 63%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-TW": "由 nikkeari 冠軍競技場 842 回合統計而來（整體勝率 63%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這些對局裡實際開爆裂的核心角：布蘭兒 100%、梅登:冰玫瑰 0%、白雪公主:重型武裝 98%。這是統計結果，不是人工驗證的打法。",
    "zh-CN": "数据挖掘：842 回合，胜率 63%。",
    "ja": "データ：842回合、勝率 63%。"
   }
@@ -1727,9 +1932,9 @@
   "archetype": "mined-11",
   "mode": "both",
   "required": [
+   "noah",
    "biscuit",
-   "maiden-ice-rose",
-   "noah"
+   "maiden-ice-rose"
   ],
   "flex": [
    {
@@ -1776,6 +1981,14 @@
   ],
   "counteredBy": [],
   "priority": 2,
+  "chainRate": {
+   "biscuit": 0,
+   "maiden-ice-rose": 0,
+   "noah": 100
+  },
+  "chainCore": [
+   "noah"
+  ],
   "_stats": {
    "matches": 623,
    "winRate": 77.8,
@@ -1829,7 +2042,7 @@
   },
   "notes": {
    "en": "Data-mined from 623 Champion Arena rounds, win rate 78%. Flex options are the most common teammates per position.",
-   "zh-TW": "由 nikkeari 冠軍競技場 623 回合統計而來（整體勝率 78%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-TW": "由 nikkeari 冠軍競技場 623 回合統計而來（整體勝率 78%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這些對局裡實際開爆裂的核心角：餅乾 0%、梅登:冰玫瑰 0%、諾雅 100%。這是統計結果，不是人工驗證的打法。",
    "zh-CN": "数据挖掘：623 回合，胜率 78%。",
    "ja": "データ：623回合、勝率 78%。"
   }
@@ -1845,9 +2058,9 @@
   "archetype": "mined-12",
   "mode": "both",
   "required": [
+   "nayuta",
    "anis-star",
-   "laplace-treasure",
-   "nayuta"
+   "laplace-treasure"
   ],
   "flex": [
    {
@@ -1896,6 +2109,15 @@
    "anis-star-system"
   ],
   "priority": 2,
+  "chainRate": {
+   "anis-star": 99,
+   "laplace-treasure": 1,
+   "nayuta": 100
+  },
+  "chainCore": [
+   "anis-star",
+   "nayuta"
+  ],
   "_stats": {
    "matches": 727,
    "winRate": 59.4,
@@ -1932,11 +2154,23 @@
      "games": 96,
      "win": 70
     }
+   ],
+   "vsArchBad": [
+    {
+     "vs": "blanc-indom",
+     "games": 49,
+     "win": 31
+    },
+    {
+     "vs": "anis-star-system",
+     "games": 91,
+     "win": 40
+    }
    ]
   },
   "notes": {
    "en": "Data-mined from 727 Champion Arena rounds, win rate 59%. Flex options are the most common teammates per position.",
-   "zh-TW": "由 nikkeari 冠軍競技場 727 回合統計而來（整體勝率 59%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-TW": "由 nikkeari 冠軍競技場 727 回合統計而來（整體勝率 59%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這些對局裡實際開爆裂的核心角：阿妮斯:超級巨星 99%、拉普拉斯 珍藏 1%、娜由塔 100%。這是統計結果，不是人工驗證的打法。",
    "zh-CN": "数据挖掘：727 回合，胜率 59%。",
    "ja": "データ：727回合、勝率 59%。"
   }
@@ -1952,9 +2186,9 @@
   "archetype": "mined-13",
   "mode": "both",
   "required": [
+   "soda",
    "centi-treasure",
-   "jackal",
-   "soda"
+   "jackal"
   ],
   "flex": [
    {
@@ -2002,6 +2236,14 @@
    "nayuta-rush"
   ],
   "priority": 2,
+  "chainRate": {
+   "centi-treasure": 43,
+   "jackal": 0,
+   "soda": 100
+  },
+  "chainCore": [
+   "soda"
+  ],
   "_stats": {
    "matches": 696,
    "winRate": 57.8,
@@ -2033,11 +2275,28 @@
      "games": 39,
      "win": 62
     }
+   ],
+   "vsArchBad": [
+    {
+     "vs": "helm-carry",
+     "games": 146,
+     "win": 38
+    },
+    {
+     "vs": "nayuta-carry",
+     "games": 147,
+     "win": 39
+    },
+    {
+     "vs": "nayuta-rush",
+     "games": 106,
+     "win": 28
+    }
    ]
   },
   "notes": {
    "en": "Data-mined from 696 Champion Arena rounds, win rate 58%. Flex options are the most common teammates per position.",
-   "zh-TW": "由 nikkeari 冠軍競技場 696 回合統計而來（整體勝率 58%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-TW": "由 nikkeari 冠軍競技場 696 回合統計而來（整體勝率 58%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這些對局裡實際開爆裂的核心角：桑迪 珍藏 43%、豺狼 0%、索達 100%。這是統計結果，不是人工驗證的打法。",
    "zh-CN": "数据挖掘：696 回合，胜率 58%。",
    "ja": "データ：696回合、勝率 58%。"
   }
@@ -2097,6 +2356,14 @@
    "anis-star-system"
   ],
   "priority": 2,
+  "chainRate": {
+   "laplace-treasure": 1,
+   "red-hood": 100,
+   "snow-white-heavy-arms": 2
+  },
+  "chainCore": [
+   "red-hood"
+  ],
   "_stats": {
    "matches": 563,
    "winRate": 62.7,
@@ -2105,6 +2372,18 @@
      "vs": "mined-1",
      "games": 43,
      "win": 70
+    }
+   ],
+   "vsArchBad": [
+    {
+     "vs": "moran-system",
+     "games": 98,
+     "win": 36
+    },
+    {
+     "vs": "anis-star-system",
+     "games": 105,
+     "win": 31
     }
    ],
    "vsArch": [
@@ -2132,7 +2411,7 @@
   },
   "notes": {
    "en": "Data-mined from 563 Champion Arena rounds, win rate 63%. Flex options are the most common teammates per position.",
-   "zh-TW": "由 nikkeari 冠軍競技場 563 回合統計而來（整體勝率 63%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-TW": "由 nikkeari 冠軍競技場 563 回合統計而來（整體勝率 63%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這些對局裡實際開爆裂的核心角：拉普拉斯 珍藏 1%、小紅帽 100%、白雪公主:重型武裝 2%。這是統計結果，不是人工驗證的打法。",
    "zh-CN": "数据挖掘：563 回合，胜率 63%。",
    "ja": "データ：563回合、勝率 63%。"
   }
@@ -2148,9 +2427,9 @@
   "archetype": "mined-15",
   "mode": "both",
   "required": [
-   "anis-sparkling-summer",
+   "noah",
    "anis-star",
-   "noah"
+   "anis-sparkling-summer"
   ],
   "flex": [
    {
@@ -2197,6 +2476,16 @@
   ],
   "counteredBy": [],
   "priority": 2,
+  "chainRate": {
+   "anis-sparkling-summer": 78,
+   "anis-star": 99,
+   "noah": 100
+  },
+  "chainCore": [
+   "anis-sparkling-summer",
+   "anis-star",
+   "noah"
+  ],
   "_stats": {
    "matches": 445,
    "winRate": 74.2,
@@ -2250,7 +2539,7 @@
   },
   "notes": {
    "en": "Data-mined from 445 Champion Arena rounds, win rate 74%. Flex options are the most common teammates per position.",
-   "zh-TW": "由 nikkeari 冠軍競技場 445 回合統計而來（整體勝率 74%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-TW": "由 nikkeari 冠軍競技場 445 回合統計而來（整體勝率 74%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這些對局裡實際開爆裂的核心角：阿妮斯:閃耀夏日 78%、阿妮斯:超級巨星 99%、諾雅 100%。這是統計結果，不是人工驗證的打法。",
    "zh-CN": "数据挖掘：445 回合，胜率 74%。",
    "ja": "データ：445回合、勝率 74%。"
   }
@@ -2266,9 +2555,9 @@
   "archetype": "mined-16",
   "mode": "both",
   "required": [
-   "emilia",
+   "nayuta",
    "helm",
-   "nayuta"
+   "emilia"
   ],
   "flex": [
    {
@@ -2314,6 +2603,15 @@
    "cinderella-carry"
   ],
   "priority": 2,
+  "chainRate": {
+   "emilia": 0,
+   "helm": 100,
+   "nayuta": 100
+  },
+  "chainCore": [
+   "helm",
+   "nayuta"
+  ],
   "_stats": {
    "matches": 559,
    "winRate": 59.0,
@@ -2338,11 +2636,23 @@
      "games": 86,
      "win": 83
     }
+   ],
+   "vsArchBad": [
+    {
+     "vs": "anis-star-system",
+     "games": 93,
+     "win": 18
+    },
+    {
+     "vs": "cinderella-carry",
+     "games": 64,
+     "win": 36
+    }
    ]
   },
   "notes": {
    "en": "Data-mined from 559 Champion Arena rounds, win rate 59%. Flex options are the most common teammates per position.",
-   "zh-TW": "由 nikkeari 冠軍競技場 559 回合統計而來（整體勝率 59%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-TW": "由 nikkeari 冠軍競技場 559 回合統計而來（整體勝率 59%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這些對局裡實際開爆裂的核心角：愛蜜莉雅 0%、海倫 100%、娜由塔 100%。這是統計結果，不是人工驗證的打法。",
    "zh-CN": "数据挖掘：559 回合，胜率 59%。",
    "ja": "データ：559回合、勝率 59%。"
   }
@@ -2358,8 +2668,8 @@
   "archetype": "mined-17",
   "mode": "both",
   "required": [
-   "anis-star",
    "bay-treasure",
+   "anis-star",
    "neon-vision-eye"
   ],
   "flex": [
@@ -2399,6 +2709,15 @@
    "mined-4"
   ],
   "priority": 2,
+  "chainRate": {
+   "anis-star": 19,
+   "bay-treasure": 98,
+   "neon-vision-eye": 95
+  },
+  "chainCore": [
+   "bay-treasure",
+   "neon-vision-eye"
+  ],
   "_stats": {
    "matches": 395,
    "winRate": 73.7,
@@ -2432,7 +2751,7 @@
   },
   "notes": {
    "en": "Data-mined from 395 Champion Arena rounds, win rate 74%. Flex options are the most common teammates per position.",
-   "zh-TW": "由 nikkeari 冠軍競技場 395 回合統計而來（整體勝率 74%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-TW": "由 nikkeari 冠軍競技場 395 回合統計而來（整體勝率 74%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這些對局裡實際開爆裂的核心角：阿妮斯:超級巨星 19%、貝伊 珍藏 98%、尼恩:透視之眼 95%。這是統計結果，不是人工驗證的打法。",
    "zh-CN": "数据挖掘：395 回合，胜率 74%。",
    "ja": "データ：395回合、勝率 74%。"
   }
@@ -2448,9 +2767,9 @@
   "archetype": "mined-18",
   "mode": "both",
   "required": [
+   "privaty-treasure",
    "emilia",
-   "laplace-treasure",
-   "privaty-treasure"
+   "laplace-treasure"
   ],
   "flex": [
    {
@@ -2490,6 +2809,14 @@
    "anis-star-system"
   ],
   "priority": 2,
+  "chainRate": {
+   "emilia": 0,
+   "laplace-treasure": 0,
+   "privaty-treasure": 100
+  },
+  "chainCore": [
+   "privaty-treasure"
+  ],
   "_stats": {
    "matches": 506,
    "winRate": 56.3,
@@ -2516,11 +2843,23 @@
      "games": 68,
      "win": 71
     }
+   ],
+   "vsArchBad": [
+    {
+     "vs": "blanc-indom",
+     "games": 36,
+     "win": 28
+    },
+    {
+     "vs": "anis-star-system",
+     "games": 66,
+     "win": 39
+    }
    ]
   },
   "notes": {
    "en": "Data-mined from 506 Champion Arena rounds, win rate 56%. Flex options are the most common teammates per position.",
-   "zh-TW": "由 nikkeari 冠軍競技場 506 回合統計而來（整體勝率 56%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-TW": "由 nikkeari 冠軍競技場 506 回合統計而來（整體勝率 56%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這些對局裡實際開爆裂的核心角：愛蜜莉雅 0%、拉普拉斯 珍藏 0%、普麗瓦蒂 珍藏 100%。這是統計結果，不是人工驗證的打法。",
    "zh-CN": "数据挖掘：506 回合，胜率 56%。",
    "ja": "データ：506回合、勝率 56%。"
   }
@@ -2537,8 +2876,8 @@
   "mode": "both",
   "required": [
    "emilia",
-   "moran-treasure",
-   "snow-white-heavy-arms"
+   "snow-white-heavy-arms",
+   "moran-treasure"
   ],
   "flex": [
    {
@@ -2583,6 +2922,14 @@
    "mined-2"
   ],
   "priority": 2,
+  "chainRate": {
+   "emilia": 0,
+   "moran-treasure": 100,
+   "snow-white-heavy-arms": 10
+  },
+  "chainCore": [
+   "moran-treasure"
+  ],
   "_stats": {
    "matches": 384,
    "winRate": 68.2,
@@ -2633,7 +2980,7 @@
   },
   "notes": {
    "en": "Data-mined from 384 Champion Arena rounds, win rate 68%. Flex options are the most common teammates per position.",
-   "zh-TW": "由 nikkeari 冠軍競技場 384 回合統計而來（整體勝率 68%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-TW": "由 nikkeari 冠軍競技場 384 回合統計而來（整體勝率 68%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這些對局裡實際開爆裂的核心角：愛蜜莉雅 0%、牡丹 珍藏 100%、白雪公主:重型武裝 10%。這是統計結果，不是人工驗證的打法。",
    "zh-CN": "数据挖掘：384 回合，胜率 68%。",
    "ja": "データ：384回合、勝率 68%。"
   }
@@ -2649,8 +2996,8 @@
   "archetype": "mined-20",
   "mode": "both",
   "required": [
-   "helm-treasure",
    "moran-treasure",
+   "helm-treasure",
    "rumani"
   ],
   "flex": [
@@ -2699,6 +3046,14 @@
    "anis-star-system"
   ],
   "priority": 2,
+  "chainRate": {
+   "helm-treasure": 9,
+   "moran-treasure": 100,
+   "rumani": 0
+  },
+  "chainCore": [
+   "moran-treasure"
+  ],
   "_stats": {
    "matches": 385,
    "winRate": 65.7,
@@ -2735,11 +3090,18 @@
      "games": 60,
      "win": 63
     }
+   ],
+   "vsArchBad": [
+    {
+     "vs": "anis-star-system",
+     "games": 61,
+     "win": 25
+    }
    ]
   },
   "notes": {
    "en": "Data-mined from 385 Champion Arena rounds, win rate 66%. Flex options are the most common teammates per position.",
-   "zh-TW": "由 nikkeari 冠軍競技場 385 回合統計而來（整體勝率 66%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-TW": "由 nikkeari 冠軍競技場 385 回合統計而來（整體勝率 66%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這些對局裡實際開爆裂的核心角：海倫 珍藏 9%、牡丹 珍藏 100%、魯瑪妮 0%。這是統計結果，不是人工驗證的打法。",
    "zh-CN": "数据挖掘：385 回合，胜率 66%。",
    "ja": "データ：385回合、勝率 66%。"
   }
@@ -2756,8 +3118,8 @@
   "mode": "both",
   "required": [
    "blanc",
-   "emilia",
-   "vesti-tactical-upgrade"
+   "vesti-tactical-upgrade",
+   "emilia"
   ],
   "flex": [
    {
@@ -2800,6 +3162,15 @@
    "mined-0"
   ],
   "priority": 2,
+  "chainRate": {
+   "blanc": 100,
+   "emilia": 7,
+   "vesti-tactical-upgrade": 92
+  },
+  "chainCore": [
+   "blanc",
+   "vesti-tactical-upgrade"
+  ],
   "_stats": {
    "matches": 334,
    "winRate": 61.4,
@@ -2823,7 +3194,7 @@
   },
   "notes": {
    "en": "Data-mined from 334 Champion Arena rounds, win rate 61%. Flex options are the most common teammates per position.",
-   "zh-TW": "由 nikkeari 冠軍競技場 334 回合統計而來（整體勝率 61%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-TW": "由 nikkeari 冠軍競技場 334 回合統計而來（整體勝率 61%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這些對局裡實際開爆裂的核心角：布蘭兒 100%、愛蜜莉雅 7%、貝斯蒂:戰術升級 92%。這是統計結果，不是人工驗證的打法。",
    "zh-CN": "数据挖掘：334 回合，胜率 61%。",
    "ja": "データ：334回合、勝率 61%。"
   }
@@ -2839,9 +3210,9 @@
   "archetype": "mined-22",
   "mode": "both",
   "required": [
-   "ada",
    "moran",
-   "snow-white-heavy-arms"
+   "snow-white-heavy-arms",
+   "ada"
   ],
   "flex": [
    {
@@ -2886,6 +3257,15 @@
    "anis-star-system"
   ],
   "priority": 2,
+  "chainRate": {
+   "ada": 0,
+   "moran": 100,
+   "snow-white-heavy-arms": 98
+  },
+  "chainCore": [
+   "moran",
+   "snow-white-heavy-arms"
+  ],
   "_stats": {
    "matches": 307,
    "winRate": 66.8,
@@ -2915,11 +3295,18 @@
      "games": 63,
      "win": 67
     }
+   ],
+   "vsArchBad": [
+    {
+     "vs": "anis-star-system",
+     "games": 54,
+     "win": 26
+    }
    ]
   },
   "notes": {
    "en": "Data-mined from 307 Champion Arena rounds, win rate 67%. Flex options are the most common teammates per position.",
-   "zh-TW": "由 nikkeari 冠軍競技場 307 回合統計而來（整體勝率 67%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-TW": "由 nikkeari 冠軍競技場 307 回合統計而來（整體勝率 67%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這些對局裡實際開爆裂的核心角：艾達·王 0%、牡丹 100%、白雪公主:重型武裝 98%。這是統計結果，不是人工驗證的打法。",
    "zh-CN": "数据挖掘：307 回合，胜率 67%。",
    "ja": "データ：307回合、勝率 67%。"
   }
@@ -2935,9 +3322,9 @@
   "archetype": "mined-23",
   "mode": "both",
   "required": [
-   "laplace-ultimate-hero",
    "noah",
-   "sakura"
+   "sakura",
+   "laplace-ultimate-hero"
   ],
   "flex": [
    {
@@ -2979,6 +3366,16 @@
   ],
   "counteredBy": [],
   "priority": 2,
+  "chainRate": {
+   "laplace-ultimate-hero": 100,
+   "noah": 100,
+   "sakura": 100
+  },
+  "chainCore": [
+   "laplace-ultimate-hero",
+   "noah",
+   "sakura"
+  ],
   "_stats": {
    "matches": 278,
    "winRate": 73.4,
@@ -3024,7 +3421,7 @@
   },
   "notes": {
    "en": "Data-mined from 278 Champion Arena rounds, win rate 73%. Flex options are the most common teammates per position.",
-   "zh-TW": "由 nikkeari 冠軍競技場 278 回合統計而來（整體勝率 73%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+   "zh-TW": "由 nikkeari 冠軍競技場 278 回合統計而來（整體勝率 73%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這些對局裡實際開爆裂的核心角：拉普拉斯:究極英雄 100%、諾雅 100%、櫻花 100%。這是統計結果，不是人工驗證的打法。",
    "zh-CN": "数据挖掘：278 回合，胜率 73%。",
    "ja": "データ：278回合、勝率 73%。"
   }

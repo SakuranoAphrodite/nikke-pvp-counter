@@ -26,6 +26,17 @@ def norm(s):
     return re.sub(r"[\s:：・･·\-_＋+()（）]", "", s or "").lower()
 
 
+def chain_units(team, by_id):
+    """粗略的爆裂軸：每種爆裂（I/II/III）由站位最前的那位開，Λ 可補任一缺的位置。與工具 chainOf 的主要規則一致。"""
+    used = set()
+    for b in ("I", "II", "III"):
+        exact = [u for u in team if u in by_id and by_id[u]["burst"] == b and u not in used]
+        lam = [u for u in team if u in by_id and by_id[u]["burst"] == "Λ" and u not in used]
+        pick = (exact or lam)[:1]
+        used.update(pick)
+    return used
+
+
 def main():
     chars = json.loads((DATA / "characters.json").read_text(encoding="utf-8"))
     by_id = {c["id"]: c for c in chars}
@@ -101,9 +112,13 @@ def main():
         pos_count = collections.defaultdict(collections.Counter)  # unit -> Counter(position)
         others = collections.Counter()
         atk = [0, 0]; dfn = [0, 0]
+        in_chain = collections.Counter(); core_rounds = 0
         for team, won, opp, server in rounds:
             if not set(combo) <= set(team):
                 continue
+            core_rounds += 1
+            for u in chain_units(team, by_id) & set(combo):
+                in_chain[u] += 1
             for p, u in enumerate(team):
                 pos_count[u][p] += 1
             for u in team:
@@ -145,15 +160,18 @@ def main():
             "name": {"en": f"{en} (data-mined)", "zh-TW": f"{zh}（資料挖掘）", "zh-CN": f"{zh}（数据挖掘）", "ja": f"{en}（データ）"},
             "archetype": f"mined-{i}",
             "mode": "both",
-            "required": [u for u in combo if u in by_id],
+            "required": [slots[p] for p in range(5) if slots[p] is not None],  # 依站位順序，fillTemplate 會照這個順序塞進非彈性位
             "flex": flex,
             "burstSlots": burst,
             "preferredSpeed": "3RL",
             "counters": [], "counteredBy": [],
             "priority": 2,
+            # 核心角在這些對局裡「真的開爆裂」的比例；>= 70% 的角色列入 chainCore，工具判定體系時要求她在軸內
+            "chainRate": {u: round(in_chain[u] / core_rounds * 100) for u in combo if u in by_id},
+            "chainCore": [u for u in combo if u in by_id and in_chain[u] / core_rounds >= 0.7],
             "_stats": {"matches": m, "winRate": round(wr * 100, 1)},
             "notes": {"en": f"Data-mined from {m} Champion Arena rounds, win rate {wr*100:.0f}%. Flex options are the most common teammates per position.",
-                      "zh-TW": f"由 nikkeari 冠軍競技場 {m} 回合統計而來（整體勝率 {wr*100:.0f}%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這是統計結果，不是人工驗證的打法。",
+                      "zh-TW": f"由 nikkeari 冠軍競技場 {m} 回合統計而來（整體勝率 {wr*100:.0f}%）；核心角站位取最常見位置，彈性位人選是該位置最常搭配的角色。這些對局裡實際開爆裂的核心角：{'、'.join(f'{by_id[u]['name']['zh-TW']} {round(in_chain[u]/core_rounds*100)}%' for u in combo if u in by_id)}。這是統計結果，不是人工驗證的打法。",
                       "zh-CN": f"数据挖掘：{m} 回合，胜率 {wr*100:.0f}%。", "ja": f"データ：{m}回合、勝率 {wr*100:.0f}%。"},
         })
     # 對位：i 對 j 至少 30 場且勝率 >= 60% → i counters j
@@ -168,11 +186,12 @@ def main():
             templates[i]["_stats"].setdefault("vsArch", []).append({"vs": a, "games": g, "win": round(w / g * 100)})
         elif g >= 30 and w / g <= 0.4:
             templates[i]["counteredBy"].append(a)
+            templates[i]["_stats"].setdefault("vsArchBad", []).append({"vs": a, "games": g, "win": round(w / g * 100)})
     # 排序：場次×勝率
     templates.sort(key=lambda t: -t["_stats"]["matches"] * t["_stats"]["winRate"])
     (DATA / "templates-mined.json").write_text(json.dumps(templates, ensure_ascii=False, indent=1), encoding="utf-8")
     for t in templates:
-        print(f"{t['name']['zh-TW']:40s} {t['_stats']['matches']:5d} 場 {t['_stats']['winRate']:5.1f}%  克 {len(t['counters'])} 被克 {len(t['counteredBy'])}  站位 {t['burstSlots']}")
+        print(f"{t['name']['zh-TW']:40s} {t['_stats']['matches']:5d} 場 {t['_stats']['winRate']:5.1f}%  克 {len(t['counters'])} 被克 {len(t['counteredBy'])}  站位 {t['burstSlots']}  軸內 {t['chainRate']}")
 
 
 if __name__ == "__main__":
