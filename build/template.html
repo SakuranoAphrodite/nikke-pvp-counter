@@ -1233,7 +1233,7 @@ function renderAnalysis(){
   const enemyMode=mode==='attack'?'defense':'attack';
   const ctx=ctxOf(enemy,enemyMode);
   const arch=detectArchetypes(enemy); const heur=heuristicArchetypes(enemy);
-  let h=`<h3>速度</h3>${speedBlock(ctx.speed,'對方')}`;
+  let h=enemySummary(enemy)+`<h3>速度</h3>${speedBlock(ctx.speed,'對方')}`;
   h+=`<h3>爆裂鏈順序</h3>${chainBlock(ctx.chain)}`;
   h+=`<h3>體系判定</h3>`;
   if(arch.length){ h+=arch.map(a=>`<div style="margin:4px 0"><span class="badge ${a===arch[0]?'bad':'warn'}">${archName(a.arch)}</span> <span class="muted">${esc(a.tpl.notes['zh-TW'])}</span></div>`).join(''); }
@@ -1515,7 +1515,7 @@ function spMini(g){
   const enemyMode=mode==='attack'?'defense':'attack'; const sp=speedOf(team,enemyMode); const ch=chainOf(team); const arch=detectArchetypes(team); const heur=heuristicArchetypes(team);
   const spc=['2RL','5SG'].includes(sp.tier)?'bad':sp.tier==='3RL'?'warn':'good';
   const off=offChainKey(team); const at=arenaTeam(team); const stat=at?(()=>{const s=rowStats(at.row); return `<span class="badge" title="冠軍競技場實戰">實戰 ${s.m} 場 ${s.wr}%</span>`;})():'';
-  el.innerHTML=`<div class="row" style="gap:6px"><span class="badge ${spc}">速度 ${sp.tier}${sp.reached?'':' 以下'}${ch.stages>3?'（'+ch.stages+' 段軸）':''}</span>${arch.length?arch.slice(0,3).map(a=>`<span class="badge warn">${archName(a.arch)}</span>`).join(''):`<span class="badge">${heur.length?heur.join('、'):'無主流模板'}</span>`}${stat}${off.length?`<span class="badge bad">軸外：${off.map(nameOf).join('、')}</span>`:''}</div><div style="margin-top:4px">${chainBlock(ch)}</div>`;
+  el.innerHTML=`<div class="row" style="gap:6px"><span class="badge ${spc}">速度 ${sp.tier}${sp.reached?'':' 以下'}${ch.stages>3?'（'+ch.stages+' 段軸）':''}</span>${arch.length?arch.slice(0,3).map(a=>`<span class="badge warn">${archName(a.arch)}</span>`).join(''):`<span class="badge">${heur.length?heur.join('、'):'無主流模板'}</span>`}${stat}${off.length?`<span class="badge bad">軸外：${off.map(nameOf).join('、')}</span>`:''}</div>${enemySummary(team)}<div style="margin-top:4px">${chainBlock(ch)}</div>`;
 }
 // 剩餘角色隊（湊數／放生）：從還沒用到的角色裡挑最強的組合，確保 B1/B2/B3 齊全，並自動排軸
 function fillerTeam(poolIds,usedSet){
@@ -1604,6 +1604,31 @@ function winSummary(slots,enemyIds,ev,opts){
   for(const l of lines){ if(/後手鏡像/.test(l)) pts.push('後手鏡像：對方不屈先到期'); else if(/^我方「.*」克制對方「/.test(l)&&!/模板寫/.test(l)) pts.push(l.replace(/（實戰.*$/,'').replace(/（冠軍.*$/,'')); }
   if(pr&&pr.n>=20){ if(pr.r>=0.6) pts.push(`同型隊實戰勝率 ${Math.round(pr.r*100)}%`); else if(pr.r<=0.4) pts.push(`同型隊實戰勝率只有 ${Math.round(pr.r*100)}%，優勢存疑`); }
   return `<div class="winpt"><b>贏點</b>：${esc(pts.slice(0,4).join('；'))}<br><b>軸</b>：${esc(chainTxt)}${off.length?`；<b>軸外</b>：${esc(offTxt)}`:''}<br>${core}</div>`;
+}
+/* 對方隊伍的贏點摘要：靠什麼、軸怎麼開、實戰戰績、怕什麼 */
+function enemySummary(ids){
+  ids=ids.filter(Boolean); if(ids.length<5) return '';
+  const eMode=mode==='attack'?'defense':'attack'; const ch=chainOf(ids), cs=chainSet(ids); const bn={I:'B1',II:'B2',III:'B3'};
+  const tagsOf=id=>(UNIT_TAGS[id]||[]).filter(x=>!/^再入/.test(x));
+  const role=id=>{ const t=tagsOf(id); const b=t.filter(isBurstTag), ps=t.filter(x=>!isBurstTag(x)); return cs.has(id)?(b[0]||ps[0]||''):(ps[0]||(b.length?'爆裂型，軸外只剩普攻':'')); };
+  const chainTypes=new Set([ch.b1,ch.b2,ch.b3].filter(x=>x&&x.b!=='Λ').map(x=>x.b));
+  const slotName=x=>x.b==='Λ'?'B'+({I:1,II:2,III:3}[['I','II','III'].find(b=>!chainTypes.has(b))]||'?')+'（Λ 補位）':(bn[x.b]||x.b);
+  const chainTxt=[ch.b1,ch.reB1,ch.b2,ch.reB2,ch.b3].filter(Boolean).map(x=>`${nameOf(x.c.id)} 開 ${slotName(x)}${role(x.c.id)?'（'+role(x.c.id)+'）':''}`).join(' → ');
+  const off=ids.filter(i=>!cs.has(i)); const offTxt=off.map(i=>`${nameOf(i)}${role(i)?'（'+role(i)+'）':''}`).join('、');
+  // 靠什麼：軸內角的爆裂效果 + 全隊的被動
+  const sp=speedOf(ids,eMode,enemyMods); const pts=[`速度 ${sp.tier}${['2RL','5SG'].includes(sp.tier)?'（快，先手型）':sp.tier==='3RL'?'（中速）':'（慢，靠體系撐）'}`];
+  const key=[]; for(const id of ids){ const t=tagsOf(id); const pick=cs.has(id)?t.filter(x=>isBurstTag(x)||/被動/.test(x)):t.filter(x=>/被動/.test(x)); if(pick.length) key.push(`${nameOf(id)}：${pick.slice(0,2).join('、')}`); }
+  if(key.length) pts.push(key.join('；'));
+  // 實戰
+  let rec='';
+  const at=arenaTeam(ids); if(at){ const s=rowStats(at.row); rec=`<b>實戰</b>：這 5 人 ${s.m} 場，勝率 ${s.wr}%（進攻 ${s.awr==null?'–':s.awr}%／防守 ${s.dwr==null?'–':s.dwr}%）`; }
+  else { const sim=arenaSimilar(ids,4); if(sim.length){ const s=rowStats(sim[0].row); rec=`<b>實戰</b>：沒有完全相同的隊；4 人相同的相近隊 ${s.m} 場，勝率 ${s.wr}%`; } else rec='<b>實戰</b>：冠軍競技場沒有相同或 4 人相同的隊'; }
+  // 怕什麼：對方各體系被哪些體系克制（經實戰驗證）
+  const archs=detectArchetypes(ids).map(a=>a.arch); const fears=[];
+  const seen=new Set();
+  for(const a of archs){ for(const t of TEMPLATES){ for(const c of (t.counters||[])){ if(c!==a||seen.has(t.archetype)) continue; const ck=claimCheck(t.archetype,a,null,ids); if(ck.state==='support'&&ck.ar.n>=30){ seen.add(t.archetype); fears.push(`${archName(t.archetype)}（${ck.ar.w} 勝 ${ck.ar.l} 負）`); } } } }
+  const fearTxt=fears.length?`<b>怕</b>：${fears.slice(0,4).join('、')}`:'<b>怕</b>：模板裡沒有經實戰驗證的克制體系';
+  return `<div class="winpt"><b>贏點</b>：${esc(pts.join('；'))}<br><b>軸</b>：${esc(chainTxt)}${off.length?`；<b>軸外</b>：${esc(offTxt)}`:''}<br>${rec}<br>${fearTxt}</div>`;
 }
 /* 判斷依據：主要項目直接列出；「（參考）」與「模板對位（參考…）」的行收進折疊區，避免和直接對位混淆 */
 const isRefLine=t=>/^（參考）|模板對位（參考/.test(t);
