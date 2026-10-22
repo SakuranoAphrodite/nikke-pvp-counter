@@ -136,6 +136,7 @@ def main():
         time.sleep(1)
 
         my_ids = {c["id"] for c in chars}
+        by_id = {c["id"]: c for c in chars}
         TREASURE_ALIAS = {}  # 珍藏版一律為 <id>-treasure（拉普拉斯珍藏與究極英雄是不同角色）
         def key_of(ari_ids, cols):
             mids = []
@@ -150,6 +151,15 @@ def main():
                 mids.append(m)
             return ",".join(sorted(mids)), mids
 
+        def chain_key(ids_):
+            """誰開爆裂：每種爆裂（I/II/III）由站位最前的那位開，Λ 補缺（與工具 chainOf 的主要規則一致）"""
+            used = []
+            for b in ("I", "II", "III"):
+                exact = [u for u in ids_ if u in by_id and by_id[u]["burst"] == b and u not in used]
+                lam = [u for u in ids_ if u in by_id and by_id[u]["burst"] == "Λ" and u not in used]
+                pick = (exact or lam)[:1]
+                used += pick
+            return ",".join(sorted(used))
         for r in rounds:
             ak, a_ids = key_of(r["attacker_team"], r.get("attacker_collections"))
             dk, d_ids = key_of(r["defender_team"], r.get("defender_collections"))
@@ -159,6 +169,7 @@ def main():
             for k, ids_, is_att, won in ((ak, a_ids, True, att_won), (dk, d_ids, False, not att_won)):
                 t = team_stats.setdefault(k, {"ids": ids_, "m": 0, "w": 0, "am": 0, "aw": 0, "dm": 0, "dw": 0, "servers": {}})
                 t["m"] += 1; t["w"] += won
+                ck = chain_key(ids_); c = t.setdefault("ch", {}).setdefault(ck, [0, 0]); c[0] += 1; c[1] += won
                 if is_att: t["am"] += 1; t["aw"] += won
                 else: t["dm"] += 1; t["dw"] += won
                 t["servers"][server] = t["servers"].get(server, 0) + 1
@@ -190,7 +201,10 @@ def main():
             keep.add(ok)
     keys = sorted(keep, key=lambda k: -team_stats[k]["m"])
     index = {k: i for i, k in enumerate(keys)}
-    teams_arr = [[k, team_stats[k]["m"], team_stats[k]["w"], team_stats[k]["am"], team_stats[k]["aw"], team_stats[k]["dm"], team_stats[k]["dw"]] for k in keys]
+    def ch_out(k):  # 這隊各種「開爆裂三人組」的場數與勝場，最多 4 種
+        ch = team_stats[k].get("ch", {})
+        return [[ck, g, w] for ck, (g, w) in sorted(ch.items(), key=lambda x: -x[1][0])[:4]]
+    teams_arr = [[k, team_stats[k]["m"], team_stats[k]["w"], team_stats[k]["am"], team_stats[k]["aw"], team_stats[k]["dm"], team_stats[k]["dw"], ch_out(k)] for k in keys]
     bb_out = {str(index[k]): [[index[ok], n, bb_samples.get((k, ok), [])] if pos < 3 else [index[ok], n] for pos, (ok, n) in enumerate(lst)] for k, lst in bb_tmp.items()}  # 出處只留前 3 組
     # 角色站位統計：各伺服器加總
     pos_out = {}
@@ -212,7 +226,7 @@ def main():
         "servers": per_server,
         "seasons": seasons,
         "rounds": total_rounds,
-        "teams": teams_arr,        # [key, m, w, am, aw, dm, dw]；key 為排序後的角色 id 以逗號相連
+        "teams": teams_arr,        # [key, m, w, am, aw, dm, dw, chains]；key 為排序後的角色 id 以逗號相連；chains = [[開爆裂三人 key, 場數, 勝場], ...]
         "beatenBy": bb_out,        # 隊伍索引 -> [[打贏它的隊伍索引, 次數], ...]
         "arch": arch_stats,
         "archVs": arch_vs,
