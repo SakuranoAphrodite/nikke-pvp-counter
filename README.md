@@ -65,7 +65,7 @@
 
 1. 在「我的角色庫」按「匯出 JSON」，下載 `roster.json`。
 2. 把 `roster.json` 放到專案根目錄（與 `index.html` 同層），commit 後 push。
-3. 線上版開啟時會讀取同目錄的 `roster.json`：本機角色庫是空的、或上次也是從倉庫載入的，就自動套用；本機手動改過則不覆蓋，可用「從 GitHub 載入角色庫」按鈕手動同步。
+3. 線上版開啟時會讀取同目錄的 `roster.json`：本機角色庫是空的、或上次也是從倉庫載入的，就自動套用角色庫和紀錄；本機手動改過則不覆蓋，可用「從 GitHub 載入資料」按鈕手動同步。對戰紀錄已有本機資料時，會先詢問是否覆蓋。
 
 `roster.json` 格式：`{"exported":"2026-10-20","owned":["scarlet","jackal"],"history":[]}`，`owned` 放角色 id（與 `build/data/characters.json` 的 `id` 相同）。
 
