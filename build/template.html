@@ -232,7 +232,9 @@ details.mods summary{color:var(--muted)}
     <div class="team"><div class="hd"><b>對方第 3 隊</b><span class="muted">照遊戲裡 P1→P5 的順序填</span></div><div class="slots" id="spSlots2"></div>
       <div class="row" style="margin-top:8px"><input type="text" id="spQuick2" placeholder="名字、簡稱或縮寫串，按 Enter" style="flex:1;min-width:200px"><button class="btn" data-spquick="2">套用</button><button class="btn primary" data-sppick="2">一次選整隊</button><button class="btn danger" data-spclear="2">清空</button></div>
       <div class="muted" id="spNote2" style="font-size:12px"></div><div id="spAnalysis2" class="muted" style="margin-top:6px"></div></div>
-    <div class="row"><button class="btn danger" id="btnSpClearAll">清空三隊</button></div>
+    <div class="row"><button class="btn" id="btnSpSaveHistory">三隊存到歷史</button><button class="btn danger" id="btnSpClearAll">清空三隊</button></div>
+    <div class="muted" style="font-size:12px;margin-top:6px">歷史（點擊載入對方三隊；按住 Shift 點擊刪除）：</div>
+    <div class="row" id="spHistory"></div>
   </div>
   <div class="card">
     <h2>② 三隊配對結果 <span class="muted" id="spRosterNote"></span></h2>
@@ -1029,6 +1031,7 @@ let spMine=load3('spMine');            // 特殊競技場：我方手動三隊
 let spSaved=LS.get('spSaved',[]);       // 儲存的三隊組合 {name,date,mine,enemy}
 let spRecords=LS.get('spRecords',[]);   // 特殊競技場紀錄 {date,enemy,mine,results}
 let spPlanType=LS.get('spPlanType','two');
+let spHistory=LS.get('spHistory',[]);   // 對方三隊的歷史 {date,enemy}
 records=LS.get('records',[]);
 enemyMods=LS.get('enemyMods',{}); mineMods=LS.get('mineMods',{});
 let pickerTarget=null; // {team:'enemy'|'mine'|'sp0'|'sp1'|'sp2', idx, multi, sel}
@@ -1429,10 +1432,10 @@ $('#btnPickEnemy').onclick=()=>openTeamPicker('enemy'); $('#btnPickMy').onclick=
 $('#rosterSearch').addEventListener('input',renderRoster);
 $('#btnOwnAll').onclick=()=>{ if(confirm('把全部角色標成擁有？')){ owned=new Set(CHARACTERS.map(c=>c.id)); LS.set('followRemote',false); save(); renderRoster(); renderSolve(); } };
 $('#btnOwnNone').onclick=()=>{ if(confirm('清空角色庫？')){ owned=new Set(); LS.set('followRemote',false); save(); renderRoster(); renderSolve(); } };
-$('#btnExport').onclick=()=>{ const blob=new Blob([JSON.stringify({exported:new Date().toISOString().slice(0,10),owned:[...owned],history,records},null,1)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='roster.json'; a.click(); };
+$('#btnExport').onclick=()=>{ const blob=new Blob([JSON.stringify({exported:new Date().toISOString().slice(0,10),owned:[...owned],history,records,spHistory,spSaved,spRecords},null,1)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='roster.json'; a.click(); };
 $('#btnRecWin').onclick=()=>addRecord('win'); $('#btnRecLoss').onclick=()=>addRecord('loss');
 $('#btnImport').onclick=()=>$('#fileImport').click();
-$('#fileImport').onchange=e=>{ const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=()=>{ try{ const d=JSON.parse(r.result); if(Array.isArray(d.owned)) owned=new Set(d.owned.filter(i=>byId[i])); if(Array.isArray(d.history)) history=d.history; if(Array.isArray(d.records)&&d.records.length&&(!records.length||confirm('匯入檔含 '+d.records.length+' 筆對戰紀錄，要覆蓋目前的紀錄嗎？'))){ records=d.records; LS.set('records',records); } LS.set('followRemote',false); save(); renderRoster(); renderSolve(); alert('已匯入 '+owned.size+' 名角色'); }catch(err){ alert('讀取失敗：'+err.message); } }; r.readAsText(f); e.target.value=''; };
+$('#fileImport').onchange=e=>{ const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=()=>{ try{ const d=JSON.parse(r.result); if(Array.isArray(d.owned)) owned=new Set(d.owned.filter(i=>byId[i])); if(Array.isArray(d.history)) history=d.history; if(Array.isArray(d.spHistory)){ spHistory=d.spHistory; LS.set('spHistory',spHistory); } if(Array.isArray(d.spSaved)){ spSaved=d.spSaved; LS.set('spSaved',spSaved); } if(Array.isArray(d.spRecords)&&d.spRecords.length&&(!spRecords.length||confirm('匯入檔含 '+d.spRecords.length+' 筆特殊競技場紀錄，要覆蓋目前的嗎？'))){ spRecords=d.spRecords; LS.set('spRecords',spRecords); } if(Array.isArray(d.records)&&d.records.length&&(!records.length||confirm('匯入檔含 '+d.records.length+' 筆對戰紀錄，要覆蓋目前的紀錄嗎？'))){ records=d.records; LS.set('records',records); } LS.set('followRemote',false); save(); renderRoster(); renderSolve(); renderSp(); alert('已匯入 '+owned.size+' 名角色'); }catch(err){ alert('讀取失敗：'+err.message); } }; r.readAsText(f); e.target.value=''; };
 
 /* ====================== 資料自動更新 ====================== */
 function setDataStatus(text,cls){ const el=$('#dataStatus'); el.textContent=text; el.style.color=cls==='ok'?'var(--good)':cls==='bad'?'var(--warn)':''; }
@@ -1602,6 +1605,11 @@ function renderSp(){
   el.querySelectorAll('[data-spapply]').forEach(b=>b.onclick=()=>{ const g=+b.dataset.spapply; enemy=[...spEnemy[g]]; mine=[...spPlan.entries[g].slots]; save(); switchTab('solve'); refresh(); $('#mySlots').scrollIntoView({behavior:'smooth'}); });
   renderSpManual();
 }
+function renderSpHistory(){
+  const el=$('#spHistory'); if(!el) return; el.innerHTML='';
+  if(!spHistory.length){ el.innerHTML='<span class="muted">還沒有。</span>'; return; }
+  spHistory.forEach((h,i)=>{ const b=document.createElement('button'); b.className='btn'; b.style.textAlign='left'; b.innerHTML=`<span class="muted" style="font-size:11px">${esc(h.date)}</span> `+h.enemy.map((t,g)=>`${g+1}：${t.map(nameOf).join('／')}`).join('<br>'); b.title='點擊載入對方三隊；按住 Shift 點擊刪除'; b.onclick=e=>{ if(e.shiftKey){ spHistory.splice(i,1); LS.set('spHistory',spHistory); renderSpHistory(); return; } spEnemy=h.enemy.map(t=>[...t]); save(); refresh(); }; el.appendChild(b); });
+}
 /* ---------- 我方手動三隊 ---------- */
 function renderSpManual(){
   for(let g=0;g<3;g++) renderSlots('#spmSlots'+g,spMine[g],SPM_KEYS[g]);
@@ -1618,7 +1626,7 @@ function renderSpManual(){
   if(ps.length===3){ const p2of3=([a,b,c])=>a*b*c+a*b*(1-c)+a*(1-b)*c+(1-a)*b*c; const P=p2of3(ps); sum.className=''; sum.innerHTML=`<div class="verdict ${P>=0.6?'good':P>=0.4?'warn':'bad'}">手動三隊：預期勝場 ${ps.reduce((a,b)=>a+b,0).toFixed(1)}／3，至少兩勝的估計機率約 ${Math.round(P*100)}%</div>`; }
   else { sum.className='muted'; sum.textContent='我方三隊與對方三隊都填滿後會顯示整體估計。'; }
   document.querySelectorAll('[data-spmapply]').forEach(b=>b.onclick=()=>{ const g=+b.dataset.spmapply; enemy=[...spEnemy[g]]; mine=[...spMine[g]]; save(); switchTab('solve'); refresh(); $('#mySlots').scrollIntoView({behavior:'smooth'}); });
-  renderSpSaved(); renderSpRecords();
+  renderSpSaved(); renderSpRecords(); renderSpHistory();
 }
 function spmQuick(g){
   quickFill(spMine[g],$('#spmQuick'+g).value,$('#spmNote'+g));
@@ -1684,6 +1692,7 @@ for(let g=0;g<3;g++){
 }
 $('#btnSpmFromPlan').onclick=()=>{ if(!spPlan||spPlan.error) return alert('上面還沒有推薦結果（對方三隊要先填滿）。'); spMine=spPlan.entries.map(e=>[...e.slots]); save(); refresh(); };
 $('#btnSpmAutoMap').onclick=spmAutoMap;
+$('#btnSpSaveHistory').onclick=()=>{ if(!spEnemy.every(t=>t.every(Boolean))) return alert('對方三隊要填滿才能存到歷史。'); const key=spEnemy.map(t=>t.join()).join('|'); if(!spHistory.some(h=>h.enemy.map(t=>t.join()).join('|')===key)) spHistory.unshift({date:new Date().toISOString().slice(0,10),enemy:spEnemy.map(t=>[...t])}); spHistory=spHistory.slice(0,30); LS.set('spHistory',spHistory); spEnemy.forEach(t=>{ if(!history.some(h=>h.join()===t.join())) history.unshift([...t]); }); history=history.slice(0,20); save(); renderHistory(); renderSpHistory(); };
 $('#btnSpmSave').onclick=()=>{ if(!spMine.every(t=>t.every(Boolean))) return alert('我方三隊要填滿才能儲存。'); const name=prompt('這組三隊的名稱',`三隊 ${spSaved.length+1}`); if(name===null) return; spSaved.unshift({name:name||`三隊 ${spSaved.length+1}`,date:new Date().toISOString().slice(0,10),mine:spMine.map(t=>[...t]),enemy:spEnemy.map(t=>[...t])}); spSaved=spSaved.slice(0,50); LS.set('spSaved',spSaved); refresh(); };
 $('#btnSpmClear').onclick=()=>{ if(confirm('清空我方三隊？')){ spMine=[EMPTY5(),EMPTY5(),EMPTY5()]; save(); refresh(); } };
 $('#btnSpRecord').onclick=spRecordNow;
