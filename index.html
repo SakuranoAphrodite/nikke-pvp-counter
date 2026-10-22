@@ -557,13 +557,19 @@ function pairRecord(myIds,enemyIds){
   const ov=(row,set)=>row[0].split(',').filter(x=>set.has(nt(x))).length;
   const ms=new Set(myIds.filter(Boolean).map(nt)), es=new Set(enemyIds.filter(Boolean).map(nt));
   let res=null;
-  for(const k of [4,3]){
+  const myChain=[...chainSet(myIds)].map(nt); // 我方真正開爆裂的三位
+  const attempts=[{k:4,chain:true},{k:3,chain:true},{k:4,chain:false},{k:3,chain:false}];
+  for(const {k,chain} of attempts){
+    if(chain&&myChain.length<3) continue;
     const my=new Set(), en=new Set();
-    ARENA.teams.forEach((row,i)=>{ if(ov(row,ms)>=k) my.add(i); if(ov(row,es)>=k) en.add(i); });
+    ARENA.teams.forEach((row,i)=>{ const u=row[0].split(',').map(nt); if(ov(row,ms)>=k&&(!chain||myChain.every(c=>u.includes(c)))) my.add(i); if(ov(row,es)>=k) en.add(i); });
     let w=0,l=0; const wins=new Map(), losses=new Map();
     for(const e of en) for(const [j,n] of (ARENA.beatenBy[String(e)]||[])) if(my.has(j)&&!en.has(j)){ w+=n; wins.set(j,(wins.get(j)||0)+n); }
     for(const m of my) for(const [j,n] of (ARENA.beatenBy[String(m)]||[])) if(en.has(j)&&!my.has(j)){ l+=n; losses.set(j,(losses.get(j)||0)+n); }
-    if(w+l>=20||k===3){ res={k,w,l,n:w+l,r:w+l?w/(w+l):0.5,myTeams:my.size,enemyTeams:en.size,topWin:[...wins].sort((a,b)=>b[1]-a[1]).slice(0,2).map(([i,n])=>({row:ARENA.teams[i],n})),topLoss:[...losses].sort((a,b)=>b[1]-a[1]).slice(0,2).map(([i,n])=>({row:ARENA.teams[i],n}))}; if(w+l>=20) break; }
+    const cand={k,chain,w,l,n:w+l,r:w+l?w/(w+l):0.5,myTeams:my.size,enemyTeams:en.size,topWin:[...wins].sort((a,b)=>b[1]-a[1]).slice(0,2).map(([i,n])=>({row:ARENA.teams[i],n})),topLoss:[...losses].sort((a,b)=>b[1]-a[1]).slice(0,2).map(([i,n])=>({row:ARENA.teams[i],n}))};
+    if(chain&&w+l>0&&w+l<20&&!res) res={...cand,thin:true}; // 軸內三人齊的樣本太少：先記著，退回較寬的條件時一併顯示
+    if(w+l>=20){ if(res&&res.thin) cand.thinChain=res; res=cand; break; }
+    if(!chain&&k===3&&!res) res=cand;
   }
   if(res&&res.n<10) res=null;
   _prCache.set(ck,res); return res;
@@ -600,7 +606,14 @@ function claimCheck(a,b,aIds,bIds){
   const res=ar.n<30?{state:'nodata',ar,text:''}:{state:ar.r>=0.55?'support':ar.r<=0.45?'contra':'even',ar,text:`（實戰：${how} ${ar.w} 勝 ${ar.l} 負）`};
   _arCache.set(ck,res); return res;
 }
-function pairText(pr,who){ return `冠軍競技場直接對位：含${who||'我方'} ${pr.k} 位相同角色的隊，對上含對方 ${pr.k} 位相同角色的隊 ${pr.w} 勝 ${pr.l} 負（勝率 ${Math.round(pr.r*100)}%）`; }
+function pairText(pr,who){
+  const me=who||'我方';
+  const mine=pr.chain?`含${me}真正開爆裂的三位、且 ${pr.k} 位相同角色的隊`:`含${me} ${pr.k} 位相同角色的隊`;
+  let t=`冠軍競技場直接對位：${mine}，對上含對方 ${pr.k} 位相同角色的隊 ${pr.w} 勝 ${pr.l} 負（勝率 ${Math.round(pr.r*100)}%）`;
+  if(pr.thinChain) t+=`；若限定${me}開爆裂的三位都在，只有 ${pr.thinChain.w} 勝 ${pr.thinChain.l} 負，樣本太少僅供參考`;
+  else if(!pr.chain) t+=`（沒有${me}開爆裂三位都在的對局，用較寬的條件）`;
+  return t;
+}
 const SIDE_ZH={A:'進攻方勝',D:'防守方勝'};
 const SERVER_ZH={G:'國際服',J:'JP',K:'KR',GLOBAL:'國際服',JP:'JP',KR:'KR'};
 function sampleText(s){ const [season,stage,side,server]=String(s).split('|'); return `${season} ${stage}（${SERVER_ZH[server]||server}，${SIDE_ZH[side]||side}）`; }
@@ -816,7 +829,10 @@ function detectArchetypes(ids){
     const score=t.required.length*2+flexHits;
     if(!out[t.archetype]||out[t.archetype].score<score) out[t.archetype]={arch:t.archetype,tpl:t,score,flexHits};
   }
-  return Object.values(out).sort((a,b)=>b.score-a.score);
+  let list=Object.values(out).sort((a,b)=>b.score-a.score);
+  // 只靠一位 B1 角成立的「體系」（牡丹坦牆、小美人魚干擾、羅珊娜反制）：隊伍已符合多人核心的模板時不算——牡丹珍藏當拉普拉斯隊的 B1 電池，不代表這是牡丹坦牆隊
+  if(list.some(a=>a.tpl.required.length>=2)) list=list.filter(a=>!(a.tpl.required.length===1&&byId[a.tpl.required[0]]&&byId[a.tpl.required[0]].burst==='I'));
+  return list;
 }
 /* 核心角都在、但「該開爆裂的核心角」不在軸內的模板：體系不成立，列出來提醒（例如桑迪排在特蕾娜前面搶了 B2） */
 function chainMisses(ids){
