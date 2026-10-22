@@ -51,6 +51,8 @@ def build():
     dump = lambda o: json.dumps(o, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
     refs_file = HERE.parent / "references.json"
     refs = json.loads(refs_file.read_text(encoding="utf-8")) if refs_file.exists() else {"updated": "", "items": []}
+    pry_file = DATA / "prydwen-pvp.json"  # Prydwen PVP 階級（瀏覽器抓取 → prydwen_map.py）
+    pry = json.loads(pry_file.read_text(encoding="utf-8")) if pry_file.exists() else {"updated": "", "tiers": {}}
     nick_file = DATA / "nicknames.json"  # 角色綽號（搜尋用）
     nick = json.loads(nick_file.read_text(encoding="utf-8")) if nick_file.exists() else {}
     known = {c["id"] for c in chars}
@@ -63,6 +65,7 @@ def build():
                 .replace("__TEMPLATES_EXTRA__", dump(extra))
                 .replace("__REFERENCES__", dump(refs))
                 .replace("__NICKNAMES__", dump(nick))
+                .replace("__PRYDWEN__", dump(pry))
                 .replace("__ARENA__", dump(arena))
                 .replace("__DECK__", dump(deck))
                 .replace("__DATA_DATE__", ver))
