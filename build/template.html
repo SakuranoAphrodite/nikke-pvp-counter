@@ -596,7 +596,12 @@ function pairRecord(myIds,enemyIds){
     let w=0,l=0; const wins=new Map(), losses=new Map();
     for(const e of en) for(const [j,n] of (ARENA.beatenBy[String(e)]||[])) if(my.has(j)&&!en.has(j)){ w+=n; wins.set(j,(wins.get(j)||0)+n); }
     for(const m of my) for(const [j,n] of (ARENA.beatenBy[String(m)]||[])) if(en.has(j)&&!my.has(j)){ l+=n; losses.set(j,(losses.get(j)||0)+n); }
-    const cand={k,chain,w,l,n:w+l,r:w+l?w/(w+l):0.5,myTeams:my.size,enemyTeams:en.size,topWin:[...wins].sort((a,b)=>b[1]-a[1]).slice(0,2).map(([i,n])=>({row:ARENA.teams[i],n})),topLoss:[...losses].sort((a,b)=>b[1]-a[1]).slice(0,2).map(([i,n])=>({row:ARENA.teams[i],n}))};
+    // 這些對局裡「像我方的隊」各含我方哪幾位：用來提醒「相似隊多半沒有 X」
+    const presence={}; for(const id of myIds.filter(Boolean)) presence[id]=0;
+    const addP=(j,n)=>{ const u=new Set(ARENA.teams[j][0].split(',').map(nt)); for(const id of myIds.filter(Boolean)) if(u.has(nt(id))) presence[id]+=n; };
+    for(const [j,n] of wins) addP(j,n); for(const [j,n] of losses) addP(j,n);
+    const missing=(w+l)?Object.entries(presence).filter(([id,c])=>c/(w+l)<0.5).map(([id,c])=>({id,pct:Math.round(c/(w+l)*100)})):[];
+    const cand={k,chain,w,l,n:w+l,r:w+l?w/(w+l):0.5,missing,myTeams:my.size,enemyTeams:en.size,topWin:[...wins].sort((a,b)=>b[1]-a[1]).slice(0,2).map(([i,n])=>({row:ARENA.teams[i],n})),topLoss:[...losses].sort((a,b)=>b[1]-a[1]).slice(0,2).map(([i,n])=>({row:ARENA.teams[i],n}))};
     if(chain&&w+l>0&&w+l<20&&!res) res={...cand,thin:true}; // 軸內三人齊的樣本太少：先記著，退回較寬的條件時一併顯示
     if(w+l>=20){ if(res&&res.thin) cand.thinChain=res; res=cand; break; }
     if(!chain&&k===3&&!res) res=cand;
@@ -642,6 +647,7 @@ function pairText(pr,who){
   let t=`冠軍競技場直接對位：${mine}，對上含對方 ${pr.k} 位相同角色的隊 ${pr.w} 勝 ${pr.l} 負（勝率 ${Math.round(pr.r*100)}%）`;
   if(pr.thinChain) t+=`；若限定${me}開爆裂的三位都在，只有 ${pr.thinChain.w} 勝 ${pr.thinChain.l} 負，樣本太少僅供參考`;
   else if(!pr.chain) t+=`（沒有${me}開爆裂三位都在的對局，用較寬的條件）`;
+  if(pr.missing&&pr.missing.length) t+=`。注意：這些相似隊大多沒有${pr.missing.map(m=>`${nameOf(m.id)}（只有 ${m.pct}% 的場次有她）`).join('、')}，她的效果沒有被這個數字驗證`;
   return t;
 }
 const SIDE_ZH={A:'進攻方勝',D:'防守方勝'};
@@ -1004,7 +1010,7 @@ function buildCounters(enemyIds,mode,ownedSet,allowSub){
     // 軸外關鍵角：模板自己的站位就把她放軸外（例如一閃隊的白雪重武、第二位 B3）是設計如此，不扣分只註明；替補塞進來才算浪費
     const offK=offChainKey(f.slots); const offSub=offK.filter(i=>f.kind[f.slots.indexOf(i)]==='sub'), offTpl=offK.filter(i=>!offSub.includes(i));
     if(offSub.length){ score-=120*offSub.length; warn.push(`${offSub.map(nameOf).join('、')}在軸外，第一輪不會開爆裂（替補位，等於浪費一個關鍵角）`); }
-    if(offTpl.length) why.push(`${offTpl.map(nameOf).join('、')}依模板站位在軸外：模板設計如此（靠普攻或被動出力，第一輪不開爆裂）`);
+    if(offTpl.length) warn.push(`${offTpl.map(nameOf).join('、')}依模板站位在軸外（不扣分，模板的排法如此）：她的主要價值是爆裂，軸外只剩普攻與被動；想讓她開爆裂就把她移到同爆裂段的前面，或換成靠被動出力的角色`);
     // 紅蓮反擊檢查
     if(['scarlet','scarlet-black-shadow'].some(x=>enemyIds.includes(x))){ const hi=f.slots.filter(i=>['SG','SMG','MG'].includes(byId[i].weapon)); if(hi.length){ score-=80*hi.length; warn.push('帶了高射速武器（'+hi.map(nameOf).join('、')+'）會被紅蓮 S2 反擊'); } }
     if(enemyIds.includes('jackal')){ const hi=f.slots.filter(i=>['SG','SMG','MG'].includes(byId[i].weapon)); if(hi.length){ score-=30*hi.length; warn.push('高射速武器會餵對方豺狼充能'); } }
