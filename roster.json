@@ -1,4 +1,5 @@
 {
+ "exported": "2026-10-22",
  "owned": [
   "blanc",
   "moran-treasure",
@@ -22,7 +23,287 @@
   "chisato",
   "red-hood",
   "rapunzel",
-  "takina"
+  "takina",
+  "mast-romantic-maid",
+  "maiden-ice-rose",
+  "crown"
  ],
- "history": []
+ "history": [
+  [
+   "jackal",
+   "snow-white-heavy-arms",
+   "blanc",
+   "biscuit",
+   "cinderella"
+  ],
+  [
+   "moran-treasure",
+   "noah",
+   "neon-vision-eye",
+   "trina",
+   "anis-star"
+  ],
+  [
+   "nayuta",
+   "centi-treasure",
+   "helm-treasure",
+   "red-hood",
+   "laplace-treasure"
+  ],
+  [
+   "anis-star",
+   "blanc",
+   "snow-white-heavy-arms",
+   "rapi-red-hood",
+   "biscuit"
+  ]
+ ],
+ "records": [
+  {
+   "date": "2026-10-22",
+   "mode": "sp",
+   "enemy": [
+    "jackal",
+    "snow-white-heavy-arms",
+    "blanc",
+    "biscuit",
+    "cinderella"
+   ],
+   "mine": [
+    "anis-star",
+    "blanc",
+    "neon-vision-eye",
+    "biscuit",
+    "little-mermaid"
+   ],
+   "result": "win",
+   "note": "特殊競技場第 3 場"
+  },
+  {
+   "date": "2026-10-22",
+   "mode": "sp",
+   "enemy": [
+    "moran-treasure",
+    "noah",
+    "neon-vision-eye",
+    "trina",
+    "anis-star"
+   ],
+   "mine": [
+    "nayuta",
+    "helm-treasure",
+    "centi-treasure",
+    "red-hood",
+    "snow-white-heavy-arms"
+   ],
+   "result": "loss",
+   "note": "特殊競技場第 2 場"
+  },
+  {
+   "date": "2026-10-22",
+   "mode": "sp",
+   "enemy": [
+    "nayuta",
+    "centi-treasure",
+    "helm-treasure",
+    "red-hood",
+    "laplace-treasure"
+   ],
+   "mine": [
+    "moran-treasure",
+    "trina",
+    "laplace-ultimate-hero",
+    "vesti-tactical-upgrade",
+    "scarlet-black-shadow"
+   ],
+   "result": "loss",
+   "note": "特殊競技場第 1 場"
+  }
+ ],
+ "spHistory": [
+  {
+   "date": "2026-10-22",
+   "enemy": [
+    [
+     "nayuta",
+     "centi-treasure",
+     "helm-treasure",
+     "red-hood",
+     "laplace-treasure"
+    ],
+    [
+     "moran-treasure",
+     "noah",
+     "neon-vision-eye",
+     "trina",
+     "anis-star"
+    ],
+    [
+     "jackal",
+     "snow-white-heavy-arms",
+     "blanc",
+     "biscuit",
+     "cinderella"
+    ]
+   ]
+  }
+ ],
+ "spSaved": [
+  {
+   "name": "三隊LINE推薦",
+   "date": "2026-10-22",
+   "mine": [
+    [
+     "moran-treasure",
+     "trina",
+     "laplace-ultimate-hero",
+     "vesti-tactical-upgrade",
+     "scarlet-black-shadow"
+    ],
+    [
+     "nayuta",
+     "helm-treasure",
+     "centi-treasure",
+     "red-hood",
+     "snow-white-heavy-arms"
+    ],
+    [
+     "anis-star",
+     "blanc",
+     "neon-vision-eye",
+     "biscuit",
+     "little-mermaid"
+    ]
+   ],
+   "enemy": [
+    [
+     "nayuta",
+     "centi-treasure",
+     "helm-treasure",
+     "red-hood",
+     "laplace-treasure"
+    ],
+    [
+     "moran-treasure",
+     "noah",
+     "neon-vision-eye",
+     "trina",
+     "anis-star"
+    ],
+    [
+     "jackal",
+     "snow-white-heavy-arms",
+     "blanc",
+     "biscuit",
+     "cinderella"
+    ]
+   ]
+  },
+  {
+   "name": "三隊 1",
+   "date": "2026-10-22",
+   "mine": [
+    [
+     "nayuta",
+     "helm-treasure",
+     "snow-white-heavy-arms",
+     "red-hood",
+     "neon-vision-eye"
+    ],
+    [
+     "anis-star",
+     "blanc",
+     "privaty-treasure",
+     "biscuit",
+     "maiden-ice-rose"
+    ],
+    [
+     "moran-treasure",
+     "trina",
+     "laplace-ultimate-hero",
+     "centi-treasure",
+     "vesti-tactical-upgrade"
+    ]
+   ],
+   "enemy": [
+    [
+     "nayuta",
+     "centi-treasure",
+     "helm-treasure",
+     "red-hood",
+     "laplace-treasure"
+    ],
+    [
+     "moran-treasure",
+     "noah",
+     "neon-vision-eye",
+     "trina",
+     "anis-star"
+    ],
+    [
+     "jackal",
+     "snow-white-heavy-arms",
+     "blanc",
+     "biscuit",
+     "cinderella"
+    ]
+   ]
+  }
+ ],
+ "spRecords": [
+  {
+   "date": "2026-10-22",
+   "enemy": [
+    [
+     "nayuta",
+     "centi-treasure",
+     "helm-treasure",
+     "red-hood",
+     "laplace-treasure"
+    ],
+    [
+     "moran-treasure",
+     "noah",
+     "neon-vision-eye",
+     "trina",
+     "anis-star"
+    ],
+    [
+     "jackal",
+     "snow-white-heavy-arms",
+     "blanc",
+     "biscuit",
+     "cinderella"
+    ]
+   ],
+   "mine": [
+    [
+     "moran-treasure",
+     "trina",
+     "laplace-ultimate-hero",
+     "vesti-tactical-upgrade",
+     "scarlet-black-shadow"
+    ],
+    [
+     "nayuta",
+     "helm-treasure",
+     "centi-treasure",
+     "red-hood",
+     "snow-white-heavy-arms"
+    ],
+    [
+     "anis-star",
+     "blanc",
+     "neon-vision-eye",
+     "biscuit",
+     "little-mermaid"
+    ]
+   ],
+   "results": [
+    "loss",
+    "loss",
+    "win"
+   ]
+  }
+ ]
 }
