@@ -713,6 +713,10 @@ function renderMods(elId,team,mods,lsKey){
 let REFERENCES = __REFERENCES__;
 /* 綽號（build/data/nicknames.json）：搜尋時與正式名一起比對 */
 const NICK = __NICKNAMES__;
+const PRYDWEN = __PRYDWEN__; // Prydwen PVP 階級表（{updated, tiers:{id:tier}}）
+/* 角色的 PVP 階級：以 Prydwen 現行的 PVP 階級為準（上游 arena-planner 的 pvpTier 本來就是某時間點抄 Prydwen 的，但沒跟著更新）；原值保留在 plannerTier */
+function applyPrydwen(chars){ for(const c of chars){ if(c.plannerTier===undefined) c.plannerTier=c.pvpTier; const t=PRYDWEN.tiers&&PRYDWEN.tiers[c.id]; if(t) c.pvpTier=t; } }
+applyPrydwen(CHARACTERS);
 const namesOf=c=>[c.name['zh-TW'],c.name['zh-CN'],c.name.en,c.name.ja,c.id].concat(NICK[c.id]||[]);
 /* 頭像：avatars/<avatarImg>.webp（來自上游倉庫），缺檔時自動隱藏 */
 const avatar=(id,cls)=>{ const c=byId[id]; return c&&c.avatarImg?`<img class="av ${cls||''}" src="avatars/${esc(c.avatarImg)}.webp" alt="" loading="lazy" onerror="this.style.display='none'">`:''; };
@@ -770,7 +774,7 @@ const ROLE_ZH={attacker:'火力',supporter:'支援',defender:'防禦'};
 let byId=Object.fromEntries(CHARACTERS.map(c=>[c.id,c]));
 const nameOf=id=>byId[id]?byId[id].name['zh-TW']:id;
 let dataInfo={source:'內建',date:BUILTIN_DATE};
-function applyData(chars,tpls,info){ CHARACTERS=chars; const ids=new Set(tpls.map(t=>t.id)); TEMPLATES=tpls.concat(TEMPLATES_EXTRA.filter(t=>!ids.has(t.id))); byId=Object.fromEntries(chars.map(c=>[c.id,c])); dataInfo=info; }
+function applyData(chars,tpls,info){ applyPrydwen(chars); CHARACTERS=chars; const ids=new Set(tpls.map(t=>t.id)); TEMPLATES=tpls.concat(TEMPLATES_EXTRA.filter(t=>!ids.has(t.id))); byId=Object.fromEntries(chars.map(c=>[c.id,c])); dataInfo=info; }
 
 /* 速度資料來源：deck = nikke-deck.com 的每階充能與公式（預設）；planner = nikke-arena-planner 的資料 */
 let speedSrc='deck'; // 實際值在狀態區由 localStorage 載入
@@ -1064,8 +1068,8 @@ const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
 const burstBadge=b=>`<span class="badge ${b==='Λ'?'bL':'b'+({I:1,II:2,III:3})[b]}">${b==='Λ'?'Λ':'B'+({I:1,II:2,III:3})[b]}</span>`;
 const elBadge=e=>`<span class="badge ${e}">${EL_ZH[e]||e}</span>`;
-const tierBadge=t=>t?`<span class="badge tier ${t}">${t}</span>`:'';
-function unitLine(id){ const c=byId[id]; if(!c) return esc(id); return `${avatar(id,'s')} <b>${esc(c.name['zh-TW'])}</b> <span class="muted">${esc(c.name.en)}</span> ${burstBadge(c.burst)}${elBadge(c.element)}<span class="badge">${c.weapon}</span><span class="badge">${ROLE_ZH[c.role]}</span>${tierBadge(c.pvpTier)}${deckRank(id)}`; }
+const tierBadge=(c)=>{ if(!c) return ''; if(typeof c==='string') c={pvpTier:c}; const t=c.pvpTier; if(!t) return ''; const pry=PRYDWEN.tiers&&PRYDWEN.tiers[c.id]; const title=pry?`Prydwen PVP 階級（${PRYDWEN.updated}）${c.plannerTier&&c.plannerTier!==t?'；arena-planner 舊值 '+c.plannerTier:''}`:'arena-planner 的 pvpTier（Prydwen 未評）'; return `<span class="badge tier ${t}" title="${esc(title)}">${t}</span>${c.plannerTier&&c.plannerTier!==t?`<span class="badge" title="上游 arena-planner 的舊階級">planner ${esc(c.plannerTier)}</span>`:''}`; };
+function unitLine(id){ const c=byId[id]; if(!c) return esc(id); return `${avatar(id,'s')} <b>${esc(c.name['zh-TW'])}</b> <span class="muted">${esc(c.name.en)}</span> ${burstBadge(c.burst)}${elBadge(c.element)}<span class="badge">${c.weapon}</span><span class="badge">${ROLE_ZH[c.role]}</span>${tierBadge(c)}${deckRank(id)}`; }
 function tagBadges(id){ return (UNIT_TAGS[id]||[]).map(t=>`<span class="badge tag">${t}</span>`).join(''); }
 
 function renderSlots(elId,team,teamKey){
@@ -1192,7 +1196,7 @@ function renderPicker(){
     const selected=pickerTarget.multi&&pickerTarget.sel.includes(c.id);
     const dis=pickerTarget.multi?(!selected&&(pickerTarget.sel.length>=5||other.has(c.id))):((inTeam.has(c.id)&&team[pickerTarget.idx]!==c.id)||other.has(c.id));
     d.className='pick'+(owned.has(c.id)?' owned':'')+(dis?' dis':'')+(selected?' sel':'');
-    d.innerHTML=`${selected?'<span class="badge good" style="float:right">P'+(pickerTarget.sel.indexOf(c.id)+1)+'</span>':''}${avatar(c.id)}<div class="pickbody"><b>${esc(c.name['zh-TW'])}</b><span class="en">${esc(c.name.en)}${(NICK[c.id]||[]).length?' · '+esc(NICK[c.id].slice(0,2).join('、')):''}</span><div>${burstBadge(c.burst)}${elBadge(c.element)}<span class="badge">${c.weapon}</span>${tierBadge(c.pvpTier)}</div></div>`;
+    d.innerHTML=`${selected?'<span class="badge good" style="float:right">P'+(pickerTarget.sel.indexOf(c.id)+1)+'</span>':''}${avatar(c.id)}<div class="pickbody"><b>${esc(c.name['zh-TW'])}</b><span class="en">${esc(c.name.en)}${(NICK[c.id]||[]).length?' · '+esc(NICK[c.id].slice(0,2).join('、')):''}</span><div>${burstBadge(c.burst)}${elBadge(c.element)}<span class="badge">${c.weapon}</span>${tierBadge(c)}</div></div>`;
     if(!dis||selected) d.onclick=()=>pickOne(c);
     el.appendChild(d);
   }
@@ -1217,7 +1221,7 @@ function renderRoster(){
   const el=$('#rosterGrid'); el.innerHTML='';
   for(const c of list){
     const d=document.createElement('div'); d.className='pick'+(owned.has(c.id)?' owned':'');
-    d.innerHTML=`${avatar(c.id)}<div class="pickbody"><b>${owned.has(c.id)?'✔ ':''}${esc(c.name['zh-TW'])}</b><span class="en">${esc(c.name.en)}${(NICK[c.id]||[]).length?' · '+esc(NICK[c.id].slice(0,2).join('、')):''}</span><div>${burstBadge(c.burst)}${elBadge(c.element)}<span class="badge">${c.weapon}</span>${tierBadge(c.pvpTier)}</div></div>`;
+    d.innerHTML=`${avatar(c.id)}<div class="pickbody"><b>${owned.has(c.id)?'✔ ':''}${esc(c.name['zh-TW'])}</b><span class="en">${esc(c.name.en)}${(NICK[c.id]||[]).length?' · '+esc(NICK[c.id].slice(0,2).join('、')):''}</span><div>${burstBadge(c.burst)}${elBadge(c.element)}<span class="badge">${c.weapon}</span>${tierBadge(c)}</div></div>`;
     d.onclick=()=>{ if(owned.has(c.id)) owned.delete(c.id); else owned.add(c.id); LS.set('followRemote',false); save(); renderRoster(); updateOwnedCount(); renderSolve(); };
     el.appendChild(d);
   }
