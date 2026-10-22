@@ -24,7 +24,11 @@ main{max-width:1200px;margin:0 auto;padding:16px}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 @media(max-width:900px){.grid2{grid-template-columns:1fr}}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:16px}
-.card h2{font-size:16px;margin:0 0 10px;display:flex;align-items:center;gap:8px}
+.card h2{font-size:16px;margin:0 0 10px;display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none}
+.card h2::before{content:'▾';color:var(--muted);font-size:12px;width:12px;flex:none}
+.card.collapsed h2::before{content:'▸'}
+.card.collapsed h2{margin-bottom:0}
+.card.collapsed > :not(h2){display:none}
 .card h3{font-size:14px;margin:12px 0 6px;color:var(--accent2)}
 .muted{color:var(--muted);font-size:13px}
 .slots{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
@@ -187,17 +191,7 @@ details.mods summary{color:var(--muted)}
   </div>
 
   <div class="card">
-    <h2>④ 用我的角色庫組反制隊 <span class="muted" id="rosterNote"></span></h2>
-    <div class="row" style="margin-bottom:8px">
-      <label><input type="checkbox" id="chkOnlyOwned" checked> 只用我擁有的角色</label>
-      <label><input type="checkbox" id="chkAllowSub" checked> 模板缺角時允許同爆裂段替補</label>
-      <span class="muted">結果依「是否克制對方原型 → 速度 → 模板強度」排序</span>
-    </div>
-    <div id="builtTeams" class="muted">填滿對方隊伍後自動產生。</div>
-  </div>
-
-  <div class="card">
-    <h2>⑤ 自己排一隊試算 <span class="muted">（可從上面的建議「帶入」再微調）</span></h2>
+    <h2>④ 自己排一隊試算 <span class="muted">（可從上面的建議「帶入」再微調）</span></h2>
     <div class="slots" id="mySlots"></div>
     <details class="mods"><summary>進階：我方角色的充能速度超頻／量子魔方（也會套用到「組反制隊」的候選隊）</summary><div id="myMods"></div></details>
     <div class="row" style="margin-top:10px">
@@ -213,14 +207,24 @@ details.mods summary{color:var(--muted)}
   </div>
 
   <div class="card">
-    <h2>⑥ 對戰紀錄 <span class="muted">（把實戰結果記下來，之後遇到同樣的對手或體系時會提醒你）</span></h2>
+    <h2>⑤ 對戰紀錄 <span class="muted">（把實戰結果記下來，之後遇到同樣的對手或體系時會提醒你）</span></h2>
     <div class="row">
       <button class="btn primary" id="btnRecWin">記錄：這場贏了</button>
       <button class="btn danger" id="btnRecLoss">記錄：這場輸了</button>
-      <span class="muted">以①的對方隊伍與⑤的我方隊伍為準，存在瀏覽器本機，匯出 JSON 時會一起帶走。</span>
+      <span class="muted">以①的對方隊伍與④的我方隊伍為準，存在瀏覽器本機，匯出 JSON 時會一起帶走。</span>
     </div>
     <div id="records" class="muted" style="margin-top:8px"></div>
   </div>
+  <div class="card">
+    <h2>⑥ 用我的角色庫組反制隊 <span class="muted" id="rosterNote"></span><span class="muted" style="font-weight:400;font-size:12px">（清單很長，可點標題收起）</span></h2>
+    <div class="row" style="margin-bottom:8px">
+      <label><input type="checkbox" id="chkOnlyOwned" checked> 只用我擁有的角色</label>
+      <label><input type="checkbox" id="chkAllowSub" checked> 模板缺角時允許同爆裂段替補</label>
+      <span class="muted">結果依「是否克制對方原型 → 速度 → 模板強度」排序</span>
+    </div>
+    <div id="builtTeams" class="muted">填滿對方隊伍後自動產生。</div>
+  </div>
+
 </section>
 
 <!-- ============ 特殊競技場 ============ -->
@@ -739,7 +743,7 @@ async function loadRemoteReferences(){
 /* ====================== 對戰紀錄 ====================== */
 let records=[]; // 實際內容在狀態區由 LS 載入
 function addRecord(result){
-  if(enemy.some(x=>!x)||mine.some(x=>!x)) return alert('對方隊伍（①）與我方隊伍（⑤）都要填滿 5 人才能記錄。');
+  if(enemy.some(x=>!x)||mine.some(x=>!x)) return alert('對方隊伍（①）與我方隊伍（④）都要填滿 5 人才能記錄。');
   const note=prompt('備註（可留空，例如：對方戰力高一成、火箭射偏、對方先爆）')||'';
   records.unshift({date:new Date().toISOString().slice(0,10),mode,enemy:[...enemy],mine:[...mine],result,note});
   records=records.slice(0,300); LS.set('records',records); refresh();
@@ -1409,10 +1413,11 @@ function renderMyEval(ctx){
   if(!myCh.valid){ h=`<div class="verdict bad">爆裂鏈不完整（缺 ${myCh.missing.join('、')}），這隊永遠開不了全爆裂。</div>`+h; el.innerHTML=h; return; }
   if(!ctx){ el.innerHTML=h+'<div class="muted">填滿對方隊伍後會顯示對戰判斷。</div>'; return; }
   const ev=evalMatch(mine,enemy,mineMods,enemyMods);
+  const pairLine=`<div class="muted" style="margin-bottom:6px">對方：${enemy.map(nameOf).join('／')}（${ctx.speed.tier}）　vs　我方：${mine.map(nameOf).join('／')}（${mySp.tier}）</div>`;
   const v={good:'優勢：這隊打這個對手有把握',bad:'劣勢：建議換體系或換速度',warn:'五五波：看戰力與站位'}[ev.verdict]+`（估計勝率約 ${Math.round(ev.p*100)}%）`;
   const st=ev.st;
   const rec=st&&st.pair.n?`<div><span class="badge ${st.pair.win>=st.pair.loss?'good':'bad'}">實戰紀錄：這隊打這個對手 ${st.pair.win} 勝 ${st.pair.loss} 負</span> <span class="muted">實戰結果比推算可靠，以它為準</span></div>`:'';
-  h=`<div class="verdict ${ev.verdict}">${v}</div>`+rec+h+`<h3>判斷依據</h3><div class="why" style="margin:4px 0">${winSummary(mine,enemy,ev,{lines:ev.good,myMods:mineMods,eMods:enemyMods})}${reasonsHtml(ev.good,ev.bad)}</div><div>${srcBadges(['tpl'],'克制關係')} ${srcBadges(['calc'],'速度與分數')} ${srcBadges(['mech','teams'],'角色機制')}</div>`+refList(refsFor(detectArchetypes(enemy).map(a=>a.arch),enemy,myArch.length?myArch[0].arch:null));
+  h=pairLine+`<div class="verdict ${ev.verdict}">${v}</div>`+rec+h+`<h3>判斷依據</h3><div class="why" style="margin:4px 0">${winSummary(mine,enemy,ev,{lines:ev.good,myMods:mineMods,eMods:enemyMods})}${reasonsHtml(ev.good,ev.bad)}</div><div>${srcBadges(['tpl'],'克制關係')} ${srcBadges(['calc'],'速度與分數')} ${srcBadges(['mech','teams'],'角色機制')}</div>`+refList(refsFor(detectArchetypes(enemy).map(a=>a.arch),enemy,myArch.length?myArch[0].arch:null));
   el.innerHTML=h;
 }
 function renderHistory(){
@@ -1441,6 +1446,8 @@ function switchTab(name){ document.querySelectorAll('nav button').forEach(x=>x.c
 
 /* ====================== 事件 ====================== */
 document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>switchTab(b.dataset.tab));
+/* 區塊收合：點卡片標題收起／展開，狀態記在瀏覽器 */
+(()=>{ const st=LS.get('collapsed',{}); document.querySelectorAll('.card > h2').forEach((h,i)=>{ const card=h.parentElement; const key=(card.closest('section')||{}).id+':'+i; if(st[key]) card.classList.add('collapsed'); h.addEventListener('click',e=>{ if(e.target.closest('button,a,input,select')) return; card.classList.toggle('collapsed'); st[key]=card.classList.contains('collapsed'); LS.set('collapsed',st); }); }); })();
 if($('#nickSearch')) $('#nickSearch').oninput=renderNickTable;
 if($('#speedSrc')){ $('#speedSrc').value=speedSrc; $('#speedSrc').onchange=()=>{ speedSrc=$('#speedSrc').value; LS.set('speedSrc',speedSrc); _prCache.clear(); refresh(); }; }
 document.querySelectorAll('#modeSeg button').forEach(b=>{ if(b.dataset.mode===mode) b.classList.add('active'); else b.classList.remove('active'); b.onclick=()=>{ mode=b.dataset.mode; document.querySelectorAll('#modeSeg button').forEach(x=>x.classList.toggle('active',x===b)); save(); refresh(); }; });
