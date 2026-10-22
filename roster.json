@@ -61,6 +61,86 @@
  "records": [
   {
    "date": "2026-10-22",
+   "mode": "defense",
+   "enemy": [
+    "nayuta",
+    "liter",
+    "drake-treasure",
+    "snow-white-heavy-arms",
+    "bay-treasure"
+   ],
+   "mine": [
+    "anis-star",
+    "blanc",
+    "helm-treasure",
+    "biscuit",
+    "neon-vision-eye"
+   ],
+   "result": "win",
+   "note": ""
+  },
+  {
+   "date": "2026-10-22",
+   "mode": "defense",
+   "enemy": [
+    "anis-star",
+    "biscuit",
+    "snow-white-heavy-arms",
+    "helm-treasure",
+    "moran-treasure"
+   ],
+   "mine": [
+    "anis-star",
+    "vesti-tactical-upgrade",
+    "blanc",
+    "biscuit",
+    "helm-treasure"
+   ],
+   "result": "win",
+   "note": "險勝"
+  },
+  {
+   "date": "2026-10-22",
+   "mode": "defense",
+   "enemy": [
+    "anis-star",
+    "helm-treasure",
+    "vesti-tactical-upgrade",
+    "biscuit",
+    "moran-treasure"
+   ],
+   "mine": [
+    "anis-star",
+    "vesti-tactical-upgrade",
+    "blanc",
+    "biscuit",
+    "helm-treasure"
+   ],
+   "result": "win",
+   "note": ""
+  },
+  {
+   "date": "2026-10-22",
+   "mode": "defense",
+   "enemy": [
+    "anis-star",
+    "helm-treasure",
+    "vesti-tactical-upgrade",
+    "biscuit",
+    "moran-treasure"
+   ],
+   "mine": [
+    "anis-star",
+    "vesti-tactical-upgrade",
+    "blanc",
+    "biscuit",
+    "helm-treasure"
+   ],
+   "result": "win",
+   "note": ""
+  },
+  {
+   "date": "2026-10-22",
    "mode": "sp",
    "enemy": [
     "jackal",
