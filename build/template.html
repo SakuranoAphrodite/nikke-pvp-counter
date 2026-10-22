@@ -1001,7 +1001,10 @@ function buildCounters(enemyIds,mode,ownedSet,allowSub){
     else if(dc===0){ score+=40; why.push(`速度 ${sp.tier} 與對方同階，結果不穩，靠體系壓制`); }
     else { score+= STALL_ARCH.has(t.archetype)? -40 : -140; warn.push(`速度 ${sp.tier}${ch.stages>3?'（四段軸）':''} 比對方 ${eSpeed.tier}${eChain.stages>3?'（四段軸）':''} 慢`+(STALL_ARCH.has(t.archetype)?'（持久體系可接受，但要扛得住第一波）':'，會被先手')); }
     const subs=f.kind.filter(k=>k==='sub').length; if(subs){ score-=60*subs; f.kind.forEach((k,i)=>{ if(k==='sub'){ const want=(f.skipped&&f.skipped[i]&&f.skipped[i].length)?`，模板原本要 ${f.skipped[i].map(nameOf).join('／')}`:''; warn.push(`P${i+1} 的 ${nameOf(f.slots[i])} 是非模板替補：模板列的人選你都沒有，改用同爆裂段、階級最高的角色${want}；效果未經驗證`); } }); }
-    const offK=offChainKey(f.slots); if(offK.length){ score-=120*offK.length; warn.push(`${offK.map(nameOf).join('、')}在軸外，第一輪不會開爆裂（等於浪費一個關鍵角）`); }
+    // 軸外關鍵角：模板自己的站位就把她放軸外（例如一閃隊的白雪重武、第二位 B3）是設計如此，不扣分只註明；替補塞進來才算浪費
+    const offK=offChainKey(f.slots); const offSub=offK.filter(i=>f.kind[f.slots.indexOf(i)]==='sub'), offTpl=offK.filter(i=>!offSub.includes(i));
+    if(offSub.length){ score-=120*offSub.length; warn.push(`${offSub.map(nameOf).join('、')}在軸外，第一輪不會開爆裂（替補位，等於浪費一個關鍵角）`); }
+    if(offTpl.length) why.push(`${offTpl.map(nameOf).join('、')}依模板站位在軸外：模板設計如此（靠普攻或被動出力，第一輪不開爆裂）`);
     // 紅蓮反擊檢查
     if(['scarlet','scarlet-black-shadow'].some(x=>enemyIds.includes(x))){ const hi=f.slots.filter(i=>['SG','SMG','MG'].includes(byId[i].weapon)); if(hi.length){ score-=80*hi.length; warn.push('帶了高射速武器（'+hi.map(nameOf).join('、')+'）會被紅蓮 S2 反擊'); } }
     if(enemyIds.includes('jackal')){ const hi=f.slots.filter(i=>['SG','SMG','MG'].includes(byId[i].weapon)); if(hi.length){ score-=30*hi.length; warn.push('高射速武器會餵對方豺狼充能'); } }
