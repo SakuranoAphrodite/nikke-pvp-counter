@@ -269,6 +269,7 @@ details.mods summary{color:var(--muted)}
       <label>第 2 場 <select id="spRes1"><option value="">未打</option><option value="win">勝</option><option value="loss">負</option></select></label>
       <label>第 3 場 <select id="spRes2"><option value="">未打</option><option value="win">勝</option><option value="loss">負</option></select></label>
       <button class="btn primary" id="btnSpRecord">記錄這場（用上面的我方三隊）</button>
+      <button class="btn" id="btnSpExport" title="和「我的角色庫」的匯出相同：角色庫、解隊的對戰紀錄與歷史、特殊競技場的紀錄、儲存三隊與歷史">匯出全部紀錄（JSON）</button>
     </div>
     <div id="spRecords" class="muted" style="margin-top:8px">還沒有紀錄。</div>
   </div>
@@ -1696,6 +1697,7 @@ $('#btnSpSaveHistory').onclick=()=>{ if(!spEnemy.every(t=>t.every(Boolean))) ret
 $('#btnSpmSave').onclick=()=>{ if(!spMine.every(t=>t.every(Boolean))) return alert('我方三隊要填滿才能儲存。'); const name=prompt('這組三隊的名稱',`三隊 ${spSaved.length+1}`); if(name===null) return; spSaved.unshift({name:name||`三隊 ${spSaved.length+1}`,date:new Date().toISOString().slice(0,10),mine:spMine.map(t=>[...t]),enemy:spEnemy.map(t=>[...t])}); spSaved=spSaved.slice(0,50); LS.set('spSaved',spSaved); refresh(); };
 $('#btnSpmClear').onclick=()=>{ if(confirm('清空我方三隊？')){ spMine=[EMPTY5(),EMPTY5(),EMPTY5()]; save(); refresh(); } };
 $('#btnSpRecord').onclick=spRecordNow;
+$('#btnSpExport').onclick=()=>$('#btnExport').click();
 $('#spOnlyOwned').onchange=refresh; $('#spAllowSub').onchange=refresh;
 
 loadRemoteRoster(false); loadRemoteReferences();
