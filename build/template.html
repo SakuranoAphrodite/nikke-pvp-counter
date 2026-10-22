@@ -1523,7 +1523,9 @@ function reasonsHtml(good,bad,extraWarn){
 }
 function spEntryCard(e,g){
   const eSp=e.ev.ctx.speed, eCh=e.ev.ctx.chain;
-  const members=e.slots.map((id,i)=>{ const c=byId[id]; const k=e.filler?'sub':e.kind[i]; const lab=e.filler?'湊數':k==='req'?'核心':k==='sub'?'替補':'彈性'; const cr=chainRole(e.slots,id); return `<div class="m ${k}">${avatar(id,'md')}<div class="body"><div class="pos">P${i+1} ${lab} ${cr?'<span class="badge good" style="font-size:10px;padding:0 4px">開'+cr+'</span>':'<span class="badge" style="font-size:10px;padding:0 4px">軸外</span>'}</div><b>${esc(c.name['zh-TW'])}</b><div>${burstBadge(c.burst)}<span class="badge">${c.weapon}</span></div></div></div>`; }).join('');
+  const members=e.slots.map((id,i)=>{ const c=byId[id]; const k=e.filler?'sub':e.kind[i]; const lab=e.filler?'湊數':k==='req'?'核心':k==='sub'?'替補':'彈性'; const cr=chainRole(e.slots,id);
+    const alt=e.filler?'':(((e.alts&&e.alts[i]&&e.alts[i].length)?`<div class="alt">替補：${e.alts[i].map(nameOf).join('／')}</div>`:'')+((e.skipped&&e.skipped[i]&&e.skipped[i].length)?`<div class="alt" title="模板把這些角色排在前面，但你沒有（或已用在別場）">模板優先但缺：${e.skipped[i].map(nameOf).join('／')}</div>`:''));
+    return `<div class="m ${k}">${avatar(id,'md')}<div class="body"><div class="pos">P${i+1} ${lab} ${cr?'<span class="badge good" style="font-size:10px;padding:0 4px">開'+cr+'</span>':'<span class="badge" style="font-size:10px;padding:0 4px">軸外</span>'}</div><b>${esc(c.name['zh-TW'])}</b><div>${burstBadge(c.burst)}<span class="badge">${c.weapon}</span></div></div>${alt}</div>`; }).join('');
   const dc=(eSp.cycles+eCh.extraSec)-(e.speed.cycles+chainOf(e.slots).extraSec);
   const cmp=dc>0?'<span class="badge good">比對方快</span>':dc===0?'<span class="badge warn">同速</span>':'<span class="badge bad">比對方慢</span>';
   const head=e.filler?`<span class="badge ${e.sacrificed?'bad':'warn'}">${e.sacrificed?'放生：剩餘角色隊':'剩餘角色隊'}</span>`:`<b>${esc(e.tpl.name['zh-TW'])}${e.variant?'（'+e.variant+'）':''}</b><span class="badge">${archName(e.tpl.archetype)}</span>`;
