@@ -1332,7 +1332,7 @@ function renderMyEval(ctx){
   const v={good:'優勢：這隊打這個對手有把握',bad:'劣勢：建議換體系或換速度',warn:'五五波：看戰力與站位'}[ev.verdict];
   const st=ev.st;
   const rec=st&&st.pair.n?`<div><span class="badge ${st.pair.win>=st.pair.loss?'good':'bad'}">實戰紀錄：這隊打這個對手 ${st.pair.win} 勝 ${st.pair.loss} 負</span> <span class="muted">實戰結果比推算可靠，以它為準</span></div>`:'';
-  h=`<div class="verdict ${ev.verdict}">${v}</div>`+rec+h+`<h3>判斷依據</h3><ul class="tips">${ev.good.map(g=>'<li>✔ '+esc(g)+'</li>').join('')}${ev.bad.map(b=>'<li style="color:var(--warn)">⚠ '+esc(b)+'</li>').join('')}</ul><div>${srcBadges(['tpl'],'克制關係')} ${srcBadges(['calc'],'速度與分數')} ${srcBadges(['mech','teams'],'角色機制')}</div>`+refList(refsFor(detectArchetypes(enemy).map(a=>a.arch),enemy,myArch.length?myArch[0].arch:null));
+  h=`<div class="verdict ${ev.verdict}">${v}</div>`+rec+h+`<h3>判斷依據</h3><div class="why" style="margin:4px 0">${reasonsHtml(ev.good,ev.bad)}</div><div>${srcBadges(['tpl'],'克制關係')} ${srcBadges(['calc'],'速度與分數')} ${srcBadges(['mech','teams'],'角色機制')}</div>`+refList(refsFor(detectArchetypes(enemy).map(a=>a.arch),enemy,myArch.length?myArch[0].arch:null));
   el.innerHTML=h;
 }
 function renderHistory(){
@@ -1498,13 +1498,20 @@ function buildSpPlan(){
   if(!best){ const used=new Set(); const entries=[]; for(const g of [0,1,2]){ const f=fillerTeam(poolIds,used); if(!f) break; f.forEach(i=>used.add(i)); entries[g]=spFillerEntry(f,g); } if(entries.filter(Boolean).length===3) consider(entries); }
   return best||{error:'角色不夠組出三隊（每隊需要 B1、B2、B3 各一且三隊不重複）。請增加角色庫、打開「允許替補」或取消「只用我擁有的角色」。'};
 }
+/* 判斷依據：主要項目直接列出；「（參考）」與「模板對位（參考…）」的行收進折疊區，避免和直接對位混淆 */
+const isRefLine=t=>/^（參考）|模板對位（參考/.test(t);
+function reasonsHtml(good,bad,extraWarn){
+  const main=[...good.filter(g=>!isRefLine(g)).map(g=>'✔ '+esc(g)),...bad.filter(b=>!isRefLine(b)).map(b=>'<span style="color:var(--warn)">⚠ '+esc(b)+'</span>'),...(extraWarn||[]).map(w=>'<span style="color:var(--warn)">⚠ '+esc(w)+'</span>')];
+  const ref=[...good.filter(isRefLine).map(g=>'✔ '+esc(g)),...bad.filter(isRefLine).map(b=>'<span style="color:var(--warn)">⚠ '+esc(b)+'</span>')];
+  return main.join('<br>')+(ref.length?`<details style="margin-top:4px"><summary class="muted">參考：模板體系的對位與克制（${ref.length} 條，勝負判定已以直接對位為準，這些不計分）</summary>${ref.join('<br>')}</details>`:'');
+}
 function spEntryCard(e,g){
   const eSp=e.ev.ctx.speed, eCh=e.ev.ctx.chain;
   const members=e.slots.map((id,i)=>{ const c=byId[id]; const k=e.filler?'sub':e.kind[i]; const lab=e.filler?'湊數':k==='req'?'核心':k==='sub'?'替補':'彈性'; const cr=chainRole(e.slots,id); return `<div class="m ${k}">${avatar(id,'md')}<div class="body"><div class="pos">P${i+1} ${lab} ${cr?'<span class="badge good" style="font-size:10px;padding:0 4px">開'+cr+'</span>':'<span class="badge" style="font-size:10px;padding:0 4px">軸外</span>'}</div><b>${esc(c.name['zh-TW'])}</b><div>${burstBadge(c.burst)}<span class="badge">${c.weapon}</span></div></div></div>`; }).join('');
   const dc=(eSp.cycles+eCh.extraSec)-(e.speed.cycles+chainOf(e.slots).extraSec);
   const cmp=dc>0?'<span class="badge good">比對方快</span>':dc===0?'<span class="badge warn">同速</span>':'<span class="badge bad">比對方慢</span>';
   const head=e.filler?`<span class="badge ${e.sacrificed?'bad':'warn'}">${e.sacrificed?'放生：剩餘角色隊':'剩餘角色隊'}</span>`:`<b>${esc(e.tpl.name['zh-TW'])}${e.variant?'（'+e.variant+'）':''}</b><span class="badge">${archName(e.tpl.archetype)}</span>`;
-  return `<div class="team"><div class="hd"><b>第 ${g+1} 場</b>${head}<span class="badge">我方 ${e.speed.tier}</span><span class="badge">對方 ${eSp.tier}</span>${cmp}<span class="verdict ${e.ev.verdict}" style="font-size:14px;margin:0">${e.ev.label}（約 ${Math.round(e.ev.p*100)}%）</span><button class="btn" data-spapply="${g}" style="margin-left:auto">帶入試算</button></div><div class="muted">對方：${spEnemy[g].map(nameOf).join('／')}</div><div class="members">${members}</div><div class="why">${e.ev.good.map(w=>'✔ '+esc(w)).join('<br>')}${e.ev.bad.length?(e.ev.good.length?'<br>':'')+e.ev.bad.map(w=>'<span style="color:var(--warn)">⚠ '+esc(w)+'</span>').join('<br>'):''}${e.filler?'<br><span style="color:var(--warn)">⚠ '+(e.sacrificed?'這場刻意放生：反制核心留給另外兩場，這隊是剩餘角色中最強、爆裂鏈完整的組合。':'角色庫組不出針對這場的反制隊，這隊是剩餘角色中最強、爆裂鏈完整的組合。')+'</span>':''}</div>${e.tpl?`<div class="muted" style="margin-top:4px">${esc(e.tpl.notes['zh-TW'])}</div>`:''}</div>`;
+  return `<div class="team"><div class="hd"><b>第 ${g+1} 場</b>${head}<span class="badge">我方 ${e.speed.tier}</span><span class="badge">對方 ${eSp.tier}</span>${cmp}<span class="verdict ${e.ev.verdict}" style="font-size:14px;margin:0">${e.ev.label}（約 ${Math.round(e.ev.p*100)}%）</span><button class="btn" data-spapply="${g}" style="margin-left:auto">帶入試算</button></div><div class="muted">對方：${spEnemy[g].map(nameOf).join('／')}</div><div class="members">${members}</div><div class="why">${reasonsHtml(e.ev.good,e.ev.bad,(e.warn||[]).filter(w=>/替補/.test(w)))}${e.filler?'<br><span style="color:var(--warn)">⚠ '+(e.sacrificed?'這場刻意放生：反制核心留給另外兩場，這隊是剩餘角色中最強、爆裂鏈完整的組合。':'角色庫組不出針對這場的反制隊，這隊是剩餘角色中最強、爆裂鏈完整的組合。')+'</span>':''}</div>${e.tpl?`<div class="muted" style="margin-top:4px">${esc(e.tpl.notes['zh-TW'])}</div>`:''}</div>`;
 }
 function renderSp(){
   for(let g=0;g<3;g++){ renderSlots('#spSlots'+g,spEnemy[g],SP_KEYS[g]); spMini(g); }
