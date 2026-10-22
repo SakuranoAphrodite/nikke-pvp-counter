@@ -584,20 +584,25 @@ function beatenBy(idx){ return (ARENA.beatenBy[String(idx)]||[]).map(([j,n,s])=>
 const _prCache=new Map();
 function pairRecord(myIds,enemyIds){
   if(!ARENA.teams||!ARENA.teams.length) return null;
-  const ck=teamKey(myIds)+'|'+teamKey(enemyIds); if(_prCache.has(ck)) return _prCache.get(ck);
   const nt=x=>x.replace(/-treasure$/,''); // 珍藏與一般版視為同一人（拉普拉斯究極英雄是另一個 id，不受影響）
+  const ch0=chainOf(myIds); const core2=[ch0.b2,ch0.b3].filter(Boolean).map(x=>nt(x.c.id)).sort(); // 誰開 B2、B3（B1 多半只是電池，比對時忽略）
+  const ck=teamKey(myIds)+'|'+teamKey(enemyIds)+'|'+core2.join(','); if(_prCache.has(ck)) return _prCache.get(ck);
   const ov=(row,set)=>row[0].split(',').filter(x=>set.has(nt(x))).length;
   const ms=new Set(myIds.filter(Boolean).map(nt)), es=new Set(enemyIds.filter(Boolean).map(nt));
   let res=null;
-  const myChain=[...chainSet(myIds)].map(nt); // 我方真正開爆裂的三位
+  const myChain=[...chainSet(myIds)].map(nt).sort(); const myTrio=myChain.join(','); // 我方真正開爆裂的三位
+  // 每個相似隊「用我這組三人開爆裂」的比例（資料有記各隊實際開法）；沒有記錄時視為 1
+  // 相似隊裡「由同樣的人開 B2 與 B3」的場次比例（B1 忽略）
+  const trioShare=row=>{ const ch=row[7]; if(!ch||!ch.length) return 1; const tot=ch.reduce((a,c)=>a+c[1],0)||row[1]; let g=0; for(const c of ch){ const u=c[0].split(',').map(nt); if(core2.every(x=>u.includes(x))) g+=c[1]; } return g/tot; };
   const attempts=[{k:4,chain:true},{k:3,chain:true},{k:4,chain:false},{k:3,chain:false}];
   for(const {k,chain} of attempts){
     if(chain&&myChain.length<3) continue;
-    const my=new Set(), en=new Set();
-    ARENA.teams.forEach((row,i)=>{ const u=row[0].split(',').map(nt); if(ov(row,ms)>=k&&(!chain||myChain.every(c=>u.includes(c)))) my.add(i); if(ov(row,es)>=k) en.add(i); });
+    const my=new Set(), en=new Set(), share=new Map();
+    ARENA.teams.forEach((row,i)=>{ const u=row[0].split(',').map(nt); if(ov(row,ms)>=k&&(!chain||core2.every(c=>u.includes(c)))){ const f=chain?trioShare(row):1; if(f>0){ my.add(i); share.set(i,f); } } if(ov(row,es)>=k) en.add(i); });
     let w=0,l=0; const wins=new Map(), losses=new Map(), lossMy=new Map();
-    for(const e of en) for(const [j,n] of (ARENA.beatenBy[String(e)]||[])) if(my.has(j)&&!en.has(j)){ w+=n; wins.set(j,(wins.get(j)||0)+n); }
-    for(const m of my) for(const [j,n] of (ARENA.beatenBy[String(m)]||[])) if(en.has(j)&&!my.has(j)){ l+=n; losses.set(j,(losses.get(j)||0)+n); lossMy.set(m,(lossMy.get(m)||0)+n); }
+    for(const e of en) for(const [j,n0] of (ARENA.beatenBy[String(e)]||[])) if(my.has(j)&&!en.has(j)){ const n=n0*(share.get(j)||1); w+=n; wins.set(j,(wins.get(j)||0)+n); }
+    for(const m of my) for(const [j,n0] of (ARENA.beatenBy[String(m)]||[])) if(en.has(j)&&!my.has(j)){ const n=n0*(share.get(m)||1); l+=n; losses.set(j,(losses.get(j)||0)+n); lossMy.set(m,(lossMy.get(m)||0)+n); }
+    w=Math.round(w*10)/10; l=Math.round(l*10)/10;
     // 這些對局裡「像我方的隊」各含我方哪幾位：用來提醒「相似隊多半沒有 X」
     const presence={}; for(const id of myIds.filter(Boolean)) presence[id]=0;
     const addP=(j,n)=>{ const u=new Set(ARENA.teams[j][0].split(',').map(nt)); for(const id of myIds.filter(Boolean)) if(u.has(nt(id))) presence[id]+=n; };
@@ -605,8 +610,9 @@ function pairRecord(myIds,enemyIds){
     const presencePct={}; for(const [id,c] of Object.entries(presence)) presencePct[id]=(w+l)?Math.round(c/(w+l)*100):0;
     const missing=(w+l)?Object.entries(presencePct).filter(([id,pct])=>pct<50).map(([id,pct])=>({id,pct})):[];
     const cand={k,chain,w,l,n:w+l,r:w+l?w/(w+l):0.5,missing,presencePct,myTeams:my.size,enemyTeams:en.size,topWin:[...wins].sort((a,b)=>b[1]-a[1]).slice(0,2).map(([i,n])=>({row:ARENA.teams[i],n})),topLoss:[...losses].sort((a,b)=>b[1]-a[1]).slice(0,2).map(([i,n])=>({row:ARENA.teams[i],n}))};
-    if(chain&&w+l>0&&w+l<20&&!res) res={...cand,thin:true}; // 軸內三人齊的樣本太少：先記著，退回較寬的條件時一併顯示
-    if(w+l>=20){ if(res&&res.thin) cand.thinChain=res; res=cand; break; }
+    const need=chain?10:20;
+    if(chain&&w+l>0&&w+l<need&&!res) res={...cand,thin:true}; // 軸內三人齊的樣本太少：先記著，退回較寬的條件時一併顯示
+    if(w+l>=need){ if(res&&res.thin) cand.thinChain=res; res=cand; break; }
     if(!chain&&k===3&&!res) res=cand;
   }
   if(res&&res.n<10) res=null;
@@ -646,10 +652,10 @@ function claimCheck(a,b,aIds,bIds){
 }
 function pairText(pr,who){
   const me=who||'我方';
-  const mine=pr.chain?`含${me}真正開爆裂的三位、且 ${pr.k} 位相同角色的隊`:`含${me} ${pr.k} 位相同角色的隊`;
+  const mine=pr.chain?`含${me} ${pr.k} 位相同角色、且由同樣的人開 B2／B3 的隊（依各隊實際開法加權）`:`含${me} ${pr.k} 位相同角色的隊`;
   let t=`冠軍競技場直接對位：${mine}，對上含對方 ${pr.k} 位相同角色的隊 ${pr.w} 勝 ${pr.l} 負（勝率 ${Math.round(pr.r*100)}%）`;
-  if(pr.thinChain) t+=`；若限定${me}開爆裂的三位都在，只有 ${pr.thinChain.w} 勝 ${pr.thinChain.l} 負，樣本太少僅供參考`;
-  else if(!pr.chain) t+=`（沒有${me}開爆裂三位都在的對局，用較寬的條件）`;
+  if(pr.thinChain) t+=`；若限定由同樣的人開 B2／B3，只有 ${Math.round(pr.thinChain.w)} 勝 ${Math.round(pr.thinChain.l)} 負，樣本太少僅供參考`;
+  else if(!pr.chain) t+=`（沒有由同樣的人開 B2／B3 的對局，用較寬的條件）`;
   if(pr.missing&&pr.missing.length) t+=`。注意：這些相似隊大多沒有${pr.missing.map(m=>`${nameOf(m.id)}（只有 ${m.pct}% 的場次有她）`).join('、')}，她的效果沒有被這個數字驗證`;
   return t;
 }
@@ -1615,7 +1621,17 @@ function winSummary(slots,enemyIds,ev,opts){
   const lines=(opts.lines||[]).filter(l=>!isRefLine(l));
   for(const l of lines){ if(/後手鏡像/.test(l)) pts.push('後手鏡像：對方不屈先到期'); else if(/^我方「.*」克制對方「/.test(l)&&!/模板寫/.test(l)) pts.push(l.replace(/（實戰.*$/,'').replace(/（冠軍.*$/,'')); }
   if(pr&&pr.n>=20){ if(pr.r>=0.6) pts.push(`同型隊實戰勝率 ${Math.round(pr.r*100)}%`); else if(pr.r<=0.4) pts.push(`同型隊實戰勝率只有 ${Math.round(pr.r*100)}%，優勢存疑`); }
-  return `<div class="winpt"><b>贏點</b>：${esc(pts.slice(0,4).join('；'))}<br><b>軸</b>：${esc(chainTxt)}${off.length?`；<b>軸外</b>：${esc(offTxt)}`:''}<br>${core}</div>`;
+  // 軸的選擇：同一爆裂段有兩位以上可開時，比較「換另一位開」的實戰結果
+  const alts=[];
+  for(const b of ['I','II','III']){
+    const cur=[ch.b1,ch.b2,ch.b3].find(x=>x&&(x.b===b||(x.b==='Λ'&&!chainOfTypes.has(b)))); if(!cur) continue;
+    const cands=ids.filter(i=>byId[i]&&byId[i].burst===b&&!cs.has(i));
+    for(const u of cands){ const alt=[...slots]; const a=alt.indexOf(cur.c.id), bI=alt.indexOf(u); [alt[a],alt[bI]]=[alt[bI],alt[a]]; const pa=pairRecord(alt,enemyIds); const pc=pr; alts.push({b:bn[b],cur:cur.c.id,u,pa,pc}); }
+  }
+  let altTxt='';
+  if(alts.length){ const rec=p=>p&&p.n>=10&&p.chain?`${Math.round(p.w)} 勝 ${Math.round(p.l)} 負（${Math.round(p.r*100)}%）`:'實戰資料不足'; const byB={}; for(const x of alts){ (byB[x.b]=byB[x.b]||{cur:x.cur,pc:x.pc,alts:[]}).alts.push(x); }
+    altTxt='<br><b>開誰的爆裂</b>：'+Object.entries(byB).map(([b,o])=>`${b} 由 ${nameOf(o.cur)} 開（現在）${rec(o.pc)}`+o.alts.map(x=>`、改由 ${nameOf(x.u)} 開 ${rec(x.pa)}`).join('')).join('；')+'（同型隊、同樣的人開 B2／B3 的實戰）'; }
+  return `<div class="winpt"><b>贏點</b>：${esc(pts.slice(0,4).join('；'))}<br><b>軸</b>：${esc(chainTxt)}${off.length?`；<b>軸外</b>：${esc(offTxt)}`:''}<br>${core}${altTxt}</div>`;
 }
 /* 對方隊伍的贏點摘要：靠什麼、軸怎麼開、實戰戰績、怕什麼 */
 function enemySummary(ids){
