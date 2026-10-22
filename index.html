@@ -817,7 +817,9 @@ const isStdB1=x=>x.c.burst==='I'&&!(x.c.id in REENTER_B1);
 function chainOf(ids){
   const chars=ids.map((id,i)=>({c:byId[id],pos:i+1,b:byId[id]?byId[id].burst:null})).filter(x=>x.c);
   const stdB1=chars.filter(isStdB1);
-  const rapi=chars.find(x=>x.c.id==='rapi-red-hood'); const rapiAsB1=!!(rapi&&!stdB1.length); if(rapiAsB1) rapi.b='I'; // 戰鬥輔助：變 B1
+  // 拉毗小紅帽只在隊上完全沒有 B1 角色時才改用 B1；超級巨星阿妮斯仍算隊伍已有 B1。
+  const hasB1=chars.some(x=>x.c.burst==='I');
+  const rapi=chars.find(x=>x.c.id==='rapi-red-hood'); const rapiAsB1=!!(rapi&&!hasB1); if(rapiAsB1) rapi.b='I'; // 戰鬥輔助：變 B1
   const has={I:false,II:false,III:false}; let lambda=false;
   chars.forEach(x=>{ if(x.b==='Λ') lambda=true; else if(has[x.b]!==undefined) has[x.b]=true; });
   const missing=['I','II','III'].filter(b=>!has[b]);
