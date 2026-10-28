@@ -331,7 +331,7 @@ details.mods summary{color:var(--muted)}
     <ol>
       <li>到「我的角色庫」把你有的角色點成「擁有」（只需做一次，會記住）。</li>
       <li>回「解隊」，按「一次選整隊」在視窗裡依 P1→P5 連點 5 位後套用；也可以點單一格換人，或在快速輸入框直接打中文名。搜尋支援綽號（白兔、黑兔、偶像阿妮斯、白雪重武、水母、戰術貝斯蒂、EMT 等，清單在 build/data/nicknames.json 可自行增補）。排好後用格子上的 ◀ ▶ 或拖曳調整站位。</li>
-      <li>看「對方分析」：速度階、爆裂鏈順序、屬於哪種體系、關鍵威脅。</li>
+      <li>看「對方分析」：速度階、爆裂鏈順序、屬於哪種體系、關鍵威脅。最上面會先列出你打過這組對手的對戰紀錄（同樣 5 人，珍藏版算同一人；也會列 4 人相同的相似隊），贏過的排前面，按「帶入我方」就把那場贏的隊伍放進「自己排一隊試算」。特殊競技場每隊下方也有同樣的查詢。</li>
       <li>看「解法建議」與「組反制隊」：工具會從你的角色庫挑出能克制對方體系、速度又夠的隊伍。</li>
       <li>想自己調整，就在「自己排一隊試算」排 5 人，會直接告訴你快慢與互剋關係。</li>
     </ol>
@@ -778,6 +778,29 @@ function recordStats(enemyIds,myIds){
   const arch=eArch.length?records.filter(r=>detectArchetypes(r.enemy).some(a=>eArch.includes(a.arch))):[];
   const pair=myIds?records.filter(r=>r.enemy.join()===enemyIds.join()&&[...r.mine].sort().join()===[...myIds].sort().join()):[];
   return {same:w(same),arch:w(arch),pair:w(pair)};
+}
+/* 歷史紀錄查詢：輸入對方隊伍後，找出打過這組對手（同 5 人；珍藏版視為同一人）或相似隊（4 人相同）的對戰紀錄，贏過的排前面，可一鍵帶入我方 */
+const recBase=i=>String(i||'').replace(/-treasure$/,'');
+function recMatches(enemyIds){
+  const eb=enemyIds.map(recBase), eset=new Set(eb), out=[];
+  records.forEach((r,i)=>{ if(!Array.isArray(r.enemy)||!Array.isArray(r.mine)) return; const rb=r.enemy.map(recBase); const shared=rb.filter(x=>eset.has(x)).length; if(shared<4) return;
+    const exact=shared===5&&rb.length===5; out.push({r,i,exact,shared,sameIds:exact&&[...r.enemy].sort().join()===[...enemyIds].sort().join(),sameOrder:exact&&r.enemy.join()===enemyIds.join()}); });
+  return out;
+}
+function historyBlock(enemyIds,opts){
+  opts=opts||{}; const m=recMatches(enemyIds);
+  if(!m.length) return opts.compact||!records.length?'':`<div class="muted">對戰紀錄裡還沒有打過這組對手（也沒有 4 人相同的相似隊）。</div>`;
+  const wins=m.filter(x=>x.r.result==='win'), losses=m.filter(x=>x.r.result!=='win');
+  const modeTxt=r=>r.mode==='attack'?'進攻':r.mode==='defense'?'防守':'特殊';
+  const tag=x=>x.exact?(x.sameIds?(x.sameOrder?'':'<span class="badge" title="同樣 5 人，但對方站位和這次不同">站位不同</span>'):'<span class="badge" title="同樣 5 人，珍藏版不同">珍藏版不同</span>'):`<span class="badge warn" title="對方有 ${x.shared} 人和這次相同">相似隊 ${x.shared}/5</span>`;
+  const line=x=>`<div class="rec"><span class="d">${esc(x.r.date)}</span><span class="badge ${x.r.result==='win'?'good':'bad'}">${x.r.result==='win'?'勝':'負'}</span><span class="badge">${modeTxt(x.r)}</span>${tag(x)}<span class="t">我方：${x.r.mine.map(nameOf).join('／')}${x.r.note?` <span class="muted">（${esc(x.r.note)}）</span>`:''}${x.exact?'':`<br><span class="muted">對方：${x.r.enemy.map(nameOf).join('／')}</span>`}</span><button class="btn" data-rechist="${x.i}" title="把這場的我方隊伍帶入${opts.compact?'我方第 '+(opts.g+1)+' 隊':'「自己排一隊試算」'}">帶入我方</button></div>`;
+  const exactWins=wins.filter(x=>x.exact).length, simWins=wins.length-exactWins;
+  const head=wins.length?`你贏過這組對手 ${exactWins} 次${simWins?`（另有相似隊 ${simWins} 次）`:''}${losses.length?`，輸過 ${losses.length} 次`:''}`:`和這組對手（含相似隊）打過 ${losses.length} 次，都沒贏`;
+  let h=`<div class="verdict ${wins.length?'good':'bad'}" style="font-size:14px;margin:4px 0">${head}</div>`;
+  h+=(opts.compact?wins.slice(0,3):wins).map(line).join('');
+  if(opts.compact&&wins.length>3) h+=`<div class="muted">還有 ${wins.length-3} 場贏的紀錄，見解隊分頁或下方紀錄。</div>`;
+  if(losses.length) h+=`<details><summary class="muted">輸的 ${losses.length} 場（看看哪些隊不行）</summary>${losses.map(line).join('')}</details>`;
+  return h;
 }
 function renderRecords(){
   const el=$('#records'); if(!records.length){ el.className='muted'; el.textContent='還沒有紀錄。'; return; }
@@ -1446,7 +1469,8 @@ function renderAnalysis(){
   const ctx=ctxOf(enemy,enemyMode);
   const arch=detectArchetypes(enemy); const heur=heuristicArchetypes(enemy);
   const mineFull=mine.filter(Boolean).length===5; const eOpp=mineFull?{ids:mine,side:mode,mods:mineMods}:null;
-  let h=enemySummary(enemy)+`<h3>速度</h3>${speedBlock(ctx.speed,'對方',simTeam(enemy,enemyMode,enemyMods,eOpp))}<details class="tldet"><summary>充能時間軸（nikke.top 逐幀模擬）${srcBadges(['top'],'依據')}</summary>${timelineBlock([{ids:enemy,side:enemyMode,mods:enemyMods,label:'對方',key:'enemy',opp:eOpp}])}</details>`;
+  const hist=historyBlock(enemy);
+  let h=enemySummary(enemy)+(hist?`<h3>你打過這組對手嗎</h3>${hist}`:'')+`<h3>速度</h3>${speedBlock(ctx.speed,'對方',simTeam(enemy,enemyMode,enemyMods,eOpp))}<details class="tldet"><summary>充能時間軸（nikke.top 逐幀模擬）${srcBadges(['top'],'依據')}</summary>${timelineBlock([{ids:enemy,side:enemyMode,mods:enemyMods,label:'對方',key:'enemy',opp:eOpp}])}</details>`;
   h+=`<h3>爆裂鏈順序</h3>${chainBlock(ctx.chain)}`;
   h+=`<h3>體系判定</h3>`;
   if(arch.length){ h+=arch.map(a=>`<div style="margin:4px 0"><span class="badge ${a===arch[0]?'bad':'warn'}">${archName(a.arch)}</span> <span class="muted">${esc(a.tpl.notes['zh-TW'])}</span></div>`).join(''); }
@@ -1460,6 +1484,7 @@ function renderAnalysis(){
   const off=offChainKey(enemy);
   if(off.length) h+=`<div class="muted" style="margin-top:6px">⚠ 對方的 ${off.map(nameOf).join('、')} 在軸外：第一輪不會開爆裂，下方關於她們爆裂效果的提示要等第二輪（冷卻後、且軸內同類型角陣亡或輪替）才成立。</div>`;
   el.innerHTML=h;
+  el.querySelectorAll('[data-rechist]').forEach(b=>b.onclick=()=>{ const r=records[+b.dataset.rechist]; if(!r) return; mine=[...r.mine]; while(mine.length<5) mine.push(null); save(); refresh(); const t=document.getElementById('jump-myteam'); if(t) t.scrollIntoView({behavior:'smooth',block:'start'}); });
   return ctx;
 }
 function renderCounters(ctx){
@@ -1751,7 +1776,8 @@ function spMini(g){
   const enemyMode=mode==='attack'?'defense':'attack'; const sp=speedOf(team,enemyMode); const ch=chainOf(team); const arch=detectArchetypes(team); const heur=heuristicArchetypes(team);
   const spc=['2RL','5SG'].includes(sp.tier)?'bad':sp.tier==='3RL'?'warn':'good';
   const off=offChainKey(team); const at=arenaTeam(team); const stat=at?(()=>{const s=rowStats(at.row); return `<span class="badge" title="冠軍競技場實戰">實戰 ${s.m} 場 ${s.wr}%</span>`;})():'';
-  el.innerHTML=`<div class="row" style="gap:6px"><span class="badge ${spc}">速度 ${sp.tier}${sp.reached?'':' 以下'}${ch.stages>3?'（'+ch.stages+' 段軸）':''}</span>${simMini(team,enemyMode,{})}${arch.length?arch.slice(0,3).map(a=>`<span class="badge warn">${archName(a.arch)}</span>`).join(''):`<span class="badge">${heur.length?heur.join('、'):'無主流模板'}</span>`}${stat}${off.length?`<span class="badge bad">軸外：${off.map(nameOf).join('、')}</span>`:''}</div>${enemySummary(team)}<div style="margin-top:4px">${chainBlock(ch)}</div>`;
+  el.innerHTML=`<div class="row" style="gap:6px"><span class="badge ${spc}">速度 ${sp.tier}${sp.reached?'':' 以下'}${ch.stages>3?'（'+ch.stages+' 段軸）':''}</span>${simMini(team,enemyMode,{})}${arch.length?arch.slice(0,3).map(a=>`<span class="badge warn">${archName(a.arch)}</span>`).join(''):`<span class="badge">${heur.length?heur.join('、'):'無主流模板'}</span>`}${stat}${off.length?`<span class="badge bad">軸外：${off.map(nameOf).join('、')}</span>`:''}</div>${enemySummary(team)}<div style="margin-top:4px">${chainBlock(ch)}</div>${historyBlock(team,{compact:true,g})}`;
+  el.querySelectorAll('[data-rechist]').forEach(b=>b.onclick=()=>{ const r=records[+b.dataset.rechist]; if(!r) return; const other=spmOtherIds(g); const dup=r.mine.filter(i=>other.has(i)); if(dup.length&&!confirm(`${dup.map(nameOf).join('、')} 已在我方其他隊，仍要帶入第 ${g+1} 隊嗎？`)) return; spMine[g]=[...r.mine]; while(spMine[g].length<5) spMine[g].push(null); save(); refresh(); });
 }
 // 剩餘角色隊（湊數／放生）：從還沒用到的角色裡挑最強的組合，確保 B1/B2/B3 齊全，並自動排軸
 function fillerTeam(poolIds,usedSet){
