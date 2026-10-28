@@ -139,6 +139,7 @@ ul.tips li{margin:5px 0}
 .rostergrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px;margin-top:10px}
 .hist{display:flex;flex-wrap:wrap;gap:6px}
 .hist button{font-size:12px}
+.swap{margin-left:auto;display:inline-flex;gap:4px}.swap .btn{padding:2px 9px;font-size:13px}.swap .btn:disabled{opacity:.35;cursor:default}
 .hitem{display:inline-flex;align-items:stretch;max-width:100%}.hitem>.btn{border-radius:8px 0 0 8px;min-width:0}
 .hitem>.x{display:flex;align-items:center;padding:0 10px;border:1px solid var(--line);border-left:0;border-radius:0 8px 8px 0;background:var(--panel2);color:var(--muted);cursor:pointer;font-size:13px;user-select:none}
 .hitem>.x:hover{color:var(--bad);border-color:var(--bad)}
@@ -223,9 +224,11 @@ details.mods summary{color:var(--muted)}
       <button class="btn" data-copy="mine" title="複製成「名字／名字／…」文字">複製</button>
       <button class="btn primary" id="btnPickMy" title="在視窗裡連點 5 位，一次選完">一次選整隊</button>
       <button class="btn" id="btnArrangeMy" title="關鍵爆裂角排進軸內、防禦者放 P1／P5、火力放 P3／P4">自動排軸</button>
+      <button class="btn" id="btnSaveMy" title="把目前這 5 人存起來（會一起記下當時的對方隊伍），之後可一鍵載入">儲存這隊</button>
       <button class="btn danger" id="btnClearMy">清空</button>
     </div>
     <div class="muted" id="quickMyNote" style="margin-top:4px;font-size:12px"></div>
+    <details class="tldet" open><summary>已儲存的我方隊伍 <span class="muted" id="mySavedCount"></span></summary><div id="mySavedList" class="muted">還沒有儲存。</div></details>
     <div id="myEval" class="muted" style="margin-top:10px">排好 5 人後自動評估對戰。</div>
   </div>
 
@@ -254,13 +257,13 @@ details.mods summary{color:var(--muted)}
 <section class="tab" id="tab-sp">
   <div class="card">
     <h2 id="jump-sp-enemy" class="jump-target">① 對方三隊 <span class="muted">（我方第 1 隊打對方第 1 隊，依此類推；三隊角色不可重複）</span></h2>
-    <div class="team"><div class="hd"><b>對方第 1 隊</b><span class="muted">照遊戲裡 P1→P5 的順序填</span></div><div class="slots" id="spSlots0"></div>
+    <div class="team"><div class="hd"><b>對方第 1 隊</b><span class="muted">照遊戲裡 P1→P5 的順序填</span><span class="swap" title="手動交換隊伍順序"><button class="btn" data-spswap="0,-1" title="和上一隊交換順序" disabled>↑</button><button class="btn" data-spswap="0,1" title="和下一隊交換順序">↓</button></span></div><div class="slots" id="spSlots0"></div>
       <div class="row" style="margin-top:8px"><input type="text" id="spQuick0" placeholder="名字、簡稱或縮寫串，按 Enter" style="flex:1;min-width:200px"><button class="btn" data-spquick="0">套用</button><button class="btn primary" data-sppick="0">一次選整隊</button><button class="btn" data-copy="sp0">複製</button><button class="btn danger" data-spclear="0">清空</button></div>
       <div class="muted" id="spNote0" style="font-size:12px"></div><div id="spAnalysis0" class="muted" style="margin-top:6px"></div></div>
-    <div class="team"><div class="hd"><b>對方第 2 隊</b><span class="muted">照遊戲裡 P1→P5 的順序填</span></div><div class="slots" id="spSlots1"></div>
+    <div class="team"><div class="hd"><b>對方第 2 隊</b><span class="muted">照遊戲裡 P1→P5 的順序填</span><span class="swap" title="手動交換隊伍順序"><button class="btn" data-spswap="1,-1" title="和上一隊交換順序">↑</button><button class="btn" data-spswap="1,1" title="和下一隊交換順序">↓</button></span></div><div class="slots" id="spSlots1"></div>
       <div class="row" style="margin-top:8px"><input type="text" id="spQuick1" placeholder="名字、簡稱或縮寫串，按 Enter" style="flex:1;min-width:200px"><button class="btn" data-spquick="1">套用</button><button class="btn primary" data-sppick="1">一次選整隊</button><button class="btn" data-copy="sp1">複製</button><button class="btn danger" data-spclear="1">清空</button></div>
       <div class="muted" id="spNote1" style="font-size:12px"></div><div id="spAnalysis1" class="muted" style="margin-top:6px"></div></div>
-    <div class="team"><div class="hd"><b>對方第 3 隊</b><span class="muted">照遊戲裡 P1→P5 的順序填</span></div><div class="slots" id="spSlots2"></div>
+    <div class="team"><div class="hd"><b>對方第 3 隊</b><span class="muted">照遊戲裡 P1→P5 的順序填</span><span class="swap" title="手動交換隊伍順序"><button class="btn" data-spswap="2,-1" title="和上一隊交換順序">↑</button><button class="btn" data-spswap="2,1" title="和下一隊交換順序" disabled>↓</button></span></div><div class="slots" id="spSlots2"></div>
       <div class="row" style="margin-top:8px"><input type="text" id="spQuick2" placeholder="名字、簡稱或縮寫串，按 Enter" style="flex:1;min-width:200px"><button class="btn" data-spquick="2">套用</button><button class="btn primary" data-sppick="2">一次選整隊</button><button class="btn" data-copy="sp2">複製</button><button class="btn danger" data-spclear="2">清空</button></div>
       <div class="muted" id="spNote2" style="font-size:12px"></div><div id="spAnalysis2" class="muted" style="margin-top:6px"></div></div>
     <div class="row"><button class="btn" id="btnSpSaveHistory">三隊存到歷史</button><button class="btn danger" id="btnSpClearAll">清空三隊</button></div>
@@ -280,13 +283,13 @@ details.mods summary{color:var(--muted)}
   <div class="card">
     <h2 id="jump-sp-mine" class="jump-target">③ 我方三隊（手動） <span class="muted">我方第 n 隊打對方第 n 隊；三隊角色不可重複</span></h2>
     <div class="row" style="margin-bottom:6px"><button class="btn" id="btnSpmFromPlan">把上面的推薦帶入</button><button class="btn" id="btnSpmAutoMap">自動配對（換我方三隊的出場順序）</button><button class="btn primary" id="btnSpmSave">儲存這組三隊</button><button class="btn danger" id="btnSpmClear">清空我方三隊</button></div>
-    <div class="team"><div class="hd"><b>我方第 1 隊</b><span class="muted">打對方第 1 隊</span></div><div class="slots" id="spmSlots0"></div>
+    <div class="team"><div class="hd"><b>我方第 1 隊</b><span class="muted">打對方第 1 隊</span><span class="swap" title="手動交換隊伍順序"><button class="btn" data-spmswap="0,-1" title="和上一隊交換順序" disabled>↑</button><button class="btn" data-spmswap="0,1" title="和下一隊交換順序">↓</button></span></div><div class="slots" id="spmSlots0"></div>
       <div class="row" style="margin-top:8px"><input type="text" id="spmQuick0" placeholder="名字、簡稱或縮寫串，按 Enter" style="flex:1;min-width:200px"><button class="btn" data-spmquick="0">套用</button><button class="btn primary" data-spmpick="0">一次選整隊</button><button class="btn" data-spmarr="0">自動排軸</button><button class="btn" data-copy="spm0">複製</button><button class="btn danger" data-spmclear="0">清空</button></div>
       <div class="muted" id="spmNote0" style="font-size:12px"></div><div id="spmEval0" class="muted" style="margin-top:6px"></div></div>
-    <div class="team"><div class="hd"><b>我方第 2 隊</b><span class="muted">打對方第 2 隊</span></div><div class="slots" id="spmSlots1"></div>
+    <div class="team"><div class="hd"><b>我方第 2 隊</b><span class="muted">打對方第 2 隊</span><span class="swap" title="手動交換隊伍順序"><button class="btn" data-spmswap="1,-1" title="和上一隊交換順序">↑</button><button class="btn" data-spmswap="1,1" title="和下一隊交換順序">↓</button></span></div><div class="slots" id="spmSlots1"></div>
       <div class="row" style="margin-top:8px"><input type="text" id="spmQuick1" placeholder="名字、簡稱或縮寫串，按 Enter" style="flex:1;min-width:200px"><button class="btn" data-spmquick="1">套用</button><button class="btn primary" data-spmpick="1">一次選整隊</button><button class="btn" data-spmarr="1">自動排軸</button><button class="btn" data-copy="spm1">複製</button><button class="btn danger" data-spmclear="1">清空</button></div>
       <div class="muted" id="spmNote1" style="font-size:12px"></div><div id="spmEval1" class="muted" style="margin-top:6px"></div></div>
-    <div class="team"><div class="hd"><b>我方第 3 隊</b><span class="muted">打對方第 3 隊</span></div><div class="slots" id="spmSlots2"></div>
+    <div class="team"><div class="hd"><b>我方第 3 隊</b><span class="muted">打對方第 3 隊</span><span class="swap" title="手動交換隊伍順序"><button class="btn" data-spmswap="2,-1" title="和上一隊交換順序">↑</button><button class="btn" data-spmswap="2,1" title="和下一隊交換順序" disabled>↓</button></span></div><div class="slots" id="spmSlots2"></div>
       <div class="row" style="margin-top:8px"><input type="text" id="spmQuick2" placeholder="名字、簡稱或縮寫串，按 Enter" style="flex:1;min-width:200px"><button class="btn" data-spmquick="2">套用</button><button class="btn primary" data-spmpick="2">一次選整隊</button><button class="btn" data-spmarr="2">自動排軸</button><button class="btn" data-copy="spm2">複製</button><button class="btn danger" data-spmclear="2">清空</button></div>
       <div class="muted" id="spmNote2" style="font-size:12px"></div><div id="spmEval2" class="muted" style="margin-top:6px"></div></div>
     <div id="spmSummary" class="muted" style="margin-top:6px"></div>
@@ -334,6 +337,7 @@ details.mods summary{color:var(--muted)}
     <ol>
       <li>到「我的角色庫」把你有的角色點成「擁有」（只需做一次，會記住）。</li>
       <li>回「解隊」，按「一次選整隊」在視窗裡依 P1→P5 連點 5 位後套用；也可以點單一格換人，或在快速輸入框直接打中文名。搜尋支援綽號（白兔、黑兔、偶像阿妮斯、白雪重武、水母、戰術貝斯蒂、EMT 等，清單在 build/data/nicknames.json 可自行增補）。排好後用格子上的 ◀ ▶ 或拖曳調整站位。</li>
+      <li>「自己排一隊試算」可按「儲存這隊」把隊伍存起來（會記下當時的對方），之後用「載入我方」或「載入雙方」一鍵叫回，並顯示這隊打目前對手的戰績；會隨「匯出 JSON」一起匯出。</li>
       <li>看「對方分析」：速度階、爆裂鏈順序、屬於哪種體系、關鍵威脅。最上面會先列出你打過這組對手的對戰紀錄（同樣 5 人，珍藏版算同一人；也會列 4 人相同的相似隊），贏過的排前面，按「帶入我方」就把那場贏的隊伍放進「自己排一隊試算」。特殊競技場每隊下方也有同樣的查詢。</li>
       <li>看「解法建議」與「組反制隊」：工具會從你的角色庫挑出能克制對方體系、速度又夠的隊伍。</li>
       <li>想自己調整，就在「自己排一隊試算」排 5 人，會直接告訴你快慢與互剋關係。</li>
@@ -341,6 +345,7 @@ details.mods summary{color:var(--muted)}
     <h3 id="jump-help-sp" class="jump-target">特殊競技場（15v15）</h3>
     <ul class="tips">
       <li>雙方各擺三隊，依序對戰：我方第 1 隊打對方第 1 隊、第 2 隊打第 2 隊、第 3 隊打第 3 隊，贏兩場就算贏。我方三隊的角色不能重複。</li>
+      <li>對方三隊與我方三隊的標題右邊有 ↑↓，可手動和上一隊／下一隊交換順序（例如對方實際出場順序和你填的不同、或想自己決定我方哪隊打哪隊）；「自動配對」則是讓工具挑我方三隊的出場順序。</li>
       <li>「特殊競技場」分頁填入對方三隊後，工具對每一場先用解隊的反制邏輯挑候選隊，再在六種場次順序下做組合搜尋，確保角色不重複，以「至少兩勝的估計機率」排序；某一場怎麼配都劣勢時會自動放生：那場派剩餘角色中最強、爆裂鏈完整的組合，反制核心留給另外兩場。</li>
       <li>每場的判斷和解隊分頁用同一套（克制、速度、軸、再入、鏡像、實戰數據、站位），機率是粗估：優勢 75%、五五波 50%、劣勢 25%、湊數隊最高 35%；自己對這組對手打過兩場以上時改用實戰結果。</li>
       <li>戰力懲罰逐隊計算：某一隊低於對方該隊的 84.6% 就吃懲罰，三隊戰力要平均分配。 <span class="src">依據：<a href="https://nikke-synergy.com/arena-guide_en" target="_blank" rel="noopener">NIKKE Synergy</a></span></li>
@@ -1275,6 +1280,7 @@ const load3=k=>{ const v=LS.get(k,null); return (Array.isArray(v)&&v.length===3&
 let spEnemy=load3('spEnemy');
 let spMine=load3('spMine');            // 特殊競技場：我方手動三隊
 let spSaved=LS.get('spSaved',[]);       // 儲存的三隊組合 {name,date,mine,enemy}
+let mySaved=LS.get('mySaved',[]);       // 解隊分頁儲存的我方隊伍 {name,date,mine,enemy}
 let spRecords=LS.get('spRecords',[]);   // 特殊競技場紀錄 {date,enemy,mine,results}
 let spPlanType=LS.get('spPlanType','two');
 let spHistory=LS.get('spHistory',[]);   // 對方三隊的歷史 {date,enemy}
@@ -1650,8 +1656,20 @@ function renderHistory(){
     const x=document.createElement('span'); x.className='x'; x.textContent='✕'; x.title='刪除這筆歷史'; x.setAttribute('role','button'); x.onclick=()=>{ if(confirm(`刪除歷史「${hst.map(nameOf).join('／')}」？`)) del(); };
     w.appendChild(b); w.appendChild(x); el.appendChild(w); });
 }
+function renderMySaved(){
+  const el=$('#mySavedList'); if(!el) return; const cnt=$('#mySavedCount'); if(cnt) cnt.textContent=mySaved.length?`（${mySaved.length} 隊）`:'';
+  if(!mySaved.length){ el.className='muted'; el.textContent='還沒有儲存。排好 5 人後按「儲存這隊」。'; return; }
+  el.className='';
+  const eFull=enemy.every(Boolean);
+  el.innerHTML=mySaved.map((sv,i)=>{ const st=eFull?recordStats(enemy,sv.mine).pair:null; const rec=st&&st.n?`<span class="badge ${st.win>=st.loss?'good':'bad'}" title="對戰紀錄裡這隊打目前的對方">對這組對手 ${st.win} 勝 ${st.loss} 負</span>`:'';
+    return `<div class="rec"><span class="d">${esc(sv.date)}</span><span class="t"><b>${esc(sv.name)}</b>${rec}<br>${sv.mine.map(nameOf).join('／')}${sv.enemy&&sv.enemy.every(Boolean)?`<br><span class="muted">當時對方：${sv.enemy.map(nameOf).join('／')}</span>`:''}</span><button class="btn" data-myload="${i}" style="font-size:11px;padding:2px 8px">載入我方</button>${sv.enemy&&sv.enemy.every(Boolean)?`<button class="btn" data-myboth="${i}" style="font-size:11px;padding:2px 8px">載入雙方</button>`:''}<button class="btn" data-myrename="${i}" style="font-size:11px;padding:2px 8px" title="改名">改名</button><span class="x" data-mydel="${i}" title="刪除">✕</span></div>`; }).join('');
+  el.querySelectorAll('[data-myload]').forEach(b=>b.onclick=()=>{ mine=[...mySaved[+b.dataset.myload].mine]; save(); refresh(); });
+  el.querySelectorAll('[data-myboth]').forEach(b=>b.onclick=()=>{ const sv=mySaved[+b.dataset.myboth]; mine=[...sv.mine]; enemy=[...sv.enemy]; save(); refresh(); });
+  el.querySelectorAll('[data-myrename]').forEach(b=>b.onclick=()=>{ const sv=mySaved[+b.dataset.myrename]; const name=prompt('隊伍名稱',sv.name); if(name&&name.trim()){ sv.name=name.trim(); LS.set('mySaved',mySaved); renderMySaved(); } });
+  el.querySelectorAll('[data-mydel]').forEach(b=>b.onclick=()=>{ const sv=mySaved[+b.dataset.mydel]; if(confirm(`刪除「${sv.name}」？`)){ mySaved.splice(+b.dataset.mydel,1); LS.set('mySaved',mySaved); renderMySaved(); } });
+}
 function renderSolve(){
-  renderSlots('#enemySlots',enemy,'enemy'); renderSlots('#mySlots',mine,'mine');
+  renderSlots('#enemySlots',enemy,'enemy'); renderSlots('#mySlots',mine,'mine'); renderMySaved();
   renderMods('#enemyMods',enemy,enemyMods,'enemyMods'); renderMods('#myMods',mine,mineMods,'mineMods');
   const ctx=renderAnalysis(); renderCounters(ctx); renderBuilt(ctx); renderMyEval(ctx); renderHistory(); renderRecords(); renderSourceHelp(); renderArenaNote();
 }
@@ -1696,6 +1714,7 @@ $('#quickMy').addEventListener('keydown',e=>{ if(e.key==='Enter') $('#btnQuickMy
 $('#btnClearEnemy').onclick=()=>{ enemy=[null,null,null,null,null]; save(); refresh(); };
 $('#btnClearMy').onclick=()=>{ mine=[null,null,null,null,null]; save(); refresh(); };
 $('#btnArrangeMy').onclick=()=>{ if(mine.filter(Boolean).length<5) return alert('先排滿 5 人'); mine=autoArrange(mine); save(); refresh(); };
+$('#btnSaveMy').onclick=()=>{ if(mine.some(x=>!x)) return alert('先排滿 5 人'); const name=prompt('這隊的名稱',`隊伍 ${mySaved.length+1}`); if(name===null) return; const dup=mySaved.findIndex(sv=>sv.mine.join()===mine.join()); if(dup>=0&&!confirm(`已有同樣 5 人同站位的「${mySaved[dup].name}」，仍要再存一份嗎？`)) return; mySaved.unshift({name:(name.trim()||`隊伍 ${mySaved.length+1}`),date:new Date().toISOString().slice(0,10),mine:[...mine],enemy:enemy.every(Boolean)?[...enemy]:null}); mySaved=mySaved.slice(0,200); LS.set('mySaved',mySaved); renderMySaved(); };
 $('#btnSaveEnemy').onclick=()=>{ if(enemy.some(x=>!x)) return alert('先填滿 5 個角色'); if(!history.some(h=>h.join()===enemy.join())) history.unshift([...enemy]); history=history.slice(0,20); save(); renderHistory(); };
 $('#chkOnlyOwned').onchange=refresh; $('#chkAllowSub').onchange=refresh;
 $('#pickerClose').onclick=closePicker; $('#picker').addEventListener('click',e=>{ if(e.target.id==='picker') closePicker(); });
@@ -1706,10 +1725,10 @@ $('#btnPickEnemy').onclick=()=>openTeamPicker('enemy'); $('#btnPickMy').onclick=
 $('#rosterSearch').addEventListener('input',renderRoster);
 $('#btnOwnAll').onclick=()=>{ if(confirm('把全部角色標成擁有？')){ owned=new Set(CHARACTERS.map(c=>c.id)); LS.set('followRemote',false); save(); renderRoster(); renderSolve(); } };
 $('#btnOwnNone').onclick=()=>{ if(confirm('清空角色庫？')){ owned=new Set(); LS.set('followRemote',false); save(); renderRoster(); renderSolve(); } };
-$('#btnExport').onclick=()=>{ const blob=new Blob([JSON.stringify({exported:new Date().toISOString().slice(0,10),owned:[...owned],history,records,spHistory,spSaved,spRecords},null,1)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='roster.json'; a.click(); };
+$('#btnExport').onclick=()=>{ const blob=new Blob([JSON.stringify({exported:new Date().toISOString().slice(0,10),owned:[...owned],history,records,mySaved,spHistory,spSaved,spRecords},null,1)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='roster.json'; a.click(); };
 $('#btnRecWin').onclick=()=>addRecord('win'); $('#btnRecLoss').onclick=()=>addRecord('loss');
 $('#btnImport').onclick=()=>$('#fileImport').click();
-$('#fileImport').onchange=e=>{ const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=()=>{ try{ const d=JSON.parse(r.result); if(Array.isArray(d.owned)) owned=new Set(d.owned.filter(i=>byId[i])); if(Array.isArray(d.history)) history=d.history; if(Array.isArray(d.spHistory)){ spHistory=d.spHistory; LS.set('spHistory',spHistory); } if(Array.isArray(d.spSaved)){ spSaved=d.spSaved; LS.set('spSaved',spSaved); } if(Array.isArray(d.spRecords)&&d.spRecords.length&&(!spRecords.length||confirm('匯入檔含 '+d.spRecords.length+' 筆特殊競技場紀錄，要覆蓋目前的嗎？'))){ spRecords=d.spRecords; LS.set('spRecords',spRecords); } if(Array.isArray(d.records)&&d.records.length&&(!records.length||confirm('匯入檔含 '+d.records.length+' 筆對戰紀錄，要覆蓋目前的紀錄嗎？'))){ records=d.records; LS.set('records',records); } LS.set('followRemote',false); save(); renderRoster(); renderSolve(); renderSp(); alert('已匯入 '+owned.size+' 名角色'); }catch(err){ alert('讀取失敗：'+err.message); } }; r.readAsText(f); e.target.value=''; };
+$('#fileImport').onchange=e=>{ const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=()=>{ try{ const d=JSON.parse(r.result); if(Array.isArray(d.owned)) owned=new Set(d.owned.filter(i=>byId[i])); if(Array.isArray(d.history)) history=d.history; if(Array.isArray(d.spHistory)){ spHistory=d.spHistory; LS.set('spHistory',spHistory); } if(Array.isArray(d.spSaved)){ spSaved=d.spSaved; LS.set('spSaved',spSaved); } if(Array.isArray(d.mySaved)){ mySaved=d.mySaved; LS.set('mySaved',mySaved); } if(Array.isArray(d.spRecords)&&d.spRecords.length&&(!spRecords.length||confirm('匯入檔含 '+d.spRecords.length+' 筆特殊競技場紀錄，要覆蓋目前的嗎？'))){ spRecords=d.spRecords; LS.set('spRecords',spRecords); } if(Array.isArray(d.records)&&d.records.length&&(!records.length||confirm('匯入檔含 '+d.records.length+' 筆對戰紀錄，要覆蓋目前的紀錄嗎？'))){ records=d.records; LS.set('records',records); } LS.set('followRemote',false); save(); renderRoster(); renderSolve(); renderSp(); alert('已匯入 '+owned.size+' 名角色'); }catch(err){ alert('讀取失敗：'+err.message); } }; r.readAsText(f); e.target.value=''; };
 
 /* ====================== 資料自動更新 ====================== */
 function setDataStatus(text,cls){ const el=$('#dataStatus'); el.textContent=text; el.style.color=cls==='ok'?'var(--good)':cls==='bad'?'var(--warn)':''; }
@@ -1760,6 +1779,7 @@ async function loadRemoteRoster(manual){
       if(Array.isArray(d.records)&&d.records.length&&(!records.length||confirm(`GitHub 的 roster.json 含 ${d.records.length} 筆對戰紀錄，要覆蓋目前的紀錄嗎？`))){ records=d.records; LS.set('records',records); imported.push(`${d.records.length} 筆對戰紀錄`); }
       if(Array.isArray(d.spHistory)){ spHistory=d.spHistory; LS.set('spHistory',spHistory); }
       if(Array.isArray(d.spSaved)){ spSaved=d.spSaved; LS.set('spSaved',spSaved); }
+      if(Array.isArray(d.mySaved)){ mySaved=d.mySaved; LS.set('mySaved',mySaved); }
       if(Array.isArray(d.spRecords)&&d.spRecords.length&&(!spRecords.length||confirm(`GitHub 的 roster.json 含 ${d.spRecords.length} 筆特殊競技場紀錄，要覆蓋目前的紀錄嗎？`))){ spRecords=d.spRecords; LS.set('spRecords',spRecords); imported.push(`${d.spRecords.length} 筆特殊競技場紀錄`); }
       LS.set('followRemote',true); save(); renderRoster(); updateOwnedCount(); renderSolve(); renderSp();
       setRemoteStatus(`已從倉庫的 roster.json 載入 ${ids.length} 名角色${imported.length?'與'+imported.join('、'):''}${d.exported?'（匯出日期 '+d.exported+'）':''}。`);
@@ -2059,6 +2079,8 @@ $('#btnSpmSave').onclick=()=>{ if(!spMine.every(t=>t.every(Boolean))) return ale
 $('#btnSpmClear').onclick=()=>{ if(confirm('清空我方三隊？')){ spMine=[EMPTY5(),EMPTY5(),EMPTY5()]; save(); refresh(); } };
 $('#btnSpRecord').onclick=spRecordNow;
 $('#btnSpExport').onclick=()=>$('#btnExport').click();
+/* 手動交換三隊順序（對方或我方）：第 g 隊與第 g+dir 隊對調 */
+document.querySelectorAll('[data-spswap],[data-spmswap]').forEach(b=>b.onclick=()=>{ const isMine=b.dataset.spmswap!==undefined; const [g,dir]=(isMine?b.dataset.spmswap:b.dataset.spswap).split(',').map(Number); const h=g+dir; if(h<0||h>2) return; const arr=isMine?spMine:spEnemy; [arr[g],arr[h]]=[arr[h],arr[g]]; save(); refresh(); });
 $('#spOnlyOwned').onchange=refresh; $('#spAllowSub').onchange=refresh;
 
 /* 複製隊伍文字：名字以「／」相連，貼回快速輸入就能還原 */
