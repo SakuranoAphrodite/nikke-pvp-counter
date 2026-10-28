@@ -139,6 +139,9 @@ ul.tips li{margin:5px 0}
 .rostergrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px;margin-top:10px}
 .hist{display:flex;flex-wrap:wrap;gap:6px}
 .hist button{font-size:12px}
+.hitem{display:inline-flex;align-items:stretch;max-width:100%}.hitem>.btn{border-radius:8px 0 0 8px;min-width:0}
+.hitem>.x{display:flex;align-items:center;padding:0 10px;border:1px solid var(--line);border-left:0;border-radius:0 8px 8px 0;background:var(--panel2);color:var(--muted);cursor:pointer;font-size:13px;user-select:none}
+.hitem>.x:hover{color:var(--bad);border-color:var(--bad)}
 .verdict{font-size:18px;font-weight:700;margin:6px 0}
 .verdict.good{color:var(--good)}.verdict.bad{color:var(--bad)}.verdict.warn{color:var(--warn)}
 details summary{cursor:pointer;color:var(--accent2);font-size:13px}
@@ -261,7 +264,7 @@ details.mods summary{color:var(--muted)}
       <div class="row" style="margin-top:8px"><input type="text" id="spQuick2" placeholder="名字、簡稱或縮寫串，按 Enter" style="flex:1;min-width:200px"><button class="btn" data-spquick="2">套用</button><button class="btn primary" data-sppick="2">一次選整隊</button><button class="btn" data-copy="sp2">複製</button><button class="btn danger" data-spclear="2">清空</button></div>
       <div class="muted" id="spNote2" style="font-size:12px"></div><div id="spAnalysis2" class="muted" style="margin-top:6px"></div></div>
     <div class="row"><button class="btn" id="btnSpSaveHistory">三隊存到歷史</button><button class="btn danger" id="btnSpClearAll">清空三隊</button></div>
-    <div class="muted" style="font-size:12px;margin-top:6px">歷史（點擊載入對方三隊；按住 Shift 點擊刪除）：</div>
+    <div class="muted" style="font-size:12px;margin-top:6px">歷史（點擊載入對方三隊；按右邊的 ✕ 或按住 Shift 點擊刪除）：</div>
     <div class="row" id="spHistory"></div>
   </div>
   <div class="card">
@@ -1642,7 +1645,10 @@ function renderMyEval(ctx){
 }
 function renderHistory(){
   const el=$('#enemyHistory'); el.innerHTML='';
-  history.forEach((hst,i)=>{ const b=document.createElement('button'); b.className='btn'; b.textContent=hst.map(nameOf).join('／'); b.title='點擊載入；按住 Shift 點擊刪除'; b.onclick=e=>{ if(e.shiftKey){history.splice(i,1);save();renderHistory();return;} enemy=[...hst]; save(); refresh(); }; el.appendChild(b); });
+  history.forEach((hst,i)=>{ const w=document.createElement('span'); w.className='hitem'; const b=document.createElement('button'); b.className='btn'; b.textContent=hst.map(nameOf).join('／'); b.title='點擊載入；按住 Shift 點擊（或按右邊的 ✕）刪除'; const del=()=>{ history.splice(i,1); save(); renderHistory(); };
+    b.onclick=e=>{ if(e.shiftKey){ del(); return; } enemy=[...hst]; save(); refresh(); };
+    const x=document.createElement('span'); x.className='x'; x.textContent='✕'; x.title='刪除這筆歷史'; x.setAttribute('role','button'); x.onclick=()=>{ if(confirm(`刪除歷史「${hst.map(nameOf).join('／')}」？`)) del(); };
+    w.appendChild(b); w.appendChild(x); el.appendChild(w); });
 }
 function renderSolve(){
   renderSlots('#enemySlots',enemy,'enemy'); renderSlots('#mySlots',mine,'mine');
@@ -1959,7 +1965,10 @@ function renderSp(){
 function renderSpHistory(){
   const el=$('#spHistory'); if(!el) return; el.innerHTML='';
   if(!spHistory.length){ el.innerHTML='<span class="muted">還沒有。</span>'; return; }
-  spHistory.forEach((h,i)=>{ const b=document.createElement('button'); b.className='btn'; b.style.textAlign='left'; b.innerHTML=`<span class="muted" style="font-size:11px">${esc(h.date)}</span> `+h.enemy.map((t,g)=>`${g+1}：${t.map(nameOf).join('／')}`).join('<br>'); b.title='點擊載入對方三隊；按住 Shift 點擊刪除'; b.onclick=e=>{ if(e.shiftKey){ spHistory.splice(i,1); LS.set('spHistory',spHistory); renderSpHistory(); return; } spEnemy=h.enemy.map(t=>[...t]); save(); refresh(); }; el.appendChild(b); });
+  spHistory.forEach((h,i)=>{ const w=document.createElement('span'); w.className='hitem'; const b=document.createElement('button'); b.className='btn'; b.style.textAlign='left'; b.innerHTML=`<span class="muted" style="font-size:11px">${esc(h.date)}</span> `+h.enemy.map((t,g)=>`${g+1}：${t.map(nameOf).join('／')}`).join('<br>'); b.title='點擊載入對方三隊；按住 Shift 點擊（或按右邊的 ✕）刪除'; const del=()=>{ spHistory.splice(i,1); LS.set('spHistory',spHistory); renderSpHistory(); };
+    b.onclick=e=>{ if(e.shiftKey){ del(); return; } spEnemy=h.enemy.map(t=>[...t]); save(); refresh(); };
+    const x=document.createElement('span'); x.className='x'; x.textContent='✕'; x.title='刪除這筆歷史'; x.setAttribute('role','button'); x.onclick=()=>{ if(confirm(`刪除 ${h.date} 這組對方三隊的歷史？`)) del(); };
+    w.appendChild(b); w.appendChild(x); el.appendChild(w); });
 }
 /* ---------- 我方手動三隊 ---------- */
 function renderSpManual(){
