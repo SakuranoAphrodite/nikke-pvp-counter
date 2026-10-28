@@ -325,7 +325,7 @@ details.mods summary{color:var(--muted)}
     <div class="row" style="margin-top:8px">
       <button class="btn" id="btnRemoteRoster" title="角色庫換成倉庫 roster.json 的版本；對戰紀錄、歷史與儲存隊伍合併進本機，不刪本機資料">從 GitHub 載入資料</button>
       <button class="btn danger" id="btnRemoteReplace" title="以倉庫 roster.json 的內容完整取代本機的角色庫、對戰紀錄、歷史與儲存隊伍（本機多出來的會被刪除）">從 GitHub 完整取代</button>
-      <span class="muted" id="remoteRosterStatus">線上版會自動讀取倉庫根目錄的 roster.json（匯出 JSON 後把檔案放進倉庫並推送即可）。</span>
+      <span class="muted" id="remoteRosterStatus">不會自動讀取；按鈕才會載入倉庫根目錄的 roster.json（匯出 JSON 後把檔案放進倉庫並推送即可）。</span>
     </div>
     <div class="filters" id="rosterFilters"></div>
     <div class="rostergrid" id="rosterGrid"></div>
@@ -417,11 +417,11 @@ details.mods summary{color:var(--muted)}
     <div id="refAll"></div>
     <h3 id="jump-help-license" class="jump-target">資料來源與授權</h3>
     <p class="muted">角色資料、充能數值與隊伍模板取自開源專案 <a href="https://github.com/williamchong/nikke-arena-planner" target="_blank">NIKKE Arena Planner</a>（MIT 授權），其數據又整理自 nikke.gg、Prydwen 與左猫猫的充能計算表。繁中譯名以該資料集的台港澳服譯名為準。解法規則與威脅標籤為本工具自行整理，僅供參考。本工具為非官方粉絲工具，與 Shift Up、Level Infinite 無關。</p>
-    <h3 id="jump-help-roster" class="jump-target">讓線上版自動載入我的角色庫</h3>
+    <h3 id="jump-help-roster" class="jump-target">把我的角色庫放到 GitHub，換裝置時一鍵載入</h3>
     <ul class="tips">
       <li>在「我的角色庫」按「匯出 JSON」，會下載一個 <code>roster.json</code>。</li>
       <li>把它放到專案根目錄（和 index.html 同層）並推送到 GitHub。</li>
-      <li>之後在任何裝置打開線上版都會自動讀這份檔案：角色庫在該裝置是空的、或上次就是從倉庫載入的，就換成倉庫的版本；該裝置手動改過角色庫就不動它，可按「從 GitHub 載入資料」手動套用。對戰紀錄、對方隊伍歷史、儲存隊伍與特殊競技場資料一律「合併」進本機：只加入本機沒有的，本機已有的不刪也不覆蓋，所以不會再跳出要不要覆蓋的詢問；roster.json 沒變動時不會重複處理。</li>
+      <li>網頁不會自動讀這份檔案：任何人第一次打開都是空白的角色庫與紀錄，資料只存在各自的瀏覽器，所以可以放心把網址給別人用。要用自己的資料時，到「我的角色庫」按「從 GitHub 載入資料」：角色庫換成倉庫的版本，對戰紀錄、對方隊伍歷史、儲存隊伍與特殊競技場資料「合併」進本機，只加入本機沒有的，本機已有的不刪也不覆蓋。</li>
       <li>「匯入 JSON」也是同樣的合併。想用檔案或倉庫的內容完整取代本機資料（例如還原備份、或換掉改過標籤的舊紀錄），改按紅色的「匯入並取代」或「從 GitHub 完整取代」，會先問一次再動作，手機也能用。</li>
     </ul>
     <h3 id="jump-help-update" class="jump-target">新角色出來怎麼辦</h3>
@@ -1452,7 +1452,7 @@ function renderRoster(){
   for(const c of list){
     const d=document.createElement('div'); d.className='pick'+(owned.has(c.id)?' owned':'');
     d.innerHTML=`${avatar(c.id)}<div class="pickbody"><b>${owned.has(c.id)?'✔ ':''}${esc(c.name['zh-TW'])}</b><span class="en">${esc(c.name.en)}${(NICK[c.id]||[]).length?' · '+esc(NICK[c.id].slice(0,2).join('、')):''}</span><div>${burstBadge(c.burst)}${elBadge(c.element)}<span class="badge">${c.weapon}</span>${tierBadge(c)}</div></div>`;
-    d.onclick=()=>{ if(owned.has(c.id)) owned.delete(c.id); else owned.add(c.id); LS.set('followRemote',false); save(); renderRoster(); updateOwnedCount(); renderSolve(); };
+    d.onclick=()=>{ if(owned.has(c.id)) owned.delete(c.id); else owned.add(c.id); save(); renderRoster(); updateOwnedCount(); renderSolve(); };
     el.appendChild(d);
   }
   updateOwnedCount();
@@ -1726,14 +1726,14 @@ $('#pickerSearch').addEventListener('keydown',e=>{ if(e.key==='Enter'){ const l=
 $('#pickerApply').onclick=()=>{ if(!pickerTarget||!pickerTarget.multi) return; const team=teamOf(pickerTarget.team); const sel=pickerTarget.sel; for(let i=0;i<5;i++) team[i]=sel[i]||null; save(); closePicker(); refresh(); };
 $('#btnPickEnemy').onclick=()=>openTeamPicker('enemy'); $('#btnPickMy').onclick=()=>openTeamPicker('mine');
 $('#rosterSearch').addEventListener('input',renderRoster);
-$('#btnOwnAll').onclick=()=>{ if(confirm('把全部角色標成擁有？')){ owned=new Set(CHARACTERS.map(c=>c.id)); LS.set('followRemote',false); save(); renderRoster(); renderSolve(); } };
-$('#btnOwnNone').onclick=()=>{ if(confirm('清空角色庫？')){ owned=new Set(); LS.set('followRemote',false); save(); renderRoster(); renderSolve(); } };
+$('#btnOwnAll').onclick=()=>{ if(confirm('把全部角色標成擁有？')){ owned=new Set(CHARACTERS.map(c=>c.id)); save(); renderRoster(); renderSolve(); } };
+$('#btnOwnNone').onclick=()=>{ if(confirm('清空角色庫？')){ owned=new Set(); save(); renderRoster(); renderSolve(); } };
 $('#btnExport').onclick=()=>{ const blob=new Blob([JSON.stringify({exported:new Date().toISOString().slice(0,10),owned:[...owned],history,records,mySaved,spHistory,spSaved,spRecords},null,1)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='roster.json'; a.click(); };
 $('#btnRecWin').onclick=()=>addRecord('win'); $('#btnRecLoss').onclick=()=>addRecord('loss');
 let importReplace=false; // 「匯入並取代」：以檔案內容完整取代本機的紀錄、歷史與儲存隊伍；「匯入 JSON」是合併
 $('#btnImport').onclick=()=>{ importReplace=false; $('#fileImport').click(); };
 $('#btnImportReplace').onclick=()=>{ if(!confirm('選好檔案後，會以檔案內容完整取代本機的角色庫、對戰紀錄、歷史與儲存隊伍（本機多出來的會被刪除），確定？')) return; importReplace=true; $('#fileImport').click(); };
-$('#fileImport').onchange=e=>{ const f=e.target.files[0]; if(!f) return; const replace=importReplace; importReplace=false; const r=new FileReader(); r.onload=()=>{ try{ const d=JSON.parse(r.result); if(!d||typeof d!=='object'||Array.isArray(d)) throw new Error('不是 roster.json 的格式'); if(Array.isArray(d.owned)) owned=new Set(d.owned.filter(i=>byId[i])); let msg; if(replace){ replaceImport(d); msg=`已匯入 ${owned.size} 名角色，並以檔案內容取代本機的紀錄、歷史與儲存隊伍。`; } else { const added=mergeImport(d); msg=`已匯入 ${owned.size} 名角色${added.length?'，合併新增 '+added.join('、'):'；紀錄與儲存隊伍沒有新資料'}。本機原有的都保留。`; } LS.set('followRemote',false); save(); renderRoster(); updateOwnedCount(); renderSolve(); renderSp(); alert(msg); }catch(err){ alert('讀取失敗：'+err.message); } }; r.readAsText(f); e.target.value=''; };
+$('#fileImport').onchange=e=>{ const f=e.target.files[0]; if(!f) return; const replace=importReplace; importReplace=false; const r=new FileReader(); r.onload=()=>{ try{ const d=JSON.parse(r.result); if(!d||typeof d!=='object'||Array.isArray(d)) throw new Error('不是 roster.json 的格式'); if(Array.isArray(d.owned)) owned=new Set(d.owned.filter(i=>byId[i])); let msg; if(replace){ replaceImport(d); msg=`已匯入 ${owned.size} 名角色，並以檔案內容取代本機的紀錄、歷史與儲存隊伍。`; } else { const added=mergeImport(d); msg=`已匯入 ${owned.size} 名角色${added.length?'，合併新增 '+added.join('、'):'；紀錄與儲存隊伍沒有新資料'}。本機原有的都保留。`; } save(); renderRoster(); updateOwnedCount(); renderSolve(); renderSp(); alert(msg); }catch(err){ alert('讀取失敗：'+err.message); } }; r.readAsText(f); e.target.value=''; };
 
 /* ====================== 資料自動更新 ====================== */
 function setDataStatus(text,cls){ const el=$('#dataStatus'); el.textContent=text; el.style.color=cls==='ok'?'var(--good)':cls==='bad'?'var(--warn)':''; }
@@ -1794,34 +1794,30 @@ function mergeImport(d){ const added=[]; MERGE_SPEC.forEach(s=>{ const m=mergeLi
 function replaceImport(d){ MERGE_SPEC.forEach(s=>{ if(Array.isArray(d[s.key])) s.set(d[s.key].filter(s.ok).slice(0,s.cap)); }); }
 
 /* ====================== 倉庫內的 roster.json ====================== */
+// 不會自動讀取：只有按「從 GitHub 載入資料」或「從 GitHub 完整取代」才抓倉庫根目錄的 roster.json，
+// 所以任何人第一次打開網頁都是空白的角色庫與紀錄，資料只存在各自的瀏覽器。
 function setRemoteStatus(t){ $('#remoteRosterStatus').textContent=t; }
-const textStamp=s=>{ let h=5381; for(let i=0;i<s.length;i++) h=(h*33+s.charCodeAt(i))>>>0; return s.length+':'+h.toString(36); };
-// manual：按了按鈕；replace：「從 GitHub 完整取代」，以倉庫內容取代本機的紀錄、歷史與儲存隊伍（預設是合併）
-async function loadRemoteRoster(manual,replace){
-  if(!/^https?:$/.test(location.protocol)){ if(manual) setRemoteStatus('本機檔案模式無法讀取 roster.json，請用線上版或匯入 JSON。'); return; }
+// replace：「從 GitHub 完整取代」，以倉庫內容取代本機的紀錄、歷史與儲存隊伍（預設是合併）
+async function loadRemoteRoster(replace){
+  if(!/^https?:$/.test(location.protocol)){ setRemoteStatus('本機檔案模式無法讀取 roster.json，請用線上版或匯入 JSON。'); return; }
+  setRemoteStatus('正在讀取倉庫的 roster.json…');
   try{
     let r=await fetch('roster.json',{cache:'no-store'});
     if(!r.ok) r=await fetch('nikke-pvp-roster.json',{cache:'no-store'}); // 舊版匯出檔名
     if(!r.ok) throw new Error('HTTP '+r.status);
-    const text=await r.text(); const d=JSON.parse(text); const ids=(d.owned||[]).filter(i=>byId[i]);
+    const d=await r.json(); const ids=(d.owned||[]).filter(i=>byId[i]);
     if(!ids.length) throw new Error('roster.json 沒有角色');
-    const same=ids.length===owned.size&&ids.every(i=>owned.has(i));
-    const follow=LS.get('followRemote',false); // 本機沒手動改過角色庫（空的、或上次就是從倉庫載入的）才自動換成倉庫的角色庫
-    const stamp=textStamp(text), seenStamp=LS.get('remoteStamp',''); const when=d.exported?`（匯出日期 ${d.exported}）`:''; const n=`${ids.length} 名`;
-    if(!manual&&owned.size&&stamp===seenStamp){ // 倉庫檔案自上次處理後沒變就不再合併，本機刻意刪掉的紀錄才不會又回來
-      setRemoteStatus(same?`角色庫與倉庫的 roster.json 一致（${n}），紀錄也已合併過${when}。`:`倉庫的 roster.json 自上次合併後沒有變動；本機角色庫已手動修改，未套用倉庫的角色庫（${n}）。`); return; }
-    const takeOwned=manual||owned.size===0||follow; const ownedChanged=takeOwned&&!same;
-    if(ownedChanged) owned=new Set(ids);
+    const same=ids.length===owned.size&&ids.every(i=>owned.has(i)); owned=new Set(ids);
+    const when=d.exported?`（匯出日期 ${d.exported}）`:'';
     let what;
     if(replace){ replaceImport(d); what='並以倉庫內容取代本機的紀錄、歷史與儲存隊伍'; }
     else { const added=mergeImport(d); what=added.length?'合併新增 '+added.join('、')+'，本機原有的都保留':'紀錄與儲存隊伍沒有新資料'; }
-    if(takeOwned) LS.set('followRemote',true);
-    LS.set('remoteStamp',stamp); save(); renderRoster(); updateOwnedCount(); renderSolve(); renderSp();
-    setRemoteStatus((ownedChanged?`已從倉庫的 roster.json 載入 ${n}角色，`:takeOwned?`角色庫與倉庫的 roster.json 一致（${n}），`:`本機角色庫已手動修改，未套用倉庫的角色庫（${n}）；`)+what+when+'。');
-  }catch(e){ if(manual) setRemoteStatus('讀取 roster.json 失敗：'+e.message); }
+    save(); renderRoster(); updateOwnedCount(); renderSolve(); renderSp();
+    setRemoteStatus((same?`角色庫與倉庫的 roster.json 一致（${ids.length} 名），`:`已從倉庫的 roster.json 載入 ${ids.length} 名角色，`)+what+when+'。');
+  }catch(e){ setRemoteStatus('讀取 roster.json 失敗：'+e.message); }
 }
-$('#btnRemoteRoster').onclick=()=>{ if(owned.size&&!confirm('會把角色庫換成倉庫 roster.json 的版本，並把倉庫的對戰紀錄、歷史與儲存隊伍合併進本機（本機已有的不會刪除），確定？')) return; loadRemoteRoster(true,false); };
-$('#btnRemoteReplace').onclick=()=>{ if(!confirm('會以倉庫 roster.json 的內容完整取代本機的角色庫、對戰紀錄、歷史與儲存隊伍（本機多出來的會被刪除），確定？')) return; loadRemoteRoster(true,true); };
+$('#btnRemoteRoster').onclick=()=>{ if(owned.size&&!confirm('會把角色庫換成倉庫 roster.json 的版本，並把倉庫的對戰紀錄、歷史與儲存隊伍合併進本機（本機已有的不會刪除），確定？')) return; loadRemoteRoster(false); };
+$('#btnRemoteReplace').onclick=()=>{ if(!confirm('會以倉庫 roster.json 的內容完整取代本機的角色庫、對戰紀錄、歷史與儲存隊伍（本機多出來的會被刪除），確定？')) return; loadRemoteRoster(true); };
 /* ====================== 特殊競技場（15v15）三隊配對 ====================== */
 const SP_KEYS=['sp0','sp1','sp2'], SPM_KEYS=['spm0','spm1','spm2'];
 function teamOf(key){ if(key==='enemy') return enemy; if(key==='mine') return mine; let g=SP_KEYS.indexOf(key); if(g>=0) return spEnemy[g]; g=SPM_KEYS.indexOf(key); return g>=0?spMine[g]:mine; }
@@ -2130,7 +2126,7 @@ document.addEventListener('click',e=>{
   if(b.dataset.copy){ const ids=teamOf(b.dataset.copy).filter(Boolean); if(!ids.length) return alert('這隊還沒有角色。'); copyText(teamText(ids),b); }
   else copyText(teamText(b.dataset.copyteam.split(',')),b);
 });
-loadRemoteRoster(false); loadRemoteReferences();
+loadRemoteReferences(); // roster.json 不自動讀取，只有「從 GitHub 載入資料」按鈕才載入
 
 updateOwnedCount(); refresh();
 </script>
