@@ -60,6 +60,9 @@ def build():
     arena_file, deck_file = DATA / "arena-stats.json", DATA / "deck-speed.json"
     arena = json.loads(arena_file.read_text(encoding="utf-8")) if arena_file.exists() else {"teams": [], "beatenBy": {}, "arch": {}, "archVs": {}, "charPos": {}, "names": {}, "rounds": 0}
     deck = json.loads(deck_file.read_text(encoding="utf-8")) if deck_file.exists() else {"units": {}, "quantumLv7": 4.66}
+    top_file = DATA / "nikketop.json"  # nikke.top 逐幀充能參數（fetch_nikketop.py）
+    top = json.loads(top_file.read_text(encoding="utf-8")) if top_file.exists() else {"units": {}, "keyPoints": []}
+    top.pop("unmatched", None)
     html = (html.replace("__CHARACTERS__", dump(chars))
                 .replace("__TEMPLATES__", dump(tpls))
                 .replace("__TEMPLATES_EXTRA__", dump(extra))
@@ -68,6 +71,7 @@ def build():
                 .replace("__PRYDWEN__", dump(pry))
                 .replace("__ARENA__", dump(arena))
                 .replace("__DECK__", dump(deck))
+                .replace("__NIKKETOP__", dump(top))
                 .replace("__DATA_DATE__", ver))
     OUT.write_text(html, encoding="utf-8")
     INDEX.write_text(html, encoding="utf-8")  # GitHub Pages 用的同內容副本

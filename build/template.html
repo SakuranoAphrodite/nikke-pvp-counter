@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- 此檔由 build/build.py 從 build/template.html 產生。直接改 index.html 或 NIKKE-PVP-解隊助手.html 的內容，下次重建時會被覆蓋；要改請改 build/template.html 再執行 build.py。 -->
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
@@ -19,6 +20,13 @@ header h1 small{color:var(--muted);font-weight:400;font-size:12px;margin-left:8p
 nav{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
 nav button,.seg button{background:var(--panel2);border:1px solid var(--line);color:var(--text);padding:6px 12px;border-radius:8px;cursor:pointer;font-size:14px}
 nav button.active,.seg button.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.jump-nav{display:flex;align-items:center;gap:6px;width:100%;overflow-x:auto;padding:2px 0 3px;scrollbar-width:thin}
+.jump-nav:empty{display:none}
+.jump-nav .jump-label{color:var(--muted);font-size:12px;white-space:nowrap;margin-right:2px}
+.jump-nav button{flex:none;white-space:nowrap;background:#202536;border:1px solid var(--line);color:var(--text);padding:4px 9px;border-radius:999px;cursor:pointer;font-size:12px}
+.jump-nav button:hover{border-color:var(--accent2);color:#fff}
+.jump-nav button:focus-visible{outline:2px solid var(--accent2);outline-offset:2px}
+.jump-target{scroll-margin-top:160px}
 main{max-width:1200px;margin:0 auto;padding:16px}
 .tab{display:none}.tab.active{display:block}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
@@ -79,6 +87,17 @@ input[type=text],textarea{background:#0f121a;border:1px solid var(--line);color:
 .bar{height:10px;background:#0f121a;border-radius:6px;overflow:hidden;border:1px solid var(--line)}
 .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2))}
 .tierrow{display:grid;grid-template-columns:52px 1fr 70px;gap:8px;align-items:center;font-size:12px;margin:3px 0}
+.tlsum{font-size:13px;line-height:1.6;margin-top:6px}.tlsum>div{margin:2px 0}
+.tlrows{margin:2px 0 6px 20px}.tlrows summary{cursor:pointer;font-size:12px}
+.tlrow{display:grid;grid-template-columns:160px 1fr 90px;gap:8px;align-items:center;font-size:12px;margin:2px 0}
+.tlkey{display:inline-block;width:16px;height:0;border-top:2px solid;vertical-align:middle;margin-right:6px;border-radius:2px}
+.tllegend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;margin:8px 0 2px}
+.tlwrap{position:relative}.tl{width:100%;height:auto;display:block;touch-action:none}
+.tlgrid{stroke:var(--line);stroke-width:1}.tlkeyline{stroke:var(--muted);stroke-width:1;stroke-dasharray:3 3;opacity:.7}.tlkeyline.stun{stroke:var(--bad)}
+.tltxt{fill:var(--muted);font-size:11px}.tlline{fill:none;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.tltick{stroke-width:2}.tldot{stroke:var(--panel);stroke-width:2}.tlx{stroke:var(--text);stroke-width:1;opacity:.8}
+.tltip{position:absolute;pointer-events:none;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:6px 8px;font-size:12px;display:none;white-space:nowrap;z-index:5;line-height:1.5}
+.tldet{margin-top:6px}.tldet>summary{cursor:pointer;font-size:13px}
 .chain{display:flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:13px}
 .chain .arrow{color:var(--muted)}
 .chain .who{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:4px 8px}
@@ -150,7 +169,7 @@ details.mods summary{color:var(--muted)}
   <div class="seg" id="modeSeg">
     <button data-mode="attack" class="active" title="我去打別人的防守隊">我方進攻</button>
     <button data-mode="defense" title="我在排防守隊，對方是進攻隊">我方防守</button>
-    <select id="speedSrc" title="速度（充能達成率）用哪一套資料與公式計算" style="margin-left:8px"><option value="deck">速度：nikke-deck 公式</option><option value="planner">速度：arena-planner 資料</option></select>
+    <select id="speedSrc" title="速度（充能達成率）用哪一套資料與公式計算" style="margin-left:8px"><option value="top">速度：nikke.top 逐幀模擬</option><option value="deck">速度：nikke-deck 公式</option><option value="planner">速度：arena-planner 資料</option></select>
   </div>
   <nav>
     <button data-tab="solve" class="active">解隊</button>
@@ -158,13 +177,14 @@ details.mods summary{color:var(--muted)}
     <button data-tab="roster">我的角色庫 <span id="ownedCount" class="badge"></span></button>
     <button data-tab="help">說明</button>
   </nav>
+  <div class="jump-nav" id="jumpNav" aria-label="頁面區塊快速導覽"></div>
 </header>
 
 <main>
 <!-- ============ 解隊 ============ -->
 <section class="tab active" id="tab-solve">
   <div class="card">
-    <h2>① 對方隊伍 <span class="muted">（照遊戲裡 P1→P5 的順序填）</span></h2>
+    <h2 id="jump-enemy" class="jump-target">① 對方隊伍 <span class="muted">（照遊戲裡 P1→P5 的順序填）</span></h2>
     <div class="slots" id="enemySlots"></div>
     <details class="mods"><summary>進階：對方的充能速度超頻／量子魔方（會改變速度判定）</summary><div id="enemyMods"></div></details>
     <div class="row" style="margin-top:10px">
@@ -181,17 +201,17 @@ details.mods summary{color:var(--muted)}
 
   <div class="grid2">
     <div class="card" id="analysisCard">
-      <h2>② 對方分析</h2>
+      <h2 id="jump-analysis" class="jump-target">② 對方分析</h2>
       <div id="analysis" class="muted">填滿 5 個角色後自動分析。</div>
     </div>
     <div class="card">
-      <h2>③ 解法建議</h2>
+      <h2 id="jump-counters" class="jump-target">③ 解法建議</h2>
       <div id="counters" class="muted">填滿 5 個角色後自動產生。</div>
     </div>
   </div>
 
   <div class="card">
-    <h2>④ 自己排一隊試算 <span class="muted">（可從上面的建議「帶入」再微調）</span></h2>
+    <h2 id="jump-myteam" class="jump-target">④ 自己排一隊試算 <span class="muted">（可從上面的建議「帶入」再微調）</span></h2>
     <div class="slots" id="mySlots"></div>
     <details class="mods"><summary>進階：我方角色的充能速度超頻／量子魔方（也會套用到「組反制隊」的候選隊）</summary><div id="myMods"></div></details>
     <div class="row" style="margin-top:10px">
@@ -207,7 +227,7 @@ details.mods summary{color:var(--muted)}
   </div>
 
   <div class="card">
-    <h2>⑤ 對戰紀錄 <span class="muted">（把實戰結果記下來，之後遇到同樣的對手或體系時會提醒你）</span></h2>
+    <h2 id="jump-records" class="jump-target">⑤ 對戰紀錄 <span class="muted">（把實戰結果記下來，之後遇到同樣的對手或體系時會提醒你）</span></h2>
     <div class="row">
       <button class="btn primary" id="btnRecWin">記錄：這場贏了</button>
       <button class="btn danger" id="btnRecLoss">記錄：這場輸了</button>
@@ -216,7 +236,7 @@ details.mods summary{color:var(--muted)}
     <div id="records" class="muted" style="margin-top:8px"></div>
   </div>
   <div class="card">
-    <h2>⑥ 用我的角色庫組反制隊 <span class="muted" id="rosterNote"></span><span class="muted" style="font-weight:400;font-size:12px">（清單很長，可點標題收起）</span></h2>
+    <h2 id="jump-built" class="jump-target">⑥ 用我的角色庫組反制隊 <span class="muted" id="rosterNote"></span><span class="muted" style="font-weight:400;font-size:12px">（清單很長，可點標題收起）</span></h2>
     <div class="row" style="margin-bottom:8px">
       <label><input type="checkbox" id="chkOnlyOwned" checked> 只用我擁有的角色</label>
       <label><input type="checkbox" id="chkAllowSub" checked> 模板缺角時允許同爆裂段替補</label>
@@ -230,7 +250,7 @@ details.mods summary{color:var(--muted)}
 <!-- ============ 特殊競技場 ============ -->
 <section class="tab" id="tab-sp">
   <div class="card">
-    <h2>① 對方三隊 <span class="muted">（我方第 1 隊打對方第 1 隊，依此類推；三隊角色不可重複）</span></h2>
+    <h2 id="jump-sp-enemy" class="jump-target">① 對方三隊 <span class="muted">（我方第 1 隊打對方第 1 隊，依此類推；三隊角色不可重複）</span></h2>
     <div class="team"><div class="hd"><b>對方第 1 隊</b><span class="muted">照遊戲裡 P1→P5 的順序填</span></div><div class="slots" id="spSlots0"></div>
       <div class="row" style="margin-top:8px"><input type="text" id="spQuick0" placeholder="名字、簡稱或縮寫串，按 Enter" style="flex:1;min-width:200px"><button class="btn" data-spquick="0">套用</button><button class="btn primary" data-sppick="0">一次選整隊</button><button class="btn" data-copy="sp0">複製</button><button class="btn danger" data-spclear="0">清空</button></div>
       <div class="muted" id="spNote0" style="font-size:12px"></div><div id="spAnalysis0" class="muted" style="margin-top:6px"></div></div>
@@ -245,7 +265,7 @@ details.mods summary{color:var(--muted)}
     <div class="row" id="spHistory"></div>
   </div>
   <div class="card">
-    <h2>② 三隊配對結果 <span class="muted" id="spRosterNote"></span></h2>
+    <h2 id="jump-sp-plan" class="jump-target">② 三隊配對結果 <span class="muted" id="spRosterNote"></span></h2>
     <div class="row" style="margin-bottom:8px">
       <label><input type="checkbox" id="spOnlyOwned" checked> 只用我擁有的角色</label>
       <label><input type="checkbox" id="spAllowSub" checked> 模板缺角時允許同爆裂段替補</label>
@@ -255,7 +275,7 @@ details.mods summary{color:var(--muted)}
     <div id="spResult" class="muted">填滿三隊後自動產生。</div>
   </div>
   <div class="card">
-    <h2>③ 我方三隊（手動） <span class="muted">我方第 n 隊打對方第 n 隊；三隊角色不可重複</span></h2>
+    <h2 id="jump-sp-mine" class="jump-target">③ 我方三隊（手動） <span class="muted">我方第 n 隊打對方第 n 隊；三隊角色不可重複</span></h2>
     <div class="row" style="margin-bottom:6px"><button class="btn" id="btnSpmFromPlan">把上面的推薦帶入</button><button class="btn" id="btnSpmAutoMap">自動配對（換我方三隊的出場順序）</button><button class="btn primary" id="btnSpmSave">儲存這組三隊</button><button class="btn danger" id="btnSpmClear">清空我方三隊</button></div>
     <div class="team"><div class="hd"><b>我方第 1 隊</b><span class="muted">打對方第 1 隊</span></div><div class="slots" id="spmSlots0"></div>
       <div class="row" style="margin-top:8px"><input type="text" id="spmQuick0" placeholder="名字、簡稱或縮寫串，按 Enter" style="flex:1;min-width:200px"><button class="btn" data-spmquick="0">套用</button><button class="btn primary" data-spmpick="0">一次選整隊</button><button class="btn" data-spmarr="0">自動排軸</button><button class="btn" data-copy="spm0">複製</button><button class="btn danger" data-spmclear="0">清空</button></div>
@@ -271,7 +291,7 @@ details.mods summary{color:var(--muted)}
     <div id="spSavedList" class="muted">還沒有儲存。</div>
   </div>
   <div class="card">
-    <h2>④ 特殊競技場紀錄 <span class="muted">記下這組對手、我方三隊與每場勝負；每一場也會進「對戰紀錄」，之後同樣的對手會顯示戰績</span></h2>
+    <h2 id="jump-sp-records" class="jump-target">④ 特殊競技場紀錄 <span class="muted">記下這組對手、我方三隊與每場勝負；每一場也會進「對戰紀錄」，之後同樣的對手會顯示戰績</span></h2>
     <div class="row">
       <label>第 1 場 <select id="spRes0"><option value="">未打</option><option value="win">勝</option><option value="loss">負</option></select></label>
       <label>第 2 場 <select id="spRes1"><option value="">未打</option><option value="win">勝</option><option value="loss">負</option></select></label>
@@ -286,7 +306,7 @@ details.mods summary{color:var(--muted)}
 <!-- ============ 角色庫 ============ -->
 <section class="tab" id="tab-roster">
   <div class="card">
-    <h2>我的角色庫 <span class="muted">點角色切換「擁有」，存在瀏覽器本機，不會上傳</span></h2>
+    <h2 id="jump-roster" class="jump-target">我的角色庫 <span class="muted">點角色切換「擁有」，存在瀏覽器本機，不會上傳</span></h2>
     <div class="row">
       <input type="text" id="rosterSearch" placeholder="搜尋（中文／英文／日文）" style="max-width:320px">
       <button class="btn" id="btnOwnAll">全部擁有</button>
@@ -296,7 +316,7 @@ details.mods summary{color:var(--muted)}
       <input type="file" id="fileImport" accept="application/json" style="display:none">
     </div>
     <div class="row" style="margin-top:8px">
-      <button class="btn" id="btnRemoteRoster">從 GitHub 載入角色庫</button>
+      <button class="btn" id="btnRemoteRoster">從 GitHub 載入資料</button>
       <span class="muted" id="remoteRosterStatus">線上版會自動讀取倉庫根目錄的 roster.json（匯出 JSON 後把檔案放進倉庫並推送即可）。</span>
     </div>
     <div class="filters" id="rosterFilters"></div>
@@ -307,7 +327,7 @@ details.mods summary{color:var(--muted)}
 <!-- ============ 說明 ============ -->
 <section class="tab" id="tab-help">
   <div class="card">
-    <h2>怎麼用</h2>
+    <h2 id="jump-help" class="jump-target">怎麼用</h2>
     <ol>
       <li>到「我的角色庫」把你有的角色點成「擁有」（只需做一次，會記住）。</li>
       <li>回「解隊」，按「一次選整隊」在視窗裡依 P1→P5 連點 5 位後套用；也可以點單一格換人，或在快速輸入框直接打中文名。搜尋支援綽號（白兔、黑兔、偶像阿妮斯、白雪重武、水母、戰術貝斯蒂、EMT 等，清單在 build/data/nicknames.json 可自行增補）。排好後用格子上的 ◀ ▶ 或拖曳調整站位。</li>
@@ -315,23 +335,23 @@ details.mods summary{color:var(--muted)}
       <li>看「解法建議」與「組反制隊」：工具會從你的角色庫挑出能克制對方體系、速度又夠的隊伍。</li>
       <li>想自己調整，就在「自己排一隊試算」排 5 人，會直接告訴你快慢與互剋關係。</li>
     </ol>
-    <h3>特殊競技場（15v15）</h3>
+    <h3 id="jump-help-sp" class="jump-target">特殊競技場（15v15）</h3>
     <ul class="tips">
       <li>雙方各擺三隊，依序對戰：我方第 1 隊打對方第 1 隊、第 2 隊打第 2 隊、第 3 隊打第 3 隊，贏兩場就算贏。我方三隊的角色不能重複。</li>
       <li>「特殊競技場」分頁填入對方三隊後，工具對每一場先用解隊的反制邏輯挑候選隊，再在六種場次順序下做組合搜尋，確保角色不重複，以「至少兩勝的估計機率」排序；某一場怎麼配都劣勢時會自動放生：那場派剩餘角色中最強、爆裂鏈完整的組合，反制核心留給另外兩場。</li>
       <li>每場的判斷和解隊分頁用同一套（克制、速度、軸、再入、鏡像、實戰數據、站位），機率是粗估：優勢 75%、五五波 50%、劣勢 25%、湊數隊最高 35%；自己對這組對手打過兩場以上時改用實戰結果。</li>
       <li>戰力懲罰逐隊計算：某一隊低於對方該隊的 84.6% 就吃懲罰，三隊戰力要平均分配。 <span class="src">依據：<a href="https://nikke-synergy.com/arena-guide_en" target="_blank" rel="noopener">NIKKE Synergy</a></span></li>
     </ul>
-    <h3>速度階怎麼看</h3>
+    <h3 id="jump-help-speed" class="jump-target">速度階怎麼看</h3>
     <table>
-      <tr><th>速度階</th><th>意思</th><th>約略時間</th></tr>
-      <tr><td>2RL</td><td>兩輪火箭筒就開全爆裂，極快，幾乎只有豺狼＋彈匣式 RL 做得到</td><td>約 2.5 秒</td></tr>
-      <tr><td>5SG</td><td>等於 2.5RL，很快，通常靠彈匣式霰彈槍</td><td>約 3.0 秒</td></tr>
-      <tr><td>3RL</td><td>主流基準，大部分對局夠用</td><td>約 3.5 秒</td></tr>
-      <tr><td>7SG</td><td>等於 3.5RL，開始會被快隊壓</td><td>約 4.0 秒</td></tr>
-      <tr><td>4RL / 5RL</td><td>慢，要靠坦克、無敵、復活撐到自己爆裂</td><td>4.5 秒以上</td></tr>
+      <tr><th>速度階</th><th>意思</th><th>充滿 100%（nikke.top）</th><th>全爆裂（B3 啟動）</th></tr>
+      <tr><td>2RL</td><td>第二發火箭筒命中（第 152 幀）就充滿，極快，幾乎只有豺狼＋彈匣式 RL 做得到</td><td>2.53 秒</td><td>約 4.0 秒</td></tr>
+      <tr><td>5SG</td><td>等於 2.5RL（第 190 幀），很快，通常靠彈匣式霰彈槍</td><td>3.17 秒</td><td>約 4.6 秒</td></tr>
+      <tr><td>3RL</td><td>第三發命中（第 228 幀），主流基準，大部分對局夠用</td><td>3.80 秒</td><td>約 5.3 秒</td></tr>
+      <tr><td>7SG</td><td>等於 3.5RL（第 266 幀），開始會被快隊壓</td><td>4.43 秒</td><td>約 5.9 秒</td></tr>
+      <tr><td>4RL / 5RL</td><td>第四／五發命中（第 304／380 幀），慢，要靠坦克、無敵、復活撐到自己爆裂</td><td>5.07／6.33 秒</td><td>約 6.5／7.8 秒</td></tr>
     </table>
-    <h3>幾個關鍵規則</h3>
+    <h3 id="jump-help-rules" class="jump-target">幾個關鍵規則</h3>
     <ul class="tips">
       <li>競技場是全自動戰鬥，不能手動選目標；你能控制的只有「帶誰、站哪、多快」。</li>
       <li>爆裂鏈一定要有 B1、B2、B3 各一（小紅帽的 Λ 可以補任何一段），缺一段就永遠開不了全爆裂。</li>
@@ -340,7 +360,7 @@ details.mods summary{color:var(--muted)}
       <li>戰力低於對方 84.6% 會吃到屬性懲罰，差太多時陣容再對也打不贏。</li>
       <li>充能數值是以「對方不動（防守 AI）」的理論值估算，實戰會因掩體、射偏、目標切換而有誤差，把它當作相對快慢的參考。</li>
     </ul>
-    <h3>速度機制完整說明</h3>
+    <h3 id="jump-help-mechanics" class="jump-target">速度機制完整說明</h3>
     <ol>
       <li><b>充能只在攻擊命中時發生。</b>每位角色每次命中有固定的基礎充能值；火箭筒打 P1 或 P5 會命中 4 個目標（角色＋掩體各兩個），充能 4 倍；打 P2～P4 命中 6 個，充能 6 倍。霰彈槍每發 10 顆彈丸等於 10 次命中，而且 PVP 中命中率屬性無效、彈丸全中。部分火箭筒命中數不同：紅蓮暗影、灰姑娘只打 1 個；愛蜜莉雅、貝斯蒂戰術升級、A2、超級巨星阿妮斯打 3 個。 <span class="src">依據：<a href="https://www.prydwen.gg/nikke/guides/pvp-mechanics" target="_blank" rel="noopener">Prydwen</a>、<a href="https://nikke-synergy.com/arena-guide_en" target="_blank" rel="noopener">NIKKE Synergy</a></span></li>
       <li><b>充能公式</b>（NIKKE Synergy）：命中數 × 每次命中充能% × (量子魔方＋充能提升) ＋ 技能觸發次數 × 每次充能% ＋ 固定補給（例如海倫珍藏每次滿蓄力 +14.31%、羅珊娜對倒地目標 +36.54%）＝該角色的充能貢獻。技能額外充能的基礎值例：紅蓮 S2 0.45、豺狼 S1 3.55、哈蘭 S1 2.9、莫德尼亞 S1 0.05。雙持角色（諾雅、索林、克洛、昆西）PVP 只用一把槍，充能減半。</li>
@@ -354,8 +374,9 @@ details.mods summary{color:var(--muted)}
       <li><b>目標順序</b>：進攻時 SMG／MG／AR／SG／RL 第一發打 P5、之後集中 P1，SR 一直打 P5；防守時 SG 集中打 P5，其餘打 P1。換目標時機：裝填、目標進掩體、目標死亡、嘲諷結束。指定目標技能（夏日阿妮斯 S2、帕瓦／佩珀的最高攻擊核爆）會被嘲諷吸走。</li>
       <li><b>戰力懲罰</b>：低於對方 84.6%（差距超過 15.4%）起扣 20% 屬性，線性增加到最多 90%；冠軍競技場沒有戰力懲罰且全員同步鎖 400，所以純看陣容。P2 留空可讓對方火箭充能由 4 倍降到 2 倍，但冠軍競技場會自動把隊伍往前擠。</li>
     </ol>
-    <h3>速度（充能達成率）怎麼算</h3>
-    <p class="muted">預設用 <a href="https://nikke-deck.com/en/deck" target="_blank" rel="noopener">nikke-deck.com</a> 的資料與公式，和該站的結果一致：每位角色在 2RL／2.5RL（本工具寫 5SG）／3RL／3.5RL（7SG）／4RL 五階的充能百分比相加，哪一階先到 100% 就是這隊的速度。細節：有「技能 10」版本的角色（海倫珍藏、愛蜜莉雅、拉貝爾…）預設用技能 10 的數值；勾「超頻 17%」用該角色的 17% 版本；量子魔方 Lv7 乘 1.0466；隊上有超級巨星阿妮斯時，其他每位依「0.084 × 角色係數 × 該階命中數」另外加充能（她的被動）。頁首可切換成 nikke-arena-planner 的資料，兩者有 27 位角色的數值不同（例如拉普拉斯究極英雄、白雪重武、戰術貝斯蒂），1RL 與 5RL 兩階 nikke-deck 沒有資料，仍用 planner 的值。豺狼的連結（分攤傷害回充）nikke-deck 另有特殊處理，本工具未納入。</p>
+    <h3 id="jump-help-charge" class="jump-target">速度（充能達成率）怎麼算</h3>
+    <p class="muted"><b>預設用 <a href="https://nikke.top/" target="_blank" rel="noopener">nikke.top</a>（NIKKE Arena Tools）的逐幀模擬</b>，本工具移植了該站前端的計算：遊戲以 60 幀為一秒，每位角色依武器有固定射擊節奏（火箭筒／狙擊槍蓄力 60 幀＋發射 16 幀，命中再延遲 12～16 幀；霰彈槍每 42 幀一發 10 顆彈丸；突擊步槍每 6 幀、衝鋒槍每 4 幀一發；機槍第 96／122／152／180 幀各一波後每 2 幀一發），每次命中充能「基礎充能 × 命中倍率」，全隊累積到 100% 那一幀就是「充滿」。所以 <b>1RL＝76 幀＝1.267 秒</b>，2RL＝152 幀（2.53 秒）、3RL＝228 幀（3.80 秒）；充滿後 B1 要再 24 幀（0.40 秒）才啟動，B2、B3 各再 32 幀（0.53 秒），全爆裂＝充滿＋1.47 秒。速度階就是「充滿的那一幀落在哪一階之前」；「充能時間軸」把兩隊的累積曲線畫出來，可以直接看出 2RL 以下的隊伍到底多快（例如 1.6RL＝第 122 幀＝2.03 秒，比 2RL 早半秒）、以及我方和對方差幾幀。特殊角色（紅蓮暗影、灰姑娘、海倫珍藏、小紅帽、夏日阿妮斯、德雷克珍藏、女僕普麗瓦蒂、冰玫瑰梅登、愛蜜莉雅、A2、哈蘭、純真白雪、小美人魚、渡鴉、戰術貝斯蒂、莉貝雷利奧、重武白雪、超級巨星阿妮斯、視界霓虹、究極英雄拉普拉斯、平凡技師麥斯威爾）都照該站的個別節奏；超級巨星阿妮斯的被動（隊友每擊 +0.084×倍率）、紅蓮被打反擊回充（每次被命中 +0.135%）、充能速度超頻 17%（蓄力少 10 幀）與量子魔方 Lv7 也有納入；<b>沒納入</b>的是豺狼連結回充（該站要手動指定連結對象）、小紅帽穿透與「萬能妮姬」。「羅珊娜」「暈眩」兩條虛線是該站標的關鍵時間點（第 96 幀機槍第一波命中、第 196 幀小美人魚暈眩）。</p>
+    <p class="muted">頁首可切換成 <a href="https://nikke-deck.com/en/deck" target="_blank" rel="noopener">nikke-deck.com</a> 的資料與公式，和該站的結果一致：每位角色在 2RL／2.5RL（本工具寫 5SG）／3RL／3.5RL（7SG）／4RL 五階的充能百分比相加，哪一階先到 100% 就是這隊的速度。細節：有「技能 10」版本的角色（海倫珍藏、愛蜜莉雅、拉貝爾…）預設用技能 10 的數值；勾「超頻 17%」用該角色的 17% 版本；量子魔方 Lv7 乘 1.0466；隊上有超級巨星阿妮斯時，其他每位依「0.084 × 角色係數 × 該階命中數」另外加充能（她的被動）。頁首可切換成 nikke-arena-planner 的資料，兩者有 27 位角色的數值不同（例如拉普拉斯究極英雄、白雪重武、戰術貝斯蒂），1RL 與 5RL 兩階 nikke-deck 沒有資料，仍用 planner 的值。豺狼的連結（分攤傷害回充）nikke-deck 另有特殊處理，本工具未納入。</p>
     <details><summary><b>名字簡稱表</b>（點開看）</summary>
     <p class="muted">快速輸入與選角搜尋認得的綽號、簡稱與單字縮寫。這些是從社群常見寫法（巴哈、PTT、KR／JP 隊伍縮寫如「諾帽餅」「노노비수라」）整理的，<b>沒有統計來源</b>，不是使用頻率排名；要增補請改 <code>build/data/nicknames.json</code> 再執行 build.py。簡體名由上游資料提供，不列在這裡。</p>
     <p class="muted">單字輸入的規則：先看有沒有角色的綽號剛好是這個字（白→布蘭兒、諾→諾雅），沒有的話取名字以這個字開頭的角色，多位同首字時選 PVP 階級高、冠軍競技場出場多的那位，有珍藏版一律珍藏版。下面「單字對應」列出每個首字實際會對到誰；想改對應就在 nicknames.json 給想要的角色加上那個單字。</p>
@@ -363,10 +384,10 @@ details.mods summary{color:var(--muted)}
     <div class="row" style="margin-top:8px"><input type="text" id="nickSearch" placeholder="搜尋角色或簡稱" style="flex:1;min-width:200px"></div>
     <div id="nickTable" style="margin-top:6px"></div>
     </details>
-    <h3>冠軍競技場實戰數據怎麼來的</h3>
+    <h3 id="jump-help-arena" class="jump-target">冠軍競技場實戰數據怎麼來的</h3>
     <p class="muted" id="arenaDataNote"></p>
     <p class="muted">工具用這份資料的三種方式：①「這隊出場 N 場、勝率」是同 5 人組合的統計；②「直接對位」是含我方 4 位（不足 20 場時放寬到 3 位）相同角色的隊伍，對上含對方 4 位（或 3 位）相同角色的隊伍的勝負，珍藏與一般版視為同一人，這是最接近你這場的實戰數字，和模板寫的克制關係衝突時以它為準；③「模板對位」是依體系分類加總的粗略數字，只在沒有直接對位資料時計分。資料挖掘模板的克制行會附上該對位的場數與勝率。</p>
-    <h3>參考網站</h3>
+    <h3 id="jump-help-sites" class="jump-target">參考網站</h3>
     <table>
       <tr><td><a href="https://nikkeari.cc/zh-CN" target="_blank" rel="noopener">にけあり！NIKKE 競技場分析器</a></td><td>冠軍競技場實戰統計：各隊伍勝率、進攻／防守勝率、站位統計、對戰紀錄。志願玩家提供截圖整理，有 JP／KR／國際服資料。本工具的「實戰數據」來源。</td></tr>
       <tr><td><a href="https://nikke-deck.com/en/deck" target="_blank" rel="noopener">NIKKE DECK</a></td><td>組隊工具，速度模型含超頻充能 17% 與量子魔方，另有「隊伍對隊伍」比較、PVP 階級表與文章。支援英／法／日／韓。</td></tr>
@@ -378,21 +399,21 @@ details.mods summary{color:var(--muted)}
       <tr><td><a href="https://nikke-tools.netlify.app/" target="_blank" rel="noopener">Nikke Tools（ニケツールズ）</a></td><td>日本玩家製作的工具集（にけあり！推薦連結之一），需在瀏覽器中開啟。</td></tr>
       <tr><td><a href="https://www.youtube.com/results?search_query=NIKKE+champion+arena" target="_blank" rel="noopener">YouTube：Champion Arena</a></td><td>玩家整理的冠軍競技場隊伍與對局影片（例如 Keripo）。</td></tr>
     </table>
-    <h3>每條建議的依據是什麼</h3>
+    <h3 id="jump-help-advice" class="jump-target">每條建議的依據是什麼</h3>
     <p class="muted">解隊畫面上每條建議後面都有「依據：…」標籤，點了會連到出處。分成幾種：</p>
     <div id="sourceList"></div>
-    <h3>參考對局與資料</h3>
+    <h3 id="jump-help-references" class="jump-target">參考對局與資料</h3>
     <p class="muted">冠軍競技場的對局回放只能在遊戲內觀看，官方不提供匯出，所以工具無法自動引用；這裡收錄的是玩家整理的影片、攻略與討論串，存放在倉庫根目錄的 <code>references.json</code>，你可以自己增加（格式見 README）。符合當前對手體系的項目會直接顯示在解法建議裡。</p>
     <div id="refAll"></div>
-    <h3>資料來源與授權</h3>
+    <h3 id="jump-help-license" class="jump-target">資料來源與授權</h3>
     <p class="muted">角色資料、充能數值與隊伍模板取自開源專案 <a href="https://github.com/williamchong/nikke-arena-planner" target="_blank">NIKKE Arena Planner</a>（MIT 授權），其數據又整理自 nikke.gg、Prydwen 與左猫猫的充能計算表。繁中譯名以該資料集的台港澳服譯名為準。解法規則與威脅標籤為本工具自行整理，僅供參考。本工具為非官方粉絲工具，與 Shift Up、Level Infinite 無關。</p>
-    <h3>讓線上版自動載入我的角色庫</h3>
+    <h3 id="jump-help-roster" class="jump-target">讓線上版自動載入我的角色庫</h3>
     <ul class="tips">
       <li>在「我的角色庫」按「匯出 JSON」，會下載一個 <code>roster.json</code>。</li>
       <li>把它放到專案根目錄（和 index.html 同層）並推送到 GitHub。</li>
-      <li>之後在任何裝置打開線上版，角色庫會自動載入這份檔案；如果你在該裝置上手動改過角色庫，就不會自動覆蓋，可按「從 GitHub 載入角色庫」手動同步。</li>
+      <li>之後在任何裝置打開線上版，角色庫與紀錄會自動載入這份檔案；如果你在該裝置上手動改過角色庫，就不會自動覆蓋，可按「從 GitHub 載入資料」手動同步。已有本機對戰紀錄時，會先詢問是否覆蓋。</li>
     </ul>
-    <h3>新角色出來怎麼辦</h3>
+    <h3 id="jump-help-update" class="jump-target">新角色出來怎麼辦</h3>
     <ul class="tips">
       <li>每天第一次打開本頁時，如果有網路，會自動向上游專案抓最新的角色與模板資料並暫存在瀏覽器；頁首會顯示目前用的是「內建」「快取」還是「線上」資料，也可以按「檢查更新」手動抓。</li>
       <li>想把新資料固定寫進這個檔案（離線也有），雙擊資料夾裡的 <code>更新資料.bat</code>，或執行 <code>python build\build.py --update</code>。</li>
@@ -564,6 +585,7 @@ const SOURCES={
   game8:{label:'Game8 競技場（2025-11）',url:'https://game8.jp/nikke/501481',desc:'最多兩個 B3、同段多的放左邊、普麗瓦蒂先手'},
   deckca:{label:'NIKKE DECK 冠軍競技場規則',url:'https://nikke-deck.com/en/articles/champion-arena',desc:'5 隊先 3 勝、平手依勝場→存活數→剩餘 HP、同步 400 無戰力懲罰'},
   ari:  {label:'nikkeari 冠軍競技場統計',url:'https://nikkeari.cc/zh-CN',desc:'にけあり！的冠軍競技場對戰資料（志願玩家截圖整理，JP／KR／國際服），本工具已匯入並以隊伍 5 人組合比對'},
+  top:  {label:'nikke.top 逐幀充能模擬',url:'https://nikke.top/',desc:'NIKKE Arena Tools：以 60 fps 逐幀模擬每位角色的射擊節奏與每次命中的充能，畫出兩隊累積充能的時間軸；1RL＝76 幀（1.267 秒），充滿後 B1 +24 幀、B2／B3 各 +32 幀。本工具移植了它的計算（不含豺狼連結回充、小紅帽穿透）'},
   deck: {label:'nikke-deck 充能資料',url:'https://nikke-deck.com/en/deck',desc:'超頻充能速度 17% 與量子魔方 Lv7 對充能的影響，以及另一份 PVP 階級表'},
   calc: {label:'本工具推算',url:null,desc:'由充能數值與評分規則算出來的結果，不是外部依據'},
   tool: {label:'本工具整理',url:null,desc:'依公開技能機制整理的提示文字'},
@@ -574,6 +596,7 @@ function srcBadges(keys,prefix){ return `<span class="src">${prefix||'依據'}�
 /* ====================== 冠軍競技場實戰統計（nikkeari.cc）與 nikke-deck 充能資料 ====================== */
 const ARENA = __ARENA__;
 const DECK  = __DECK__;
+const TOP   = __NIKKETOP__; // nikke.top 逐幀充能參數（build/fetch_nikketop.py）
 const ARENA_IDX=new Map((ARENA.teams||[]).map((t,i)=>[t[0],i]));
 const anyName=id=>byId[id]?byId[id].name['zh-TW']:((ARENA.names&&ARENA.names[id])||id);
 const teamKey=ids=>[...ids].sort().join(',');
@@ -771,7 +794,7 @@ function renderSourceHelp(){
 /* ====================== 計算核心 ====================== */
 const TIERS=['2RL','5SG','3RL','7SG','4RL','5RL'];
 const CYCLES={'1RL':1,'2RL':2,'3SG':1.5,'5SG':2.5,'3RL':3,'7SG':3.5,'4RL':4,'5RL':5};
-const TIER_SEC={'2RL':2.5,'5SG':3.0,'3RL':3.5,'7SG':4.0,'4RL':4.5,'5RL':5.5};
+const TIER_SEC={'2RL':2.53,'5SG':3.17,'3RL':3.80,'7SG':4.43,'4RL':5.07,'5RL':6.33}; // 該階充滿 100% 的秒數（nikke.top：1RL＝76 幀＝1.267 秒），全爆裂再約 +1.47 秒
 const TIER_RANK={'SSS':8,'SS':7,'S':6,'A':5,'B':4,'C':3,'D':2,'E':1,'F':0};
 const EL_ZH={fire:'燃燒',water:'水冷',wind:'風壓',electric:'電擊',iron:'鐵甲'};
 const ROLE_ZH={attacker:'火力',supporter:'支援',defender:'防禦'};
@@ -781,7 +804,7 @@ let dataInfo={source:'內建',date:BUILTIN_DATE};
 function applyData(chars,tpls,info){ applyPrydwen(chars); CHARACTERS=chars; const ids=new Set(tpls.map(t=>t.id)); TEMPLATES=tpls.concat(TEMPLATES_EXTRA.filter(t=>!ids.has(t.id))); byId=Object.fromEntries(chars.map(c=>[c.id,c])); dataInfo=info; }
 
 /* 速度資料來源：deck = nikke-deck.com 的每階充能與公式（預設）；planner = nikke-arena-planner 的資料 */
-let speedSrc='deck'; // 實際值在狀態區由 localStorage 載入
+let speedSrc='top'; // top = nikke.top 逐幀模擬（預設）；實際值在狀態區由 localStorage 載入
 const DECK_IDX={'2RL':0,'5SG':1,'3RL':2,'7SG':3,'4RL':4}; // nikke-deck 的五階：2RL、2.5RL、3RL、3.5RL、4RL
 /* nikke-deck 公式（app-deck-details.getBurstGeneration）：
    每階充能 = 該角色的 burstGeneration（有「S10」預設版本就用它；勾超頻 17% 用 17% 版本）
@@ -797,6 +820,7 @@ function deckGen(c,t,md,star){
   return g/100;
 }
 function speedOf(ids,mode,mods){
+  if(speedSrc==='top'){ const sim=simTeam(ids,mode,mods,null,400); if(sim){ const totals={}; for(const t of ['1RL',...TIERS]) totals[t]=sim.at(TOP_F[t])/100; let tier='5RL',reached=false; for(const t of TIERS){ if(sim.fullF!==null&&sim.fullF<=TOP_F[t]){tier=t;reached=true;break;} } return {tier,totals,reached,cycles:CYCLES[tier],sec:TIER_SEC[tier],sim}; } }
   const chars=ids.map(i=>byId[i]).filter(Boolean);
   const totals={}; const star=chars.some(c=>c.id==='anis-star');
   for(const t of ['1RL',...TIERS]) totals[t]=chars.reduce((s,c)=>{ let g=c.burstGen[mode][t]||0; const md=mods&&mods[c.id];
@@ -806,6 +830,171 @@ function speedOf(ids,mode,mods){
   for(const t of TIERS){ if(totals[t]>=1){tier=t;reached=true;break;} }
   return {tier,totals,reached,cycles:CYCLES[tier],sec:TIER_SEC[tier]};
 }
+/* ====================== nikke.top 逐幀充能模擬 ======================
+   移植自 nikke.top（NIKKE Arena Tools）前端的計算：60 fps，每位角色依武器有固定射擊節奏，
+   每次命中充能 rate × mult（×量子魔方），全隊累積到 100 就「充滿」；之後 B1 +24 幀、每多一段 +32 幀。
+   火箭筒／狙擊槍：蓄力 int 幀（充能速度超頻 17% 縮短 10 幀）＋發射 16 幀，命中再延遲 12～16 幀（依站位）；
+   一輪火箭筒 = 76 幀 = 1.267 秒，2RL = 152 幀、3RL = 228 幀。
+   未移植：豺狼連結回充（網站要手動指定連結對象）、小紅帽穿透、萬能妮姬。 */
+const TOP_F={'1RL':76,'2RL':152,'5SG':190,'3RL':228,'7SG':266,'4RL':304,'5RL':380};
+const TOP_RL=76, TOP_FPS=60, TOP_MAXF=597;
+const TOP_KEYS=(TOP.keyPoints||[]).map(k=>({f:k.f,label:({Rosanna:'羅珊娜',Stun:'暈眩'})[k.label]||k.label,raw:k.label}));
+const TOP_RED=[0,0,2,2,2,4,4,4,6,6,6,8,8,8,8,10,10,10,12,12,12,14,14,14,14,16,16,16,18,18,18,20,20,20,20,22,22,22,24,24,24,26,26,26,28,28,28];
+const topRed=p=>TOP_RED[Math.max(0,Math.min(46,Math.floor(p)))]||0;           // 充能速度% → 蓄力縮短幀數
+const topRedSR=p=>p===10?8:(p>=18&&p<=20)?14:(p>=21&&p<=24)?16:topRed(p);   // 莉貝雷利奧用的對照
+function topSpd(md,extra){ const arr=[]; if(md&&md.ol) arr.push(17); if(extra) arr.push(...extra); const m=new Map(); for(const v of arr){ if(v>0) m.set(v,(m.get(v)||0)+v); } let s=0; for(const v of m.values()) s+=Math.round(v); return s; }
+const topQ=md=>1+((md&&md.q)?(DECK.quantumLv7||4.66):0)/100;
+function topDelay(u,pos,atk){ if(u.w!=='RL') return 0; if(u.top==='003') return 10; if(u.top==='053T'||u.top==='053') return 6; if(atk) return pos<=1?16:14; return pos<=1?16:pos<=3?14:12; }
+function topTargets(u,atk){ const h=u.hpc,w=u.w; if(atk){ if(w==='SR') return [[4,h]]; if(w==='RL') return [[0,h],[1,h]]; return [[0,h]]; } if(w==='SG') return [[4,h]]; if(w==='RL') return [[0,h],[1,h]]; return [[0,h]]; }
+const topExtraTg=atk=>atk?[[0,1],[1,1]]:[[3,1],[4,1]];
+function topMG(u,md,n,pos){ const p=u.rate*topQ(md), d=u.top==='011'?2:1, ev=[]; const push=(f,h)=>ev.push({f,ch:p*h*d,src:pos,tg:[[0,h*d]],w:'MG'});
+  if(96<=n) push(96,12); if(122<=n) push(122,6); if(152<=n) push(152,16);
+  if(180<=n){ push(180,14); for(let b=182;b<=n;b+=2) ev.push({f:b,ch:p,src:pos,tg:[[0,d]],w:'MG'}); }
+  return ev; }
+function topGeneric(u,md,n,pos,atk){
+  if(u.w==='MG') return topMG(u,md,n,pos);
+  let l=u.int,c=0; const chg=u.w==='RL'||u.w==='SR';
+  if(chg){ l=Math.max(1,l-topRed(topSpd(md))); c=16; }
+  const g=u.rate*u.mult*topQ(md), m=topDelay(u,pos,atk), ev=[], tg=()=>topTargets(u,atk);
+  let b=0;
+  if(chg){ b=l; if(b+m<=n) ev.push({f:b+m,ch:g,src:pos,tg:tg(),w:u.w}); b+=c+l; }
+  while(b<=n){ ev.push({f:b+m,ch:g,src:pos,tg:tg(),w:u.w}); b+=l+c; }
+  return ev;
+}
+/* 個別角色的特殊節奏（nikke.top 的 getCalculator） */
+const TOP_SPECIAL={
+  '002':(u,md,n,pos)=>{ const q=topQ(md); return [[23,2.5],[69,2.5],[115,3.75],[161,2.5],[207,2.5],[253,5],[299,2.5],[345,2.5],[391,3.75]].filter(x=>x[0]<=n).map(x=>({f:x[0],ch:x[1]*q,src:pos,tg:[[0,1]],w:'RL'})); },
+  '003':(u,md,n,pos,atk)=>{ const p=0.225*topQ(md), C=topDelay(u,pos,atk), g=[4,2,2,2,4,4], d=[2,2,2,2,4,4], ev=[]; let b=1,first=true,T=60;
+    while(T<=n){ const f=(first?g:d)[(b-1)%6]; ev.push({f:T+C,ch:p*f,src:pos,tg:[[0,2]],w:'RL'}); b++; T+=22; if(b>6&&first){ first=false; b=1; } } return ev; },
+  '004T':(u,md,n,pos,atk)=>topGeneric(u,md,n,pos,atk).map(e=>({...e,ch:e.ch+14.31})),
+  '005':(u,md,n,pos,atk)=>{ const l=u.int,c=16,g=u.rate*u.mult*topQ(md),m=topDelay(u,pos,atk),ev=[],st=[],tp=atk?4:0;
+    const live=I=>st.filter(x=>x>I).length, add=I=>{ st.push(I+180); for(let i=st.length-1;i>=0;i--) if(st[i]<=I) st.splice(i,1); if(st.length>10) st.splice(0,st.length-10); };
+    let k=l-topRed(topSpd(md)); if(k+m<=n){ ev.push({f:k+m,ch:g,src:pos,tg:[[tp,u.hpc]],w:'SR'}); add(k+m); }
+    for(;;){ const I=live(k); k+=c+l-topRed(topSpd(md,Array(I).fill(3.81))); if(k+m>n) break; ev.push({f:k+m,ch:g,src:pos,tg:[[tp,u.hpc]],w:'SR'}); add(k+m); } return ev; },
+  '008':(u,md,n,pos,atk)=>{ const C=topQ(md),ev=[]; let g=0; while(g<=n){ ev.push({f:g,ch:0.25*10*C,src:pos,tg:topTargets(u,atk),w:'SG'});
+    for(let b=1;b<=4;b++){ g+=42; if(g<=n) ev.push({f:g,ch:2.5*C,src:pos,tg:topTargets(u,atk),w:'SG'}); }
+    if(g<=n&&g+12<=n) ev.push({f:g+12,ch:0.25*2*C,src:pos,tg:[],w:'SG'}); g+=84; } return ev; },
+  '010T':(u,md,n,pos,atk)=>{ const m=topQ(md),ev=[{f:0,ch:0.45*10*m,src:pos,tg:topTargets(u,atk),w:'SG'}]; let g=0,d=1;
+    while(g<=n){ g+=42; if(g<=n){ d++; ev.push({f:g,ch:0.45*10*m,src:pos,tg:topTargets(u,atk),w:'SG'}); if(d%5===0&&g+12<=n) ev.push({f:g+12,ch:0.45*m,src:pos,tg:[],w:'SG'}); } } return ev; },
+  '027':(u,md,n,pos,atk)=>{ const m=topQ(md),ev=[]; let v=0,g=0; while(v<=n){ g++; const d=topTargets(u,atk); let b=0.2*10*m; if(g%3===0){ b+=0.2*2*m; d.push(...topExtraTg(atk)); } ev.push({f:v,ch:b,src:pos,tg:d,w:'SG'}); v+=42; } return ev; },
+  '032':(u,md,n,pos,atk)=>topGeneric(u,md,n,pos,atk).map(e=>({...e,tg:[[0,2],[1,1]]})),
+  '041':(u,md,n,pos,atk)=>{ const l=u.int,c=16,g=u.rate*u.mult*topQ(md),m=topDelay(u,pos,atk),ev=[],tg=()=>[[0,u.hpc],[1,u.hpc],[2,u.hpc]];
+    let x=l-topRed(topSpd(md)); if(x+m<=n) ev.push({f:x+m,ch:g,src:pos,tg:tg(),w:'RL'});
+    const T=topRed(topSpd(md,[13.01])); for(x+=c+l-T;x+m<=n;x+=c+l-T) ev.push({f:x+m,ch:g,src:pos,tg:tg(),w:'RL'}); return ev; },
+  '051':(u,md,n,pos)=>{ const m=1.3*9*topQ(md); return [152,228].filter(f=>f<=n).map(f=>({f,ch:m,src:pos,tg:[[0,2],[1,2],[2,2]],w:'RL'})); },
+  '061':(u,md,n,pos,atk)=>{ const o=2.9*topQ(md), v=Math.max(1,u.int-topRed(topSpd(md))), tp=atk?4:0, ev=[]; let d=v;
+    if(d<=n) ev.push({f:d,ch:o,src:pos,tg:[[tp,1]],w:'SR'}); for(d+=16+v;d<=n;d+=16+v) ev.push({f:d,ch:o*2,src:pos,tg:[[tp,1]],w:'SR'}); return ev; },
+  '076':(u,md,n,pos,atk)=>{ const o=0.05*topQ(md); return topGeneric(u,md,n,pos,atk).map((e,i)=>(i+1)%30===0?{...e,ch:e.ch+o}:e); },
+  '152':(u,md,n,pos,atk)=>{ const o=0.5*topQ(md); return topGeneric(u,md,n,pos,atk).map((e,i)=>i===0?{...e,ch:e.ch+o}:e); },
+  '159':(u,md,n,pos,atk)=>{ const d=topQ(md),ev=[]; let x=78,T=x+2+72;
+    if(x+2<n){ ev.push({f:x+2,ch:1.4*5*d,src:pos,tg:topTargets(u,atk),w:'RL'}); if(T<n) ev.push({f:T,ch:1.4*d,src:pos,tg:[[0,1]],w:'RL'}); }
+    for(x+=126;x<=n;x+=126){ if(x+2<=n) ev.push({f:x+2,ch:1.4*5*d,src:pos,tg:topTargets(u,atk),w:'RL'}); T+=60; if(T<=n) ev.push({f:T,ch:1.4*d,src:pos,tg:[[0,1]],w:'RL'}); } return ev; },
+  '162':(u,md,n,pos)=>{ const p=0.65*12*topQ(md), b=Math.max(1,122-topRed(topSpd(md))*2), off=pos<=1?14:12, ev=[]; let M=0;
+    for(;;){ const h=M+b; if(h>n) break; for(let i=0;i<4;i++){ const k=h+i*22+off; if(k>n) break; ev.push({f:k,ch:p,src:pos,tg:[[0,2],[1,2],[2,2]],w:'RL'}); } M=h+66; if(M>n) break; } return ev; },
+  '167':(u,md,n,pos)=>{ const m=Math.max(1,90-topRedSR(topSpd(md))), d=2.8*topQ(md), ev=[]; for(let T=0;;T++){ const M=m+T*m; if(M>n) break; let h=0;
+    for(let i=0;i<6;i++){ if(i===1) h+=12; else if(i>1) h+=6; const R=M+h; if(R>n) break; ev.push({f:R,ch:d,src:pos,tg:[[4,1]],w:'SR'}); } } return ev; },
+  '169':(u,md,n,pos)=>{ const q=topQ(md),ev=[],off=[0,6,12,20,28,36,44],mu=[2,1,5,1,1,1,1]; for(let d=0;;d++){ const b=72+d*88; if(b>n) break;
+    for(let i=0;i<7;i++){ const h=b+off[i]; if(h>n) break; ev.push({f:h,ch:2.8*mu[i]*q,src:pos,tg:[[4,1]],w:'SR'}); } } return ev; },
+  '174':(u,md,n,pos)=>{ const m=Math.max(1,60-topRed(topSpd(md))), b=u.rate*u.mult*topQ(md), off=pos<=1?14:12, ev=[]; for(let M=m;M<=n;M+=4+m){ if(M+off<=n) ev.push({f:M+off,ch:b,src:pos,tg:[[0,1],[1,1],[2,1]],w:'RL'}); } return ev; },
+  '175':(u,md,n,pos)=>{ const m=Math.max(1,60-topRed(topSpd(md))), b=u.rate*u.mult*topQ(md), off=pos<=1?14:12, ev=[]; for(let M=m;M<=n;M+=2+m){ if(M+off<=n) ev.push({f:M+off,ch:b,src:pos,tg:[[0,1],[1,1]],w:'RL'}); } return ev; },
+  '176':(u,md,n,pos,atk)=>{ const l=u.int,c=6,g=u.rate*u.mult*topQ(md),m=topDelay(u,pos,atk),ev=[]; let x=l-topRed(topSpd(md)),T=0;
+    while(x+m<=n){ ev.push({f:x+m,ch:g,src:pos,tg:topTargets(u,atk),w:'RL'}); T++; x+=c+l-topRed(topSpd(md,[T===1?10:20])); } return ev; },
+  '177':(u,md,n,pos,atk)=>topGeneric(u,md,n,pos,atk).map(e=>({...e,ch:e.ch+7.15})),
+};
+function topEvents(id,md,n,pos,atk){ const u=TOP.units[id]; if(!u) return null; const fn=TOP_SPECIAL[u.top]||topGeneric; return fn(u,md,n,pos,atk); }
+const _simCache=new Map();
+/* simTeam：ids 依站位（可含 null），side = 'attack'|'defense'，mods = {id:{ol,q}}，opp = {ids,side,mods}（算紅蓮反擊用）
+   回傳 null 表示有角色沒有 nikke.top 資料（missing 列在 simMissing） */
+function simMissing(ids){ return ids.filter(i=>i&&byId[i]&&!TOP.units[i]); }
+function simTeam(ids,side,mods,opp,maxF){
+  maxF=maxF||TOP_MAXF; mods=mods||{};
+  const key=ids.join(',')+'|'+side+'|'+JSON.stringify(mods)+'|'+(opp?opp.ids.join(',')+'|'+opp.side+'|'+JSON.stringify(opp.mods||{}):'')+'|'+maxF;
+  if(_simCache.has(key)) return _simCache.get(key);
+  if(_simCache.size>4000) _simCache.clear();
+  const atk=side==='attack';
+  if(simMissing(ids).length){ _simCache.set(key,null); return null; }
+  const per=[]; let star=false;
+  ids.forEach((id,pos)=>{ if(!id||!byId[id]) return; const ev=topEvents(id,mods[id],maxF,pos,atk); if(ev) per.push({id,pos,ev}); if(id==='anis-star') star=true; });
+  if(star){ for(const p of per){ const u=TOP.units[p.id]; p.ev=p.ev.map(e=>({...e,ch:e.ch+(u.w==='MG'?0.084*e.tg.reduce((s,t)=>s+t[1],0):0.084*(u.mult||1))})); } }
+  const extra=[];
+  const sPos=ids.indexOf('scarlet');
+  if(sPos>=0&&opp&&!simMissing(opp.ids).length){ const oatk=opp.side==='attack'; const byF=new Map();
+    opp.ids.forEach((id,pos)=>{ if(!id||!byId[id]) return; for(const e of topEvents(id,(opp.mods||{})[id],maxF,pos,oatk)||[]){ let h=0; for(const t of e.tg) if(t[0]===sPos) h+=t[1]; if(h) byF.set(e.f,(byF.get(e.f)||0)+h); } });
+    for(const [f,h] of byF) extra.push({f,ch:0.135*h,src:sPos,tg:[],w:'AR'});
+    if(extra.length) extra.sort((a,b)=>a.f-b.f);
+  }
+  const all=per.flatMap(p=>p.ev).concat(extra);
+  const byF=new Map(); for(const e of all) byF.set(e.f,(byF.get(e.f)||0)+e.ch);
+  const frames=[...byF.keys()].sort((a,b)=>a-b); let cum=0, fullF=null; const pts=[];
+  for(const f of frames){ cum=Number((cum+byF.get(f)).toFixed(3)); pts.push({f,v:cum}); if(fullF===null&&cum>=100) fullF=f; }
+  const at=f=>{ let v=0; for(const p of pts){ if(p.f>f) break; v=p.v; } return v; };
+  const upto=fullF===null?maxF:fullF;
+  const perChar=per.map(p=>{ const ev=p.ev.filter(e=>e.f<=upto); return {id:p.id,pos:p.pos,w:TOP.units[p.id].w,hits:ev.length,cum:ev.reduce((s,e)=>s+e.ch,0),first:ev.length?ev[0].f:null}; });
+  if(extra.length){ const ev=extra.filter(e=>e.f<=upto); perChar.push({id:'scarlet',pos:sPos,w:'反擊',hits:ev.length,cum:ev.reduce((s,e)=>s+e.ch,0),first:ev.length?ev[0].f:null,counter:true}); }
+  const stages=chainOf(ids).stages||3;
+  const bursts=fullF===null?[]:Array.from({length:stages},(_,i)=>fullF+24+32*i);
+  const r={ids,side,pts,fullF,at,perChar,bursts,stages,maxF,valid:chainOf(ids).valid};
+  _simCache.set(key,r); return r;
+}
+const simSec=f=>(f/TOP_FPS).toFixed(2);
+const simRL=f=>(f/TOP_RL).toFixed(1);
+/* 充滿幀數對照速度階的說明文字：比哪一階快／慢多少 */
+function simTierNote(f){
+  const order=['2RL','5SG','3RL','7SG','4RL','5RL']; const nm=t=>({'5SG':'2.5RL','7SG':'3.5RL'})[t]||t;
+  if(f<TOP_F['2RL']) return `比 2RL 還快 ${simSec(TOP_F['2RL']-f)} 秒`;
+  for(let i=0;i<order.length;i++){ const t=order[i]; if(f===TOP_F[t]) return `剛好 ${nm(t)}`; if(f<TOP_F[t]) return `比 ${nm(order[i-1])} 慢 ${simSec(f-TOP_F[order[i-1]])} 秒、比 ${nm(t)} 快 ${simSec(TOP_F[t]-f)} 秒`; }
+  return `比 5RL 還慢 ${simSec(f-TOP_F['5RL'])} 秒`;
+}
+function simMini(ids,side,mods,opp){ const s=simTeam(ids,side,mods,opp||null); if(!s) return ''; if(s.fullF===null) return `<span class="muted" title="nikke.top 逐幀模擬：模擬到 ${simSec(s.maxF)} 秒仍未充滿">充滿 &gt;${simSec(s.maxF)}s</span>`;
+  return `<span class="muted" title="nikke.top 逐幀模擬：充滿 100% 的時間（第 ${s.fullF} 幀）／全爆裂（最後一段爆裂）的時間">充滿 ${simSec(s.fullF)}s（≈${simRL(s.fullF)}RL）／全爆裂 ${simSec(s.bursts[s.bursts.length-1])}s</span>`; }
+/* ---------- 充能時間軸（nikke.top 式的顯示） ---------- */
+const TL_COLOR={mine:'#3987e5',enemy:'#d95926'};
+const _tlData={}; let _tlSeq=0;
+function simSummary(t){
+  const s=t.sim, key=`<i class="tlkey" style="border-color:${TL_COLOR[t.key]}"></i>`;
+  if(!s){ const miss=simMissing(t.ids); return `<div>${key}<b>${t.label}</b>：nikke.top 沒有 ${miss.map(nameOf).join('、')} 的資料，無法逐幀模擬。</div>`; }
+  if(s.fullF===null) return `<div>${key}<b>${t.label}</b>：模擬到 ${simSec(s.maxF)} 秒仍未充滿（只到 ${s.at(s.maxF).toFixed(1)}%）。</div>`;
+  const b=s.bursts, bl=b.map((f,i)=>`B${i+1}${s.stages>3&&i<s.stages-2&&i>0?'′':''} ${simSec(f)}s`).join(' → ');
+  const rows=[...s.perChar].sort((a,b)=>b.cum-a.cum).map(p=>`<div class="tlrow"><span>${p.counter?'紅蓮反擊（被打回充）':esc(nameOf(p.id))+'（'+p.w+'）'}</span><div class="bar"><i style="width:${Math.min(100,p.cum)}%;background:${TL_COLOR[t.key]}"></i></div><span class="muted">${p.cum.toFixed(1)}%・${p.hits} 次</span></div>`).join('');
+  return `<div>${key}<b>${t.label}</b> 充滿 100%：<b>${simSec(s.fullF)} 秒</b>（第 ${s.fullF} 幀，≈ ${simRL(s.fullF)}RL，${simTierNote(s.fullF)}）${s.valid?`；${bl}（全爆裂）`:'；爆裂鏈不完整，充滿也開不了全爆裂'}</div><details class="tlrows"><summary class="muted">各角色到充滿為止的貢獻</summary>${rows}</details>`;
+}
+function timelineBlock(teams){
+  teams=teams.map(t=>({...t,sim:simTeam(t.ids,t.side,t.mods,t.opp||null)}));
+  let h=`<div class="tlsum">${teams.map(simSummary).join('')}`;
+  const ok=teams.filter(t=>t.sim&&t.sim.fullF!==null);
+  if(ok.length===2){ const [a,b]=ok; const d=a.sim.fullF-b.sim.fullF; // a=對方, b=我方（呼叫端順序）
+    const me=ok.find(t=>t.key==='mine')||b, op=ok.find(t=>t.key==='enemy')||a; const dd=op.sim.fullF-me.sim.fullF;
+    h+=`<div class="verdict ${dd>0?'good':dd<0?'bad':'warn'}" style="font-size:14px;margin:6px 0">${dd===0?'兩隊同一幀充滿，誰先開爆裂看隨機':`我方比對方${dd>0?'早':'晚'} <b>${simSec(Math.abs(dd))} 秒</b>（${Math.abs(dd)} 幀）充滿${me.sim.valid&&op.sim.valid?'，全爆裂也差同樣的時間':''}`}</div>`; }
+  h+='</div>';
+  if(!ok.length) return h;
+  const id='tl'+(++_tlSeq); const W=760,H=250,L=40,R=14,T=26,B=30;
+  const ends=ok.map(t=>t.sim.bursts.length?t.sim.bursts[t.sim.bursts.length-1]:t.sim.fullF);
+  const maxF=Math.min(TOP_MAXF+120,Math.max(240,...ends)+14);
+  const x=f=>L+f/maxF*(W-L-R), y=v=>T+(1-Math.min(v,100)/100)*(H-T-B);
+  let g='';
+  for(const v of [0,50,100]) g+=`<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" class="tlgrid"/><text x="${L-6}" y="${y(v)+4}" class="tltxt" text-anchor="end">${v}%</text>`;
+  const stepS=maxF/TOP_FPS>6?1:0.5; for(let s=0;s*TOP_FPS<=maxF;s+=stepS) g+=`<line x1="${x(s*TOP_FPS)}" x2="${x(s*TOP_FPS)}" y1="${y(0)}" y2="${y(0)+4}" class="tlgrid"/><text x="${x(s*TOP_FPS)}" y="${H-10}" class="tltxt" text-anchor="middle">${s}s</text>`;
+  for(const k of TOP_KEYS){ if(k.f>maxF) continue; g+=`<line x1="${x(k.f)}" x2="${x(k.f)}" y1="${T-4}" y2="${y(0)}" class="tlkeyline${k.raw==='Stun'?' stun':''}"/><text x="${x(k.f)}" y="${T-8}" class="tltxt" text-anchor="middle">${k.label}</text>`; }
+  ok.forEach((t,i)=>{ const s=t.sim, c=TL_COLOR[t.key]; let d=`M${x(0)},${y(0)}`; let last=0;
+    for(const p of s.pts){ if(p.f>s.fullF) break; d+=`H${x(p.f)}V${y(p.v)}`; last=p.v; }
+    g+=`<path d="${d}" class="tlline" style="stroke:${c}"/>`;
+    s.bursts.forEach((f,j)=>{ if(f>maxF) return; const yy=y(100); g+=`<line x1="${x(f)}" x2="${x(f)}" y1="${yy-7}" y2="${yy+7}" class="tltick" style="stroke:${c}"/><text x="${x(f)}" y="${i===0?yy-10:yy+18}" class="tltxt" text-anchor="middle">B${j+1}</text>`; });
+    g+=`<circle cx="${x(s.fullF)}" cy="${y(100)}" r="4.5" class="tldot" style="fill:${c}"/>`;
+  });
+  g+=`<line class="tlx" x1="0" x2="0" y1="${T}" y2="${y(0)}" style="display:none"/>`;
+  _tlData[id]={teams:ok.map(t=>({label:t.label,key:t.key,sim:t.sim})),maxF,L,R,W};
+  const legend=ok.map(t=>`<span><i class="tlkey" style="border-color:${TL_COLOR[t.key]}"></i>${t.label}累積充能</span>`).join('')+`<span class="muted">縱虛線＝nikke.top 的關鍵時間點（1RL＝76 幀）；B1/B2/B3＝各段爆裂啟動</span>`;
+  return h+`<div class="tllegend">${legend}</div><div class="tlwrap"><svg class="tl" data-tl="${id}" viewBox="0 0 ${W} ${H}" role="img" aria-label="充能時間軸">${g}</svg><div class="tltip"></div></div>`;
+}
+document.addEventListener('pointermove',e=>{ const svg=e.target.closest&&e.target.closest('svg.tl'); document.querySelectorAll('svg.tl').forEach(s=>{ if(s!==svg){ const l=s.querySelector('.tlx'); if(l) l.style.display='none'; const tip=s.parentElement.querySelector('.tltip'); if(tip) tip.style.display='none'; } });
+  if(!svg) return; const d=_tlData[svg.dataset.tl]; if(!d) return; const rc=svg.getBoundingClientRect(); const px=(e.clientX-rc.left)/rc.width*d.W; const f=Math.round(Math.max(0,Math.min(d.maxF,(px-d.L)/(d.W-d.L-d.R)*d.maxF)));
+  const xl=d.L+f/d.maxF*(d.W-d.L-d.R); const line=svg.querySelector('.tlx'); line.setAttribute('x1',xl); line.setAttribute('x2',xl); line.style.display='';
+  const tip=svg.parentElement.querySelector('.tltip'); tip.replaceChildren(); const head=document.createElement('div'); head.textContent=`${simSec(f)} 秒（第 ${f} 幀，≈ ${simRL(f)}RL）`; tip.appendChild(head);
+  for(const t of d.teams){ const row=document.createElement('div'); const k=document.createElement('i'); k.className='tlkey'; k.style.borderColor=TL_COLOR[t.key]; row.appendChild(k); const v=Math.min(999,t.sim.at(f)); const b=document.createElement('b'); b.textContent=v.toFixed(1)+'%'; row.appendChild(b); row.appendChild(document.createTextNode(' '+t.label+(t.sim.fullF!==null&&f>=t.sim.fullF?'（已充滿）':''))); tip.appendChild(row); }
+  tip.style.display='block'; const left=(e.clientX-rc.left); tip.style.left=(left>rc.width*0.6?left-tip.offsetWidth-12:left+12)+'px'; tip.style.top=Math.max(0,e.clientY-rc.top-10)+'px';
+});
+document.addEventListener('pointerleave',e=>{ if(e.target&&e.target.classList&&e.target.classList.contains('tl')){ const l=e.target.querySelector('.tlx'); if(l) l.style.display='none'; const tip=e.target.parentElement.querySelector('.tltip'); if(tip) tip.style.display='none'; } },true);
+
 /* 再入爆裂段：開完後同一段的另一位也能開（多一段，全爆裂延後）
    - 無條件再入 B1（爆裂技能）：蒂亞（延遲約 1.0 秒）、露菲冬日購物狂（延遲約 1.5 秒）、阿維斯塔、仙境兔女郎愛麗絲
    - 超級巨星阿妮斯：被動，隊上有另一位「一般 B1」（再入角不算）時才再入
@@ -817,7 +1006,9 @@ const isStdB1=x=>x.c.burst==='I'&&!(x.c.id in REENTER_B1);
 function chainOf(ids){
   const chars=ids.map((id,i)=>({c:byId[id],pos:i+1,b:byId[id]?byId[id].burst:null})).filter(x=>x.c);
   const stdB1=chars.filter(isStdB1);
-  const rapi=chars.find(x=>x.c.id==='rapi-red-hood'); const rapiAsB1=!!(rapi&&!stdB1.length); if(rapiAsB1) rapi.b='I'; // 戰鬥輔助：變 B1
+  // 拉毗小紅帽只在隊上完全沒有 B1 角色時才改用 B1；超級巨星阿妮斯仍算隊伍已有 B1。
+  const hasB1=chars.some(x=>x.c.burst==='I');
+  const rapi=chars.find(x=>x.c.id==='rapi-red-hood'); const rapiAsB1=!!(rapi&&!hasB1); if(rapiAsB1) rapi.b='I'; // 戰鬥輔助：變 B1
   const has={I:false,II:false,III:false}; let lambda=false;
   chars.forEach(x=>{ if(x.b==='Λ') lambda=true; else if(has[x.b]!==undefined) has[x.b]=true; });
   const missing=['I','II','III'].filter(b=>!has[b]);
@@ -1048,7 +1239,7 @@ function buildCounters(enemyIds,mode,ownedSet,allowSub){
 /* ====================== 狀態 ====================== */
 const LS={get:(k,d)=>{try{const v=localStorage.getItem('nikkePvp.'+k);return v?JSON.parse(v):d}catch(e){return d}},set:(k,v)=>{try{localStorage.setItem('nikkePvp.'+k,JSON.stringify(v))}catch(e){}}};
 let mode=LS.get('mode','attack');
-speedSrc=LS.get('speedSrc','deck');
+speedSrc=LS.get('speedSrc','top');
 let enemy=LS.get('enemy',[null,null,null,null,null]);
 let mine=LS.get('mine',[null,null,null,null,null]);
 let owned=new Set(LS.get('owned',[]));
@@ -1234,10 +1425,11 @@ function renderRoster(){
 function updateOwnedCount(){ $('#ownedCount').textContent=owned.size+'/'+CHARACTERS.length; }
 
 /* ====================== 解隊畫面 ====================== */
-function speedBlock(sp,label){
+function speedBlock(sp,label,sim){
   const rows=TIERS.map(t=>{ const v=sp.totals[t]; const pct=Math.min(100,v*100); return `<div class="tierrow"><span>${t}</span><div class="bar"><i style="width:${pct}%"></i></div><span class="muted">${(v*100).toFixed(0)}%</span></div>`; }).join('');
-  const srcNote=speedSrc==='deck'?'依 nikke-deck 的充能資料與公式（含 S10 預設版本、超級巨星阿妮斯的每擊加成）':'依 nikke-arena-planner 的充能資料';
-  return `<div><div class="speed f${sp.tier}">${sp.tier}${sp.reached?'':' 以下'}</div><div class="muted">${label}約 ${sp.sec} 秒開全爆裂（${sp.cycles} 輪火箭筒）。各速度階的充能達成率（${srcNote}）：</div>${rows}</div>`;
+  const srcNote=speedSrc==='top'?'依 nikke.top 逐幀模擬，各階數字是模擬到該階那一幀時的累積充能':speedSrc==='deck'?'依 nikke-deck 的充能資料與公式（含 S10 預設版本、超級巨星阿妮斯的每擊加成）':'依 nikke-arena-planner 的充能資料';
+  const timing=(sim&&sim.fullF!==null)?`${label}充滿 100% 約 <b>${simSec(sim.fullF)} 秒</b>（≈ ${simRL(sim.fullF)}RL），全爆裂約 ${simSec(sim.bursts[sim.bursts.length-1]||sim.fullF+88)} 秒（nikke.top 逐幀模擬）。`:`${label}約 ${sp.sec} 秒充滿（${sp.cycles} 輪火箭筒），全爆裂再約 1.5 秒。`;
+  return `<div><div class="speed f${sp.tier}">${sp.tier}${sp.reached?'':' 以下'}</div><div class="muted">${timing}各速度階的充能達成率（${srcNote}）：</div>${rows}</div>`;
 }
 function chainBlock(ch){
   if(!ch.valid) return `<div class="badge bad">爆裂鏈不完整：缺 ${ch.missing.join('、')}</div>`;
@@ -1253,7 +1445,8 @@ function renderAnalysis(){
   const enemyMode=mode==='attack'?'defense':'attack';
   const ctx=ctxOf(enemy,enemyMode);
   const arch=detectArchetypes(enemy); const heur=heuristicArchetypes(enemy);
-  let h=enemySummary(enemy)+`<h3>速度</h3>${speedBlock(ctx.speed,'對方')}`;
+  const mineFull=mine.filter(Boolean).length===5; const eOpp=mineFull?{ids:mine,side:mode,mods:mineMods}:null;
+  let h=enemySummary(enemy)+`<h3>速度</h3>${speedBlock(ctx.speed,'對方',simTeam(enemy,enemyMode,enemyMods,eOpp))}<details class="tldet"><summary>充能時間軸（nikke.top 逐幀模擬）${srcBadges(['top'],'依據')}</summary>${timelineBlock([{ids:enemy,side:enemyMode,mods:enemyMods,label:'對方',key:'enemy',opp:eOpp}])}</details>`;
   h+=`<h3>爆裂鏈順序</h3>${chainBlock(ctx.chain)}`;
   h+=`<h3>體系判定</h3>`;
   if(arch.length){ h+=arch.map(a=>`<div style="margin:4px 0"><span class="badge ${a===arch[0]?'bad':'warn'}">${archName(a.arch)}</span> <span class="muted">${esc(a.tpl.notes['zh-TW'])}</span></div>`).join(''); }
@@ -1308,7 +1501,7 @@ function teamCard(r,eSpeed,idx){
   const pr=pairRecord(r.slots,enemy); const av=archVsRecord(t.archetype,eArchs);
   const arenaRec=(pr&&pr.n>=20)?` <span class="badge ${pr.r>=0.6?'good':pr.r<=0.4?'bad':'warn'}" title="冠軍競技場中，含這隊 ${pr.k} 位相同角色的隊伍對上含對方 ${pr.k} 位相同角色的隊伍（珍藏與一般版視為同一人）">直接對位 ${pr.w} 勝 ${pr.l} 負</span>`:(av.w+av.l)>=10?` <span class="badge ${av.w>=av.l?'good':'bad'}" title="冠軍競技場中，含此模板核心的隊伍對上含對方各體系核心的隊伍（依體系分類加總，較粗略）">模板對位 ${av.w} 勝 ${av.l} 負</span>`:'';
   const at=arenaTeam(r.slots); const exact=at?(()=>{const s=rowStats(at.row); return ` <span class="badge" title="這 5 人組合在冠軍競技場的整體戰績">實戰 ${s.m} 場 ${s.wr}%</span>`;})():'';
-  return `<div class="team"><div class="hd"><b>${idx+1}. ${esc(t.name['zh-TW'])}${r.variant?'（'+r.variant+'）':''}</b>${r.variant?'<span class="badge good">刻意慢一階</span>':''}<span class="badge">${archName(t.archetype)}</span><span class="badge" title="模板強度等級（來自上游模板的 priority）：主流 +300、強力 +200、可用 +100">${({1:'主流模板',2:'強力模板',3:'可用模板'})[t.priority]||'模板'}</span><span class="badge ${r.speed.tier==='2RL'||r.speed.tier==='5SG'?'bad':r.speed.tier==='3RL'?'warn':''}">${r.speed.tier}</span>${cmp}${rec}${arenaRec}${exact}${(()=>{ const ev=evalMatch(r.slots,enemy,mineMods,enemyMods); return `<span class="verdict ${ev.verdict}" style="font-size:14px;margin:0" title="與「我方隊伍」判斷同一套估計：優勢 75%／五五波 50%／劣勢 25%，有直接對位或你的戰績時再修正">${ev.label}（約 ${Math.round(ev.p*100)}%）</span>`; })()}<button class="btn" data-copyteam="${r.slots.join(',')}" style="margin-left:auto" title="複製隊伍文字">複製</button><button class="btn" data-apply="${idx}">帶入試算</button></div><div class="members">${members}</div><div class="why">${winSummary(r.slots,enemy,null,{lines:r.why,myMods:mineMods,eMods:enemyMods})}${r.why.map(w=>'✔ '+esc(w)).join('<br>')}${r.warn.length?'<br>'+r.warn.map(w=>'<span style="color:var(--warn)">⚠ '+w+'</span>').join('<br>'):''}</div><div class="muted" style="margin-top:4px">${esc(t.notes['zh-TW'])}</div><div style="margin-top:4px">${srcBadges(['tpl'],'克制關係與模板依據')} ${srcBadges(['calc'],'速度與排序')}</div>${refList(refs)}</div>`;
+  return `<div class="team"><div class="hd"><b>${idx+1}. ${esc(t.name['zh-TW'])}${r.variant?'（'+r.variant+'）':''}</b>${r.variant?'<span class="badge good">刻意慢一階</span>':''}<span class="badge">${archName(t.archetype)}</span><span class="badge" title="模板強度等級（來自上游模板的 priority）：主流 +300、強力 +200、可用 +100">${({1:'主流模板',2:'強力模板',3:'可用模板'})[t.priority]||'模板'}</span><span class="badge ${r.speed.tier==='2RL'||r.speed.tier==='5SG'?'bad':r.speed.tier==='3RL'?'warn':''}">${r.speed.tier}</span>${simMini(r.slots,mode,mineMods,{ids:enemy,side:mode==='attack'?'defense':'attack',mods:enemyMods})}${cmp}${rec}${arenaRec}${exact}${(()=>{ const ev=evalMatch(r.slots,enemy,mineMods,enemyMods); return `<span class="verdict ${ev.verdict}" style="font-size:14px;margin:0" title="與「我方隊伍」判斷同一套估計：優勢 75%／五五波 50%／劣勢 25%，有直接對位或你的戰績時再修正">${ev.label}（約 ${Math.round(ev.p*100)}%）</span>`; })()}<button class="btn" data-copyteam="${r.slots.join(',')}" style="margin-left:auto" title="複製隊伍文字">複製</button><button class="btn" data-apply="${idx}">帶入試算</button></div><div class="members">${members}</div><div class="why">${winSummary(r.slots,enemy,null,{lines:r.why,myMods:mineMods,eMods:enemyMods})}${r.why.map(w=>'✔ '+esc(w)).join('<br>')}${r.warn.length?'<br>'+r.warn.map(w=>'<span style="color:var(--warn)">⚠ '+w+'</span>').join('<br>'):''}</div><div class="muted" style="margin-top:4px">${esc(t.notes['zh-TW'])}</div><div style="margin-top:4px">${srcBadges(['tpl'],'克制關係與模板依據')} ${srcBadges(['calc'],'速度與排序')}</div>${refList(refs)}</div>`;
 }
 let lastBuilt=[];
 function renderBuilt(ctx){
@@ -1409,7 +1602,9 @@ function renderMyEval(ctx){
   el.className='';
   const mySp=speedOf(mine,mode,mineMods); const myCh=chainOf(mine); const myArch=detectArchetypes(mine); const myHeur=heuristicArchetypes(mine);
   const offMine=offChainKey(mine);
-  let h=`<div class="grid2"><div><h3>我方速度</h3>${speedBlock(mySp,'我方')}</div><div><h3>我方爆裂鏈</h3>${chainBlock(myCh)}${offMine.length?`<div class="muted">⚠ ${offMine.map(nameOf).join('、')}在軸外，第一輪不會開爆裂；按「自動排軸」或手動調整順序。</div>`:''}<h3>我方體系</h3>${myArch.length?myArch.map(a=>`<span class="badge good">${archName(a.arch)}</span>`).join(' '):'<span class="muted">不屬於主流模板</span>'}${myHeur.length?`<div class="muted">特徵：${myHeur.join('、')}</div>`:''}</div></div>`;
+  const eMode=mode==='attack'?'defense':'attack'; const myOpp=ctx?{ids:enemy,side:eMode,mods:enemyMods}:null;
+  const tl=`<h3>充能時間軸（nikke.top 逐幀模擬）${srcBadges(['top'],'依據')}</h3>`+timelineBlock((ctx?[{ids:enemy,side:eMode,mods:enemyMods,label:'對方',key:'enemy',opp:{ids:mine,side:mode,mods:mineMods}}]:[]).concat([{ids:mine,side:mode,mods:mineMods,label:'我方',key:'mine',opp:myOpp}]));
+  let h=`<div class="grid2"><div><h3>我方速度</h3>${speedBlock(mySp,'我方',simTeam(mine,mode,mineMods,myOpp))}</div><div><h3>我方爆裂鏈</h3>${chainBlock(myCh)}${offMine.length?`<div class="muted">⚠ ${offMine.map(nameOf).join('、')}在軸外，第一輪不會開爆裂；按「自動排軸」或手動調整順序。</div>`:''}<h3>我方體系</h3>${myArch.length?myArch.map(a=>`<span class="badge good">${archName(a.arch)}</span>`).join(' '):'<span class="muted">不屬於主流模板</span>'}${myHeur.length?`<div class="muted">特徵：${myHeur.join('、')}</div>`:''}</div></div>`+tl;
   if(!myCh.valid){ h=`<div class="verdict bad">爆裂鏈不完整（缺 ${myCh.missing.join('、')}），這隊永遠開不了全爆裂。</div>`+h; el.innerHTML=h; return; }
   if(!ctx){ el.innerHTML=h+'<div class="muted">填滿對方隊伍後會顯示對戰判斷。</div>'; return; }
   const ev=evalMatch(mine,enemy,mineMods,enemyMods);
@@ -1442,10 +1637,22 @@ function renderCharTable(){
   const rows=[...firsts.entries()].map(([ch,set])=>{ const hit=findByName(ch); const others=[...set].filter(c=>hit&&c.id!==hit.id&&c.id!==hit.id.replace(/-treasure$/,'')).map(c=>c.name['zh-TW']); return {ch,hit,others}; }).filter(r=>r.hit).sort((a,b)=>a.ch.localeCompare(b.ch,'zh-Hant'));
   el.innerHTML=`<table><tr><th>字</th><th>對到</th><th>其他同首字（要指定請打兩個字）</th></tr>`+rows.map(r=>`<tr><td><b>${esc(r.ch)}</b></td><td>${avatar(r.hit.id,'s')} ${esc(r.hit.name['zh-TW'])}</td><td class="muted">${esc(r.others.join('、'))}</td></tr>`).join('')+`</table>`;
 }
-function switchTab(name){ document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x.dataset.tab===name)); document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active')); $('#tab-'+name).classList.add('active'); if(name==='roster') renderRoster(); if(name==='help'){ renderNickTable(); renderCharTable(); } window.scrollTo(0,0); }
+const JUMP_SECTIONS={
+  solve:[['jump-enemy','對方隊伍'],['jump-analysis','對方分析'],['jump-counters','解法建議'],['jump-myteam','自己排一隊'],['jump-records','對戰紀錄'],['jump-built','組反制隊']],
+  sp:[['jump-sp-enemy','對方三隊'],['jump-sp-plan','三隊配對結果'],['jump-sp-mine','我方三隊'],['jump-sp-records','特殊競技場紀錄']],
+  roster:[['jump-roster','角色庫']],
+  help:[['jump-help','怎麼用'],['jump-help-sp','特殊競技場'],['jump-help-speed','速度階'],['jump-help-rules','關鍵規則'],['jump-help-mechanics','速度機制'],['jump-help-charge','充能計算'],['jump-help-arena','實戰數據'],['jump-help-sites','參考網站'],['jump-help-advice','建議依據'],['jump-help-references','參考對局'],['jump-help-license','資料來源'],['jump-help-roster','同步角色庫'],['jump-help-update','更新角色資料']]
+};
+function updateJumpNav(name){
+  const el=$('#jumpNav'); if(!el) return;
+  el.innerHTML=''; const label=document.createElement('span'); label.className='jump-label'; label.textContent='快速前往'; el.appendChild(label);
+  (JUMP_SECTIONS[name]||[]).forEach(([id,text])=>{ const b=document.createElement('button'); b.type='button'; b.textContent=text; b.onclick=()=>{ const target=document.getElementById(id); if(!target) return; const top=target.getBoundingClientRect().top+window.scrollY-($('#jumpNav').closest('header').offsetHeight)-10; window.scrollTo({top,behavior:'smooth'}); }; el.appendChild(b); });
+}
+function switchTab(name){ document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x.dataset.tab===name)); document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active')); $('#tab-'+name).classList.add('active'); updateJumpNav(name); if(name==='roster') renderRoster(); if(name==='help'){ renderNickTable(); renderCharTable(); } window.scrollTo(0,0); }
 
 /* ====================== 事件 ====================== */
 document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>switchTab(b.dataset.tab));
+updateJumpNav('solve');
 /* 區塊收合：點卡片標題收起／展開，狀態記在瀏覽器 */
 (()=>{ const st=LS.get('collapsed',{}); document.querySelectorAll('.card > h2').forEach((h,i)=>{ const card=h.parentElement; const key=(card.closest('section')||{}).id+':'+i; if(st[key]) card.classList.add('collapsed'); h.addEventListener('click',e=>{ if(e.target.closest('button,a,input,select')) return; card.classList.toggle('collapsed'); st[key]=card.classList.contains('collapsed'); LS.set('collapsed',st); }); }); })();
 if($('#nickSearch')) $('#nickSearch').oninput=renderNickTable;
@@ -1516,11 +1723,17 @@ async function loadRemoteRoster(manual){
     const same=ids.length===owned.size&&ids.every(i=>owned.has(i));
     const follow=LS.get('followRemote',false); // 只有空角色庫或上次就是從倉庫載入的才自動覆蓋
     if(manual||owned.size===0||(follow&&!same)){
-      owned=new Set(ids); if(Array.isArray(d.history)&&d.history.length&&!history.length) history=d.history;
-      LS.set('followRemote',true); save(); renderRoster(); updateOwnedCount(); renderSolve();
-      setRemoteStatus(`已從倉庫的 roster.json 載入 ${ids.length} 名角色${d.exported?'（匯出日期 '+d.exported+'）':''}。`);
+      owned=new Set(ids);
+      const imported=[];
+      if(Array.isArray(d.history)){ history=d.history; imported.push('對方隊伍歷史'); }
+      if(Array.isArray(d.records)&&d.records.length&&(!records.length||confirm(`GitHub 的 roster.json 含 ${d.records.length} 筆對戰紀錄，要覆蓋目前的紀錄嗎？`))){ records=d.records; LS.set('records',records); imported.push(`${d.records.length} 筆對戰紀錄`); }
+      if(Array.isArray(d.spHistory)){ spHistory=d.spHistory; LS.set('spHistory',spHistory); }
+      if(Array.isArray(d.spSaved)){ spSaved=d.spSaved; LS.set('spSaved',spSaved); }
+      if(Array.isArray(d.spRecords)&&d.spRecords.length&&(!spRecords.length||confirm(`GitHub 的 roster.json 含 ${d.spRecords.length} 筆特殊競技場紀錄，要覆蓋目前的紀錄嗎？`))){ spRecords=d.spRecords; LS.set('spRecords',spRecords); imported.push(`${d.spRecords.length} 筆特殊競技場紀錄`); }
+      LS.set('followRemote',true); save(); renderRoster(); updateOwnedCount(); renderSolve(); renderSp();
+      setRemoteStatus(`已從倉庫的 roster.json 載入 ${ids.length} 名角色${imported.length?'與'+imported.join('、'):''}${d.exported?'（匯出日期 '+d.exported+'）':''}。`);
     } else if(same) setRemoteStatus(`角色庫與倉庫的 roster.json 一致（${ids.length} 名）。`);
-    else setRemoteStatus(`本機角色庫已手動修改，未套用倉庫的 roster.json（${ids.length} 名）；按「從 GitHub 載入角色庫」可覆蓋成倉庫版本。`);
+    else setRemoteStatus(`本機角色庫已手動修改，未套用倉庫的 roster.json（${ids.length} 名）；按「從 GitHub 載入資料」可載入倉庫版本。`);
   }catch(e){ if(manual) setRemoteStatus('讀取 roster.json 失敗：'+e.message); }
 }
 $('#btnRemoteRoster').onclick=()=>{ if(owned.size&&!confirm('這會用倉庫的 roster.json 覆蓋目前的角色庫，確定？')) return; loadRemoteRoster(true); };
@@ -1538,7 +1751,7 @@ function spMini(g){
   const enemyMode=mode==='attack'?'defense':'attack'; const sp=speedOf(team,enemyMode); const ch=chainOf(team); const arch=detectArchetypes(team); const heur=heuristicArchetypes(team);
   const spc=['2RL','5SG'].includes(sp.tier)?'bad':sp.tier==='3RL'?'warn':'good';
   const off=offChainKey(team); const at=arenaTeam(team); const stat=at?(()=>{const s=rowStats(at.row); return `<span class="badge" title="冠軍競技場實戰">實戰 ${s.m} 場 ${s.wr}%</span>`;})():'';
-  el.innerHTML=`<div class="row" style="gap:6px"><span class="badge ${spc}">速度 ${sp.tier}${sp.reached?'':' 以下'}${ch.stages>3?'（'+ch.stages+' 段軸）':''}</span>${arch.length?arch.slice(0,3).map(a=>`<span class="badge warn">${archName(a.arch)}</span>`).join(''):`<span class="badge">${heur.length?heur.join('、'):'無主流模板'}</span>`}${stat}${off.length?`<span class="badge bad">軸外：${off.map(nameOf).join('、')}</span>`:''}</div>${enemySummary(team)}<div style="margin-top:4px">${chainBlock(ch)}</div>`;
+  el.innerHTML=`<div class="row" style="gap:6px"><span class="badge ${spc}">速度 ${sp.tier}${sp.reached?'':' 以下'}${ch.stages>3?'（'+ch.stages+' 段軸）':''}</span>${simMini(team,enemyMode,{})}${arch.length?arch.slice(0,3).map(a=>`<span class="badge warn">${archName(a.arch)}</span>`).join(''):`<span class="badge">${heur.length?heur.join('、'):'無主流模板'}</span>`}${stat}${off.length?`<span class="badge bad">軸外：${off.map(nameOf).join('、')}</span>`:''}</div>${enemySummary(team)}<div style="margin-top:4px">${chainBlock(ch)}</div>`;
 }
 // 剩餘角色隊（湊數／放生）：從還沒用到的角色裡挑最強的組合，確保 B1/B2/B3 齊全，並自動排軸
 function fillerTeam(poolIds,usedSet){

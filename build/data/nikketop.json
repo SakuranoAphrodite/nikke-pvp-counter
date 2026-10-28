@@ -1,0 +1,1780 @@
+{
+"source": "nikke.top（NIKKE Arena Tools）前端資料",
+"fetched": "2026-10-28",
+"fps": 60,
+"keyPoints": [
+{
+"f": 76,
+"label": "1RL"
+},
+{
+"f": 96,
+"label": "Rosanna"
+},
+{
+"f": 152,
+"label": "2RL"
+},
+{
+"f": 196,
+"label": "Stun"
+},
+{
+"f": 228,
+"label": "3RL"
+},
+{
+"f": 304,
+"label": "4RL"
+},
+{
+"f": 380,
+"label": "5RL"
+},
+{
+"f": 456,
+"label": "6RL"
+}
+],
+"units": {
+"alice": {
+"top": "001",
+"w": "SR",
+"rate": 2.8,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 90
+},
+"scarlet-black-shadow": {
+"top": "002",
+"w": "RL",
+"rate": 1.25,
+"mult": 2,
+"hpc": 1,
+"hint": 1,
+"int": 60
+},
+"cinderella": {
+"top": "003",
+"w": "RL",
+"rate": 0.0225,
+"mult": 3,
+"hpc": 2,
+"hint": 1,
+"int": 60
+},
+"helm-treasure": {
+"top": "004T",
+"w": "SR",
+"rate": 2.8,
+"mult": 2,
+"hpc": 2,
+"hint": 1,
+"int": 60
+},
+"helm": {
+"top": "004",
+"w": "SR",
+"rate": 2.8,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 60
+},
+"red-hood": {
+"top": "005",
+"w": "SR",
+"rate": 2.8,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 60
+},
+"ludmilla-winter-owner": {
+"top": "006",
+"w": "MG",
+"rate": 0.05,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 2
+},
+"jackal": {
+"top": "007",
+"w": "RL",
+"rate": 3.55,
+"mult": 4,
+"hpc": 1,
+"hint": 2,
+"int": 60
+},
+"anis-sparkling-summer": {
+"top": "008",
+"w": "SG",
+"rate": 0.25,
+"mult": 10,
+"hpc": 10,
+"hint": 1,
+"int": 42
+},
+"crown": {
+"top": "009",
+"w": "MG",
+"rate": 0.05,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 2
+},
+"drake": {
+"top": "010",
+"w": "SG",
+"rate": 0.45,
+"mult": 10,
+"hpc": 10,
+"hint": 1,
+"int": 42
+},
+"drake-treasure": {
+"top": "010T",
+"w": "SG",
+"rate": 0.45,
+"mult": 10,
+"hpc": 10,
+"hint": 1,
+"int": 42
+},
+"modernia": {
+"top": "011",
+"w": "MG",
+"rate": 0.05,
+"mult": 2,
+"hpc": 2,
+"hint": 1,
+"int": 2
+},
+"rosanna": {
+"top": "012",
+"w": "MG",
+"rate": 0.05,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 2
+},
+"rapi-red-hood": {
+"top": "013",
+"w": "MG",
+"rate": 0.05,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 2
+},
+"scarlet": {
+"top": "014",
+"w": "AR",
+"rate": 0.45,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 6
+},
+"centi": {
+"top": "015",
+"w": "RL",
+"rate": 3.45,
+"mult": 4,
+"hpc": 1,
+"hint": 2,
+"int": 60
+},
+"soda-twinkling-bunny": {
+"top": "016",
+"w": "SG",
+"rate": 0.45,
+"mult": 10,
+"hpc": 10,
+"hint": 1,
+"int": 42
+},
+"naga": {
+"top": "017",
+"w": "SG",
+"rate": 0.2,
+"mult": 10,
+"hpc": 10,
+"hint": 1,
+"int": 42
+},
+"blanc": {
+"top": "018",
+"w": "AR",
+"rate": 0.2,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 6
+},
+"biscuit": {
+"top": "019",
+"w": "RL",
+"rate": 1.4,
+"mult": 4,
+"hpc": 1,
+"hint": 2,
+"int": 60
+},
+"d-killer-wife": {
+"top": "020",
+"w": "SR",
+"rate": 2.8,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 60
+},
+"tia": {
+"top": "021",
+"w": "RL",
+"rate": 1.4,
+"mult": 4,
+"hpc": 1,
+"hint": 2,
+"int": 60
+},
+"dorothy": {
+"top": "022",
+"w": "AR",
+"rate": 0.2,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 6
+},
+"privaty": {
+"top": "023",
+"w": "AR",
+"rate": 0.2,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 6
+},
+"maxwell": {
+"top": "025",
+"w": "SR",
+"rate": 2.8,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 60
+},
+"privaty-unkind-maid": {
+"top": "027",
+"w": "SG",
+"rate": 0.2,
+"mult": 10,
+"hpc": 10,
+"hint": 1,
+"int": 42
+},
+"liter": {
+"top": "028",
+"w": "SMG",
+"rate": 0.1,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 4
+},
+"noir": {
+"top": "029",
+"w": "SG",
+"rate": 0.45,
+"mult": 10,
+"hpc": 10,
+"hint": 1,
+"int": 42
+},
+"snow-white": {
+"top": "030",
+"w": "AR",
+"rate": 0.25,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 6
+},
+"noah": {
+"top": "031",
+"w": "RL",
+"rate": 1.5,
+"mult": 8,
+"hpc": 1,
+"hint": 2,
+"int": 60
+},
+"maiden-ice-rose": {
+"top": "032",
+"w": "RL",
+"rate": 1.82,
+"mult": 5,
+"hpc": 2,
+"hint": 2,
+"int": 60
+},
+"noise": {
+"top": "034",
+"w": "RL",
+"rate": 1.4,
+"mult": 4,
+"hpc": 1,
+"hint": 2,
+"int": 60
+},
+"rapunzel": {
+"top": "035",
+"w": "RL",
+"rate": 1.45,
+"mult": 4,
+"hpc": 1,
+"hint": 2,
+"int": 60
+},
+"bready": {
+"top": "036",
+"w": "SR",
+"rate": 2.8,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 60
+},
+"grave": {
+"top": "037",
+"w": "AR",
+"rate": 0.45,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 6
+},
+"rouge": {
+"top": "038",
+"w": "SR",
+"rate": 2.9,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 60
+},
+"anchor-innocent-maid": {
+"top": "039",
+"w": "RL",
+"rate": 1.4,
+"mult": 4,
+"hpc": 1,
+"hint": 2,
+"int": 60
+},
+"rei-ayanami": {
+"top": "040",
+"w": "MG",
+"rate": 0.05,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 2
+},
+"emilia": {
+"top": "041",
+"w": "RL",
+"rate": 1.4,
+"mult": 9,
+"hpc": 2,
+"hint": 3,
+"int": 60
+},
+"2b": {
+"top": "042",
+"w": "AR",
+"rate": 0.2,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 6
+},
+"rei-ayanami-tentative-name": {
+"top": "043",
+"w": "AR",
+"rate": 0.25,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 6
+},
+"sakura-bloom-in-summer": {
+"top": "044",
+"w": "AR",
+"rate": 0.2,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 6
+},
+"rem": {
+"top": "045",
+"w": "MG",
+"rate": 0.05,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 2
+},
+"quency-escape-queen": {
+"top": "046",
+"w": "SMG",
+"rate": 0.074,
+"mult": 2,
+"hpc": 2,
+"hint": 1,
+"int": 4
+},
+"ein": {
+"top": "047",
+"w": "SR",
+"rate": 2.8,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 60
+},
+"rupee": {
+"top": "048",
+"w": "AR",
+"rate": 0.2,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 6
+},
+"mast-romantic-maid": {
+"top": "049",
+"w": "MG",
+"rate": 0.05,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 2
+},
+"tove": {
+"top": "050",
+"w": "AR",
+"rate": 0.2,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 6
+},
+"tove-treasure": {
+"top": "050T",
+"w": "AR",
+"rate": 0.2,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 6
+},
+"a2": {
+"top": "051",
+"w": "RL",
+"rate": 1.3,
+"mult": 9,
+"hpc": 2,
+"hint": 3,
+"int": 60
+},
+"volume": {
+"top": "052",
+"w": "SMG",
+"rate": 0.1,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 4
+},
+"laplace-treasure": {
+"top": "053T",
+"w": "RL",
+"rate": 1.45,
+"mult": 8,
+"hpc": 2,
+"hint": 2,
+"int": 60
+},
+"laplace": {
+"top": "053",
+"w": "RL",
+"rate": 1.45,
+"mult": 4,
+"hpc": 1,
+"hint": 2,
+"int": 60
+},
+"marciana": {
+"top": "054",
+"w": "SG",
+"rate": 0.2,
+"mult": 10,
+"hpc": 10,
+"hint": 1,
+"int": 42
+},
+"mast": {
+"top": "055",
+"w": "SMG",
+"rate": 0.1,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 4
+},
+"miranda": {
+"top": "056",
+"w": "SMG",
+"rate": 0.1,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 4
+},
+"miranda-treasure": {
+"top": "056T",
+"w": "SMG",
+"rate": 0.1,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 4
+},
+"anne-miracle-fairy": {
+"top": "057",
+"w": "RL",
+"rate": 1.4,
+"mult": 4,
+"hpc": 1,
+"hint": 2,
+"int": 60
+},
+"diesel": {
+"top": "058",
+"w": "MG",
+"rate": 0.05,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 2
+},
+"diesel-treasure": {
+"top": "058T",
+"w": "MG",
+"rate": 0.05,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 2
+},
+"pepper": {
+"top": "059",
+"w": "SG",
+"rate": 0.45,
+"mult": 10,
+"hpc": 10,
+"hint": 1,
+"int": 42
+},
+"guillotine": {
+"top": "060",
+"w": "MG",
+"rate": 0.05,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 2
+},
+"harran": {
+"top": "061",
+"w": "SR",
+"rate": 2.9,
+"mult": 2,
+"hpc": 1,
+"hint": 1,
+"int": 60
+},
+"sugar": {
+"top": "062",
+"w": "SG",
+"rate": 0.45,
+"mult": 10,
+"hpc": 10,
+"hint": 1,
+"int": 42
+},
+"leona": {
+"top": "063",
+"w": "SG",
+"rate": 0.2,
+"mult": 10,
+"hpc": 10,
+"hint": 1,
+"int": 42
+},
+"rumani": {
+"top": "064",
+"w": "RL",
+"rate": 3.25,
+"mult": 4,
+"hpc": 1,
+"hint": 2,
+"int": 60
+},
+"maiden": {
+"top": "065",
+"w": "SG",
+"rate": 0.45,
+"mult": 10,
+"hpc": 10,
+"hint": 1,
+"int": 42
+},
+"dolla": {
+"top": "066",
+"w": "SR",
+"rate": 2.8,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 60
+},
+"soda": {
+"top": "067",
+"w": "MG",
+"rate": 0.05,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 2
+},
+"rosanna-chic-ocean": {
+"top": "068",
+"w": "AR",
+"rate": 0.2,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 6
+},
+"mana": {
+"top": "069",
+"w": "AR",
+"rate": 0.25,
+"mult": 1.704,
+"hpc": 1,
+"hint": 1,
+"int": 6
+},
+"moran": {
+"top": "070",
+"w": "AR",
+"rate": 0.25,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 6
+},
+"folkwang": {
+"top": "071",
+"w": "AR",
+"rate": 0.2,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 6
+},
+"helm-aquamarine": {
+"top": "072",
+"w": "AR",
+"rate": 0.2,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 6
+},
+"isabel": {
+"top": "073",
+"w": "SG",
+"rate": 0.2,
+"mult": 10,
+"hpc": 10,
+"hint": 1,
+"int": 42
+},
+"novel": {
+"top": "074",
+"w": "SMG",
+"rate": 0.1,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 4
+},
+"bay-treasure": {
+"top": "075T",
+"w": "RL",
+"rate": 1.4,
+"mult": 4,
+"hpc": 1,
+"hint": 2,
+"int": 60
+},
+"bay": {
+"top": "075",
+"w": "RL",
+"rate": 1.4,
+"mult": 4,
+"hpc": 1,
+"hint": 2,
+"int": 60
+},
+"snow-white-innocent-days": {
+"top": "076",
+"w": "AR",
+"rate": 0.05,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 6
+},
+"rapunzel-pure-grace": {
+"top": "077",
+"w": "SR",
+"rate": 2.8,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 60
+},
+"anis": {
+"top": "078",
+"w": "RL",
+"rate": 3.55,
+"mult": 4,
+"hpc": 1,
+"hint": 2,
+"int": 60
+},
+"d": {
+"top": "079",
+"w": "SMG",
+"rate": 0.1,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 4
+},
+"yulha": {
+"top": "080",
+"w": "SR",
+"rate": 2.75,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 60
+},
+"poli-treasure": {
+"top": "081T",
+"w": "SG",
+"rate": 0.2,
+"mult": 10,
+"hpc": 10,
+"hint": 1,
+"int": 42
+},
+"poli": {
+"top": "081",
+"w": "SG",
+"rate": 0.2,
+"mult": 10,
+"hpc": 10,
+"hint": 1,
+"int": 42
+},
+"sakura": {
+"top": "082",
+"w": "SR",
+"rate": 2.7,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 60
+},
+"neon-blue-ocean": {
+"top": "083",
+"w": "MG",
+"rate": 0.05,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 2
+},
+"ludmilla": {
+"top": "084",
+"w": "SMG",
+"rate": 0.15,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 4
+},
+"viper": {
+"top": "085",
+"w": "SG",
+"rate": 0.45,
+"mult": 10,
+"hpc": 10,
+"hint": 1,
+"int": 42
+},
+"viper-treasure": {
+"top": "085T",
+"w": "SG",
+"rate": 0.45,
+"mult": 10,
+"hpc": 10,
+"hint": 1,
+"int": 42
+},
+"exia-treasure": {
+"top": "086T",
+"w": "SR",
+"rate": 2.8,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 60
+},
+"exia": {
+"top": "086",
+"w": "SR",
+"rate": 2.8,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 60
+},
+"signal": {
+"top": "087",
+"w": "SMG",
+"rate": 0.1,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 4
+},
+"admi": {
+"top": "088",
+"w": "SR",
+"rate": 2.7,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 60
+},
+"nero": {
+"top": "089",
+"w": "SMG",
+"rate": 0.1,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 4
+},
+"julia-treasure": {
+"top": "090T",
+"w": "AR",
+"rate": 0.2,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 6
+},
+"julia": {
+"top": "090",
+"w": "AR",
+"rate": 0.2,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 6
+},
+"epinel": {
+"top": "091",
+"w": "SMG",
+"rate": 0.1,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 4
+},
+"elegg": {
+"top": "092",
+"w": "MG",
+"rate": 0.05,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 2
+},
+"phantom": {
+"top": "093",
+"w": "AR",
+"rate": 0.25,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 6
+},
+"cocoa": {
+"top": "094",
+"w": "SR",
+"rate": 2.8,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 60
+},
+"brid": {
+"top": "095",
+"w": "AR",
+"rate": 0.2,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 6
+},
+"nihilister": {
+"top": "096",
+"w": "SR",
+"rate": 2.8,
+"mult": 4,
+"hpc": 2,
+"hint": 1,
+"int": 60
+},
+"crow": {
+"top": "097",
+"w": "SMG",
+"rate": 0.1,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 4
+},
+"vesti": {
+"top": "098",
+"w": "RL",
+"rate": 1.4,
+"mult": 4,
+"hpc": 1,
+"hint": 2,
+"int": 60
+},
+"trony": {
+"top": "099",
+"w": "SR",
+"rate": 2.8,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 60
+},
+"frima": {
+"top": "100",
+"w": "SR",
+"rate": 2.65,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 60
+},
+"frima-treasure": {
+"top": "100T",
+"w": "SR",
+"rate": 2.65,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 60
+},
+"yuni": {
+"top": "101",
+"w": "RL",
+"rate": 1.4,
+"mult": 4,
+"hpc": 1,
+"hint": 1,
+"int": 90
+},
+"quiry": {
+"top": "102",
+"w": "RL",
+"rate": 1.4,
+"mult": 4,
+"hpc": 1,
+"hint": 2,
+"int": 60
+},
+"eunhwa": {
+"top": "103",
+"w": "SR",
+"rate": 2.9,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 60
+},
+"aria": {
+"top": "104",
+"w": "MG",
+"rate": 0.05,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 2
+},
+"soline": {
+"top": "105",
+"w": "SMG",
+"rate": 0.1,
+"mult": 2,
+"hpc": 2,
+"hint": 1,
+"int": 4
+},
+"power": {
+"top": "106",
+"w": "RL",
+"rate": 1.4,
+"mult": 4,
+"hpc": 1,
+"hint": 2,
+"int": 60
+},
+"mary-bay-goddess": {
+"top": "107",
+"w": "SR",
+"rate": 2.65,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 60
+},
+"guilty": {
+"top": "108",
+"w": "SG",
+"rate": 0.2,
+"mult": 10,
+"hpc": 10,
+"hint": 1,
+"int": 42
+},
+"emma": {
+"top": "109",
+"w": "MG",
+"rate": 0.05,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 2
+},
+"mihara": {
+"top": "110",
+"w": "AR",
+"rate": 0.25,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 6
+},
+"milk": {
+"top": "111",
+"w": "SR",
+"rate": 2.8,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 60
+},
+"milk-treasure": {
+"top": "111T",
+"w": "SR",
+"rate": 2.8,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 60
+},
+"alice-wonderland-bunny": {
+"top": "112",
+"w": "SMG",
+"rate": 0.1,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 4
+},
+"kilo": {
+"top": "113",
+"w": "MG",
+"rate": 0.05,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 2
+},
+"makima": {
+"top": "115",
+"w": "SMG",
+"rate": 0.1,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 4
+},
+"rei": {
+"top": "116",
+"w": "SMG",
+"rate": 0.1,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 4
+},
+"mary": {
+"top": "117",
+"w": "SG",
+"rate": 0.2,
+"mult": 10,
+"hpc": 10,
+"hint": 1,
+"int": 42
+},
+"yan": {
+"top": "118",
+"w": "RL",
+"rate": 1.4,
+"mult": 4,
+"hpc": 1,
+"hint": 1,
+"int": 90
+},
+"anchor": {
+"top": "119",
+"w": "RL",
+"rate": 1.4,
+"mult": 4,
+"hpc": 1,
+"hint": 2,
+"int": 60
+},
+"ether": {
+"top": "120",
+"w": "SG",
+"rate": 0.2,
+"mult": 10,
+"hpc": 10,
+"hint": 1,
+"int": 42
+},
+"trina": {
+"top": "121",
+"w": "RL",
+"rate": 3.6,
+"mult": 4,
+"hpc": 1,
+"hint": 2,
+"int": 60
+},
+"rupee-winter-shopper": {
+"top": "122",
+"w": "AR",
+"rate": 0.2,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 6
+},
+"rapi": {
+"top": "123",
+"w": "AR",
+"rate": 0.2,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 6
+},
+"pascal": {
+"top": "124",
+"w": "RL",
+"rate": 1.15,
+"mult": 4,
+"hpc": 1,
+"hint": 2,
+"int": 60
+},
+"himeno": {
+"top": "126",
+"w": "SR",
+"rate": 2.9,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 60
+},
+"ram": {
+"top": "128",
+"w": "SR",
+"rate": 2.8,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 60
+},
+"zwei": {
+"top": "129",
+"w": "SG",
+"rate": 0.35,
+"mult": 10,
+"hpc": 10,
+"hint": 1,
+"int": 42
+},
+"sin": {
+"top": "130",
+"w": "AR",
+"rate": 0.2,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 6
+},
+"n102": {
+"top": "131",
+"w": "RL",
+"rate": 1.4,
+"mult": 4,
+"hpc": 1,
+"hint": 1,
+"int": 90
+},
+"neon": {
+"top": "132",
+"w": "SG",
+"rate": 0.45,
+"mult": 10,
+"hpc": 10,
+"hint": 1,
+"int": 42
+},
+"neve": {
+"top": "133",
+"w": "SG",
+"rate": 0.2,
+"mult": 10,
+"hpc": 10,
+"hint": 1,
+"int": 42
+},
+"quency": {
+"top": "134",
+"w": "SMG",
+"rate": 0.1,
+"mult": 2,
+"hpc": 2,
+"hint": 1,
+"int": 4
+},
+"belorta": {
+"top": "138",
+"w": "RL",
+"rate": 1.4,
+"mult": 4,
+"hpc": 1,
+"hint": 1,
+"int": 60
+},
+"flora": {
+"top": "140",
+"w": "MG",
+"rate": 0.05,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 2
+},
+"ade": {
+"top": "142",
+"w": "AR",
+"rate": 0.25,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 6
+},
+"mica-snow-buddy": {
+"top": "144",
+"w": "SMG",
+"rate": 0.1,
+"mult": 4,
+"hpc": 1,
+"hint": 1,
+"int": 4
+},
+"mica": {
+"top": "145",
+"w": "RL",
+"rate": 1.4,
+"mult": 4,
+"hpc": 1,
+"hint": 2,
+"int": 90
+},
+"guillotine-winter-slayer": {
+"top": "148",
+"w": "AR",
+"rate": 0.2,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 6
+},
+"clay": {
+"top": "149",
+"w": "SMG",
+"rate": 0.1,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 4
+},
+"sakura-suzuhara": {
+"top": "150",
+"w": "SMG",
+"rate": 0.1,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 4
+},
+"crust": {
+"top": "151",
+"w": "RL",
+"rate": 1.4,
+"mult": 4,
+"hpc": 1,
+"hint": 2,
+"int": 60
+},
+"little-mermaid": {
+"top": "152",
+"w": "SMG",
+"rate": 0.1,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 4
+},
+"mihara-bonding-chain": {
+"top": "153",
+"w": "MG",
+"rate": 0.05,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 2
+},
+"mori": {
+"top": "154",
+"w": "AR",
+"rate": 0.2,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 6
+},
+"arcana": {
+"top": "155",
+"w": "RL",
+"rate": 1.5,
+"mult": 4,
+"hpc": 1,
+"hint": 2,
+"int": 60
+},
+"eve": {
+"top": "156",
+"w": "AR",
+"rate": 0.2,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 6
+},
+"k": {
+"top": "157",
+"w": "SMG",
+"rate": 0.1,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 4
+},
+"raven": {
+"top": "159",
+"w": "RL",
+"rate": 1.4,
+"mult": 5,
+"hpc": 1,
+"hint": 1,
+"int": 2
+},
+"sora": {
+"top": "160",
+"w": "RL",
+"rate": 1.4,
+"mult": 4,
+"hpc": 1,
+"hint": 2,
+"int": 60
+},
+"emma-tactical-upgrade": {
+"top": "161",
+"w": "MG",
+"rate": 0.05,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 2
+},
+"vesti-tactical-upgrade": {
+"top": "162",
+"w": "RL",
+"rate": 0.65,
+"mult": 12,
+"hpc": 2,
+"hint": 3,
+"int": 122
+},
+"eunhwa-tactical-upgrade": {
+"top": "163",
+"w": "SR",
+"rate": 2.9,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 60
+},
+"dorothy-serendipity": {
+"top": "164",
+"w": "SG",
+"rate": 0.2,
+"mult": 10,
+"hpc": 10,
+"hint": 1,
+"int": 42
+},
+"elegg-boom-and-shock": {
+"top": "165",
+"w": "MG",
+"rate": 0.05,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 2
+},
+"nayuta": {
+"top": "166",
+"w": "SMG",
+"rate": 0.1,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 4
+},
+"liberalio": {
+"top": "167",
+"w": "SR",
+"rate": 2.8,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 90
+},
+"ada": {
+"top": "168",
+"w": "RL",
+"rate": 1.4,
+"mult": 4,
+"hpc": 1,
+"hint": 2,
+"int": 60
+},
+"snow-white-heavy-arms": {
+"top": "169",
+"w": "SR",
+"rate": 2.8,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 72
+},
+"label": {
+"top": "170",
+"w": "AR",
+"rate": 0.2,
+"mult": 1.704,
+"hpc": 1,
+"hint": 1,
+"int": 6
+},
+"arcana-fortune-mate": {
+"top": "171",
+"w": "SG",
+"rate": 0.2,
+"mult": 10,
+"hpc": 10,
+"hint": 1,
+"int": 42
+},
+"soline-frost-ticket": {
+"top": "172",
+"w": "SG",
+"rate": 0.2,
+"mult": 10,
+"hpc": 10,
+"hint": 1,
+"int": 42
+},
+"diesel-winter-sweets": {
+"top": "173",
+"w": "RL",
+"rate": 1.4,
+"mult": 4,
+"hpc": 1,
+"hint": 2,
+"int": 60
+},
+"anis-star": {
+"top": "174",
+"w": "RL",
+"rate": 1.4,
+"mult": 12,
+"hpc": 2,
+"hint": 3,
+"int": 60
+},
+"neon-vision-eye": {
+"top": "175",
+"w": "RL",
+"rate": 0.75,
+"mult": 4,
+"hpc": 1,
+"hint": 2,
+"int": 60
+},
+"laplace-ultimate-hero": {
+"top": "176",
+"w": "RL",
+"rate": 1.5,
+"mult": 4,
+"hpc": 1,
+"hint": 2,
+"int": 60
+},
+"maxwell-ordinary-mechanic": {
+"top": "177",
+"w": "SR",
+"rate": 2.8,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 60
+},
+"drake-great-villain": {
+"top": "178",
+"w": "SG",
+"rate": 0.2,
+"mult": 10,
+"hpc": 10,
+"hint": 1,
+"int": 42
+},
+"sin-swift-bunny": {
+"top": "180",
+"w": "SR",
+"rate": 2.8,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 60
+},
+"centi-treasure": {
+"top": "015",
+"w": "RL",
+"rate": 3.45,
+"mult": 4,
+"hpc": 1,
+"hint": 2,
+"int": 60,
+"fromBase": true
+},
+"flora-treasure": {
+"top": "140",
+"w": "MG",
+"rate": 0.05,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 2,
+"fromBase": true
+},
+"moran-treasure": {
+"top": "070",
+"w": "AR",
+"rate": 0.25,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 6,
+"fromBase": true
+},
+"phantom-treasure": {
+"top": "093",
+"w": "AR",
+"rate": 0.25,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 6,
+"fromBase": true
+},
+"privaty-treasure": {
+"top": "023",
+"w": "AR",
+"rate": 0.2,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 6,
+"fromBase": true
+},
+"rosanna-treasure": {
+"top": "012",
+"w": "MG",
+"rate": 0.05,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 2,
+"fromBase": true
+},
+"sugar-treasure": {
+"top": "062",
+"w": "SG",
+"rate": 0.45,
+"mult": 10,
+"hpc": 10,
+"hint": 1,
+"int": 42,
+"fromBase": true
+},
+"zwei-treasure": {
+"top": "129",
+"w": "SG",
+"rate": 0.35,
+"mult": 10,
+"hpc": 10,
+"hint": 1,
+"int": 42,
+"fromBase": true
+}
+},
+"unmatched": [
+{
+"id": "024",
+"en": "Asuka Shikinami Langley"
+},
+{
+"id": "026",
+"en": "Asuka Shikinami Langley: WILLE"
+},
+{
+"id": "033",
+"en": "Mari Makinami Illustrious"
+},
+{
+"id": "114",
+"en": "Delta"
+},
+{
+"id": "125",
+"en": "Misato Katsuragi"
+},
+{
+"id": "127",
+"en": "Product 12"
+},
+{
+"id": "135",
+"en": "Soldier OW"
+},
+{
+"id": "136",
+"en": "Soldier FA"
+},
+{
+"id": "137",
+"en": "iDoll Flower"
+},
+{
+"id": "139",
+"en": "Product 23"
+},
+{
+"id": "141",
+"en": "Product 08"
+},
+{
+"id": "143",
+"en": "Soldier EG"
+},
+{
+"id": "146",
+"en": "iDoll Sun"
+},
+{
+"id": "147",
+"en": "iDoll Ocean"
+},
+{
+"id": "158",
+"en": "Lily"
+},
+{
+"id": "179",
+"en": "Queen: Makoto"
+}
+]
+}
