@@ -141,26 +141,6 @@
   },
   {
    "date": "2026-10-22",
-   "mode": "attack",
-   "enemy": [
-    "nayuta",
-    "helm-treasure",
-    "snow-white-heavy-arms",
-    "anis-star",
-    "neon-vision-eye"
-   ],
-   "mine": [
-    "anis-star",
-    "blanc",
-    "helm-treasure",
-    "biscuit",
-    "centi-treasure"
-   ],
-   "result": "win",
-   "note": ""
-  },
-  {
-   "date": "2026-10-22",
    "mode": "defense",
    "enemy": [
     "nayuta",
