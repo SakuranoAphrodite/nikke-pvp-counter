@@ -66,9 +66,9 @@
 
 1. 在「我的角色庫」按「匯出 JSON」，下載 `roster.json`。
 2. 把 `roster.json` 放到專案根目錄（與 `index.html` 同層），commit 後 push。
-3. 線上版開啟時會讀取同目錄的 `roster.json`：本機角色庫是空的、或上次也是從倉庫載入的，就自動套用角色庫和紀錄；本機手動改過則不覆蓋，可用「從 GitHub 載入資料」按鈕手動同步。對戰紀錄已有本機資料時，會先詢問是否覆蓋。
+3. 線上版開啟時會讀取同目錄的 `roster.json`：本機角色庫是空的、或上次也是從倉庫載入的，就換成倉庫的角色庫；本機手動改過角色庫則不動它，可用「從 GitHub 載入資料」按鈕手動套用。對戰紀錄、對方隊伍歷史、儲存隊伍與特殊競技場資料一律「合併」進本機（只加入本機沒有的，不刪除、不覆蓋，不再詢問），`roster.json` 沒變動時不會重複處理。想以倉庫或檔案內容完整取代本機資料（還原備份），改按「從 GitHub 完整取代」或「匯入並取代」，會先問一次。
 
-`roster.json` 格式：`{"exported":"2026-10-20","owned":["scarlet","jackal"],"history":[]}`，`owned` 放角色 id（與 `build/data/characters.json` 的 `id` 相同）。
+`roster.json` 格式：`{"exported":"2026-10-28","owned":["scarlet","jackal"],"history":[],"records":[],"mySaved":[],"spHistory":[],"spSaved":[],"spRecords":[]}`，`owned` 放角色 id（與 `build/data/characters.json` 的 `id` 相同）；其餘欄位依序是對方隊伍歷史、對戰紀錄、儲存的我方隊伍、特殊競技場的對方三隊歷史、儲存三隊與紀錄，直接用「匯出 JSON」產生即可。對戰紀錄每筆為 `{"date","mode":"attack"|"defense"|"sp","enemy":[5 個 id],"mine":[5 個 id],"result":"win"|"loss","note"}`。
 
 ## 檔案結構
 

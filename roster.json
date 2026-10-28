@@ -61,7 +61,7 @@
  "records": [
   {
    "date": "2026-10-28",
-   "mode": "sp",
+   "mode": "attack",
    "enemy": [
     "jackal",
     "snow-white-heavy-arms",
@@ -81,7 +81,7 @@
   },
   {
    "date": "2026-10-28",
-   "mode": "sp",
+   "mode": "attack",
    "enemy": [
     "moran-treasure",
     "noah",
@@ -101,7 +101,7 @@
   },
   {
    "date": "2026-10-28",
-   "mode": "sp",
+   "mode": "attack",
    "enemy": [
     "nayuta",
     "centi-treasure",
@@ -121,7 +121,7 @@
   },
   {
    "date": "2026-10-28",
-   "mode": "defense",
+   "mode": "attack",
    "enemy": [
     "anis-star",
     "noah",
@@ -141,7 +141,27 @@
   },
   {
    "date": "2026-10-22",
-   "mode": "defense",
+   "mode": "attack",
+   "enemy": [
+    "nayuta",
+    "helm-treasure",
+    "snow-white-heavy-arms",
+    "anis-star",
+    "neon-vision-eye"
+   ],
+   "mine": [
+    "anis-star",
+    "blanc",
+    "helm-treasure",
+    "biscuit",
+    "centi-treasure"
+   ],
+   "result": "win",
+   "note": ""
+  },
+  {
+   "date": "2026-10-22",
+   "mode": "attack",
    "enemy": [
     "nayuta",
     "liter",
@@ -161,7 +181,7 @@
   },
   {
    "date": "2026-10-22",
-   "mode": "defense",
+   "mode": "attack",
    "enemy": [
     "anis-star",
     "biscuit",
@@ -181,7 +201,7 @@
   },
   {
    "date": "2026-10-22",
-   "mode": "defense",
+   "mode": "attack",
    "enemy": [
     "anis-star",
     "helm-treasure",
@@ -201,7 +221,7 @@
   },
   {
    "date": "2026-10-22",
-   "mode": "defense",
+   "mode": "attack",
    "enemy": [
     "anis-star",
     "helm-treasure",
@@ -221,7 +241,7 @@
   },
   {
    "date": "2026-10-22",
-   "mode": "sp",
+   "mode": "attack",
    "enemy": [
     "jackal",
     "snow-white-heavy-arms",
@@ -241,7 +261,7 @@
   },
   {
    "date": "2026-10-22",
-   "mode": "sp",
+   "mode": "attack",
    "enemy": [
     "moran-treasure",
     "noah",
@@ -261,7 +281,7 @@
   },
   {
    "date": "2026-10-22",
-   "mode": "sp",
+   "mode": "attack",
    "enemy": [
     "nayuta",
     "centi-treasure",
