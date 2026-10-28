@@ -192,7 +192,7 @@ details.mods summary{color:var(--muted)}
     <div class="slots" id="enemySlots"></div>
     <details class="mods"><summary>進階：對方的充能速度超頻／量子魔方（會改變速度判定）</summary><div id="enemyMods"></div></details>
     <div class="row" style="margin-top:10px">
-      <input type="text" id="quickEnemy" placeholder="快速輸入：名字或簡稱用空格隔開（紅蓮 豺狼 白兔 桑迪 特蕾），或直接打縮寫串（諾諾餅灰米），按 Enter" style="flex:1;min-width:260px">
+      <input type="text" id="quickEnemy" placeholder="快速輸入：名字或簡稱用空格隔開（紅蓮 豺狼 白兔 桑迪 特蕾），一個詞對一個角色，按 Enter" style="flex:1;min-width:260px">
       <button class="btn" id="btnQuickEnemy">套用</button>
       <button class="btn primary" id="btnPickEnemy" title="在視窗裡連點 5 位，一次選完">一次選整隊</button>
       <button class="btn" id="btnSaveEnemy">存到歷史</button>
@@ -219,7 +219,7 @@ details.mods summary{color:var(--muted)}
     <div class="slots" id="mySlots"></div>
     <details class="mods"><summary>進階：我方角色的充能速度超頻／量子魔方（也會套用到「組反制隊」的候選隊）</summary><div id="myMods"></div></details>
     <div class="row" style="margin-top:10px">
-      <input type="text" id="quickMy" placeholder="快速輸入 5 個名字，按 Enter" style="flex:1;min-width:260px">
+      <input type="text" id="quickMy" placeholder="快速輸入 5 個名字，用空格隔開，按 Enter" style="flex:1;min-width:260px">
       <button class="btn" id="btnQuickMy">套用</button>
       <button class="btn" data-copy="mine" title="複製成「名字／名字／…」文字">複製</button>
       <button class="btn primary" id="btnPickMy" title="在視窗裡連點 5 位，一次選完">一次選整隊</button>
@@ -258,13 +258,13 @@ details.mods summary{color:var(--muted)}
   <div class="card">
     <h2 id="jump-sp-enemy" class="jump-target">① 對方三隊 <span class="muted">（我方第 1 隊打對方第 1 隊，依此類推；三隊角色不可重複）</span></h2>
     <div class="team"><div class="hd"><b>對方第 1 隊</b><span class="muted">照遊戲裡 P1→P5 的順序填</span><span class="swap" title="手動交換隊伍順序"><button class="btn" data-spswap="0,-1" title="和上一隊交換順序" disabled>↑</button><button class="btn" data-spswap="0,1" title="和下一隊交換順序">↓</button></span></div><div class="slots" id="spSlots0"></div>
-      <div class="row" style="margin-top:8px"><input type="text" id="spQuick0" placeholder="名字、簡稱或縮寫串，按 Enter" style="flex:1;min-width:200px"><button class="btn" data-spquick="0">套用</button><button class="btn primary" data-sppick="0">一次選整隊</button><button class="btn" data-copy="sp0">複製</button><button class="btn danger" data-spclear="0">清空</button></div>
+      <div class="row" style="margin-top:8px"><input type="text" id="spQuick0" placeholder="名字或簡稱用空格隔開，按 Enter" style="flex:1;min-width:200px"><button class="btn" data-spquick="0">套用</button><button class="btn primary" data-sppick="0">一次選整隊</button><button class="btn" data-copy="sp0">複製</button><button class="btn danger" data-spclear="0">清空</button></div>
       <div class="muted" id="spNote0" style="font-size:12px"></div><div id="spAnalysis0" class="muted" style="margin-top:6px"></div></div>
     <div class="team"><div class="hd"><b>對方第 2 隊</b><span class="muted">照遊戲裡 P1→P5 的順序填</span><span class="swap" title="手動交換隊伍順序"><button class="btn" data-spswap="1,-1" title="和上一隊交換順序">↑</button><button class="btn" data-spswap="1,1" title="和下一隊交換順序">↓</button></span></div><div class="slots" id="spSlots1"></div>
-      <div class="row" style="margin-top:8px"><input type="text" id="spQuick1" placeholder="名字、簡稱或縮寫串，按 Enter" style="flex:1;min-width:200px"><button class="btn" data-spquick="1">套用</button><button class="btn primary" data-sppick="1">一次選整隊</button><button class="btn" data-copy="sp1">複製</button><button class="btn danger" data-spclear="1">清空</button></div>
+      <div class="row" style="margin-top:8px"><input type="text" id="spQuick1" placeholder="名字或簡稱用空格隔開，按 Enter" style="flex:1;min-width:200px"><button class="btn" data-spquick="1">套用</button><button class="btn primary" data-sppick="1">一次選整隊</button><button class="btn" data-copy="sp1">複製</button><button class="btn danger" data-spclear="1">清空</button></div>
       <div class="muted" id="spNote1" style="font-size:12px"></div><div id="spAnalysis1" class="muted" style="margin-top:6px"></div></div>
     <div class="team"><div class="hd"><b>對方第 3 隊</b><span class="muted">照遊戲裡 P1→P5 的順序填</span><span class="swap" title="手動交換隊伍順序"><button class="btn" data-spswap="2,-1" title="和上一隊交換順序">↑</button><button class="btn" data-spswap="2,1" title="和下一隊交換順序" disabled>↓</button></span></div><div class="slots" id="spSlots2"></div>
-      <div class="row" style="margin-top:8px"><input type="text" id="spQuick2" placeholder="名字、簡稱或縮寫串，按 Enter" style="flex:1;min-width:200px"><button class="btn" data-spquick="2">套用</button><button class="btn primary" data-sppick="2">一次選整隊</button><button class="btn" data-copy="sp2">複製</button><button class="btn danger" data-spclear="2">清空</button></div>
+      <div class="row" style="margin-top:8px"><input type="text" id="spQuick2" placeholder="名字或簡稱用空格隔開，按 Enter" style="flex:1;min-width:200px"><button class="btn" data-spquick="2">套用</button><button class="btn primary" data-sppick="2">一次選整隊</button><button class="btn" data-copy="sp2">複製</button><button class="btn danger" data-spclear="2">清空</button></div>
       <div class="muted" id="spNote2" style="font-size:12px"></div><div id="spAnalysis2" class="muted" style="margin-top:6px"></div></div>
     <div class="row"><button class="btn" id="btnSpSaveHistory">三隊存到歷史</button><button class="btn danger" id="btnSpClearAll">清空三隊</button></div>
     <div class="muted" style="font-size:12px;margin-top:6px">歷史（點擊載入對方三隊；按右邊的 ✕ 或按住 Shift 點擊刪除）：</div>
@@ -284,13 +284,13 @@ details.mods summary{color:var(--muted)}
     <h2 id="jump-sp-mine" class="jump-target">③ 我方三隊（手動） <span class="muted">我方第 n 隊打對方第 n 隊；三隊角色不可重複</span></h2>
     <div class="row" style="margin-bottom:6px"><button class="btn" id="btnSpmFromPlan">把上面的推薦帶入</button><button class="btn" id="btnSpmAutoMap">自動配對（換我方三隊的出場順序）</button><button class="btn primary" id="btnSpmSave">儲存這組三隊</button><button class="btn danger" id="btnSpmClear">清空我方三隊</button></div>
     <div class="team"><div class="hd"><b>我方第 1 隊</b><span class="muted">打對方第 1 隊</span><span class="swap" title="手動交換隊伍順序"><button class="btn" data-spmswap="0,-1" title="和上一隊交換順序" disabled>↑</button><button class="btn" data-spmswap="0,1" title="和下一隊交換順序">↓</button></span></div><div class="slots" id="spmSlots0"></div>
-      <div class="row" style="margin-top:8px"><input type="text" id="spmQuick0" placeholder="名字、簡稱或縮寫串，按 Enter" style="flex:1;min-width:200px"><button class="btn" data-spmquick="0">套用</button><button class="btn primary" data-spmpick="0">一次選整隊</button><button class="btn" data-spmarr="0">自動排軸</button><button class="btn" data-copy="spm0">複製</button><button class="btn danger" data-spmclear="0">清空</button></div>
+      <div class="row" style="margin-top:8px"><input type="text" id="spmQuick0" placeholder="名字或簡稱用空格隔開，按 Enter" style="flex:1;min-width:200px"><button class="btn" data-spmquick="0">套用</button><button class="btn primary" data-spmpick="0">一次選整隊</button><button class="btn" data-spmarr="0">自動排軸</button><button class="btn" data-copy="spm0">複製</button><button class="btn danger" data-spmclear="0">清空</button></div>
       <div class="muted" id="spmNote0" style="font-size:12px"></div><div id="spmEval0" class="muted" style="margin-top:6px"></div></div>
     <div class="team"><div class="hd"><b>我方第 2 隊</b><span class="muted">打對方第 2 隊</span><span class="swap" title="手動交換隊伍順序"><button class="btn" data-spmswap="1,-1" title="和上一隊交換順序">↑</button><button class="btn" data-spmswap="1,1" title="和下一隊交換順序">↓</button></span></div><div class="slots" id="spmSlots1"></div>
-      <div class="row" style="margin-top:8px"><input type="text" id="spmQuick1" placeholder="名字、簡稱或縮寫串，按 Enter" style="flex:1;min-width:200px"><button class="btn" data-spmquick="1">套用</button><button class="btn primary" data-spmpick="1">一次選整隊</button><button class="btn" data-spmarr="1">自動排軸</button><button class="btn" data-copy="spm1">複製</button><button class="btn danger" data-spmclear="1">清空</button></div>
+      <div class="row" style="margin-top:8px"><input type="text" id="spmQuick1" placeholder="名字或簡稱用空格隔開，按 Enter" style="flex:1;min-width:200px"><button class="btn" data-spmquick="1">套用</button><button class="btn primary" data-spmpick="1">一次選整隊</button><button class="btn" data-spmarr="1">自動排軸</button><button class="btn" data-copy="spm1">複製</button><button class="btn danger" data-spmclear="1">清空</button></div>
       <div class="muted" id="spmNote1" style="font-size:12px"></div><div id="spmEval1" class="muted" style="margin-top:6px"></div></div>
     <div class="team"><div class="hd"><b>我方第 3 隊</b><span class="muted">打對方第 3 隊</span><span class="swap" title="手動交換隊伍順序"><button class="btn" data-spmswap="2,-1" title="和上一隊交換順序">↑</button><button class="btn" data-spmswap="2,1" title="和下一隊交換順序" disabled>↓</button></span></div><div class="slots" id="spmSlots2"></div>
-      <div class="row" style="margin-top:8px"><input type="text" id="spmQuick2" placeholder="名字、簡稱或縮寫串，按 Enter" style="flex:1;min-width:200px"><button class="btn" data-spmquick="2">套用</button><button class="btn primary" data-spmpick="2">一次選整隊</button><button class="btn" data-spmarr="2">自動排軸</button><button class="btn" data-copy="spm2">複製</button><button class="btn danger" data-spmclear="2">清空</button></div>
+      <div class="row" style="margin-top:8px"><input type="text" id="spmQuick2" placeholder="名字或簡稱用空格隔開，按 Enter" style="flex:1;min-width:200px"><button class="btn" data-spmquick="2">套用</button><button class="btn primary" data-spmpick="2">一次選整隊</button><button class="btn" data-spmarr="2">自動排軸</button><button class="btn" data-copy="spm2">複製</button><button class="btn danger" data-spmclear="2">清空</button></div>
       <div class="muted" id="spmNote2" style="font-size:12px"></div><div id="spmEval2" class="muted" style="margin-top:6px"></div></div>
     <div id="spmSummary" class="muted" style="margin-top:6px"></div>
     <h3>已儲存的三隊</h3>
@@ -338,7 +338,7 @@ details.mods summary{color:var(--muted)}
     <h2 id="jump-help" class="jump-target">怎麼用</h2>
     <ol>
       <li>到「我的角色庫」把你有的角色點成「擁有」（只需做一次，會記住）。</li>
-      <li>回「解隊」，按「一次選整隊」在視窗裡依 P1→P5 連點 5 位後套用；也可以點單一格換人，或在快速輸入框直接打中文名。搜尋支援綽號（白兔、黑兔、偶像阿妮斯、白雪重武、水母、戰術貝斯蒂、EMT 等，清單在 build/data/nicknames.json 可自行增補）。排好後用格子上的 ◀ ▶ 或拖曳調整站位。</li>
+      <li>回「解隊」，按「一次選整隊」在視窗裡依 P1→P5 連點 5 位後套用；也可以點單一格換人，或在快速輸入框直接打中文名，名字之間用空格隔開，一個詞對一個角色（「偶阿」「白重」這類取字首的簡稱也認得）。搜尋支援綽號（白兔、黑兔、偶像阿妮斯、白雪重武、水母、戰術貝斯蒂、EMT 等，清單在 build/data/nicknames.json 可自行增補）。排好後用格子上的 ◀ ▶ 或拖曳調整站位。</li>
       <li>「自己排一隊試算」可按「儲存這隊」把隊伍存起來（會記下當時的對方），之後用「載入我方」或「載入雙方」一鍵叫回，並顯示這隊打目前對手的戰績；會隨「匯出 JSON」一起匯出。</li>
       <li>看「對方分析」：速度階、爆裂鏈順序、屬於哪種體系、關鍵威脅。最上面會先列出你打過這組對手的對戰紀錄（同樣 5 人，珍藏版算同一人；也會列 4 人相同的相似隊），贏過的排前面，按「帶入我方」就把那場贏的隊伍放進「自己排一隊試算」。特殊競技場每隊下方也有同樣的查詢。</li>
       <li>看「解法建議」與「組反制隊」：工具會從你的角色庫挑出能克制對方體系、速度又夠的隊伍。</li>
@@ -1323,6 +1323,7 @@ function renderSlots(elId,team,teamKey){
 function save(){ LS.set('enemy',enemy); LS.set('mine',mine); LS.set('spEnemy',spEnemy); LS.set('spMine',spMine); LS.set('owned',[...owned]); LS.set('mode',mode); LS.set('history',history); }
 
 /* 名稱模糊比對 */
+const isSubseq=(a,b)=>{ let i=0; for(const ch of b){ if(ch===a[i]) i++; if(i>=a.length) return true; } return false; }; // a 的字依序出現在 b 裡
 function findByName(q,exclude){
   q=q.trim().toLowerCase(); if(!q) return null;
   const norm=s=>s.toLowerCase().replace(/[\s:：·・\-_]/g,'');
@@ -1333,7 +1334,7 @@ function findByName(q,exclude){
     if(exclude&&exclude.has(c.id)) continue;
     const names=namesOf(c).map(norm);
     let s=0;
-    names.forEach((n,k)=>{ if(s>=100) return; if(n===nq){s=100;return;} if(n.startsWith(nq)) s=Math.max(s,nq.length===1?(k<5?80:76):80-(n.length-nq.length)); else if(n.includes(nq)) s=Math.max(s,60-(n.length-nq.length)); }); // 單字時正式名開頭（k<5）優先於綽號開頭：「小」→小紅帽而不是「小紅帽拉毗」
+    names.forEach((n,k)=>{ if(s>=100) return; if(n===nq){s=100;return;} if(n.startsWith(nq)) s=Math.max(s,nq.length===1?(k<5?80:76):80-(n.length-nq.length)); else if(n.includes(nq)) s=Math.max(s,60-(n.length-nq.length)); else if(nq.length>=2&&n[0]===nq[0]&&isSubseq(nq,n)) s=Math.max(s,45-(n.length-nq.length)); }); // 取字首的簡稱：字依序出現且第一字相同（「偶阿」→偶像阿妮斯） // 單字時正式名開頭（k<5）優先於綽號開頭：「小」→小紅帽而不是「小紅帽拉毗」
     if(s>0) scored.push({c,s});
   }
   if(!scored.length) return null;
@@ -1346,33 +1347,20 @@ function findByName(q,exclude){
   if(wantBase&&top.id.endsWith('-treasure')){ const b=byId[top.id.replace(/-treasure$/,'')]; if(b) top=b; }
   return top;
 }
-/* 不加空格的縮寫字串（例如「諾諾餅灰米」）：貪婪切成 2 字或 1 字，已用過的角色不重複 */
-function segmentNames(token,used){
-  const out=[]; let i=0;
-  while(i<token.length&&out.length<5){
-    let hit=null;
-    for(const len of [3,2,1]){ const piece=token.slice(i,i+len); if(piece.length<len) continue; const c=findByName(piece,used); if(c){ hit={c,len}; break; } }
-    if(!hit) return null;
-    out.push(hit.c); used.add(hit.c.id); i+=hit.len;
-  }
-  return i>=token.length?out:null;
-}
+/* 快速輸入：一個詞對一個角色，依輸入順序填 P1→P5；對不到的詞該格清空並列在「找不到」。不再把一個詞拆成縮寫串（避免「偶阿」被拆成偶像阿妮斯＋阿妮斯） */
 function quickFill(team,text,noteEl){
-  let parts=text.split(/[\s,，、\/／|｜+＋→>]+/).filter(Boolean); // 空格、逗號、頓號、斜線（半形／全形）、直線、加號都可當分隔
+  let parts=text.split(/[\s　,，、\/／|｜+＋→>]+/).filter(Boolean); // 空格（半形／全形）、逗號、頓號、斜線（半形／全形）、直線、加號都可當分隔
   // 「桑迪 珍藏」「海倫 一般」這種中間有空格的寫法：把「珍藏」「一般」「寶物」併回前一個名字
   parts=parts.reduce((acc,x)=>{ if(/^(珍藏|一般|普通|寶物|无珍藏|無珍藏)$/.test(x)&&acc.length) acc[acc.length-1]+=x; else acc.push(x); return acc; },[]);
-  const notFound=[], hits=[]; const used=new Set(); const picked=[];
-  for(const p of parts){
-    if(picked.length>=5) break;
+  const extra=parts.slice(5); parts=parts.slice(0,5);
+  const notFound=[], dups=[], hits=[]; const used=new Set();
+  parts.forEach((p,i)=>{
     const c=findByName(p,used);
-    if(c){ picked.push(c); used.add(c.id); hits.push(`${esc(p)}→${esc(c.name['zh-TW'])}`); continue; }
-    const seg=segmentNames(p,new Set(used)); // 整個對不到才當縮寫串拆解（例如「諾諾餅灰米」）
-    if(seg&&seg.length>1){ seg.forEach(x=>{ if(picked.length<5){ picked.push(x); used.add(x.id); } }); hits.push(`${esc(p)}→${esc(seg.map(x=>x.name['zh-TW']).join('＋'))}`); continue; }
-    notFound.push(p);
-  }
-  picked.slice(0,5).forEach((c,i)=>{ team[i]=c.id; });
-  if(noteEl) noteEl.innerHTML=(hits.length?'辨識：'+hits.join('、'):'')+(notFound.length?` <span style="color:var(--bad)">找不到：${esc(notFound.join('、'))}</span>`:'')+(hits.length?' <span class="muted">（有珍藏版一律預設珍藏，要一般版加「一般」；不對就點該格換人）</span>':'');
-  else if(notFound.length) alert('找不到：'+notFound.join('、')+'\n可以改用英文名或先在選角視窗搜尋看看正確譯名。');
+    if(c){ team[i]=c.id; used.add(c.id); hits.push(`${esc(p)}→${esc(c.name['zh-TW'])}`); }
+    else { team[i]=null; const d=findByName(p); if(d&&used.has(d.id)) dups.push(`${p}（${d.name['zh-TW']} 已在這隊）`); else notFound.push(p); }
+  });
+  if(noteEl) noteEl.innerHTML=(hits.length?'辨識：'+hits.join('、'):'')+(dups.length?` <span style="color:var(--warn)">重複：${esc(dups.join('、'))}</span>`:'')+(notFound.length?` <span style="color:var(--bad)">找不到：${esc(notFound.join('、'))}</span>`:'')+(extra.length?` <span style="color:var(--warn)">超過 5 個，已略過：${esc(extra.join('、'))}</span>`:'')+(hits.length?' <span class="muted">（名字之間用空格隔開，一個詞對一個角色；有珍藏版一律預設珍藏，要一般版加「一般」；不對就點該格換人）</span>':'');
+  else if(notFound.length) alert('找不到：'+notFound.join('、')+'\n名字之間請用空格隔開，一個詞對一個角色；可以改用英文名或先在選角視窗搜尋看看正確譯名。');
 }
 
 /* ====================== 選角視窗 ====================== */
