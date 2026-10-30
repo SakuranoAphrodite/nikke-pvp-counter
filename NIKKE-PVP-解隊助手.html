@@ -562,13 +562,14 @@ const RULES = [
   {id:'emilia', when:c=>c.has('emilia'), level:'warn', title:'對方有愛蜜莉雅', text:c=>`她的爆裂傷害約 3 秒後才落地，你的諾雅 3 秒無敵擋不住；她也無視分攤、護盾與路障。解法：在她爆裂前打死她（她常放 P2）、小美人魚暈眩、或布蘭兒不屈撐過。`},
   {id:'cinderella', when:c=>c.has('cinderella'), level:'warn', title:'對方有灰姑娘', text:c=>`灰姑娘的核爆是連續 10 段、約 2 秒才打完，所以諾雅 3 秒無敵或布蘭兒不屈都能擋掉大半；2RL 灰姑娘對 3RL 諾雅／布蘭兒隊幾乎必輸。她放 P1／P2 會被目標跳過（對方若這樣放是弱點），強的配置是放 P4／P5。`},
   {id:'label', when:c=>c.has('label'), level:'warn', title:'對方有蕾貝兒', text:c=>`蕾貝兒開場 5 秒讓隊友受到的電擊傷害 −70%（被動），你的紅蓮、灰姑娘、羅珊娜這些電擊核爆第一波幾乎打不動。改用非電擊的核爆或拖過 5 秒。`},
-  {id:'nayuta', when:c=>c.has('nayuta'), level:'warn', title:'對方有娜由塔', text:c=>`娜由塔開場 9 秒自身不屈（被動，每場一次），第一波單體核爆打她是白打；用 AOE 打其他人或等 9 秒。她常配羅珊娜與犧牲角（米哈拉）餵羅珊娜每次倒地 +36.5% 充能。`},
+  {id:'nayuta', when:c=>c.has('nayuta'), level:'warn', title:'對方有娜由塔', text:c=>`娜由塔開場 9 秒自身不屈（被動，每場一次），第一波單體核爆打她是白打；用 AOE 打其他人或等 9 秒；羅珊娜（含珍藏）S1 在第 96 幀的驅散可以清掉這個不屈，前提是娜由塔在對方攻擊力前 2 名。她常配羅珊娜與犧牲角（米哈拉）餵羅珊娜每次倒地 +36.5% 充能。`},
   {id:'bay', when:c=>c.has('bay','bay-treasure'), level:'warn', title:'對方有貝伊（分攤）', text:c=>`貝伊讓全隊分攤傷害（她 40%、其餘各 15%），再把大半轉到掩體，接近 80% 減傷，而且是被動，貝伊活著就一直生效；同速核爆對局她的 B2 會吸掉你的第一波。解法：愛蜜莉雅無視分攤、先打死貝伊（分攤即止）、羅珊娜驅散、或持久戰。`},
-  {id:'blanc', when:c=>c.has('blanc'), level:'warn', title:'對方有布蘭兒（不屈）', text:c=>`不屈期間那位隊友不會死，核爆打完對方還站著；不屈只給「血量最低的一位」，高手會用 HP 魔方把主 C 調成最低血來指定。解法：羅珊娜驅散不屈、小美人魚暈眩打斷她的爆裂、諾雅持久耗過 10 秒再打；如果你也靠布蘭兒，見下方「後手鏡像」。`},
+  {id:'blanc', when:c=>c.has('blanc'), level:'warn', title:'對方有布蘭兒（不屈）', text:c=>`不屈期間那位隊友不會死，核爆打完對方還站著；不屈只給「血量最低的一位」，高手會用 HP 魔方把主 C 調成最低血來指定。解法：羅珊娜 B1 核爆搶在布蘭兒 B2 前打死主 C（她的驅散固定在第 96 幀發動，碰不到爆裂後才出現的不屈；B1 比 B2 早 32 幀，所以你的充滿只要不比對方晚 32 幀／0.53 秒以上，核爆就先落地）、小美人魚暈眩打斷她的爆裂、諾雅持久耗過 10 秒再打；如果你也靠布蘭兒，見下方「後手鏡像」。`},
   {id:'moran', when:c=>c.has('moran-treasure','moran'), level:'warn', title:'對方有牡丹（減傷坦牆）', text:c=>`牡丹爆裂全隊減傷 35%＋全體嘲諷 10 秒（被動另有 4 秒嘲諷），${c.has('nero')?'再加尼羅的減傷疊加，接近全免傷，':''}單靠一波核爆打不死。解法：<b>布蘭兒隊</b>（爆裂讓敵方受傷 +39%）專剋減傷隊；霰彈集火在爆裂前打死關鍵角、戰術三人組、夏日阿妮斯雙目標無視嘲諷、愛麗絲單體穿坦。`},
   {id:'mermaid', when:c=>c.has('little-mermaid'), level:'warn', title:'對方有小美人魚', text:c=>`她的暈眩（被動，泡泡目標被打 50 次後 3 秒）會打斷你的爆裂鏈，放 P1／P2 時專門用來暈你的諾雅或布蘭兒，時間點約 2.3RL。解法：比她快（2RL）在她動作前開爆裂；用諾伊斯 P1 吸仇恨、把諾雅放 P2／P5；或牡丹持久體系抗干擾。她全隊每耗 400 發彈藥 +37% 充能，對方霰彈多時她很快。`},
   {id:'revive', when:c=>c.has('rapunzel','anne-miracle-fairy'), level:'warn', title:'對方有復活', text:c=>`一波打死主 C 會被拉起來。需要第二輪傷害，或把隊伍調整成持久戰；AOE 核爆比單體更能一次清掉輔助。`},
-  {id:'rosanna', when:c=>c.has('rosanna','rosanna-treasure'), level:'warn', title:'對方有羅珊娜（驅散）', text:c=>`她會驅散你的增益、不屈與豺狼連結，別靠布蘭兒不屈或豺狼分攤取勝；牡丹珍藏坦牆體系可以克她。`},
+  {id:'rosanna', when:c=>c.has('rosanna','rosanna-treasure'), level:'warn', title:'對方有羅珊娜（驅散＋B1 核爆）', text:c=>{ const ros=c.ids.find(i=>['rosanna','rosanna-treasure'].includes(i)); const inCh=chainSet(c.ids).has(ros); const f=inCh?stageFrame(simTeam(c.ids,mode==='attack'?'defense':'attack',enemyMods,null),c.chain,ros):null;
+    return `她的 S1 驅散固定在開場第 96 幀（1.6 秒，機槍第一波命中）發動、每場一次，只清你攻擊力最高 2 人身上「開場就有」的被動增益：豺狼連結、娜由塔不屈、貝伊分攤。布蘭兒的不屈要等 B2 才出現，驅散碰不到；真正的威脅是她的 B1 核爆（優先打攻擊手、2 人）${inCh?(f!==null?`，約在第 ${f} 幀（${simSec(f)} 秒）落地`:'，在對方充滿後 24 幀落地'):'，不過她目前在對方軸外，第一輪不會開'}。你的布蘭兒 B2 不屈比自家充滿晚 56 幀，充滿要比她早 32 幀（0.53 秒）以上，不屈才會先掛上；解隊評分會逐幀判斷誰先。牡丹珍藏坦牆體系可以克她。`; }},
   {id:'sg', when:c=>c.weaponCount('SG')>=2, level:'warn', title:'對方是霰彈集火隊', text:c=>`充能快，爆裂前就能把 P1 或 P5 打死（對方防守時霰彈集中打你的 P5，進攻時打 P1）。解法：紅蓮 S2 反擊、尼羅反傷、諾雅無敵、布蘭兒不屈，或在被打的那一位放瑪奇瑪／餅乾＋防禦者這類無敵坦；脆皮不要放那一位。霰彈每發 10 次命中，也會大量餵你的豺狼充能。`},
   {id:'sanis', when:c=>c.has('anis-sparkling-summer'), level:'warn', title:'對方有夏日阿妮斯', text:c=>`她同時打兩個目標而且無視嘲諷，持久戰很強。解法：紅蓮核爆（她撐不過紅蓮 S2 反擊）、布蘭兒不屈、貝斯蒂戰術升級主 C。`},
   {id:'blanc-mirror', when:c=>c.has('blanc'), level:'good', title:'後手鏡像：用更慢的布蘭兒（白兔）隊', text:c=>`布蘭兒爆裂給血量最低的隊友 <b>10 秒不屈</b>＋最大 HP 提升，並讓所有敵人受傷 +39%，冷卻 60 秒（同小隊在場減 40 秒），所以第一個 10 秒就定勝負。不屈期間仍會持續受傷，只是不會死：一到期就立刻倒下。若你也靠布蘭兒撐最後一隻，<b>先開爆裂的那方不屈先到期、先倒</b>，對方最後一隻必定比你多撐一下。因此對布蘭兒鏡像要<b>刻意慢一階</b>（例如對方 3RL 你 7SG）讓自己後開；只能慢一階，慢太多會在開爆裂前被打死或布蘭兒先陣亡。下方「組反制隊」若有布蘭兒會自動給你一個「後手鏡像版」。`},
@@ -1073,6 +1074,24 @@ function chainSet(ids){ const ch=chainOf(ids); return new Set([ch.b1,ch.reB1,ch.
 function chainRole(ids,id){ const ch=chainOf(ids); if(ch.b1&&ch.b1.c.id===id) return ch.rapiAsB1&&id==='rapi-red-hood'?'B1(變身)':'B1'; if(ch.reB1&&ch.reB1.c.id===id) return '再入B1'; if(ch.b2&&ch.b2.c.id===id) return 'B2'; if(ch.reB2&&ch.reB2.c.id===id) return '再入B2'; if(ch.b3&&ch.b3.c.id===id) return 'B3'; return null; }
 function burstDependent(id){ return (UNIT_TAGS[id]||[]).some(isBurstTag); }
 function offChainKey(ids){ const cs=chainSet(ids); return ids.filter(i=>i&&byId[i]&&!cs.has(i)&&burstDependent(i)); }
+/* 羅珊娜 vs 布蘭兒：羅珊娜 S1 的驅散固定在第 96 幀（機槍第一波命中）發動、每場一次，只清得到開場就有的被動增益，
+   碰不到布蘭兒 B2 才給的不屈。真正的克制是她的 B1 核爆（充滿 +24 幀）是否「確定」早於我方布蘭兒的 B2（充滿 +56 幀），
+   依 nikke.top 逐幀模擬判斷；算不出來（缺資料、10 秒內充不滿）或同一幀都不當作克制。
+   回傳 null＝不適用（對方沒羅珊娜、我方沒布蘭兒、或布蘭兒在軸外另有扣分）；否則 {kind:'sure'|'later'|'tie'|'unknown'|'off', note, eF, mF} */
+function stageFrame(sim,ch,id){ if(!sim||sim.fullF===null) return null; const order=[ch.b1,ch.reB1,ch.b2,ch.reB2,ch.b3].filter(Boolean); const i=order.findIndex(x=>x.c.id===id); return (i<0||sim.bursts[i]===undefined)?null:sim.bursts[i]; }
+function rosannaVsBlanc(myIds,mySide,myMods,enemyIds,eSide,eMods){
+  const ros=enemyIds.find(i=>['rosanna','rosanna-treasure'].includes(i)); if(!ros||!myIds.includes('blanc')) return null;
+  if(!chainSet(enemyIds).has(ros)) return {kind:'off',note:`對方${nameOf(ros)}在軸外，第一輪不會開 B1 核爆，我方布蘭兒的不屈不受她威脅（她第 96 幀的驅散碰不到不屈）`};
+  if(!chainSet(myIds).has('blanc')) return null;
+  const eSim=simTeam(enemyIds,eSide,eMods,{ids:myIds,side:mySide,mods:myMods}), mSim=simTeam(myIds,mySide,myMods,{ids:enemyIds,side:eSide,mods:eMods});
+  const eF=stageFrame(eSim,chainOf(enemyIds),ros), mF=stageFrame(mSim,chainOf(myIds),'blanc');
+  const R=`對方${nameOf(ros)}的 B1 核爆`, B='我方布蘭兒的 B2 不屈';
+  if(eF===null||mF===null) return {kind:'unknown',eF,mF,note:`${R}和${B}誰先，nikke.top 逐幀模擬算不出來（缺角色資料或 10 秒內充不滿），不當作克制`};
+  const fr=f=>`第 ${f} 幀／${simSec(f)} 秒`;
+  if(eF<mF) return {kind:'sure',eF,mF,note:`${R}（${fr(eF)}）確定早於${B}（${fr(mF)}），主 C 會在不屈掛上前被打；她的驅散碰不到不屈，但核爆先落地`};
+  if(eF===mF) return {kind:'tie',eF,mF,note:`${R}和${B}都在${fr(eF)}，先後不確定，不當作克制`};
+  return {kind:'later',eF,mF,note:`${B}（${fr(mF)}）早於${R}（${fr(eF)}），不屈先掛上；她第 96 幀的驅散也碰不到爆裂後才出現的不屈`};
+}
 /* 自動排軸：關鍵爆裂角排進軸內（同類型中位置最小）、防禦者 P1/P5、火力 P3/P4 */
 function autoArrange(ids){
   const list=ids.filter(i=>i&&byId[i]); if(list.length<5) return ids;
@@ -1258,7 +1277,8 @@ function buildCounters(enemyIds,mode,ownedSet,allowSub){
     // 紅蓮反擊檢查
     if(['scarlet','scarlet-black-shadow'].some(x=>enemyIds.includes(x))){ const hi=f.slots.filter(i=>['SG','SMG','MG'].includes(byId[i].weapon)); if(hi.length){ score-=80*hi.length; warn.push('帶了高射速武器（'+hi.map(nameOf).join('、')+'）會被紅蓮 S2 反擊'); } }
     if(enemyIds.includes('jackal')){ const hi=f.slots.filter(i=>['SG','SMG','MG'].includes(byId[i].weapon)); if(hi.length){ score-=30*hi.length; warn.push('高射速武器會餵對方豺狼充能'); } }
-    if(enemyIds.some(i=>['rosanna','rosanna-treasure'].includes(i))&&f.slots.some(i=>['blanc','jackal'].includes(i))){ score-=100; warn.push('對方羅珊娜（S1 每場一次，對 2 名最高攻擊）會驅散你的不屈／連結'); }
+    if(enemyIds.some(i=>['rosanna','rosanna-treasure'].includes(i))&&f.slots.includes('jackal')){ score-=100; warn.push('對方羅珊娜 S1（第 96 幀、每場一次，對 2 名最高攻擊）會驅散你的豺狼連結'); }
+    { const rb=rosannaVsBlanc(f.slots,myMode,mineMods,enemyIds,enemyMode,enemyMods); if(rb){ if(rb.kind==='sure'){ score-=100; warn.push(rb.note); } else if(rb.kind==='later'||rb.kind==='off') why.push(rb.note); else warn.push(rb.note+'，不扣分'); } }
     const tierSum=f.slots.reduce((s,i)=>s+(TIER_RANK[byId[i].pvpTier]||0),0); score+=tierSum*3;
     results.push({...f,speed:sp,chain:ch,score,why,warn,countersEnemy,counteredByEnemy});
     }
@@ -1601,7 +1621,8 @@ function evalMatch(myIds,enemyIds,myMods,eMods){
   else { good.push('雙方同速，結果不穩'); }
   const myHi=myIds.filter(i=>['SG','SMG','MG'].includes(byId[i].weapon));
   if(ctx.has('scarlet','scarlet-black-shadow')&&myHi.length){ pts-=1; bad.push('我方高射速武器（'+myHi.map(nameOf).join('、')+'）會被紅蓮 S2 反擊'); }
-  if(ctx.has('rosanna','rosanna-treasure')&&myIds.some(i=>['blanc','jackal'].includes(i))){ pts-=1; bad.push('對方羅珊娜（S1 每場一次，對 2 名最高攻擊）會驅散我方的不屈／連結'); }
+  if(ctx.has('rosanna','rosanna-treasure')&&myIds.includes('jackal')){ pts-=1; bad.push('對方羅珊娜 S1（第 96 幀、每場一次，對 2 名最高攻擊）會驅散我方的豺狼連結'); }
+  { const rb=rosannaVsBlanc(myIds,mode,myMods,enemyIds,enemyMode,eMods); if(rb){ if(rb.kind==='sure'){ pts-=1; bad.push(rb.note); } else if(rb.kind==='later'||rb.kind==='off') good.push(rb.note); else bad.push(rb.note+'，不扣分'); } }
   if(ctx.has('noah')&&chainSet(enemyIds).has('noah')&&dc>=0&&!myArch.some(a=>STALL_ARCH.has(a.arch))){ pts-=1; bad.push('對方諾雅在軸內，無敵會吃掉我方第一波，而我方不是持久體系'); }
   { const offM=offChainKey(myIds); if(offM.length){ pts-=1*offM.length; bad.push(`我方 ${offM.map(nameOf).join('、')} 在軸外，第一輪不會開爆裂，等於少一個關鍵角`); } }
   { const offE=offChainKey(enemyIds); if(offE.length){ pts+=0.5*offE.length; good.push(`對方 ${offE.map(nameOf).join('、')} 在軸外，她們的爆裂效果第一輪不會出現`); } }
