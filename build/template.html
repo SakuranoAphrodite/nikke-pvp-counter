@@ -742,7 +742,7 @@ function renderMods(elId,team,mods,lsKey){
   const el=$(elId); if(!el) return; el.innerHTML='';
   team.forEach((id,i)=>{ if(!id||!byId[id]) return; const u=DECK.units&&DECK.units[id]; const canOl=!!(u&&u.ol17); const m=mods[id]||{};
     const d=document.createElement('div'); d.className='mrow';
-    d.innerHTML=`<span>P${i+1} ${esc(nameOf(id))}</span><label class="${canOl?'':'dis'}" title="${canOl?'充能速度 17% 超頻：改用 nikke-deck 的 17% 充能數值（通常等於往快的方向移半階）':'此角色沒有充能速度超頻選項'}"><input type="checkbox" data-k="ol" ${m.ol?'checked':''} ${canOl?'':'disabled'}>超頻17%</label><label title="量子魔方 Lv7：充能 +${DECK.quantumLv7||4.66}%"><input type="checkbox" data-k="q" ${m.q?'checked':''}>量子Lv7</label>`;
+    d.innerHTML=`<span>P${i+1} ${nameOf(id)}</span><label class="${canOl?'':'dis'}" title="${canOl?'充能速度 17% 超頻：改用 nikke-deck 的 17% 充能數值（通常等於往快的方向移半階）':'此角色沒有充能速度超頻選項'}"><input type="checkbox" data-k="ol" ${m.ol?'checked':''} ${canOl?'':'disabled'}>超頻17%</label><label title="量子魔方 Lv7：充能 +${DECK.quantumLv7||4.66}%"><input type="checkbox" data-k="q" ${m.q?'checked':''}>量子Lv7</label>`;
     d.querySelectorAll('input').forEach(inp=>inp.onchange=()=>{ mods[id]=mods[id]||{}; mods[id][inp.dataset.k]=inp.checked; if(!mods[id].ol&&!mods[id].q) delete mods[id]; LS.set(lsKey,mods); refresh(); });
     el.appendChild(d); });
   if(!el.children.length) el.innerHTML='<span class="muted">先選角色。</span>';
@@ -834,7 +834,7 @@ const TIER_RANK={'SSS':8,'SS':7,'S':6,'A':5,'B':4,'C':3,'D':2,'E':1,'F':0};
 const EL_ZH={fire:'燃燒',water:'水冷',wind:'風壓',electric:'電擊',iron:'鐵甲'};
 const ROLE_ZH={attacker:'火力',supporter:'支援',defender:'防禦'};
 let byId=Object.fromEntries(CHARACTERS.map(c=>[c.id,c]));
-const nameOf=id=>byId[id]?byId[id].name['zh-TW']:id;
+const nameOf=id=>esc(byId[id]?byId[id].name['zh-TW']:id); // 一律跳脫：資料或匯入檔裡的名字／id 不能夾帶 HTML
 let dataInfo={source:'內建',date:BUILTIN_DATE};
 function applyData(chars,tpls,info){ applyPrydwen(chars); CHARACTERS=chars; const ids=new Set(tpls.map(t=>t.id)); TEMPLATES=tpls.concat(TEMPLATES_EXTRA.filter(t=>!ids.has(t.id))); byId=Object.fromEntries(chars.map(c=>[c.id,c])); dataInfo=info; }
 
@@ -1400,7 +1400,7 @@ function openTeamPicker(teamKey){
 }
 function renderTray(){
   const t=$('#pickerTray'); const sel=pickerTarget.sel; t.innerHTML='';
-  for(let i=0;i<5;i++){ const id=sel[i]; const d=document.createElement('span'); d.className='chip'+(id?'':' empty'); d.innerHTML=id?`P${i+1} ${esc(nameOf(id))} <span class="x" title="移除">✕</span>`:`P${i+1} 未選`; if(id) d.querySelector('.x').onclick=()=>{ sel.splice(i,1); renderTray(); renderPicker(); }; t.appendChild(d); }
+  for(let i=0;i<5;i++){ const id=sel[i]; const d=document.createElement('span'); d.className='chip'+(id?'':' empty'); d.innerHTML=id?`P${i+1} ${nameOf(id)} <span class="x" title="移除">✕</span>`:`P${i+1} 未選`; if(id) d.querySelector('.x').onclick=()=>{ sel.splice(i,1); renderTray(); renderPicker(); }; t.appendChild(d); }
   $('#pickerApply').textContent=sel.length===5?'套用這 5 人':`已選 ${sel.length}/5（可先套用）`;
 }
 function closePicker(){ $('#picker').classList.remove('open'); pickerTarget=null; }
@@ -1789,14 +1789,17 @@ function mergeList(local,remote,keyOf,ok,cap){
   if(list.some(x=>x&&!Array.isArray(x)&&x.date)) list=list.map((x,i)=>[x,i]).sort((a,b)=>String((b[0]||{}).date||'').localeCompare(String((a[0]||{}).date||''))||a[1]-b[1]).map(q=>q[0]); // 新的在前，同日維持原順序
   return {list:cap?list.slice(0,cap):list,added:extra.length};
 }
-const isTeam=x=>Array.isArray(x)&&x.length===5;
+const isId=i=>typeof i==='string'&&!!byId[i];
+const isTeam=x=>Array.isArray(x)&&x.length===5&&x.every(isId); // 匯入的隊伍：5 個都要是目前資料裡的角色 id
+const isTeamLoose=x=>x==null||(Array.isArray(x)&&x.length===5&&x.every(i=>i===null||isId(i))); // 可留空的對方隊伍
 const isTeam3=x=>Array.isArray(x)&&x.length===3&&x.every(isTeam);
+const isTeam3Loose=x=>x==null||(Array.isArray(x)&&x.length===3&&x.every(isTeamLoose));
 const MERGE_SPEC=[
   {key:'history',label:'組對方隊伍歷史',ok:isTeam,keyOf:h=>mergeKey(h),cap:20,get:()=>history,set:v=>{ history=v; }},
   {key:'records',label:'筆對戰紀錄',ok:x=>!!x&&isTeam(x.enemy)&&isTeam(x.mine)&&!!x.result,keyOf:x=>mergeKey([x.date,x.mode,x.enemy,x.mine,x.result,x.note||'']),cap:300,get:()=>records,set:v=>{ records=v; LS.set('records',v); }},
-  {key:'mySaved',label:'隊儲存的我方隊伍',ok:x=>!!x&&isTeam(x.mine),keyOf:x=>mergeKey([x.name,x.mine,x.enemy||null]),cap:200,get:()=>mySaved,set:v=>{ mySaved=v; LS.set('mySaved',v); }},
+  {key:'mySaved',label:'隊儲存的我方隊伍',ok:x=>!!x&&isTeam(x.mine)&&isTeamLoose(x.enemy),keyOf:x=>mergeKey([x.name,x.mine,x.enemy||null]),cap:200,get:()=>mySaved,set:v=>{ mySaved=v; LS.set('mySaved',v); }},
   {key:'spHistory',label:'組特殊競技場對方三隊',ok:x=>!!x&&isTeam3(x.enemy),keyOf:x=>mergeKey(x.enemy),cap:30,get:()=>spHistory,set:v=>{ spHistory=v; LS.set('spHistory',v); }},
-  {key:'spSaved',label:'組儲存的特殊競技場三隊',ok:x=>!!x&&isTeam3(x.mine),keyOf:x=>mergeKey([x.name,x.mine,x.enemy||null]),cap:50,get:()=>spSaved,set:v=>{ spSaved=v; LS.set('spSaved',v); }},
+  {key:'spSaved',label:'組儲存的特殊競技場三隊',ok:x=>!!x&&isTeam3(x.mine)&&isTeam3Loose(x.enemy),keyOf:x=>mergeKey([x.name,x.mine,x.enemy||null]),cap:50,get:()=>spSaved,set:v=>{ spSaved=v; LS.set('spSaved',v); }},
   {key:'spRecords',label:'筆特殊競技場紀錄',ok:x=>!!x&&isTeam3(x.enemy)&&isTeam3(x.mine)&&Array.isArray(x.results),keyOf:x=>mergeKey([x.date,x.enemy,x.mine,x.results]),cap:200,get:()=>spRecords,set:v=>{ spRecords=v; LS.set('spRecords',v); }},
 ];
 function mergeImport(d){ const added=[]; MERGE_SPEC.forEach(s=>{ const m=mergeList(s.get(),d[s.key],s.keyOf,s.ok,s.cap); if(m.added){ s.set(m.list); added.push(`${m.added} ${s.label}`); } }); return added; }
