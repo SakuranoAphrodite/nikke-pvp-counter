@@ -60,6 +60,66 @@
  ],
  "records": [
   {
+   "date": "2026-10-29",
+   "mode": "sp",
+   "enemy": [
+    "jackal",
+    "snow-white-heavy-arms",
+    "blanc",
+    "biscuit",
+    "cinderella"
+   ],
+   "mine": [
+    "moran-treasure",
+    "trina",
+    "laplace-ultimate-hero",
+    "vesti-tactical-upgrade",
+    "centi-treasure"
+   ],
+   "result": "loss",
+   "note": "特殊競技場第 3 場"
+  },
+  {
+   "date": "2026-10-29",
+   "mode": "sp",
+   "enemy": [
+    "moran-treasure",
+    "noah",
+    "neon-vision-eye",
+    "trina",
+    "anis-star"
+   ],
+   "mine": [
+    "anis-star",
+    "blanc",
+    "rapi-red-hood",
+    "biscuit",
+    "neon-vision-eye"
+   ],
+   "result": "loss",
+   "note": "特殊競技場第 2 場"
+  },
+  {
+   "date": "2026-10-29",
+   "mode": "sp",
+   "enemy": [
+    "nayuta",
+    "centi-treasure",
+    "helm-treasure",
+    "red-hood",
+    "laplace-treasure"
+   ],
+   "mine": [
+    "nayuta",
+    "crown",
+    "helm-treasure",
+    "red-hood",
+    "snow-white-heavy-arms"
+   ],
+   "result": "loss",
+   "note": "特殊競技場第 1 場"
+  },
+  {
    "date": "2026-10-28",
    "mode": "attack",
    "enemy": [
@@ -140,6 +200,26 @@
    "note": "唯一穩定解法"
   },
   {
+   "date": "2026-10-27",
+   "mode": "defense",
+   "enemy": [
+    "anis-star",
+    "noah",
+    "helm-treasure",
+    "snow-white-heavy-arms",
+    "moran-treasure"
+   ],
+   "mine": [
+    "anis-star",
+    "blanc",
+    "rapi-red-hood",
+    "biscuit",
+    "helm-treasure"
+   ],
+   "result": "win",
+   "note": "唯一穩定贏法"
+  },
+  {
    "date": "2026-10-22",
    "mode": "attack",
    "enemy": [
@@ -158,6 +238,146 @@
    ],
    "result": "win",
    "note": ""
+  },
+  {
+   "date": "2026-10-22",
+   "mode": "defense",
+   "enemy": [
+    "nayuta",
+    "liter",
+    "drake-treasure",
+    "snow-white-heavy-arms",
+    "bay-treasure"
+   ],
+   "mine": [
+    "anis-star",
+    "blanc",
+    "helm-treasure",
+    "biscuit",
+    "neon-vision-eye"
+   ],
+   "result": "win",
+   "note": ""
+  },
+  {
+   "date": "2026-10-22",
+   "mode": "defense",
+   "enemy": [
+    "anis-star",
+    "biscuit",
+    "snow-white-heavy-arms",
+    "helm-treasure",
+    "moran-treasure"
+   ],
+   "mine": [
+    "anis-star",
+    "vesti-tactical-upgrade",
+    "blanc",
+    "biscuit",
+    "helm-treasure"
+   ],
+   "result": "win",
+   "note": "險勝"
+  },
+  {
+   "date": "2026-10-22",
+   "mode": "defense",
+   "enemy": [
+    "anis-star",
+    "helm-treasure",
+    "vesti-tactical-upgrade",
+    "biscuit",
+    "moran-treasure"
+   ],
+   "mine": [
+    "anis-star",
+    "vesti-tactical-upgrade",
+    "blanc",
+    "biscuit",
+    "helm-treasure"
+   ],
+   "result": "win",
+   "note": ""
+  },
+  {
+   "date": "2026-10-22",
+   "mode": "defense",
+   "enemy": [
+    "anis-star",
+    "helm-treasure",
+    "vesti-tactical-upgrade",
+    "biscuit",
+    "moran-treasure"
+   ],
+   "mine": [
+    "anis-star",
+    "vesti-tactical-upgrade",
+    "blanc",
+    "biscuit",
+    "helm-treasure"
+   ],
+   "result": "win",
+   "note": ""
+  },
+  {
+   "date": "2026-10-22",
+   "mode": "sp",
+   "enemy": [
+    "jackal",
+    "snow-white-heavy-arms",
+    "blanc",
+    "biscuit",
+    "cinderella"
+   ],
+   "mine": [
+    "anis-star",
+    "blanc",
+    "neon-vision-eye",
+    "biscuit",
+    "little-mermaid"
+   ],
+   "result": "win",
+   "note": "特殊競技場第 3 場"
+  },
+  {
+   "date": "2026-10-22",
+   "mode": "sp",
+   "enemy": [
+    "moran-treasure",
+    "noah",
+    "neon-vision-eye",
+    "trina",
+    "anis-star"
+   ],
+   "mine": [
+    "nayuta",
+    "helm-treasure",
+    "centi-treasure",
+    "red-hood",
+    "snow-white-heavy-arms"
+   ],
+   "result": "loss",
+   "note": "特殊競技場第 2 場"
+  },
+  {
+   "date": "2026-10-22",
+   "mode": "sp",
+   "enemy": [
+    "nayuta",
+    "centi-treasure",
+    "helm-treasure",
+    "red-hood",
+    "laplace-treasure"
+   ],
+   "mine": [
+    "moran-treasure",
+    "trina",
+    "laplace-ultimate-hero",
+    "vesti-tactical-upgrade",
+    "scarlet-black-shadow"
+   ],
+   "result": "loss",
+   "note": "特殊競技場第 1 場"
   },
   {
    "date": "2026-10-22",
@@ -368,6 +588,56 @@
  ],
  "spSaved": [
   {
+   "name": "正常防守",
+   "date": "2026-10-29",
+   "mine": [
+    [
+     "nayuta",
+     "crown",
+     "helm-treasure",
+     "red-hood",
+     "snow-white-heavy-arms"
+    ],
+    [
+     "anis-star",
+     "blanc",
+     "rapi-red-hood",
+     "biscuit",
+     "neon-vision-eye"
+    ],
+    [
+     "moran-treasure",
+     "trina",
+     "laplace-ultimate-hero",
+     "vesti-tactical-upgrade",
+     "centi-treasure"
+    ]
+   ],
+   "enemy": [
+    [
+     null,
+     null,
+     null,
+     null,
+     null
+    ],
+    [
+     null,
+     null,
+     null,
+     null,
+     null
+    ],
+    [
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ]
+  },
+  {
    "name": "三隊LINE推薦",
    "date": "2026-10-22",
    "mine": [
@@ -469,6 +739,60 @@
   }
  ],
  "spRecords": [
+  {
+   "date": "2026-10-29",
+   "enemy": [
+    [
+     "nayuta",
+     "centi-treasure",
+     "helm-treasure",
+     "red-hood",
+     "laplace-treasure"
+    ],
+    [
+     "moran-treasure",
+     "noah",
+     "neon-vision-eye",
+     "trina",
+     "anis-star"
+    ],
+    [
+     "jackal",
+     "snow-white-heavy-arms",
+     "blanc",
+     "biscuit",
+     "cinderella"
+    ]
+   ],
+   "mine": [
+    [
+     "nayuta",
+     "crown",
+     "helm-treasure",
+     "red-hood",
+     "snow-white-heavy-arms"
+    ],
+    [
+     "anis-star",
+     "blanc",
+     "rapi-red-hood",
+     "biscuit",
+     "neon-vision-eye"
+    ],
+    [
+     "moran-treasure",
+     "trina",
+     "laplace-ultimate-hero",
+     "vesti-tactical-upgrade",
+     "centi-treasure"
+    ]
+   ],
+   "results": [
+    "loss",
+    "loss",
+    "loss"
+   ]
+  },
   {
    "date": "2026-10-28",
    "enemy": [
