@@ -1,5 +1,5 @@
 {
- "exported": "2026-10-29",
+ "exported": "2026-11-01",
  "owned": [
   "blanc",
   "moran-treasure",
@@ -30,6 +30,27 @@
  ],
  "history": [
   [
+   "neon-vision-eye",
+   "little-mermaid",
+   "naga",
+   "cinderella-crystal-wave",
+   "rapi-red-hood"
+  ],
+  [
+   "moran-treasure",
+   "ade-agent-bunny",
+   "privaty-treasure",
+   "snow-white-heavy-arms",
+   "vesti-tactical-upgrade"
+  ],
+  [
+   "drake-treasure",
+   "crown",
+   "anis-star",
+   "helm-treasure",
+   "mast-romantic-maid"
+  ],
+  [
    "jackal",
    "snow-white-heavy-arms",
    "blanc",
@@ -59,6 +80,246 @@
   ]
  ],
  "records": [
+  {
+   "date": "2026-11-01",
+   "mode": "sp",
+   "enemy": [
+    "centi-treasure",
+    "privaty-treasure",
+    "jackal",
+    "vesti-tactical-upgrade",
+    "snow-white-heavy-arms"
+   ],
+   "mine": [
+    "nayuta",
+    "helm-treasure",
+    "centi-treasure",
+    "red-hood",
+    "snow-white-heavy-arms"
+   ],
+   "result": "win",
+   "note": "特殊競技場第 3 場"
+  },
+  {
+   "date": "2026-11-01",
+   "mode": "sp",
+   "enemy": [
+    "blanc",
+    "biscuit",
+    "liberalio",
+    "anis-star",
+    "cinderella"
+   ],
+   "mine": [
+    "anis-star",
+    "blanc",
+    "rapi-red-hood",
+    "biscuit",
+    "neon-vision-eye"
+   ],
+   "result": "win",
+   "note": "特殊競技場第 2 場"
+  },
+  {
+   "date": "2026-11-01",
+   "mode": "sp",
+   "enemy": [
+    "neon-vision-eye",
+    "moran-treasure",
+    "noah",
+    "helm-treasure",
+    "little-mermaid"
+   ],
+   "mine": [
+    "moran-treasure",
+    "laplace-ultimate-hero",
+    "liberalio",
+    "rapunzel",
+    "trina"
+   ],
+   "result": "loss",
+   "note": "特殊競技場第 1 場"
+  },
+  {
+   "date": "2026-11-01",
+   "mode": "sp",
+   "enemy": [
+    "jackal",
+    "snow-white-heavy-arms",
+    "blanc",
+    "biscuit",
+    "cinderella"
+   ],
+   "mine": [
+    "nayuta",
+    "helm-treasure",
+    "red-hood",
+    "snow-white-heavy-arms",
+    "crown"
+   ],
+   "result": "loss",
+   "note": "特殊競技場第 3 場"
+  },
+  {
+   "date": "2026-11-01",
+   "mode": "sp",
+   "enemy": [
+    "moran-treasure",
+    "naga",
+    "helm-treasure",
+    "little-mermaid",
+    "vesti-tactical-upgrade"
+   ],
+   "mine": [
+    "anis-star",
+    "blanc",
+    "neon-vision-eye",
+    "biscuit",
+    "liberalio"
+   ],
+   "result": "loss",
+   "note": "特殊競技場第 2 場"
+  },
+  {
+   "date": "2026-11-01",
+   "mode": "sp",
+   "enemy": [
+    "rapi-red-hood",
+    "anis-star",
+    "privaty-treasure",
+    "crown",
+    "liberalio"
+   ],
+   "mine": [
+    "moran-treasure",
+    "laplace-ultimate-hero",
+    "vesti-tactical-upgrade",
+    "centi-treasure",
+    "trina"
+   ],
+   "result": "win",
+   "note": "特殊競技場第 1 場"
+  },
+  {
+   "date": "2026-11-01",
+   "mode": "sp",
+   "enemy": [
+    "neon-vision-eye",
+    "little-mermaid",
+    "naga",
+    "cinderella-crystal-wave",
+    "rapi-red-hood"
+   ],
+   "mine": [
+    "nayuta",
+    "helm-treasure",
+    "centi-treasure",
+    "red-hood",
+    "snow-white-heavy-arms"
+   ],
+   "result": "win",
+   "note": "特殊競技場第 3 場"
+  },
+  {
+   "date": "2026-11-01",
+   "mode": "sp",
+   "enemy": [
+    "moran-treasure",
+    "ade-agent-bunny",
+    "privaty-treasure",
+    "snow-white-heavy-arms",
+    "vesti-tactical-upgrade"
+   ],
+   "mine": [
+    "anis-star",
+    "blanc",
+    "rapi-red-hood",
+    "biscuit",
+    "neon-vision-eye"
+   ],
+   "result": "loss",
+   "note": "特殊競技場第 2 場"
+  },
+  {
+   "date": "2026-11-01",
+   "mode": "sp",
+   "enemy": [
+    "drake-treasure",
+    "crown",
+    "anis-star",
+    "helm-treasure",
+    "mast-romantic-maid"
+   ],
+   "mine": [
+    "moran-treasure",
+    "laplace-ultimate-hero",
+    "liberalio",
+    "rapunzel",
+    "trina"
+   ],
+   "result": "loss",
+   "note": "特殊競技場第 1 場"
+  },
+  {
+   "date": "2026-11-01",
+   "mode": "sp",
+   "enemy": [
+    "neon-vision-eye",
+    "little-mermaid",
+    "naga",
+    "cinderella-crystal-wave",
+    "rapi-red-hood"
+   ],
+   "mine": [
+    "nayuta",
+    "helm-treasure",
+    "centi-treasure",
+    "red-hood",
+    "snow-white-heavy-arms"
+   ],
+   "result": "win",
+   "note": "特殊競技場第 3 場"
+  },
+  {
+   "date": "2026-11-01",
+   "mode": "sp",
+   "enemy": [
+    "moran-treasure",
+    "ade-agent-bunny",
+    "privaty-treasure",
+    "snow-white-heavy-arms",
+    "vesti-tactical-upgrade"
+   ],
+   "mine": [
+    "moran-treasure",
+    "laplace-ultimate-hero",
+    "liberalio",
+    "rapunzel",
+    "trina"
+   ],
+   "result": "loss",
+   "note": "特殊競技場第 2 場"
+  },
+  {
+   "date": "2026-11-01",
+   "mode": "sp",
+   "enemy": [
+    "drake-treasure",
+    "crown",
+    "anis-star",
+    "helm-treasure",
+    "mast-romantic-maid"
+   ],
+   "mine": [
+    "anis-star",
+    "blanc",
+    "vesti-tactical-upgrade",
+    "biscuit",
+    "neon-vision-eye"
+   ],
+   "result": "win",
+   "note": "特殊競技場第 1 場"
+  },
   {
    "date": "2026-10-29",
    "mode": "sp",
@@ -560,6 +821,32 @@
  ],
  "spHistory": [
   {
+   "date": "2026-11-01",
+   "enemy": [
+    [
+     "drake-treasure",
+     "crown",
+     "anis-star",
+     "helm-treasure",
+     "mast-romantic-maid"
+    ],
+    [
+     "moran-treasure",
+     "ade-agent-bunny",
+     "privaty-treasure",
+     "snow-white-heavy-arms",
+     "vesti-tactical-upgrade"
+    ],
+    [
+     "neon-vision-eye",
+     "little-mermaid",
+     "naga",
+     "cinderella-crystal-wave",
+     "rapi-red-hood"
+    ]
+   ]
+  },
+  {
    "date": "2026-10-22",
    "enemy": [
     [
@@ -587,6 +874,56 @@
   }
  ],
  "spSaved": [
+  {
+   "name": "普通進攻",
+   "date": "2026-11-01",
+   "mine": [
+    [
+     "moran-treasure",
+     "laplace-ultimate-hero",
+     "liberalio",
+     "rapunzel",
+     "trina"
+    ],
+    [
+     "anis-star",
+     "blanc",
+     "rapi-red-hood",
+     "biscuit",
+     "neon-vision-eye"
+    ],
+    [
+     "nayuta",
+     "helm-treasure",
+     "centi-treasure",
+     "red-hood",
+     "snow-white-heavy-arms"
+    ]
+   ],
+   "enemy": [
+    [
+     "neon-vision-eye",
+     "moran-treasure",
+     "noah",
+     "helm-treasure",
+     "little-mermaid"
+    ],
+    [
+     "blanc",
+     "biscuit",
+     "liberalio",
+     "anis-star",
+     "cinderella"
+    ],
+    [
+     "centi-treasure",
+     "privaty-treasure",
+     "jackal",
+     "vesti-tactical-upgrade",
+     "snow-white-heavy-arms"
+    ]
+   ]
+  },
   {
    "name": "正常防守",
    "date": "2026-10-29",
@@ -739,6 +1076,222 @@
   }
  ],
  "spRecords": [
+  {
+   "date": "2026-11-01",
+   "enemy": [
+    [
+     "neon-vision-eye",
+     "moran-treasure",
+     "noah",
+     "helm-treasure",
+     "little-mermaid"
+    ],
+    [
+     "blanc",
+     "biscuit",
+     "liberalio",
+     "anis-star",
+     "cinderella"
+    ],
+    [
+     "centi-treasure",
+     "privaty-treasure",
+     "jackal",
+     "vesti-tactical-upgrade",
+     "snow-white-heavy-arms"
+    ]
+   ],
+   "mine": [
+    [
+     "moran-treasure",
+     "laplace-ultimate-hero",
+     "liberalio",
+     "rapunzel",
+     "trina"
+    ],
+    [
+     "anis-star",
+     "blanc",
+     "rapi-red-hood",
+     "biscuit",
+     "neon-vision-eye"
+    ],
+    [
+     "nayuta",
+     "helm-treasure",
+     "centi-treasure",
+     "red-hood",
+     "snow-white-heavy-arms"
+    ]
+   ],
+   "results": [
+    "loss",
+    "win",
+    "win"
+   ]
+  },
+  {
+   "date": "2026-11-01",
+   "enemy": [
+    [
+     "rapi-red-hood",
+     "anis-star",
+     "privaty-treasure",
+     "crown",
+     "liberalio"
+    ],
+    [
+     "moran-treasure",
+     "naga",
+     "helm-treasure",
+     "little-mermaid",
+     "vesti-tactical-upgrade"
+    ],
+    [
+     "jackal",
+     "snow-white-heavy-arms",
+     "blanc",
+     "biscuit",
+     "cinderella"
+    ]
+   ],
+   "mine": [
+    [
+     "moran-treasure",
+     "laplace-ultimate-hero",
+     "vesti-tactical-upgrade",
+     "centi-treasure",
+     "trina"
+    ],
+    [
+     "anis-star",
+     "blanc",
+     "neon-vision-eye",
+     "biscuit",
+     "liberalio"
+    ],
+    [
+     "nayuta",
+     "helm-treasure",
+     "red-hood",
+     "snow-white-heavy-arms",
+     "crown"
+    ]
+   ],
+   "results": [
+    "win",
+    "loss",
+    "loss"
+   ]
+  },
+  {
+   "date": "2026-11-01",
+   "enemy": [
+    [
+     "drake-treasure",
+     "crown",
+     "anis-star",
+     "helm-treasure",
+     "mast-romantic-maid"
+    ],
+    [
+     "moran-treasure",
+     "ade-agent-bunny",
+     "privaty-treasure",
+     "snow-white-heavy-arms",
+     "vesti-tactical-upgrade"
+    ],
+    [
+     "neon-vision-eye",
+     "little-mermaid",
+     "naga",
+     "cinderella-crystal-wave",
+     "rapi-red-hood"
+    ]
+   ],
+   "mine": [
+    [
+     "moran-treasure",
+     "laplace-ultimate-hero",
+     "liberalio",
+     "rapunzel",
+     "trina"
+    ],
+    [
+     "anis-star",
+     "blanc",
+     "rapi-red-hood",
+     "biscuit",
+     "neon-vision-eye"
+    ],
+    [
+     "nayuta",
+     "helm-treasure",
+     "centi-treasure",
+     "red-hood",
+     "snow-white-heavy-arms"
+    ]
+   ],
+   "results": [
+    "loss",
+    "loss",
+    "win"
+   ]
+  },
+  {
+   "date": "2026-11-01",
+   "enemy": [
+    [
+     "drake-treasure",
+     "crown",
+     "anis-star",
+     "helm-treasure",
+     "mast-romantic-maid"
+    ],
+    [
+     "moran-treasure",
+     "ade-agent-bunny",
+     "privaty-treasure",
+     "snow-white-heavy-arms",
+     "vesti-tactical-upgrade"
+    ],
+    [
+     "neon-vision-eye",
+     "little-mermaid",
+     "naga",
+     "cinderella-crystal-wave",
+     "rapi-red-hood"
+    ]
+   ],
+   "mine": [
+    [
+     "anis-star",
+     "blanc",
+     "vesti-tactical-upgrade",
+     "biscuit",
+     "neon-vision-eye"
+    ],
+    [
+     "moran-treasure",
+     "laplace-ultimate-hero",
+     "liberalio",
+     "rapunzel",
+     "trina"
+    ],
+    [
+     "nayuta",
+     "helm-treasure",
+     "centi-treasure",
+     "red-hood",
+     "snow-white-heavy-arms"
+    ]
+   ],
+   "results": [
+    "win",
+    "loss",
+    "win"
+   ]
+  },
   {
    "date": "2026-10-29",
    "enemy": [
