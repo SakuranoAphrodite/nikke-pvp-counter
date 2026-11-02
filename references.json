@@ -1,7 +1,15 @@
 {
- "updated": "2026-10-20",
+ "updated": "2026-11-02",
  "_說明": "參考對局與資料。欄位：title 標題、url 連結、source 來源、kind 影片/攻略/討論/對局、enemy 對手體系 id（見 templates.json 的 archetype）、my 我方體系 id、units 對手關鍵角色 id（命中兩個以上就會顯示）、result win/loss（自己打過的對局才填）、note 一句話說明、date 日期。",
  "items": [
+  {
+   "title": "官方 2026-08 開發者筆記（nikke.gg 轉載）：攻守目標優先規則統一，以進攻方為準、適用所有競技場",
+   "url": "https://nikke.gg/august-2026-developers-note/",
+   "source": "nikke.gg", "kind": "攻略",
+   "enemy": [], "my": [], "units": [],
+   "note": "2026-10-29 更新後實測：不論攻守 SR 都打 P5、SG 都打 P1；更新前防守方 SG 打 P5、防守方 SR 打 P1。Prydwen／nikke.top／wikiwiki 到 2026-11 仍寫舊規則",
+   "date": "2026-08-28"
+  },
   {
    "title": "JP wikiwiki 競技場攻略（2026-10-21 更新）：諾雅無敵對同速核爆、小美人魚暈眩、不屈對決後開有利、2026 主流隊",
    "url": "https://wikiwiki.jp/fpo2w6pt/（NIKKE）アリーナ攻略",
@@ -55,7 +63,7 @@
    "url": "https://www.prydwen.gg/nikke/guides/pvp-mechanics",
    "source": "Prydwen", "kind": "攻略",
    "enemy": [], "my": [], "units": [],
-   "note": "工具內角色機制規則的主要出處",
+   "note": "工具內角色機制規則的主要出處（目標順序一節是 2026-10-29 更新前的舊規則）",
    "date": "2024"
   },
   {

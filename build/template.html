@@ -366,7 +366,7 @@ details.mods summary{color:var(--muted)}
       <li>競技場是全自動戰鬥，不能手動選目標；你能控制的只有「帶誰、站哪、多快」。</li>
       <li>爆裂鏈一定要有 B1、B2、B3 各一（小紅帽的 Λ 可以補任何一段），缺一段就永遠開不了全爆裂。</li>
       <li>同一段爆裂由「位置編號最小」的那位先開，所以排位順序會改變實際開爆裂的人。第一輪會開的三位是「軸內」，其餘是「軸外」：軸外角色的爆裂技能（無敵、不屈、復活、核爆）第一輪不會發動。工具的勝負判斷已納入這點：靠爆裂的核心角在軸外時，該體系視為不成立（不參與克制加減分），相關提示略過，鏡像需雙方都在軸內；我方候選隊有關鍵角在軸外會扣分，自排試算也會扣分並說明。⑤ 的「自動排軸」會把關鍵角排進軸內、防禦者放 P1／P5、火力放 P3／P4。</li>
-      <li>P1 與 P5 承受最多攻擊、P3 與 P4 最安全：坦克放 P1/P5，主 C 放 P3/P4。</li>
+      <li>P1 承受最多攻擊，P5 主要只被狙擊槍打（2026-10-29 更新後霰彈槍不再打 P5）、P3 與 P4 最安全：坦克放 P1，對方有 SR 時 P5 也要放扛得住的，主 C 放 P3/P4。</li>
       <li>戰力低於對方 84.6% 會吃到屬性懲罰，差太多時陣容再對也打不贏。</li>
       <li>充能數值是以「對方不動（防守 AI）」的理論值估算，實戰會因掩體、射偏、目標切換而有誤差，把它當作相對快慢的參考。</li>
     </ul>
@@ -381,11 +381,11 @@ details.mods summary{color:var(--muted)}
       <li><b>標籤上的「(被動)」</b>：表示效果來自一般技能，角色在軸外也有效；沒有標被動的核爆、無敵、不屈、復活、全體暈眩、全體嘲諷、全隊減傷、再入，都要該角色實際開爆裂才會發生。例如梅登的全體嘲諷、魯德米拉的全體嘲諷與減傷、瑪奇瑪與娜由塔的不屈、餅乾的防禦者免疫、豺狼連結、貝伊分攤、羅珊娜驅散都是被動。 <span class="src">依據：<a href="https://nikke.gg/characters/maiden/" target="_blank" rel="noopener">nikke.gg 各角色技能頁</a></span></li>
       <li><b>超頻「充能速度」17%</b>：蓄力武器（火箭筒、狙擊槍）蓄力更快，等於把該角色在速度表上往快的方向移半階（2RL 用 2.5RL 的值）。本工具「進階」裡的超頻勾選就是用這個模型估算（來自 nikke-deck 的資料，只有有此超頻選項的角色能勾）。<b>量子魔方 Lv7</b>：充能 +4.66%，常常剛好讓隊伍跨過門檻。這些都是估算，實戰仍以遊戲內表現為準。 <span class="src">依據：<a href="https://nikke-deck.com/en/deck" target="_blank" rel="noopener">nikke-deck</a></span></li>
       <li><b>火箭射偏（whiff）</b>：火箭筒與狙擊槍在攻擊間隔會被視為進掩體，對方火箭可能打空，失去大量充能；Prydwen 認為這是 95% 對局的勝負關鍵之一，也是同速對局結果不穩的主因。因此諾伊斯、諾雅這類火箭筒不適合單獨當 P1 坦（會被跳過，讓後排被集火）。</li>
-      <li><b>目標順序</b>：進攻時 SMG／MG／AR／SG／RL 第一發打 P5、之後集中 P1，SR 一直打 P5；防守時 SG 集中打 P5，其餘打 P1。換目標時機：裝填、目標進掩體、目標死亡、嘲諷結束。指定目標技能（夏日阿妮斯 S2、帕瓦／佩珀的最高攻擊核爆）會被嘲諷吸走。</li>
+      <li><b>目標順序</b>（2026-10-29 更新後攻守相同）：SR 一直打 P5；RL 一直打 P1（濺射 P2）；SMG／MG／AR／SG 第一發打 P5、之後集中 P1。更新前防守方的 SG 打 P5、防守方的 SR 打 P1；官方 2026-08 開發者筆記說明「冠軍競技場無法選擇攻守，因此統一攻守的目標優先規則，以進攻方為準，適用所有競技場」，10/29 更新後玩家實測已生效。Prydwen、nikke.top 等攻略站寫的仍是舊規則。換目標時機：裝填、目標進掩體、目標死亡、嘲諷結束。指定目標技能（夏日阿妮斯 S2、帕瓦／佩珀的最高攻擊核爆）會被嘲諷吸走。</li>
       <li><b>戰力懲罰</b>：低於對方 84.6%（差距超過 15.4%）起扣 20% 屬性，線性增加到最多 90%；冠軍競技場沒有戰力懲罰且全員同步鎖 400，所以純看陣容。P2 留空可讓對方火箭充能由 4 倍降到 2 倍，但冠軍競技場會自動把隊伍往前擠。</li>
     </ol>
     <h3 id="jump-help-charge" class="jump-target">速度（充能達成率）怎麼算</h3>
-    <p class="muted"><b>預設用 <a href="https://nikke.top/" target="_blank" rel="noopener">nikke.top</a>（NIKKE Arena Tools）的逐幀模擬</b>，本工具移植了該站前端的計算：遊戲以 60 幀為一秒，每位角色依武器有固定射擊節奏（火箭筒／狙擊槍蓄力 60 幀＋發射 16 幀，命中再延遲 12～16 幀；霰彈槍每 42 幀一發 10 顆彈丸；突擊步槍每 6 幀、衝鋒槍每 4 幀一發；機槍第 96／122／152／180 幀各一波後每 2 幀一發），每次命中充能「基礎充能 × 命中倍率」，全隊累積到 100% 那一幀就是「充滿」。所以 <b>1RL＝76 幀＝1.267 秒</b>，2RL＝152 幀（2.53 秒）、3RL＝228 幀（3.80 秒）；充滿後 B1 要再 24 幀（0.40 秒）才啟動，B2、B3 各再 32 幀（0.53 秒），全爆裂＝充滿＋1.47 秒。速度階就是「充滿的那一幀落在哪一階之前」；「充能時間軸」把兩隊的累積曲線畫出來，可以直接看出 2RL 以下的隊伍到底多快（例如 1.6RL＝第 122 幀＝2.03 秒，比 2RL 早半秒）、以及我方和對方差幾幀。特殊角色（紅蓮暗影、灰姑娘、海倫珍藏、小紅帽、夏日阿妮斯、德雷克珍藏、女僕普麗瓦蒂、冰玫瑰梅登、愛蜜莉雅、A2、哈蘭、純真白雪、小美人魚、渡鴉、戰術貝斯蒂、莉貝雷利奧、重武白雪、超級巨星阿妮斯、視界霓虹、究極英雄拉普拉斯、平凡技師麥斯威爾）都照該站的個別節奏；超級巨星阿妮斯的被動（隊友每擊 +0.084×倍率）、紅蓮被打反擊回充（每次被命中 +0.135%）、充能速度超頻 17%（蓄力少 10 幀）與量子魔方 Lv7 也有納入；<b>沒納入</b>的是豺狼連結回充（該站要手動指定連結對象）、小紅帽穿透與「萬能妮姬」。「羅珊娜」「暈眩」兩條虛線是該站標的關鍵時間點（第 96 幀機槍第一波命中、第 196 幀小美人魚暈眩）。</p>
+    <p class="muted"><b>預設用 <a href="https://nikke.top/" target="_blank" rel="noopener">nikke.top</a>（NIKKE Arena Tools）的逐幀模擬</b>，本工具移植了該站前端的計算：遊戲以 60 幀為一秒，每位角色依武器有固定射擊節奏（火箭筒／狙擊槍蓄力 60 幀＋發射 16 幀，命中再延遲 12～16 幀；霰彈槍每 42 幀一發 10 顆彈丸；突擊步槍每 6 幀、衝鋒槍每 4 幀一發；機槍第 96／122／152／180 幀各一波後每 2 幀一發），每次命中充能「基礎充能 × 命中倍率」，全隊累積到 100% 那一幀就是「充滿」。目標位置改用 2026-10-29 更新後的統一規則（SR 打 P5、其餘打 P1，攻守相同）；nikke.top 本身到 2026-11 仍用舊的攻守分開規則，所以紅蓮被打反擊這類和「誰被打」有關的結果會和該站不同。所以 <b>1RL＝76 幀＝1.267 秒</b>，2RL＝152 幀（2.53 秒）、3RL＝228 幀（3.80 秒）；充滿後 B1 要再 24 幀（0.40 秒）才啟動，B2、B3 各再 32 幀（0.53 秒），全爆裂＝充滿＋1.47 秒。速度階就是「充滿的那一幀落在哪一階之前」；「充能時間軸」把兩隊的累積曲線畫出來，可以直接看出 2RL 以下的隊伍到底多快（例如 1.6RL＝第 122 幀＝2.03 秒，比 2RL 早半秒）、以及我方和對方差幾幀。特殊角色（紅蓮暗影、灰姑娘、海倫珍藏、小紅帽、夏日阿妮斯、德雷克珍藏、女僕普麗瓦蒂、冰玫瑰梅登、愛蜜莉雅、A2、哈蘭、純真白雪、小美人魚、渡鴉、戰術貝斯蒂、莉貝雷利奧、重武白雪、超級巨星阿妮斯、視界霓虹、究極英雄拉普拉斯、平凡技師麥斯威爾）都照該站的個別節奏；超級巨星阿妮斯的被動（隊友每擊 +0.084×倍率）、紅蓮被打反擊回充（每次被命中 +0.135%）、充能速度超頻 17%（蓄力少 10 幀）與量子魔方 Lv7 也有納入；<b>沒納入</b>的是豺狼連結回充（該站要手動指定連結對象）、小紅帽穿透與「萬能妮姬」。「羅珊娜」「暈眩」兩條虛線是該站標的關鍵時間點（第 96 幀機槍第一波命中、第 196 幀小美人魚暈眩）。</p>
     <p class="muted">頁首可切換成 <a href="https://nikke-deck.com/en/deck" target="_blank" rel="noopener">nikke-deck.com</a> 的資料與公式，和該站的結果一致：每位角色在 2RL／2.5RL（本工具寫 5SG）／3RL／3.5RL（7SG）／4RL 五階的充能百分比相加，哪一階先到 100% 就是這隊的速度。細節：有「技能 10」版本的角色（海倫珍藏、愛蜜莉雅、拉貝爾…）預設用技能 10 的數值；勾「超頻 17%」用該角色的 17% 版本；量子魔方 Lv7 乘 1.0466；隊上有超級巨星阿妮斯時，其他每位依「0.084 × 角色係數 × 該階命中數」另外加充能（她的被動）。頁首可切換成 nikke-arena-planner 的資料，兩者有 27 位角色的數值不同（例如拉普拉斯究極英雄、白雪重武、戰術貝斯蒂），1RL 與 5RL 兩階 nikke-deck 沒有資料，仍用 planner 的值。豺狼的連結（分攤傷害回充）nikke-deck 另有特殊處理，本工具未納入。</p>
     <details><summary><b>名字簡稱表</b>（點開看）</summary>
     <p class="muted">快速輸入與選角搜尋認得的綽號、簡稱與單字縮寫。這些是從社群常見寫法（巴哈、PTT、KR／JP 隊伍縮寫如「諾帽餅」「노노비수라」）整理的，<b>沒有統計來源</b>，不是使用頻率排名；要增補請改 <code>build/data/nicknames.json</code> 再執行 build.py。簡體名由上游資料提供，不列在這裡。</p>
@@ -570,7 +570,7 @@ const RULES = [
   {id:'revive', when:c=>c.has('rapunzel','anne-miracle-fairy'), level:'warn', title:'對方有復活', text:c=>`一波打死主 C 會被拉起來。需要第二輪傷害，或把隊伍調整成持久戰；AOE 核爆比單體更能一次清掉輔助。`},
   {id:'rosanna', when:c=>c.has('rosanna','rosanna-treasure'), level:'warn', title:'對方有羅珊娜（驅散＋B1 核爆）', text:c=>{ const ros=c.ids.find(i=>['rosanna','rosanna-treasure'].includes(i)); const inCh=chainSet(c.ids).has(ros); const f=inCh?stageFrame(simTeam(c.ids,mode==='attack'?'defense':'attack',enemyMods,null),c.chain,ros):null;
     return `她的 S1 驅散固定在開場第 96 幀（1.6 秒，機槍第一波命中）發動、每場一次，只清你攻擊力最高 2 人身上「開場就有」的被動增益：豺狼連結、娜由塔不屈、貝伊分攤。布蘭兒的不屈要等 B2 才出現，驅散碰不到；真正的威脅是她的 B1 核爆（優先打攻擊手、2 人）${inCh?(f!==null?`，約在第 ${f} 幀（${simSec(f)} 秒）落地`:'，在對方充滿後 24 幀落地'):'，不過她目前在對方軸外，第一輪不會開'}。你的布蘭兒 B2 不屈比自家充滿晚 56 幀，充滿要比她早 32 幀（0.53 秒）以上，不屈才會先掛上；解隊評分會逐幀判斷誰先。牡丹珍藏坦牆體系可以克她。`; }},
-  {id:'sg', when:c=>c.weaponCount('SG')>=2, level:'warn', title:'對方是霰彈集火隊', text:c=>`充能快，爆裂前就能把 P1 或 P5 打死（對方防守時霰彈集中打你的 P5，進攻時打 P1）。解法：紅蓮 S2 反擊、尼羅反傷、諾雅無敵、布蘭兒不屈，或在被打的那一位放瑪奇瑪／餅乾＋防禦者這類無敵坦；脆皮不要放那一位。霰彈每發 10 次命中，也會大量餵你的豺狼充能。`},
+  {id:'sg', when:c=>c.weaponCount('SG')>=2, level:'warn', title:'對方是霰彈集火隊', text:c=>`充能快，爆裂前就能把你的 P1 打死（2026-10-29 更新後不論攻守，霰彈第一發後都集中打 P1；更新前防守方的霰彈是打 P5）。解法：紅蓮 S2 反擊、尼羅反傷、諾雅無敵、布蘭兒不屈，或在 P1 放瑪奇瑪／餅乾＋防禦者這類無敵坦；脆皮不要放 P1。霰彈每發 10 次命中，也會大量餵你的豺狼充能。`},
   {id:'sanis', when:c=>c.has('anis-sparkling-summer'), level:'warn', title:'對方有夏日阿妮斯', text:c=>`她同時打兩個目標而且無視嘲諷，持久戰很強。解法：紅蓮核爆（她撐不過紅蓮 S2 反擊）、布蘭兒不屈、貝斯蒂戰術升級主 C。`},
   {id:'blanc-mirror', when:c=>c.has('blanc'), level:'good', title:'後手鏡像：用更慢的布蘭兒（白兔）隊', text:c=>`布蘭兒爆裂給血量最低的隊友 <b>10 秒不屈</b>＋最大 HP 提升，並讓所有敵人受傷 +39%，冷卻 60 秒（同小隊在場減 40 秒），所以第一個 10 秒就定勝負。不屈期間仍會持續受傷，只是不會死：一到期就立刻倒下。若你也靠布蘭兒撐最後一隻，<b>先開爆裂的那方不屈先到期、先倒</b>，對方最後一隻必定比你多撐一下。因此對布蘭兒鏡像要<b>刻意慢一階</b>（例如對方 3RL 你 7SG）讓自己後開；只能慢一階，慢太多會在開爆裂前被打死或布蘭兒先陣亡。下方「組反制隊」若有布蘭兒會自動給你一個「後手鏡像版」。`},
   {id:'sanis-mirror', when:c=>c.has('anis-sparkling-summer'), level:'good', title:'後手鏡像：用更慢的夏日阿妮斯', text:c=>`夏日阿妮斯的強度集中在爆裂後約 10 秒的自回血＋雙目標輸出窗口。你也帶夏日阿妮斯但<b>刻意比對方慢一階</b>（例如對方 3RL 你 7SG），對方的窗口先結束、你的才開始，耗血戰就站得比她久。條件：要有諾伊斯／諾雅／餅乾之類的保護撐過對方那一輪，而且只能慢一階，慢太多會在開爆裂前被打死。下方「組反制隊」若有夏日阿妮斯會自動給你一個「後手鏡像版」。`},
@@ -582,7 +582,8 @@ const RULES = [
 /* ====================== 來源標註 ====================== */
 const SOURCES={
   tpl:  {label:'上游模板對照表',url:'https://github.com/williamchong/nikke-arena-planner/blob/master/app/data/templates.json',desc:'NIKKE Arena Planner 的 23 個隊伍模板與互剋關係，整理自 nikke.gg 與 Prydwen 的競技場分析'},
-  mech: {label:'Prydwen PVP 機制',url:'https://www.prydwen.gg/nikke/guides/pvp-mechanics',desc:'武器目標順序、火箭筒充能倍率、嘲諷角、無敵與不屈的差別、戰力懲罰 15.4% 門檻'},
+  mech: {label:'Prydwen PVP 機制',url:'https://www.prydwen.gg/nikke/guides/pvp-mechanics',desc:'武器目標順序（寫的是 2026-10-29 更新前的攻守分開規則）、火箭筒充能倍率、嘲諷角、無敵與不屈的差別、戰力懲罰 15.4% 門檻'},
+  devnote:{label:'官方 2026-08 開發者筆記（目標規則統一）',url:'https://nikke.gg/august-2026-developers-note/',desc:'官方宣布：冠軍競技場無法選擇攻守，因此統一攻守的目標優先規則、以進攻方規則為準、適用所有競技場，10 月底實裝；2026-10-29 更新後玩家實測：不論攻守 SR 打 P5、SG 打 P1'},
   teams:{label:'Prydwen 隊伍原型',url:'https://www.prydwen.gg/nikke/guides/pvp-sp-arena-teams',desc:'各體系的打法與「如何打贏」段落（諾伊斯擋第一波＋諾雅開盾、羅珊娜 S1 四級驅散豺狼連結、餅乾＋防禦者擋愛麗絲等）'},
   baha: {label:'巴哈組隊心得',url:'https://forum.gamer.com.tw/C.php?bsn=36390&snA=8237',desc:'台港澳服玩家的競技場組隊思路與對局分享串'},
   synergy:{label:'NIKKE Synergy 競技場機制',url:'https://nikke-synergy.com/arena-guide_en',desc:'逐幀充能計算器作者的機制整理；明寫「運用布蘭兒不屈這類技能時，刻意延後開爆裂有時反而有利」，並有爆裂啟動延遲（約 0.433 秒）與技能生效延遲（約 0.1 秒）的數據'},
@@ -602,7 +603,7 @@ const SOURCES={
   calc: {label:'本工具推算',url:null,desc:'由充能數值與評分規則算出來的結果，不是外部依據'},
   tool: {label:'本工具整理',url:null,desc:'依公開技能機制整理的提示文字'},
 };
-const RULE_SRC={nochain:['calc'],fast:['mech','calc'],slow:['mech','calc'],scarlet:['teams','mech'],jackal:['teams','mech'],noah:['wikiwiki','dcinside','arca','mech'],emilia:['dcinside','wikiwiki'],cinderella:['nikkegg-cindy','dcinside'],label:['wikiwiki','dcinside'],nayuta:['arca','wikiwiki'],bay:['arca','dcinside','nikkegg-cindy'],blanc:['mech','tpl','arca'],moran:['tpl','dcinside'],mermaid:['arca','wikiwiki','tpl'],revive:['teams'],rosanna:['teams','tpl'],sg:['mech','teams','arca'],sanis:['teams','tpl'],'sanis-mirror':['teams','community'],'blanc-mirror':['synergy','nikkegg-blanc','mech','community'],st:['teams'],stun:['tpl'],share:['tpl']};
+const RULE_SRC={nochain:['calc'],fast:['mech','calc'],slow:['mech','calc'],scarlet:['teams','mech'],jackal:['teams','mech'],noah:['wikiwiki','dcinside','arca','mech'],emilia:['dcinside','wikiwiki'],cinderella:['nikkegg-cindy','dcinside'],label:['wikiwiki','dcinside'],nayuta:['arca','wikiwiki'],bay:['arca','dcinside','nikkegg-cindy'],blanc:['mech','tpl','arca'],moran:['tpl','dcinside'],mermaid:['arca','wikiwiki','tpl'],revive:['teams'],rosanna:['teams','tpl'],sg:['devnote','mech','teams','arca'],sanis:['teams','tpl'],'sanis-mirror':['teams','community'],'blanc-mirror':['synergy','nikkegg-blanc','mech','community'],st:['teams'],stun:['tpl'],share:['tpl']};
 function srcBadges(keys,prefix){ return `<span class="src">${prefix||'依據'}：`+keys.map(k=>{ const s=SOURCES[k]||{label:k,desc:''}; return s.url?`<a href="${s.url}" target="_blank" rel="noopener" title="${esc(s.desc)}">${s.label}</a>`:`<span title="${esc(s.desc)}">${s.label}</span>`; }).join('、')+'</span>'; }
 
 /* ====================== 冠軍競技場實戰統計（nikkeari.cc）與 nikke-deck 充能資料 ====================== */
@@ -869,6 +870,7 @@ function speedOf(ids,mode,mods){
    移植自 nikke.top（NIKKE Arena Tools）前端的計算：60 fps，每位角色依武器有固定射擊節奏，
    每次命中充能 rate × mult（×量子魔方），全隊累積到 100 就「充滿」；之後 B1 +24 幀、每多一段 +32 幀。
    火箭筒／狙擊槍：蓄力 int 幀（充能速度超頻 17% 縮短 10 幀）＋發射 16 幀，命中再延遲 12～16 幀（依站位）；
+   目標位置：SR 打 P5、RL 打 P1（濺射 P2）、其餘打 P1，攻守相同（2026-10-29 更新後規則，見 topTargets）；
    一輪火箭筒 = 76 幀 = 1.267 秒，2RL = 152 幀、3RL = 228 幀。
    未移植：豺狼連結回充（網站要手動指定連結對象）、小紅帽穿透、萬能妮姬。 */
 const TOP_F={'1RL':76,'2RL':152,'5SG':190,'3RL':228,'7SG':266,'4RL':304,'5RL':380};
@@ -880,8 +882,10 @@ const topRedSR=p=>p===10?8:(p>=18&&p<=20)?14:(p>=21&&p<=24)?16:topRed(p);   // �
 function topSpd(md,extra){ const arr=[]; if(md&&md.ol) arr.push(17); if(extra) arr.push(...extra); const m=new Map(); for(const v of arr){ if(v>0) m.set(v,(m.get(v)||0)+v); } let s=0; for(const v of m.values()) s+=Math.round(v); return s; }
 const topQ=md=>1+((md&&md.q)?(DECK.quantumLv7||4.66):0)/100;
 function topDelay(u,pos,atk){ if(u.w!=='RL') return 0; if(u.top==='003') return 10; if(u.top==='053T'||u.top==='053') return 6; if(atk) return pos<=1?16:14; return pos<=1?16:pos<=3?14:12; }
-function topTargets(u,atk){ const h=u.hpc,w=u.w; if(atk){ if(w==='SR') return [[4,h]]; if(w==='RL') return [[0,h],[1,h]]; return [[0,h]]; } if(w==='SG') return [[4,h]]; if(w==='RL') return [[0,h],[1,h]]; return [[0,h]]; }
-const topExtraTg=atk=>atk?[[0,1],[1,1]]:[[3,1],[4,1]];
+/* 目標位置：2026-10-29 更新後攻守統一採進攻方規則（官方 2026-08 開發者筆記預告、更新後玩家實測）：SR 打 P5、RL 打 P1＋濺射 P2、其餘打 P1。
+   更新前防守方 SG 打 P5、防守方 SR 打 P1；nikke.top 到 2026-11-02 仍用舊規則，這裡刻意與該站不同。atk 參數保留給呼叫端，不再影響結果。 */
+function topTargets(u,atk){ const h=u.hpc,w=u.w; if(w==='SR') return [[4,h]]; if(w==='RL') return [[0,h],[1,h]]; return [[0,h]]; }
+const topExtraTg=atk=>[[0,1],[1,1]];   // 女僕普麗瓦蒂每第 3 發的額外命中：SG 目標 P1 的鄰位（舊規則防守時是 P4／P5）
 function topMG(u,md,n,pos){ const p=u.rate*topQ(md), d=u.top==='011'?2:1, ev=[]; const push=(f,h)=>ev.push({f,ch:p*h*d,src:pos,tg:[[0,h*d]],w:'MG'});
   if(96<=n) push(96,12); if(122<=n) push(122,6); if(152<=n) push(152,16);
   if(180<=n){ push(180,14); for(let b=182;b<=n;b+=2) ev.push({f:b,ch:p,src:pos,tg:[[0,d]],w:'MG'}); }
@@ -902,7 +906,7 @@ const TOP_SPECIAL={
   '003':(u,md,n,pos,atk)=>{ const p=0.225*topQ(md), C=topDelay(u,pos,atk), g=[4,2,2,2,4,4], d=[2,2,2,2,4,4], ev=[]; let b=1,first=true,T=60;
     while(T<=n){ const f=(first?g:d)[(b-1)%6]; ev.push({f:T+C,ch:p*f,src:pos,tg:[[0,2]],w:'RL'}); b++; T+=22; if(b>6&&first){ first=false; b=1; } } return ev; },
   '004T':(u,md,n,pos,atk)=>topGeneric(u,md,n,pos,atk).map(e=>({...e,ch:e.ch+14.31})),
-  '005':(u,md,n,pos,atk)=>{ const l=u.int,c=16,g=u.rate*u.mult*topQ(md),m=topDelay(u,pos,atk),ev=[],st=[],tp=atk?4:0;
+  '005':(u,md,n,pos,atk)=>{ const l=u.int,c=16,g=u.rate*u.mult*topQ(md),m=topDelay(u,pos,atk),ev=[],st=[],tp=4;
     const live=I=>st.filter(x=>x>I).length, add=I=>{ st.push(I+180); for(let i=st.length-1;i>=0;i--) if(st[i]<=I) st.splice(i,1); if(st.length>10) st.splice(0,st.length-10); };
     let k=l-topRed(topSpd(md)); if(k+m<=n){ ev.push({f:k+m,ch:g,src:pos,tg:[[tp,u.hpc]],w:'SR'}); add(k+m); }
     for(;;){ const I=live(k); k+=c+l-topRed(topSpd(md,Array(I).fill(3.81))); if(k+m>n) break; ev.push({f:k+m,ch:g,src:pos,tg:[[tp,u.hpc]],w:'SR'}); add(k+m); } return ev; },
@@ -917,7 +921,7 @@ const TOP_SPECIAL={
     let x=l-topRed(topSpd(md)); if(x+m<=n) ev.push({f:x+m,ch:g,src:pos,tg:tg(),w:'RL'});
     const T=topRed(topSpd(md,[13.01])); for(x+=c+l-T;x+m<=n;x+=c+l-T) ev.push({f:x+m,ch:g,src:pos,tg:tg(),w:'RL'}); return ev; },
   '051':(u,md,n,pos)=>{ const m=1.3*9*topQ(md); return [152,228].filter(f=>f<=n).map(f=>({f,ch:m,src:pos,tg:[[0,2],[1,2],[2,2]],w:'RL'})); },
-  '061':(u,md,n,pos,atk)=>{ const o=2.9*topQ(md), v=Math.max(1,u.int-topRed(topSpd(md))), tp=atk?4:0, ev=[]; let d=v;
+  '061':(u,md,n,pos,atk)=>{ const o=2.9*topQ(md), v=Math.max(1,u.int-topRed(topSpd(md))), tp=4, ev=[]; let d=v;
     if(d<=n) ev.push({f:d,ch:o,src:pos,tg:[[tp,1]],w:'SR'}); for(d+=16+v;d<=n;d+=16+v) ev.push({f:d,ch:o*2,src:pos,tg:[[tp,1]],w:'SR'}); return ev; },
   '076':(u,md,n,pos,atk)=>{ const o=0.05*topQ(md); return topGeneric(u,md,n,pos,atk).map((e,i)=>(i+1)%30===0?{...e,ch:e.ch+o}:e); },
   '152':(u,md,n,pos,atk)=>{ const o=0.5*topQ(md); return topGeneric(u,md,n,pos,atk).map((e,i)=>i===0?{...e,ch:e.ch+o}:e); },
@@ -1531,7 +1535,7 @@ function renderCounters(ctx){
   }
   const refs=refsFor(arch.map(a=>a.arch),enemy,null);
   h+=refList(refs,'這個對手體系的參考對局／資料')+`<div class="muted" style="margin-top:4px">想看這隊每一場對誰輸贏：到 <a href="https://nikkeari.cc/zh-CN" target="_blank" rel="noopener">nikkeari 競技場分析器</a> 的「編成詳細」分頁手動選這 5 人（網站不支援帶隊伍的連結）。</div>`;
-  h+=`<h3>通用原則</h3><ul class="tips"><li>要嘛比對方快一階先開爆裂，要嘛確定扛得住對方第一波再反打；兩個都做不到就換體系。 ${srcBadges(['teams'])}</li><li>冠軍競技場數據裡，進攻方與防守方的勝率差不大（同一隊伍兩邊各約一半），不要假設進攻方必勝；影響較大的是進攻／防守時霰彈槍的目標位置不同。 ${srcBadges(['ari','mech'])}</li><li>目標順序：${mode==='attack'?'你的 SMG／MG／AR／SG／RL 第一發打對方 P5、之後集中打 P1，SR 一直打 P5；對方防守的 SG 會集中打你的 P5，其餘武器打你的 P1':'對方進攻的 SMG／MG／AR／SG／RL 會集中打你的 P1，SR 打你的 P5；你防守的 SG 集中打對方 P5，其餘打對方 P1'}。RL／SR 攻擊間隔會被視為進掩體而被跳過，所以諾伊斯、諾雅這類 RL 不適合單獨當 P1 坦。 ${srcBadges(['mech'])}</li><li>戰力差超過 15.4%（低於對方 84.6%）會吃屬性懲罰，先確認戰力再談陣容。 ${srcBadges(['mech'])}</li><li>站位：P2 是最容易死的位置（P1 被打時火箭濺射到 P2，P1 進掩體時 P2 被集火）；嘲諷角不要放 P2～P4，否則對方火箭一發打到三人、充能約 1.5 倍；灰姑娘不放 P1／P2；最多帶兩個 B3，同段有兩人時把要先開的放左邊。 ${srcBadges(['dcinside','arca','game8','nikkegg-cindy'])}</li><li>同速對局的 0.1 秒：技能效果在爆裂啟動後約 0.1 秒才生效，對方爆裂後 0.1 秒內開的爆裂會無視它；充能速度超頻約 5%（2RL 隊）或 3.3%（3RL 隊）就能快 0.1 秒，15% 可讓 3RL 隊的 B3 搶在對方諾雅生效前。 ${srcBadges(['dcinside','synergy'])}</li></ul>`;
+  h+=`<h3>通用原則</h3><ul class="tips"><li>要嘛比對方快一階先開爆裂，要嘛確定扛得住對方第一波再反打；兩個都做不到就換體系。 ${srcBadges(['teams'])}</li><li>冠軍競技場數據裡，進攻方與防守方的勝率差不大（同一隊伍兩邊各約一半），不要假設進攻方必勝；2026-10-29 更新後攻守的目標規則已統一（以進攻方為準），霰彈槍不再因攻守換目標，這些統計多半是更新前打的。 ${srcBadges(['ari','devnote'])}</li><li>目標順序（2026-10-29 更新後攻守相同）：雙方的 SR 一直打對面 P5；RL 一直打對面 P1；SMG／MG／AR／SG 第一發打 P5、之後集中打 P1。所以對方有 SR 就顧好你的 P5，對方霰彈多就顧好你的 P1。RL／SR 攻擊間隔會被視為進掩體而被跳過，所以諾伊斯、諾雅這類 RL 不適合單獨當 P1 坦。 ${srcBadges(['devnote','mech'])}</li><li>戰力差超過 15.4%（低於對方 84.6%）會吃屬性懲罰，先確認戰力再談陣容。 ${srcBadges(['mech'])}</li><li>站位：P2 是最容易死的位置（P1 被打時火箭濺射到 P2，P1 進掩體時 P2 被集火）；嘲諷角不要放 P2～P4，否則對方火箭一發打到三人、充能約 1.5 倍；灰姑娘不放 P1／P2；最多帶兩個 B3，同段有兩人時把要先開的放左邊。 ${srcBadges(['dcinside','arca','game8','nikkegg-cindy'])}</li><li>同速對局的 0.1 秒：技能效果在爆裂啟動後約 0.1 秒才生效，對方爆裂後 0.1 秒內開的爆裂會無視它；充能速度超頻約 5%（2RL 隊）或 3.3%（3RL 隊）就能快 0.1 秒，15% 可讓 3RL 隊的 B3 搶在對方諾雅生效前。 ${srcBadges(['dcinside','synergy'])}</li></ul>`;
   el.innerHTML=h;
   el.querySelectorAll('[data-arena-apply]').forEach(b=>b.onclick=()=>{ const s=rowStats(ARENA.teams[+b.dataset.arenaApply]); mine=autoArrange([...s.ids]); save(); refresh(); $('#mySlots').scrollIntoView({behavior:'smooth'}); });
 }
