@@ -1,5 +1,5 @@
 {
- "exported": "2026-11-01",
+ "exported": "2026-11-06",
  "owned": [
   "blanc",
   "moran-treasure",
@@ -26,30 +26,14 @@
   "takina",
   "maiden-ice-rose",
   "crown",
-  "anis-sparkling-summer"
+  "anis-sparkling-summer",
+  "bay-treasure",
+  "rumani",
+  "scarlet-goddeath",
+  "drake-treasure",
+  "mint"
  ],
  "history": [
-  [
-   "neon-vision-eye",
-   "little-mermaid",
-   "naga",
-   "cinderella-crystal-wave",
-   "rapi-red-hood"
-  ],
-  [
-   "moran-treasure",
-   "ade-agent-bunny",
-   "privaty-treasure",
-   "snow-white-heavy-arms",
-   "vesti-tactical-upgrade"
-  ],
-  [
-   "drake-treasure",
-   "crown",
-   "anis-star",
-   "helm-treasure",
-   "mast-romantic-maid"
-  ],
   [
    "jackal",
    "snow-white-heavy-arms",
@@ -77,6 +61,27 @@
    "snow-white-heavy-arms",
    "rapi-red-hood",
    "biscuit"
+  ],
+  [
+   "neon-vision-eye",
+   "little-mermaid",
+   "naga",
+   "cinderella-crystal-wave",
+   "rapi-red-hood"
+  ],
+  [
+   "moran-treasure",
+   "ade-agent-bunny",
+   "privaty-treasure",
+   "snow-white-heavy-arms",
+   "vesti-tactical-upgrade"
+  ],
+  [
+   "drake-treasure",
+   "crown",
+   "anis-star",
+   "helm-treasure",
+   "mast-romantic-maid"
   ]
  ],
  "records": [
@@ -502,7 +507,7 @@
   },
   {
    "date": "2026-10-22",
-   "mode": "defense",
+   "mode": "attack",
    "enemy": [
     "nayuta",
     "liter",
@@ -522,7 +527,7 @@
   },
   {
    "date": "2026-10-22",
-   "mode": "defense",
+   "mode": "attack",
    "enemy": [
     "anis-star",
     "biscuit",
@@ -542,7 +547,7 @@
   },
   {
    "date": "2026-10-22",
-   "mode": "defense",
+   "mode": "attack",
    "enemy": [
     "anis-star",
     "helm-treasure",
@@ -562,7 +567,7 @@
   },
   {
    "date": "2026-10-22",
-   "mode": "defense",
+   "mode": "attack",
    "enemy": [
     "anis-star",
     "helm-treasure",
@@ -582,7 +587,7 @@
   },
   {
    "date": "2026-10-22",
-   "mode": "sp",
+   "mode": "attack",
    "enemy": [
     "jackal",
     "snow-white-heavy-arms",
@@ -602,7 +607,7 @@
   },
   {
    "date": "2026-10-22",
-   "mode": "sp",
+   "mode": "attack",
    "enemy": [
     "moran-treasure",
     "noah",
@@ -622,7 +627,7 @@
   },
   {
    "date": "2026-10-22",
-   "mode": "sp",
+   "mode": "attack",
    "enemy": [
     "nayuta",
     "centi-treasure",
@@ -642,7 +647,7 @@
   },
   {
    "date": "2026-10-22",
-   "mode": "attack",
+   "mode": "defense",
    "enemy": [
     "nayuta",
     "liter",
@@ -662,7 +667,7 @@
   },
   {
    "date": "2026-10-22",
-   "mode": "attack",
+   "mode": "defense",
    "enemy": [
     "anis-star",
     "biscuit",
@@ -682,7 +687,7 @@
   },
   {
    "date": "2026-10-22",
-   "mode": "attack",
+   "mode": "defense",
    "enemy": [
     "anis-star",
     "helm-treasure",
@@ -702,7 +707,7 @@
   },
   {
    "date": "2026-10-22",
-   "mode": "attack",
+   "mode": "defense",
    "enemy": [
     "anis-star",
     "helm-treasure",
@@ -722,7 +727,7 @@
   },
   {
    "date": "2026-10-22",
-   "mode": "attack",
+   "mode": "sp",
    "enemy": [
     "jackal",
     "snow-white-heavy-arms",
@@ -742,7 +747,7 @@
   },
   {
    "date": "2026-10-22",
-   "mode": "attack",
+   "mode": "sp",
    "enemy": [
     "moran-treasure",
     "noah",
@@ -762,7 +767,7 @@
   },
   {
    "date": "2026-10-22",
-   "mode": "attack",
+   "mode": "sp",
    "enemy": [
     "nayuta",
     "centi-treasure",
