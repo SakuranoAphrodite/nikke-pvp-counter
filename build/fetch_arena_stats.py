@@ -15,6 +15,7 @@ import json, re, sys, time, urllib.request
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE))
 DATA = HERE / "data"
 RAW = DATA / "raw"
 RAW.mkdir(parents=True, exist_ok=True)
@@ -237,54 +238,10 @@ def main():
     (DATA / "arena-stats.json").write_text(json.dumps(out, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     print(f"arena-stats.json：{len(teams_arr)} 隊、{total_rounds} 回合、{len(arch_stats)} 體系；{per_server}")
 
-    # ---------- nikke-deck 充能變體與階級 ----------
+    # ---------- nikke-deck 充能變體與階級（共用 nikkedeck.py；build.py --update 也會產生同一份） ----------
     try:
-        deck = get("https://nikke-deck.com/en/assets/data.json")
-        (RAW / "deck_data.json").write_text(json.dumps(deck, ensure_ascii=False), encoding="utf-8")
-        code2my = {}
-        for c in chars:
-            img = c.get("avatarImg") or ""
-            m = re.search(r"si_(c\d+)_", img)
-            if m:
-                code = m.group(1) + ("treasure" if c["id"].endswith("-treasure") else "")
-                code2my[code] = c["id"]
-        en2my = {norm(c["name"]["en"]): c["id"] for c in chars}
-        speed = {}
-        for n in deck["nikkes"]:
-            mid = code2my.get(n["id"])
-            if not mid:  # 後備：英文名（nikke-deck 寶物版寫成「Helm +」）
-                en = norm(n["name"]["en"].replace(" +", " treasure").replace("+", " treasure"))
-                mid = en2my.get(en)
-            if not mid:
-                continue
-            # nikke-deck 公式（chunk app-deck-details.getBurstGeneration）：
-            #   每階充能 = 特殊版本（S10 預設或超頻 17%）的 burstGeneration，否則一般 burstGeneration；量子魔方 ×(1+4.66%)；
-            #   隊上有超級巨星阿妮斯（c017）時，其他每位 += 0.084 × 角色係數 × 該階命中數（hitOneTarget）
-            RATIO = {"c017": 6, "c821": 4.5, "c232": 8, "c183": 2.5, "c062": 4, "c811": 4.5, "c261": 2, "c290": 1.704, "c582": 1.704,
-                     "c225": 2, "c230": 2, "c094": 6, "c851": 5, "c302": 1, "c511": 1.5}
-            entry = {"rank": n.get("rank"), "ol17": False, "s10": None, "deckId": n["id"],
-                     "ratio": RATIO.get(n["id"], 4 if n.get("weapon") == 2 else 1)}
-            base_gen, base_hits = n.get("burstGeneration") or None, n.get("hitOneTarget") or None
-            for sp in n.get("specials", []):
-                if sp["name"] == "17%":
-                    entry["ol17"] = True
-                    entry["gen17"] = sp.get("burstGeneration"); entry["hits17"] = sp.get("hitOneTarget") or base_hits
-                elif sp["name"] == "S10":
-                    entry["s10"] = {"gen": sp.get("burstGeneration"), "default": sp.get("default", False)}
-                    if sp.get("default") or not base_gen:  # nikke-deck 預設就用 S10 版本
-                        base_gen = sp.get("burstGeneration"); base_hits = sp.get("hitOneTarget") or base_hits
-            if base_gen:
-                entry["gen"] = base_gen
-            if base_hits:
-                entry["hits"] = base_hits
-            speed[mid] = entry
-        quantum = next((c for c in deck.get("cubes", []) if "Quantum" in c["name"]["en"]), None)
-        (DATA / "deck-speed.json").write_text(json.dumps({
-            "source": "nikke-deck.com data.json（" + deck.get("lastUpdated", "") + "）",
-            "quantumLv7": quantum["value"] if quantum else None,
-            "units": speed,
-        }, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
-        print(f"deck-speed.json：{len(speed)} 名角色對應（nikke-deck 共 {len(deck['nikkes'])}），量子 Lv7 = {quantum['value'] if quantum else None}")
+        import nikkedeck
+        nikkedeck.write_speed(nikkedeck.fetch("--refresh" in sys.argv), chars)
     except Exception as e:
         print("nikke-deck 抓取失敗", e)
 

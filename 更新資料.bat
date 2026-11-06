@@ -1,7 +1,7 @@
 @echo off
 chcp 65001 >nul
 cd /d "%~dp0"
-echo 正在從上游專案抓最新資料並重新產生 HTML...
+echo 正在抓最新資料（arena-planner、nikke-deck、nikke.top）、合併角色庫並重新產生 HTML...
 python -X utf8 build\build.py --update
 if errorlevel 1 (
   echo.

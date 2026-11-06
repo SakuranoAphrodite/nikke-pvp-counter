@@ -21,7 +21,8 @@ SITE = "https://nikke.top/"
 UA = {"User-Agent": "Mozilla/5.0 (nikke-pvp-counter fetch script)"}
 WEAPON = {1: "SG", 2: "RL", 3: "SR", 4: "AR", 5: "SMG", 6: "MG"}
 # nikke.top 英文名 → 本工具 id（自動對應失敗時的手動對照；" +" 結尾表示珍藏）
-OVERRIDE = {}
+OVERRIDE = {"Queen: Makoto": "queen", "Asuka Shikinami Langley": "asuka", "Asuka Shikinami Langley: WILLE": "asuka-wille",
+            "Mari Makinami Illustrious": "mari", "Misato Katsuragi": "misato"}
 
 
 def get(url: str) -> bytes:

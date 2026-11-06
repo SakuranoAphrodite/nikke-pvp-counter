@@ -7,7 +7,7 @@
 線上版（手機也能用）：<https://sakuranoaphrodite.github.io/nikke-pvp-counter/>
 
 1. 或者直接用瀏覽器打開 `NIKKE-PVP-解隊助手.html`（不需要安裝任何東西，離線可用）。
-2. 到「我的角色庫」把你擁有的角色點成擁有，資料只存在瀏覽器本機。
+2. 到「我的角色庫」把你擁有的角色點成擁有，資料只存在瀏覽器本機。清單可依「階級」「出場時間」（初次出場日期，來自 NIKKE Synergy）或「衝能速度」排序；衝能速度排的是每位角色一人在所選階段（2RL／2.5RL／3RL／3.5RL／4RL）內充的爆裂能量，數字來自 NIKKE DECK、和該站的「Sort by RL」一致，5 人相加到 100% 的那一階就是隊伍速度；再按一次同一個按鈕會反向。
 3. 回「解隊」，照對方 P1 到 P5 的順序填入角色，或在快速輸入框直接打中文名，例如 `紅蓮 豺狼 布蘭兒 桑迪 特蕾娜`。
 4. 看分析與建議，點「帶入試算」可以再微調自己的隊伍。
 
@@ -17,7 +17,7 @@
 
 ## 冠軍競技場實戰數據與進階速度設定
 
-- 速度預設採用 [nikke.top](https://nikke.top/)（NIKKE Arena Tools）的逐幀模擬：60 fps，每位角色依武器有固定射擊節奏（火箭筒一輪 76 幀＝1.267 秒），每次命中充能「基礎充能 × 命中倍率」，全隊累積到 100% 那一幀就是「充滿」，之後 B1 +24 幀、B2／B3 各 +32 幀。本工具把該站前端的計算移植進來（含 21 位特殊節奏角色、超級巨星阿妮斯被動、紅蓮反擊回充、超頻 17%、量子魔方；不含豺狼連結回充與小紅帽穿透），結果與該站逐幀一致。解隊分頁的「充能時間軸」畫出兩隊的累積充能曲線、1RL～5RL 與暈眩等關鍵時間點、各段爆裂啟動時間，並寫出充滿秒數、等於幾 RL、比 2RL 快或慢多少、兩隊差幾幀，讓 2RL 以下的隊伍也看得出實際多快。參數由 `python build/fetch_nikketop.py` 抓進 `build/data/nikketop.json`（`--refresh` 重抓）。
+- 速度預設採用 [nikke.top](https://nikke.top/)（NIKKE Arena Tools）的逐幀模擬：60 fps，每位角色依武器有固定射擊節奏（火箭筒一輪 76 幀＝1.267 秒），每次命中充能「基礎充能 × 命中倍率」，全隊累積到 100% 那一幀就是「充滿」，之後 B1 +24 幀、B2／B3 各 +32 幀。本工具把該站前端的計算移植進來（含 23 位特殊節奏角色，2026-11-06 補上紅蓮:神殺與長髮公主:聖域、超級巨星阿妮斯被動、紅蓮反擊回充、超頻 17%、量子魔方；不含豺狼連結回充與小紅帽穿透），結果與該站逐幀一致。解隊分頁的「充能時間軸」畫出兩隊的累積充能曲線、1RL～5RL 與暈眩等關鍵時間點、各段爆裂啟動時間，並寫出充滿秒數、等於幾 RL、比 2RL 快或慢多少、兩隊差幾幀，讓 2RL 以下的隊伍也看得出實際多快。參數由 `python build/fetch_nikketop.py` 抓進 `build/data/nikketop.json`（`--refresh` 重抓）。
 - 頁首可切換成 nikke-deck.com 的每階充能資料與公式（含技能 10 預設版本、超頻 17% 版本、量子魔方、超級巨星阿妮斯的每擊加成），結果與該站一致；頁首可切換回 nikke-arena-planner 的資料。公式來源：nikke-deck 前端 `app-deck-details.getBurstGeneration`。
 
 - `build/fetch_arena_stats.py` 會從 [にけあり！NIKKE 競技場分析器](https://nikkeari.cc/zh-CN) 的公開 API 抓冠軍競技場的對戰紀錄（JP／KR／國際服，每回合含進攻隊、防守隊與勝方），整理成 `build/data/arena-stats.json`：每個 5 人組合的場次、勝率、進攻／防守勝率、被哪些隊伍打贏過、含某核心角的隊伍整體勝率、角色常用站位。工具會在「對方分析」顯示這隊（或 4 人相同的相近隊）的實戰戰績，在「解法建議」列出實戰中打贏過它的隊伍並可一鍵帶入。判斷勝負時另有「直接對位」：含我方 4 位（不足 20 場放寬到 3 位）相同角色的隊伍對上含對方 4 位（或 3 位）相同角色的隊伍的實戰勝負，珍藏與一般版視為同一人；它和模板寫的克制關係衝突時以實戰為準（例如「娜由塔一閃」模板宣稱克制布蘭兒不屈隊，但對超級巨星阿妮斯＋布蘭兒隊實戰只有約三成，工具就不再給克制加分）。
@@ -76,8 +76,11 @@
 | --- | --- |
 | `NIKKE-PVP-解隊助手.html` | 成品，單一檔案 |
 | `build/template.html` | 頁面原始碼，含解法規則與威脅標籤 |
-| `build/build.py` | 建置腳本，把資料嵌進頁面 |
-| `build/data/characters.json` | 209 名角色資料、繁中譯名、充能數值、PVP 階級 |
+| `build/build.py` | 建置腳本：`--update` 抓上游、nikke-deck、nikke.top 並合併角色庫後嵌進頁面；`--merge` 只用快取重新合併 |
+| `build/nikkedeck.py` | NIKKE DECK 的 `data.json`：下載、對應角色 id、產生 `deck-speed.json`、把上游沒收錄的 SSR 轉成本工具的角色格式 |
+| `build/synergy.py`、`build/synergy_export.js` | NIKKE Synergy 的角色表：瀏覽器 Console 匯出腳本，與把匯出檔對應到角色 id（出場日期、繁中譯名） |
+| `build/data/characters.json` | 213 名角色資料、繁中譯名、充能數值、PVP 階級、出場日期（上游 209 名＋nikke-deck 補的 4 名，補的角色有 `source` 欄位） |
+| `build/data/synergy-raw.json` | NIKKE Synergy 的角色表匯出檔（227 名，含珍藏版與 R／SR）與譯名表，由 `synergy_export.js` 在瀏覽器產生 |
 | `build/data/templates.json` | 上游的 23 個主流隊伍模板與互剋關係 |
 | `build/data/templates-extra.json` | 本工具補充的 2026 體系模板（超級巨星阿妮斯＋餅乾核心、娜由塔一閃、豺狼＋貝斯蒂不屈、諾雅諾伊斯餅乾灰姑娘），獨立嵌入，線上更新上游模板後仍會合併 |
 | `build/data/templates-mined.json` | `build/mine_templates.py` 從 nikkeari 的 24,000 回合挖出的 24 個核心家族：場次、勝率、常見補位、站位、互剋（統計結果，非人工驗證） |
@@ -106,19 +109,38 @@ arena-stats.json 的每個隊伍另記錄「實際開爆裂的三位」的場次
 
 ## 新角色出來怎麼辦
 
-工具有三層更新方式：
+角色庫的基底是上游 [NIKKE Arena Planner](https://github.com/williamchong/nikke-arena-planner) 的 `characters.json`（各模板、威脅標籤、綽號、實戰數據都用它的角色 id），但上游 2026-10 之後沒再更新，所以 `build.py --update` 現在會合併三個來源：
 
-1. **自動**：每天第一次打開 HTML 時，若有網路，會向上游專案抓最新的 `characters.json` 與 `templates.json`，暫存在瀏覽器並立即套用。頁首會顯示資料來源（內建／快取／線上）與日期，也有「檢查更新」按鈕可手動觸發。
-2. **半自動**：雙擊 `更新資料.bat`，或執行下面的指令，會把最新資料寫回 `build/data/` 並重新產生成品 HTML，離線時也會有新角色：
+| 來源 | 提供什麼 | 怎麼抓 |
+| --- | --- | --- |
+| NIKKE Arena Planner（GitHub） | 角色基底、模板 | 自動 |
+| [NIKKE DECK](https://nikke-deck.com/en/deck) `data.json` | 上游沒收錄的新 SSR（武器、爆裂、職業、企業、屬性、每階充能、PVP 階級）；所有角色的每階充能與超頻 17% 版本 | 自動 |
+| [NIKKE Synergy](https://nikke-synergy.com/index_en) 角色表 | 每位角色的初次出場日期（珍藏版以珍藏品實裝日計）、新角色的繁中譯名、彈藥／裝填／蓄力 | 該站擋程式抓取，要用瀏覽器匯出（下面） |
+| [nikke.top](https://nikke.top/) | 逐幀充能參數 | 自動（`fetch_nikketop.py`） |
+
+更新方式：
+
+1. **自動**：每天第一次打開 HTML 時，若有網路，會向本專案的 GitHub 倉庫抓合併後的 `build/data/characters.json` 與 `templates.json`，暫存在瀏覽器並立即套用（線上資料比內建少時不套用）。頁首會顯示資料來源（內建／快取／線上）與日期，也有「檢查更新」按鈕可手動觸發。
+2. **半自動**：雙擊 `更新資料.bat`，或執行下面的指令，會抓上游、nikke-deck 與 nikke.top、合併角色庫、寫回 `build/data/` 並重新產生成品 HTML，離線時也會有新角色：
 
 ```bash
 python build/build.py --update
 ```
 
-3. **手動**：若上游停更，可直接編輯 `build/data/characters.json` 新增角色（照既有格式填爆裂類型、武器與各速度階的充能值），再執行 `python build/build.py`。
+   nikke-deck 補進來的角色會標「新」，繁中名與出場日期取自 `synergy-raw.json`；兩邊都沒有繁中名的角色（例如剛公布、譯名表還沒更新的）可在 `build.py` 的 `NAME_FIX` 手動補，綽號在 `nicknames.json` 補。新角色的頭像上游沒有，執行 `python build/fetch_avatars.py` 會依 `characters.json` 記的 nikke-synergy 角色圖網址下載到 `avatars/`。
+3. **更新出場日期（nikke-synergy）**：用瀏覽器打開 <https://nikke-synergy.com/index_en>，按 F12 打開 Console，把 `build/synergy_export.js` 整個貼進去執行，會下載 `synergy-raw.json`（網站前端已載入到瀏覽器裡的角色表與譯名表，不含技能文字與圖片）；放到 `build/data/` 後執行：
+
+```bash
+python build/build.py --merge
+```
+
+   `--merge` 不重抓上游與 nikke-deck（用 `build/data/raw/` 的快取），只重新合併角色庫再產生 HTML。沒有 `synergy-raw.json` 時一切照常，只是角色沒有出場日期、排序退回上游的 `releaseOrder`。
+4. **手動**：可直接編輯 `build/data/characters.json` 新增角色（照既有格式填爆裂類型、武器與各速度階的充能值），再執行 `python build/build.py`；但 `--update`／`--merge` 會從上游快取重新合併，手動加的角色要放進 `templates-extra.json` 那類獨立檔案才不會被蓋掉。
+
+nikke-deck 補的角色，充能數值直接用該站的 2RL～4RL 五階；1RL、1.5RL 與 5RL 是推算值（1RL 取 2RL 的一半、5RL 以 3RL→4RL 的增量外推），記在 `burstGenSource` 欄位。速度計算預設走 nikke.top 的逐幀模擬，該站有收錄的新角色不受這個推算影響。
 
 威脅標籤（`UNIT_TAGS`）、體系中文名（`ARCH_NAME`）與解法規則（`RULES`）在 `build/template.html` 內，是本工具自行整理的知識層，新角色或新體系需要手動補；沒補的角色會顯示為「一般角色」，不影響速度計算。
 
 ## 資料來源與授權
 
-角色資料、充能數值與隊伍模板取自開源專案 [NIKKE Arena Planner](https://github.com/williamchong/nikke-arena-planner)（MIT 授權，授權書在 `build/data/LICENSE-nikke-arena-planner.txt`）。該專案的數據整理自 nikke.gg、Prydwen 與左猫猫的充能計算表。解法規則與威脅標籤由本工具自行整理，僅供參考。本工具為非官方粉絲工具，與 Shift Up、Level Infinite 無關。
+角色資料、充能數值與隊伍模板取自開源專案 [NIKKE Arena Planner](https://github.com/williamchong/nikke-arena-planner)（MIT 授權，授權書在 `build/data/LICENSE-nikke-arena-planner.txt`）。該專案的數據整理自 nikke.gg、Prydwen 與左猫猫的充能計算表。該專案沒收錄的新角色由 [NIKKE DECK](https://nikke-deck.com/en/deck) 的資料檔補入（每階充能、武器、爆裂、職業、PVP 階級），角色的出場日期與新角色的繁中譯名來自 [NIKKE Synergy](https://nikke-synergy.com/index_en) 的角色表（用瀏覽器匯出，只取角色基本欄位與譯名，不含技能文字與圖片）；兩者都是粉絲站，本工具只做讀取與換算，請勿高頻抓取。解法規則與威脅標籤由本工具自行整理，僅供參考。本工具為非官方粉絲工具，與 Shift Up、Level Infinite 無關。

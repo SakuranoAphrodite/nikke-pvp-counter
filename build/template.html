@@ -312,7 +312,7 @@ details.mods summary{color:var(--muted)}
 <!-- ============ 角色庫 ============ -->
 <section class="tab" id="tab-roster">
   <div class="card">
-    <h2 id="jump-roster" class="jump-target">我的角色庫 <span class="muted">點角色切換「擁有」，存在瀏覽器本機，不會上傳</span></h2>
+    <h2 id="jump-roster" class="jump-target">我的角色庫 <span class="muted">點角色切換「擁有」，存在瀏覽器本機，不會上傳；可依階級、出場時間或衝能速度排序</span></h2>
     <div class="row">
       <input type="text" id="rosterSearch" placeholder="搜尋（中文／英文／日文）" style="max-width:320px">
       <button class="btn" id="btnOwnAll">全部擁有</button>
@@ -400,9 +400,9 @@ details.mods summary{color:var(--muted)}
     <h3 id="jump-help-sites" class="jump-target">參考網站</h3>
     <table>
       <tr><td><a href="https://nikkeari.cc/zh-CN" target="_blank" rel="noopener">にけあり！NIKKE 競技場分析器</a></td><td>冠軍競技場實戰統計：各隊伍勝率、進攻／防守勝率、站位統計、對戰紀錄。志願玩家提供截圖整理，有 JP／KR／國際服資料。本工具的「實戰數據」來源。</td></tr>
-      <tr><td><a href="https://nikke-deck.com/en/deck" target="_blank" rel="noopener">NIKKE DECK</a></td><td>組隊工具，速度模型含超頻充能 17% 與量子魔方，另有「隊伍對隊伍」比較、PVP 階級表與文章。支援英／法／日／韓。</td></tr>
-      <tr><td><a href="https://nikke-synergy.com/arena-ex_en" target="_blank" rel="noopener">NIKKE Synergy Arena EX</a></td><td>逐幀（約 0.0166 秒）計算爆裂速度並畫出時間軸，可設定魔方與充能加速；機制文章最完整，有繁體中文版。</td></tr>
-      <tr><td><a href="https://nikke.williamchong.cloud/" target="_blank" rel="noopener">NIKKE Arena Planner</a></td><td>本工具角色資料與模板的來源；依角色庫推薦 5v5 與 15v15 隊伍。</td></tr>
+      <tr><td><a href="https://nikke-deck.com/en/deck" target="_blank" rel="noopener">NIKKE DECK</a></td><td>組隊工具，速度模型含超頻充能 17% 與量子魔方，另有「隊伍對隊伍」比較、PVP 階級表與文章。支援英／法／日／韓。本工具的每階充能、「衝能速度」排序與新角色（上游沒收錄的）資料來源。</td></tr>
+      <tr><td><a href="https://nikke-synergy.com/index_en" target="_blank" rel="noopener">NIKKE Synergy</a></td><td>角色資料庫與組隊工具（Arena EX 逐幀計算爆裂速度並畫出時間軸，可設定魔方與充能加速）；機制文章最完整，有繁體中文版。本工具的角色出場日期與繁中譯名來源（擋程式抓取，用瀏覽器匯出）。</td></tr>
+      <tr><td><a href="https://nikke.williamchong.cloud/" target="_blank" rel="noopener">NIKKE Arena Planner</a></td><td>本工具角色資料的基底與模板的來源（2026-10 後未再更新，新角色改由 NIKKE DECK 補）；依角色庫推薦 5v5 與 15v15 隊伍。</td></tr>
       <tr><td><a href="https://www.prydwen.gg/nikke/guides/pvp-mechanics" target="_blank" rel="noopener">Prydwen PVP 指南</a></td><td>PVP 機制、隊伍原型與反制、冠軍競技場規則、角色評價。英文，需用瀏覽器開（擋自動抓取）。</td></tr>
       <tr><td><a href="https://nikke.gg/arena-mechanics/" target="_blank" rel="noopener">nikke.gg</a></td><td>競技場機制、角色技能全文與分析（技能數值查詢最方便）。</td></tr>
       <tr><td><a href="https://forum.gamer.com.tw/C.php?bsn=36390&snA=8237" target="_blank" rel="noopener">巴哈姆特 妮姬板 競技場串</a></td><td>台港澳服玩家的組隊思路與對局討論，最貼近你所在伺服器的環境。</td></tr>
@@ -416,7 +416,7 @@ details.mods summary{color:var(--muted)}
     <p class="muted">冠軍競技場的對局回放只能在遊戲內觀看，官方不提供匯出，所以工具無法自動引用；這裡收錄的是玩家整理的影片、攻略與討論串，存放在倉庫根目錄的 <code>references.json</code>，你可以自己增加（格式見 README）。符合當前對手體系的項目會直接顯示在解法建議裡。</p>
     <div id="refAll"></div>
     <h3 id="jump-help-license" class="jump-target">資料來源與授權</h3>
-    <p class="muted">角色資料、充能數值與隊伍模板取自開源專案 <a href="https://github.com/williamchong/nikke-arena-planner" target="_blank">NIKKE Arena Planner</a>（MIT 授權），其數據又整理自 nikke.gg、Prydwen 與左猫猫的充能計算表。繁中譯名以該資料集的台港澳服譯名為準。解法規則與威脅標籤為本工具自行整理，僅供參考。本工具為非官方粉絲工具，與 Shift Up、Level Infinite 無關。</p>
+    <p class="muted">角色資料、充能數值與隊伍模板取自開源專案 <a href="https://github.com/williamchong/nikke-arena-planner" target="_blank">NIKKE Arena Planner</a>（MIT 授權），其數據又整理自 nikke.gg、Prydwen 與左猫猫的充能計算表。該專案沒收錄的新角色由 <a href="https://nikke-deck.com/en/deck" target="_blank" rel="noopener">NIKKE DECK</a> 的資料補入（每階充能、武器、爆裂、職業），出場日期與這些新角色的繁中譯名來自 <a href="https://nikke-synergy.com/index_en" target="_blank" rel="noopener">NIKKE Synergy</a>。繁中譯名以台港澳服譯名為準。解法規則與威脅標籤為本工具自行整理，僅供參考。本工具為非官方粉絲工具，與 Shift Up、Level Infinite 無關。</p>
     <h3 id="jump-help-roster" class="jump-target">把我的角色庫放到 GitHub，換裝置時一鍵載入</h3>
     <ul class="tips">
       <li>在「我的角色庫」按「匯出 JSON」，會下載一個 <code>roster.json</code>。</li>
@@ -426,9 +426,9 @@ details.mods summary{color:var(--muted)}
     </ul>
     <h3 id="jump-help-update" class="jump-target">新角色出來怎麼辦</h3>
     <ul class="tips">
-      <li>每天第一次打開本頁時，如果有網路，會自動向上游專案抓最新的角色與模板資料並暫存在瀏覽器；頁首會顯示目前用的是「內建」「快取」還是「線上」資料，也可以按「檢查更新」手動抓。</li>
+      <li>每天第一次打開本頁時，如果有網路，會自動向本專案的 GitHub 倉庫抓最新的角色庫與模板並暫存在瀏覽器；頁首會顯示目前用的是「內建」「快取」還是「線上」資料，也可以按「檢查更新」手動抓。</li>
       <li>想把新資料固定寫進這個檔案（離線也有），雙擊資料夾裡的 <code>更新資料.bat</code>，或執行 <code>python build\build.py --update</code>。</li>
-      <li>新角色的爆裂速度與模板由上游更新；本工具的威脅標籤與解法規則需要手動補，缺標籤的角色會顯示為「一般角色」，不影響速度計算。</li>
+      <li>角色庫的基底是上游 NIKKE Arena Planner（2026-10 之後沒再更新）；上游沒收錄的新角色由 <a href="https://nikke-deck.com/en/deck" target="_blank" rel="noopener">NIKKE DECK</a> 的資料自動補進來（每階充能、武器、爆裂、職業），角色卡標「新」；出場日期與繁中譯名來自 <a href="https://nikke-synergy.com/index_en" target="_blank" rel="noopener">NIKKE Synergy</a>（該站擋程式抓取，要用瀏覽器匯出，方法見 README）。新角色的威脅標籤與解法規則需要手動補，缺標籤的角色會顯示為「一般角色」，不影響速度計算。</li>
     </ul>
   </div>
 </section>
@@ -457,7 +457,8 @@ let CHARACTERS = __CHARACTERS__;
 const TEMPLATES_EXTRA = __TEMPLATES_EXTRA__; // 本工具補充的 2026 體系模板，線上更新上游模板後仍會合併
 let TEMPLATES  = __TEMPLATES__.concat(TEMPLATES_EXTRA);
 const BUILTIN_DATE = '__DATA_DATE__';
-const DATA_RAW = 'https://raw.githubusercontent.com/williamchong/nikke-arena-planner/master/app/data/';
+const BUILTIN_COUNT = CHARACTERS.length; // 線上資料比內建少（倉庫還沒推送新版）時不套用，免得新角色消失
+const DATA_RAW = 'https://raw.githubusercontent.com/SakuranoAphrodite/nikke-pvp-counter/main/build/data/'; // 本專案倉庫合併後的角色庫（上游 arena-planner 基底＋nikke-deck 新角色＋nikke-synergy 出場日期）
 
 /* ====================== 知識層（本工具自行整理） ====================== */
 // 關鍵角色的 PVP 功能標籤與一句話說明
@@ -759,7 +760,7 @@ function applyPrydwen(chars){ for(const c of chars){ if(c.plannerTier===undefine
 applyPrydwen(CHARACTERS);
 const namesOf=c=>[c.name['zh-TW'],c.name['zh-CN'],c.name.en,c.name.ja,c.id].concat(NICK[c.id]||[]);
 /* 頭像：avatars/<avatarImg>.webp（來自上游倉庫），缺檔時自動隱藏 */
-const avatar=(id,cls)=>{ const c=byId[id]; return c&&c.avatarImg?`<img class="av ${cls||''}" src="avatars/${esc(c.avatarImg)}.webp" alt="" loading="lazy" onerror="this.style.display='none'">`:''; };
+const avatar=(id,cls)=>{ const c=byId[id]; const f=c&&(c.avatarFile||(c.avatarImg&&c.avatarImg+'.webp')); return f?`<img class="av ${cls||''}" src="avatars/${esc(f)}" alt="" loading="lazy" onerror="this.style.display='none'">`:''; }; // 新角色（nikke-deck 補的）用 avatarFile，由 fetch_avatars.py 下載
 function refsFor(enemyArchs,enemyIds,myArch){
   const eset=new Set(enemyArchs);
   return (REFERENCES.items||[]).filter(it=>{
@@ -939,6 +940,8 @@ const TOP_SPECIAL={
   '176':(u,md,n,pos,atk)=>{ const l=u.int,c=6,g=u.rate*u.mult*topQ(md),m=topDelay(u,pos,atk),ev=[]; let x=l-topRed(topSpd(md)),T=0;
     while(x+m<=n){ ev.push({f:x+m,ch:g,src:pos,tg:topTargets(u,atk),w:'RL'}); T++; x+=c+l-topRed(topSpd(md,[T===1?10:20])); } return ev; },
   '177':(u,md,n,pos,atk)=>topGeneric(u,md,n,pos,atk).map(e=>({...e,ch:e.ch+7.15})),
+  '181':(u,md,n,pos,atk)=>topGeneric(u,md,n,pos,atk).map(e=>({...e,tg:[[0,2],[1,1]]})),   // 長髮公主:聖域：火箭筒節奏同一般，但濺射命中 P1 兩下、P2 一下（nikke.top class nr）
+  '183':(u,md,n,pos)=>{ const h=u.rate*topQ(md), ev=[]; for(let b=0;b<=n;b+=u.int){ ev.push({f:b,ch:h*2,src:pos,tg:[[0,1],[1,1]],w:'AR'}); if(b+12<=n) ev.push({f:b+12,ch:h*2,src:pos,tg:[[0,1]],w:'AR'}); } return ev; },   // 紅蓮:神殺：每 42 幀兩段，第 0 幀 2 倍基礎充能打 P1＋P2、第 12 幀再 2 倍打 P1（nikke.top class fr；每階總量與通用模型相同，只差時間點）
 };
 function topEvents(id,md,n,pos,atk){ const u=TOP.units[id]; if(!u) return null; const fn=TOP_SPECIAL[u.top]||topGeneric; return fn(u,md,n,pos,atk); }
 const _simCache=new Map();
@@ -1315,7 +1318,10 @@ records=LS.get('records',[]);
 enemyMods=LS.get('enemyMods',{}); mineMods=LS.get('mineMods',{});
 let pickerTarget=null; // {team:'enemy'|'mine'|'sp0'|'sp1'|'sp2', idx, multi, sel}
 let pickerFilter={burst:null,weapon:null,element:null,ownedOnly:false};
-let rosterFilter={burst:null,weapon:null,element:null,ownedOnly:false};
+let rosterFilter={burst:null,weapon:null,element:null,ownedOnly:false,sort:'tier',dir:-1,rl:'2RL'}; // sort：tier 階級／release 出場時間／speed 衝能速度；dir -1 = 高→低、新→舊、快→慢
+const ROSTER_RL=[['2RL','2RL'],['5SG','2.5RL'],['3RL','3RL'],['7SG','3.5RL'],['4RL','4RL']]; // 衝能速度排序可選的階段，同 nikke-deck 的「Sort by RL」
+/* 角色一人在某階段（2RL～4RL）內充的爆裂能量：優先用 nikke-deck 的每階充能（和該站「Sort by RL」同一份數字），沒收錄的角色用 arena-planner 的 burstGen */
+function charGen(c,t){ const g=deckGen(c,t,null,false); if(g!=null) return g; const v=c.burstGen&&c.burstGen.attack?c.burstGen.attack[t]:null; return v==null?null:v; }
 
 /* ====================== UI 工具 ====================== */
 const $=s=>document.querySelector(s);
@@ -1453,17 +1459,33 @@ function renderRosterFilters(){
   ['RL','SG','SR','AR','SMG','MG'].forEach(w=>mk(w,'weapon',w));
   ['fire','water','wind','electric','iron'].forEach(e=>mk(EL_ZH[e],'element',e));
   const b=document.createElement('button'); b.className='btn'+(rosterFilter.ownedOnly?' primary':''); b.textContent='只看擁有'; b.onclick=()=>{rosterFilter.ownedOnly=!rosterFilter.ownedOnly; renderRoster();}; f.appendChild(b);
+  const lbl=document.createElement('span'); lbl.className='muted'; lbl.style.cssText='align-self:center;margin-left:8px'; lbl.textContent='排序：'; f.appendChild(lbl);
+  const mkSort=(label,key,title)=>{ const on=rosterFilter.sort===key; const b=document.createElement('button'); b.className='btn'+(on?' primary':''); b.title=title+'；再按一次反向'; b.textContent=label+(on?(rosterFilter.dir<0?' ▼':' ▲'):''); b.onclick=()=>{ if(rosterFilter.sort===key) rosterFilter.dir=-rosterFilter.dir; else { rosterFilter.sort=key; rosterFilter.dir=-1; } renderRoster(); }; f.appendChild(b); };
+  mkSort('階級','tier','PVP 階級高→低');
+  mkSort('出場時間','release','初次出場日期新→舊（nikke-synergy 的資料；珍藏版以珍藏品實裝日計）');
+  mkSort('衝能速度','speed','該角色一人在所選階段內充的爆裂能量多→少（nikke-deck 的每階充能，同該站的 Sort by RL；5 人相加到 100% 的那一階就是隊伍速度）');
+  if(rosterFilter.sort==='speed') for(const [k,l] of ROSTER_RL){ const b=document.createElement('button'); b.className='btn'+(rosterFilter.rl===k?' primary':''); b.textContent=l; b.title='以 '+l+' 內的充能排序'; b.onclick=()=>{rosterFilter.rl=k; renderRoster();}; f.appendChild(b); }
 }
 function renderRoster(){
   renderRosterFilters();
   const q=$('#rosterSearch').value.trim().toLowerCase(); const norm=s=>s.toLowerCase().replace(/[\s:：·・\-_]/g,'');
   let list=CHARACTERS.filter(c=>(!rosterFilter.burst||c.burst===rosterFilter.burst)&&(!rosterFilter.weapon||c.weapon===rosterFilter.weapon)&&(!rosterFilter.element||c.element===rosterFilter.element)&&(!rosterFilter.ownedOnly||owned.has(c.id)));
   if(q){ const nq=norm(q); list=list.filter(c=>namesOf(c).some(n=>norm(n).includes(nq))); }
-  list.sort((a,b)=>(TIER_RANK[b.pvpTier]||0)-(TIER_RANK[a.pvpTier]||0)||a.name['zh-TW'].localeCompare(b.name['zh-TW'],'zh-Hant'));
+  const byName=(a,b)=>a.name['zh-TW'].localeCompare(b.name['zh-TW'],'zh-Hant');
+  const s=rosterFilter.sort, dir=rosterFilter.dir, rl=rosterFilter.rl, gen=c=>{ const g=charGen(c,rl); return g==null?-1:g; };
+  const asc=s==='release'?(a,b)=>(a.releaseDate||'').localeCompare(b.releaseDate||'')||(a.releaseOrder||0)-(b.releaseOrder||0)
+           :s==='speed'?(a,b)=>gen(a)-gen(b)
+           :(a,b)=>(TIER_RANK[a.pvpTier]||0)-(TIER_RANK[b.pvpTier]||0);
+  list.sort((a,b)=>dir*asc(a,b)||byName(a,b));
+  const rlLabel=(ROSTER_RL.find(x=>x[0]===rl)||ROSTER_RL[0])[1];
   const el=$('#rosterGrid'); el.innerHTML='';
   for(const c of list){
     const d=document.createElement('div'); d.className='pick'+(owned.has(c.id)?' owned':'');
-    d.innerHTML=`${avatar(c.id)}<div class="pickbody"><b>${owned.has(c.id)?'✔ ':''}${esc(c.name['zh-TW'])}</b><span class="en">${esc(c.name.en)}${(NICK[c.id]||[]).length?' · '+esc(NICK[c.id].slice(0,2).join('、')):''}</span><div>${burstBadge(c.burst)}${elBadge(c.element)}<span class="badge">${c.weapon}</span>${tierBadge(c)}</div></div>`;
+    const u=DECK.units&&DECK.units[c.id];
+    const extra=s==='speed'?(gen(c)<0?'<span class="badge">無充能資料</span>':`<span class="badge" title="${u&&u.gen?'nikke-deck 的每階充能':'arena-planner 的充能資料'}：此角色一人在 ${rlLabel} 內充的爆裂能量">${rlLabel} ${(gen(c)*100).toFixed(1)}%</span>`)
+               :s==='release'?`<span class="badge" title="初次出場日期（nikke-synergy）">${esc(c.releaseDate||'日期不明')}</span>`:'';
+    const isNew=c.source?'<span class="badge good" title="上游 arena-planner 尚未收錄；資料來自 nikke-deck（充能、武器、爆裂）與 nikke-synergy（出場日期、譯名）">新</span>':'';
+    d.innerHTML=`${avatar(c.id)}<div class="pickbody"><b>${owned.has(c.id)?'✔ ':''}${esc(c.name['zh-TW'])}</b><span class="en">${esc(c.name.en)}${(NICK[c.id]||[]).length?' · '+esc(NICK[c.id].slice(0,2).join('、')):''}</span><div>${burstBadge(c.burst)}${elBadge(c.element)}<span class="badge">${c.weapon}</span>${tierBadge(c)||deckRank(c.id)}${isNew}${extra}</div></div>`;
     d.onclick=()=>{ if(owned.has(c.id)) owned.delete(c.id); else owned.add(c.id); save(); renderRoster(); updateOwnedCount(); renderSolve(); };
     el.appendChild(d);
   }
@@ -1759,6 +1781,7 @@ async function checkOnlineData(manual){
     const [chars,tpls]=await Promise.all([get('characters.json'),get('templates.json')]);
     clearTimeout(timer);
     if(!Array.isArray(chars)||chars.length<100||!chars[0].burstGen||!Array.isArray(tpls)||!tpls.length) throw new Error('資料格式不符');
+    if(chars.length<BUILTIN_COUNT) throw new Error(`線上資料（${chars.length} 名）比內建（${BUILTIN_COUNT} 名）舊，維持內建`);
     const added=chars.filter(c=>!byId[c.id]).map(c=>c.name['zh-TW']);
     const today=new Date().toISOString().slice(0,10);
     LS.set('dataCache',{chars,tpls,date:today}); LS.set('lastCheck',today);

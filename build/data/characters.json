@@ -48,7 +48,10 @@
     "releaseOrder": 1377,
     "avatarImg": "si_c352_00_s",
     "pvpTier": "SSS",
-    "squad": "Aegis"
+    "squad": "Aegis",
+    "deckId": "c352treasure",
+    "releaseDate": "2025-01-16",
+    "synergyName": "宝ヘルム"
   },
   {
     "id": "snow-white-heavy-arms",
@@ -99,7 +102,10 @@
     "releaseOrder": 1461,
     "avatarImg": "si_c471_00_s",
     "pvpTier": "SS",
-    "squad": "Goddess"
+    "squad": "Goddess",
+    "deckId": "c471",
+    "releaseDate": "2026-01-01",
+    "synergyName": "ヘビスノ"
   },
   {
     "id": "trina",
@@ -156,7 +162,10 @@
     "squad": "Botanic Garden",
     "prefersTeammate": [
       "same-element"
-    ]
+    ],
+    "deckId": "c412",
+    "releaseDate": "2025-03-13",
+    "synergyName": "トリナ"
   },
   {
     "id": "anis",
@@ -207,7 +216,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c012_00_s",
     "pvpTier": "D",
-    "squad": "Counters"
+    "squad": "Counters",
+    "deckId": "c012",
+    "releaseDate": "2022-11-04",
+    "synergyName": "アニス"
   },
   {
     "id": "jackal",
@@ -258,7 +270,10 @@
     "releaseOrder": 376,
     "avatarImg": "si_c111_00_s",
     "pvpTier": "SS",
-    "squad": "Exotic"
+    "squad": "Exotic",
+    "deckId": "c111",
+    "releaseDate": "2023-01-12",
+    "synergyName": "ジャッカル"
   },
   {
     "id": "centi",
@@ -309,7 +324,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c080_00_s",
     "pvpTier": "B",
-    "squad": "Mighty Tools"
+    "squad": "Mighty Tools",
+    "deckId": "c080",
+    "releaseDate": "2022-11-04",
+    "synergyName": "センチ"
   },
   {
     "id": "rumani",
@@ -360,7 +378,10 @@
     "releaseOrder": 1020,
     "avatarImg": "si_c240_00_s",
     "pvpTier": "S",
-    "squad": "Nepenthe"
+    "squad": "Nepenthe",
+    "deckId": "c240",
+    "releaseDate": "2024-10-17",
+    "synergyName": "ルマニ"
   },
   {
     "id": "emilia",
@@ -411,7 +432,10 @@
     "releaseOrder": 810,
     "avatarImg": "si_c821_00_s",
     "pvpTier": "S",
-    "squad": "Emilia's Faction"
+    "squad": "Emilia's Faction",
+    "deckId": "c821",
+    "releaseDate": "2024-03-21",
+    "synergyName": "エミリア"
   },
   {
     "id": "noah",
@@ -462,7 +486,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c232_00_s",
     "pvpTier": "SS",
-    "squad": "Inherit"
+    "squad": "Inherit",
+    "deckId": "c232",
+    "releaseDate": "2022-11-04",
+    "synergyName": "ノア"
   },
   {
     "id": "pascal",
@@ -516,7 +543,10 @@
     "traits": [
       "healer"
     ],
-    "squad": "Machine Lifeform"
+    "squad": "Machine Lifeform",
+    "deckId": "c812",
+    "releaseDate": "2023-09-01",
+    "synergyName": "パスカル"
   },
   {
     "id": "maiden-ice-rose",
@@ -570,7 +600,10 @@
     "squad": "Extrinsic",
     "prefersTeammate": [
       "same-element"
-    ]
+    ],
+    "deckId": "c183",
+    "releaseDate": "2024-12-05",
+    "synergyName": "氷メイデン"
   },
   {
     "id": "drake-treasure",
@@ -621,7 +654,10 @@
     "releaseOrder": 1335,
     "avatarImg": "si_c101_00_s",
     "pvpTier": "B",
-    "squad": "Matis"
+    "squad": "Matis",
+    "deckId": "c101treasure",
+    "releaseDate": "2025-01-16",
+    "synergyName": "宝ドレイク"
   },
   {
     "id": "drake",
@@ -672,7 +708,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c101_00_s",
     "pvpTier": "B",
-    "squad": "Matis"
+    "squad": "Matis",
+    "deckId": "c101",
+    "releaseDate": "2022-11-04",
+    "synergyName": "ドレイク"
   },
   {
     "id": "viper",
@@ -723,7 +762,10 @@
     "releaseOrder": 383,
     "avatarImg": "si_c112_00_s",
     "pvpTier": "B",
-    "squad": "Exotic"
+    "squad": "Exotic",
+    "deckId": "c112",
+    "releaseDate": "2023-01-19",
+    "synergyName": "バイパー"
   },
   {
     "id": "viper-treasure",
@@ -774,7 +816,10 @@
     "releaseOrder": 383,
     "avatarImg": "si_c112_00_s",
     "pvpTier": "C",
-    "squad": "Exotic"
+    "squad": "Exotic",
+    "deckId": "c112treasure",
+    "releaseDate": "2024-07-04",
+    "synergyName": "宝バイパー"
   },
   {
     "id": "maiden",
@@ -825,7 +870,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c181_00_s",
     "pvpTier": "B",
-    "squad": "Extrinsic"
+    "squad": "Extrinsic",
+    "deckId": "c181",
+    "releaseDate": "2022-11-04",
+    "synergyName": "メイデン"
   },
   {
     "id": "neon",
@@ -876,7 +924,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c011_00_s",
     "pvpTier": "D",
-    "squad": "Counters"
+    "squad": "Counters",
+    "deckId": "c011",
+    "releaseDate": "2022-11-04",
+    "synergyName": "ネオン"
   },
   {
     "id": "noir",
@@ -930,7 +981,10 @@
     "squad": "777",
     "prefersTeammate": [
       "same-squad"
-    ]
+    ],
+    "deckId": "c271",
+    "releaseDate": "2023-05-25",
+    "synergyName": "ノワール"
   },
   {
     "id": "pepper",
@@ -984,7 +1038,10 @@
     "squad": "Seraphim",
     "traits": [
       "healer"
-    ]
+    ],
+    "deckId": "c131",
+    "releaseDate": "2022-11-04",
+    "synergyName": "ペッパー"
   },
   {
     "id": "sugar",
@@ -1035,7 +1092,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c140_00_s",
     "pvpTier": "C",
-    "squad": "Cafe Sweety"
+    "squad": "Cafe Sweety",
+    "deckId": "c140",
+    "releaseDate": "2022-11-04",
+    "synergyName": "シュガー"
   },
   {
     "id": "soda-twinkling-bunny",
@@ -1086,7 +1146,10 @@
     "releaseOrder": 880,
     "avatarImg": "si_c314_00_s",
     "pvpTier": "S",
-    "squad": "Maid For You"
+    "squad": "Maid For You",
+    "deckId": "c314",
+    "releaseDate": "2024-05-30",
+    "synergyName": "バニーソーダ"
   },
   {
     "id": "laplace-treasure",
@@ -1137,7 +1200,10 @@
     "releaseOrder": 1251,
     "avatarImg": "si_c100_00_s",
     "pvpTier": "A",
-    "squad": "Matis"
+    "squad": "Matis",
+    "deckId": "c100treasure",
+    "releaseDate": "2024-05-30",
+    "synergyName": "宝ラプラス"
   },
   {
     "id": "liberalio",
@@ -1188,7 +1254,10 @@
     "releaseOrder": 1405,
     "avatarImg": "si_c262_00_s",
     "pvpTier": "S",
-    "squad": "Heretic"
+    "squad": "Heretic",
+    "deckId": "c262",
+    "releaseDate": "2025-11-06",
+    "synergyName": "リバーレリオ"
   },
   {
     "id": "mica-snow-buddy",
@@ -1239,7 +1308,10 @@
     "releaseOrder": 712,
     "avatarImg": "si_c062_00_s",
     "pvpTier": "B",
-    "squad": "The Carronades"
+    "squad": "The Carronades",
+    "deckId": "c062",
+    "releaseDate": "2023-12-14",
+    "synergyName": "クリミカ"
   },
   {
     "id": "zwei",
@@ -1293,7 +1365,10 @@
       "cover-healer"
     ],
     "pvpTier": "C",
-    "squad": "School Circle"
+    "squad": "School Circle",
+    "deckId": "c390",
+    "releaseDate": "2024-08-08",
+    "synergyName": "ツバイ"
   },
   {
     "id": "nihilister",
@@ -1344,7 +1419,10 @@
     "releaseOrder": 453,
     "avatarImg": "si_c261_00_s",
     "pvpTier": "A",
-    "squad": "Heretic"
+    "squad": "Heretic",
+    "deckId": "c261",
+    "releaseDate": "2023-03-30",
+    "synergyName": "ニヒリスター"
   },
   {
     "id": "arcana",
@@ -1398,7 +1476,10 @@
     "squad": "Best Seller",
     "prefersTeammate": [
       "same-element"
-    ]
+    ],
+    "deckId": "c581",
+    "releaseDate": "2025-05-15",
+    "synergyName": "アルカナ"
   },
   {
     "id": "a2",
@@ -1449,7 +1530,10 @@
     "releaseOrder": 615,
     "avatarImg": "si_c811_00_s",
     "pvpTier": "B",
-    "squad": "YoRHa"
+    "squad": "YoRHa",
+    "deckId": "c811",
+    "releaseDate": "2023-09-08",
+    "synergyName": "A2"
   },
   {
     "id": "laplace",
@@ -1500,7 +1584,10 @@
     "releaseOrder": 327,
     "avatarImg": "si_c100_00_s",
     "pvpTier": "C",
-    "squad": "Matis"
+    "squad": "Matis",
+    "deckId": "c100",
+    "releaseDate": "2022-11-24",
+    "synergyName": "ラプラス"
   },
   {
     "id": "rapunzel",
@@ -1554,7 +1641,10 @@
     "traits": [
       "healer"
     ],
-    "squad": "Pioneer"
+    "squad": "Pioneer",
+    "deckId": "c221",
+    "releaseDate": "2022-11-04",
+    "synergyName": "ラプンツェル"
   },
   {
     "id": "diesel-winter-sweets",
@@ -1605,7 +1695,10 @@
     "releaseOrder": 1433,
     "avatarImg": "si_c075_00_s",
     "pvpTier": "B",
-    "squad": "Infinity Rail"
+    "squad": "Infinity Rail",
+    "deckId": "c075",
+    "releaseDate": "2025-12-04",
+    "synergyName": "冬ディーゼル"
   },
   {
     "id": "grave",
@@ -1656,7 +1749,10 @@
     "releaseOrder": 1041,
     "avatarImg": "si_c514_00_s",
     "pvpTier": "S",
-    "squad": "Old Tales"
+    "squad": "Old Tales",
+    "deckId": "c514",
+    "releaseDate": "2024-11-07",
+    "synergyName": "グレイブ"
   },
   {
     "id": "scarlet",
@@ -1707,7 +1803,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c222_00_s",
     "pvpTier": "S",
-    "squad": "Pioneer"
+    "squad": "Pioneer",
+    "deckId": "c222",
+    "releaseDate": "2022-11-04",
+    "synergyName": "紅蓮"
   },
   {
     "id": "anchor",
@@ -1758,7 +1857,10 @@
     "releaseOrder": 579,
     "avatarImg": "si_c351_00_s",
     "pvpTier": "D",
-    "squad": "Aegis"
+    "squad": "Aegis",
+    "deckId": "c351",
+    "releaseDate": "2023-08-03",
+    "synergyName": "アンカー"
   },
   {
     "id": "anchor-innocent-maid",
@@ -1815,7 +1917,10 @@
     "squad": "Aegis",
     "prefersTeammate": [
       "same-squad"
-    ]
+    ],
+    "deckId": "c355",
+    "releaseDate": "2025-02-06",
+    "synergyName": "メイドアンカー"
   },
   {
     "id": "anne-miracle-fairy",
@@ -1873,7 +1978,10 @@
     "prefersTeammate": [
       "role:supporter",
       "role:attacker"
-    ]
+    ],
+    "deckId": "c121",
+    "releaseDate": "2022-12-15",
+    "synergyName": "クリエヌ"
   },
   {
     "id": "vesti",
@@ -1924,7 +2032,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c091_00_s",
     "pvpTier": "D",
-    "squad": "Absolute"
+    "squad": "Absolute",
+    "deckId": "c091",
+    "releaseDate": "2022-11-04",
+    "synergyName": "ベスティー"
   },
   {
     "id": "bay",
@@ -1975,7 +2086,10 @@
     "releaseOrder": 831,
     "avatarImg": "si_c550_00_s",
     "pvpTier": "S",
-    "squad": "Rewind"
+    "squad": "Rewind",
+    "deckId": "c550",
+    "releaseDate": "2024-04-11",
+    "synergyName": "ベイ"
   },
   {
     "id": "bay-treasure",
@@ -2026,7 +2140,10 @@
     "releaseOrder": 831,
     "avatarImg": "si_c550_00_s",
     "pvpTier": "S",
-    "squad": "Rewind"
+    "squad": "Rewind",
+    "deckId": "c550treasure",
+    "releaseDate": "2025-07-17",
+    "synergyName": "宝ベイ"
   },
   {
     "id": "biscuit",
@@ -2085,7 +2202,10 @@
       "role:attacker",
       "role:defender",
       "role:supporter"
-    ]
+    ],
+    "deckId": "c381",
+    "releaseDate": "2023-03-15",
+    "synergyName": "ビスケット"
   },
   {
     "id": "tia",
@@ -2139,7 +2259,10 @@
     "squad": "Dazzling Pearl",
     "requiresTeammate": [
       "cover-healer"
-    ]
+    ],
+    "deckId": "c451",
+    "releaseDate": "2023-10-12",
+    "synergyName": "ティア"
   },
   {
     "id": "quiry",
@@ -2193,7 +2316,10 @@
     "squad": "A.C.P.U.",
     "prefersTeammate": [
       "role:defender"
-    ]
+    ],
+    "deckId": "c033",
+    "releaseDate": "2023-10-19",
+    "synergyName": "キリ"
   },
   {
     "id": "crust",
@@ -2244,7 +2370,10 @@
     "releaseOrder": 1195,
     "avatarImg": "si_c521_00_s",
     "pvpTier": "C",
-    "squad": "Cooking Oil"
+    "squad": "Cooking Oil",
+    "deckId": "c521",
+    "releaseDate": "2025-04-10",
+    "synergyName": "クラスト"
   },
   {
     "id": "mica",
@@ -2295,7 +2424,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c061_00_s",
     "pvpTier": "D",
-    "squad": "The Carronades"
+    "squad": "The Carronades",
+    "deckId": "c061",
+    "releaseDate": "2022-11-04",
+    "synergyName": "ミカ"
   },
   {
     "id": "noise",
@@ -2346,7 +2478,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c430_00_s",
     "pvpTier": "S",
-    "squad": "Prima Donna"
+    "squad": "Prima Donna",
+    "deckId": "c430",
+    "releaseDate": "2022-11-04",
+    "synergyName": "ノイズ"
   },
   {
     "id": "power",
@@ -2397,7 +2532,10 @@
     "releaseOrder": 417,
     "avatarImg": "si_c801_00_s",
     "pvpTier": "C",
-    "squad": "Devil Hunter"
+    "squad": "Devil Hunter",
+    "deckId": "c801",
+    "releaseDate": "2023-02-22",
+    "synergyName": "パワー"
   },
   {
     "id": "sora",
@@ -2448,7 +2586,10 @@
     "releaseOrder": 1279,
     "avatarImg": "si_c532_00_s",
     "pvpTier": "C",
-    "squad": "Over the Horizon"
+    "squad": "Over the Horizon",
+    "deckId": "c532",
+    "releaseDate": "2025-07-03",
+    "synergyName": "ソラ"
   },
   {
     "id": "ada",
@@ -2499,7 +2640,10 @@
     "releaseOrder": 978,
     "avatarImg": "si_c840_00_s",
     "pvpTier": "S",
-    "squad": "B.S.T."
+    "squad": "B.S.T.",
+    "deckId": "c840",
+    "releaseDate": "2025-09-24",
+    "synergyName": "エイダ"
   },
   {
     "id": "mana",
@@ -2553,7 +2697,10 @@
       "healer"
     ],
     "pvpTier": "A",
-    "squad": "M.M.R."
+    "squad": "M.M.R.",
+    "deckId": "c290",
+    "releaseDate": "2025-01-16",
+    "synergyName": "マナ"
   },
   {
     "id": "anis-sparkling-summer",
@@ -2607,7 +2754,10 @@
     "squad": "Counters",
     "prefersTeammate": [
       "same-element"
-    ]
+    ],
+    "deckId": "c015",
+    "releaseDate": "2023-08-03",
+    "synergyName": "水着アニス"
   },
   {
     "id": "jill",
@@ -2658,7 +2808,10 @@
     "releaseOrder": 978,
     "avatarImg": "si_c841_00_s",
     "pvpTier": "D",
-    "squad": "B.S.T."
+    "squad": "B.S.T.",
+    "deckId": "c841",
+    "releaseDate": "2025-10-02",
+    "synergyName": "ジル"
   },
   {
     "id": "scarlet-black-shadow",
@@ -2709,7 +2862,10 @@
     "releaseOrder": 730,
     "avatarImg": "si_c225_00_s",
     "pvpTier": "A",
-    "squad": "Goddess"
+    "squad": "Goddess",
+    "deckId": "c225",
+    "releaseDate": "2024-01-01",
+    "synergyName": "黒紅蓮"
   },
   {
     "id": "harran",
@@ -2760,7 +2916,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c230_00_s",
     "pvpTier": "A",
-    "squad": "Inherit"
+    "squad": "Inherit",
+    "deckId": "c230",
+    "releaseDate": "2022-11-04",
+    "synergyName": "ハラン"
   },
   {
     "id": "raven",
@@ -2811,7 +2970,10 @@
     "releaseOrder": 1265,
     "avatarImg": "si_c851_00_s",
     "pvpTier": "C",
-    "squad": "2nd Airborne Squad"
+    "squad": "2nd Airborne Squad",
+    "deckId": "c851",
+    "releaseDate": "2025-06-19",
+    "synergyName": "レイヴン"
   },
   {
     "id": "privaty-unkind-maid",
@@ -2862,7 +3024,10 @@
     "releaseOrder": 765,
     "avatarImg": "si_c313_00_s",
     "pvpTier": "B",
-    "squad": "Maid For You"
+    "squad": "Maid For You",
+    "deckId": "c313",
+    "releaseDate": "2024-02-05",
+    "synergyName": "メイドプリ"
   },
   {
     "id": "guilty",
@@ -2916,7 +3081,10 @@
     "squad": "Real Kindness",
     "prefersTeammate": [
       "same-element"
-    ]
+    ],
+    "deckId": "c400",
+    "releaseDate": "2023-01-12",
+    "synergyName": "ギルティ"
   },
   {
     "id": "ether",
@@ -2967,7 +3135,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c291_00_s",
     "pvpTier": "D",
-    "squad": "M.M.R."
+    "squad": "M.M.R.",
+    "deckId": "c291",
+    "releaseDate": "2022-11-04",
+    "synergyName": "エーテル"
   },
   {
     "id": "poli",
@@ -3018,7 +3189,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c030_00_s",
     "pvpTier": "B",
-    "squad": "A.C.P.U."
+    "squad": "A.C.P.U.",
+    "deckId": "c030",
+    "releaseDate": "2022-11-04",
+    "synergyName": "ポリ"
   },
   {
     "id": "poli-treasure",
@@ -3069,7 +3243,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c030_00_s",
     "pvpTier": "A",
-    "squad": "A.C.P.U."
+    "squad": "A.C.P.U.",
+    "deckId": "c030treasure",
+    "releaseDate": "2025-07-17",
+    "synergyName": "宝ポリ"
   },
   {
     "id": "leona",
@@ -3120,7 +3297,10 @@
     "releaseOrder": 740,
     "avatarImg": "si_c382_00_s",
     "pvpTier": "D",
-    "squad": "Happy Zoo"
+    "squad": "Happy Zoo",
+    "deckId": "c382",
+    "releaseDate": "2024-01-11",
+    "synergyName": "レオナ"
   },
   {
     "id": "marciana",
@@ -3174,7 +3354,10 @@
       "healer"
     ],
     "pvpTier": "C",
-    "squad": "Academia"
+    "squad": "Academia",
+    "deckId": "c321",
+    "releaseDate": "2023-09-21",
+    "synergyName": "マルチャーナ"
   },
   {
     "id": "mary",
@@ -3228,7 +3411,10 @@
       "healer"
     ],
     "pvpTier": "D",
-    "squad": "Seraphim"
+    "squad": "Seraphim",
+    "deckId": "c130",
+    "releaseDate": "2022-11-04",
+    "synergyName": "メアリー"
   },
   {
     "id": "naga",
@@ -3282,7 +3468,10 @@
     "traits": [
       "healer"
     ],
-    "squad": "Dazzling Pearl"
+    "squad": "Dazzling Pearl",
+    "deckId": "c450",
+    "releaseDate": "2023-10-05",
+    "synergyName": "ナガ"
   },
   {
     "id": "neve",
@@ -3333,7 +3522,10 @@
     "releaseOrder": 341,
     "avatarImg": "si_c193_00_s",
     "pvpTier": "D",
-    "squad": "Unlimited"
+    "squad": "Unlimited",
+    "deckId": "c193",
+    "releaseDate": "2022-12-08",
+    "synergyName": "ネヴェ"
   },
   {
     "id": "dorothy-serendipity",
@@ -3384,7 +3576,10 @@
     "releaseOrder": 1293,
     "avatarImg": "si_c234_00_s",
     "pvpTier": "S",
-    "squad": "Inherit"
+    "squad": "Inherit",
+    "deckId": "c234",
+    "releaseDate": "2025-07-17",
+    "synergyName": "水着ドロシー"
   },
   {
     "id": "isabel",
@@ -3435,7 +3630,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c231_00_s",
     "pvpTier": "D",
-    "squad": "Inherit"
+    "squad": "Inherit",
+    "deckId": "c231",
+    "releaseDate": "2022-11-04",
+    "synergyName": "イサベル"
   },
   {
     "id": "soline-frost-ticket",
@@ -3486,7 +3684,10 @@
     "releaseOrder": 1419,
     "avatarImg": "si_c074_00_s",
     "pvpTier": "S",
-    "squad": "Infinity Rail"
+    "squad": "Infinity Rail",
+    "deckId": "c074",
+    "releaseDate": "2025-11-20",
+    "synergyName": "冬ソリン"
   },
   {
     "id": "brid-silent-track",
@@ -3537,7 +3738,10 @@
     "releaseOrder": 1440,
     "avatarImg": "si_c073_00_s",
     "pvpTier": "S",
-    "squad": "Infinity Rail"
+    "squad": "Infinity Rail",
+    "deckId": "c073",
+    "releaseDate": "2025-12-11",
+    "synergyName": "冬ブリッド"
   },
   {
     "id": "k",
@@ -3588,7 +3792,10 @@
     "releaseOrder": 1244,
     "avatarImg": "si_c041_00_s",
     "pvpTier": "E",
-    "squad": "Perilous Siege"
+    "squad": "Perilous Siege",
+    "deckId": "c041",
+    "releaseDate": "2025-05-29",
+    "synergyName": "K"
   },
   {
     "id": "quency",
@@ -3639,7 +3846,10 @@
     "releaseOrder": 376,
     "avatarImg": "si_c402_00_s",
     "pvpTier": "E",
-    "squad": "Real Kindness"
+    "squad": "Real Kindness",
+    "deckId": "c402",
+    "releaseDate": "2023-01-12",
+    "synergyName": "クエンシー"
   },
   {
     "id": "crow",
@@ -3690,7 +3900,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c110_00_s",
     "pvpTier": "D",
-    "squad": "Exotic"
+    "squad": "Exotic",
+    "deckId": "c110",
+    "releaseDate": "2022-11-04",
+    "synergyName": "クロウ"
   },
   {
     "id": "soline",
@@ -3741,7 +3954,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c071_00_s",
     "pvpTier": "D",
-    "squad": "Infinity Rail"
+    "squad": "Infinity Rail",
+    "deckId": "c071",
+    "releaseDate": "2022-11-04",
+    "synergyName": "ソリン"
   },
   {
     "id": "asuka",
@@ -3795,7 +4011,10 @@
     "squad": "NERV",
     "prefersTeammate": [
       "same-element"
-    ]
+    ],
+    "deckId": "c830",
+    "releaseDate": "2024-08-22",
+    "synergyName": "アスカ"
   },
   {
     "id": "snow-white",
@@ -3846,7 +4065,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c220_00_s",
     "pvpTier": "D",
-    "squad": "Pioneer"
+    "squad": "Pioneer",
+    "deckId": "c220",
+    "releaseDate": "2022-11-04",
+    "synergyName": "スノホワ"
   },
   {
     "id": "ade",
@@ -3897,7 +4119,10 @@
     "releaseOrder": 775,
     "avatarImg": "si_c310_00_s",
     "pvpTier": "C",
-    "squad": "Maid For You"
+    "squad": "Maid For You",
+    "deckId": "c310",
+    "releaseDate": "2024-02-15",
+    "synergyName": "エード"
   },
   {
     "id": "rei-ayanami-tentative-name",
@@ -3948,7 +4173,10 @@
     "releaseOrder": 1153,
     "avatarImg": "si_c834_00_s",
     "pvpTier": "A",
-    "squad": "NERV"
+    "squad": "NERV",
+    "deckId": "c834",
+    "releaseDate": "2025-02-27",
+    "synergyName": "アヤナミ風"
   },
   {
     "id": "mihara",
@@ -3999,7 +4227,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c161_00_s",
     "pvpTier": "E",
-    "squad": "Wardress"
+    "squad": "Wardress",
+    "deckId": "c161",
+    "releaseDate": "2022-11-04",
+    "synergyName": "ミハラ"
   },
   {
     "id": "moran",
@@ -4050,7 +4281,10 @@
     "releaseOrder": 754,
     "avatarImg": "si_c281_00_s",
     "pvpTier": "SS",
-    "squad": "Underworld Queen"
+    "squad": "Underworld Queen",
+    "deckId": "c281",
+    "releaseDate": "2024-01-25",
+    "synergyName": "モラン"
   },
   {
     "id": "phantom",
@@ -4101,7 +4335,10 @@
     "releaseOrder": 1013,
     "avatarImg": "si_c580_00_s",
     "pvpTier": "B",
-    "squad": "Best Seller"
+    "squad": "Best Seller",
+    "deckId": "c580",
+    "releaseDate": "2024-10-10",
+    "synergyName": "ファントム"
   },
   {
     "id": "vesti-tactical-upgrade",
@@ -4152,7 +4389,10 @@
     "releaseOrder": 1328,
     "avatarImg": "si_c094_00_s",
     "pvpTier": "SSS",
-    "squad": "Absolute"
+    "squad": "Absolute",
+    "deckId": "c094",
+    "releaseDate": "2025-08-21",
+    "synergyName": "ベスティー:tac"
   },
   {
     "id": "himeno",
@@ -4203,7 +4443,10 @@
     "releaseOrder": 417,
     "avatarImg": "si_c802_00_s",
     "pvpTier": "E",
-    "squad": "Devil Hunter"
+    "squad": "Devil Hunter",
+    "deckId": "c802",
+    "releaseDate": "2023-02-22",
+    "synergyName": "姫野"
   },
   {
     "id": "rouge",
@@ -4254,7 +4497,10 @@
     "releaseOrder": 992,
     "avatarImg": "si_c272_00_s",
     "pvpTier": "S",
-    "squad": "777"
+    "squad": "777",
+    "deckId": "c272",
+    "releaseDate": "2024-09-19",
+    "synergyName": "ルージュ"
   },
   {
     "id": "eunhwa",
@@ -4305,7 +4551,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c092_00_s",
     "pvpTier": "E",
-    "squad": "Absolute"
+    "squad": "Absolute",
+    "deckId": "c092",
+    "releaseDate": "2022-11-04",
+    "synergyName": "ウンファ"
   },
   {
     "id": "ludmilla",
@@ -4356,7 +4605,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c190_00_s",
     "pvpTier": "A",
-    "squad": "Unlimited"
+    "squad": "Unlimited",
+    "deckId": "c190",
+    "releaseDate": "2022-11-04",
+    "synergyName": "ルドミラ"
   },
   {
     "id": "quency-escape-queen",
@@ -4407,7 +4659,10 @@
     "releaseOrder": 1006,
     "avatarImg": "si_c403_00_s",
     "pvpTier": "B",
-    "squad": "Real Kindness"
+    "squad": "Real Kindness",
+    "deckId": "c403",
+    "releaseDate": "2024-10-03",
+    "synergyName": "怪盗クエンシー"
   },
   {
     "id": "n102",
@@ -4458,7 +4713,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c120_00_s",
     "pvpTier": "D",
-    "squad": "Recall & Release"
+    "squad": "Recall & Release",
+    "deckId": "c120",
+    "releaseDate": "2022-11-04",
+    "synergyName": "N102"
   },
   {
     "id": "belorta",
@@ -4509,7 +4767,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c060_00_s",
     "pvpTier": "D",
-    "squad": "The Carronades"
+    "squad": "The Carronades",
+    "deckId": "c060",
+    "releaseDate": "2022-11-04",
+    "synergyName": "べロータ"
   },
   {
     "id": "yan",
@@ -4560,7 +4821,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c201_00_s",
     "pvpTier": "D",
-    "squad": "Talentum"
+    "squad": "Talentum",
+    "deckId": "c201",
+    "releaseDate": "2022-11-04",
+    "synergyName": "ヤン"
   },
   {
     "id": "yuni",
@@ -4614,7 +4878,10 @@
       "healer"
     ],
     "pvpTier": "D",
-    "squad": "Wardress"
+    "squad": "Wardress",
+    "deckId": "c160",
+    "releaseDate": "2022-11-04",
+    "synergyName": "ユニ"
   },
   {
     "id": "ein",
@@ -4665,7 +4932,10 @@
     "releaseOrder": 936,
     "avatarImg": "si_c391_00_s",
     "pvpTier": "A",
-    "squad": "School Circle"
+    "squad": "School Circle",
+    "deckId": "c391",
+    "releaseDate": "2024-07-25",
+    "synergyName": "アイン"
   },
   {
     "id": "d-killer-wife",
@@ -4716,7 +4986,10 @@
     "releaseOrder": 796,
     "avatarImg": "si_c043_00_s",
     "pvpTier": "S",
-    "squad": "Perilous Siege"
+    "squad": "Perilous Siege",
+    "deckId": "c043",
+    "releaseDate": "2024-03-07",
+    "synergyName": "嫁D"
   },
   {
     "id": "exia",
@@ -4767,7 +5040,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c210_00_s",
     "pvpTier": "E",
-    "squad": "Protocol"
+    "squad": "Protocol",
+    "deckId": "c210",
+    "releaseDate": "2022-11-04",
+    "synergyName": "エクシア"
   },
   {
     "id": "exia-treasure",
@@ -4818,7 +5094,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c210_00_s",
     "pvpTier": "A",
-    "squad": "Protocol"
+    "squad": "Protocol",
+    "deckId": "c210treasure",
+    "releaseDate": "2024-05-30",
+    "synergyName": "宝エクシア"
   },
   {
     "id": "bready",
@@ -4869,7 +5148,10 @@
     "releaseOrder": 1181,
     "avatarImg": "si_c520_00_s",
     "pvpTier": "E",
-    "squad": "Cooking Oil"
+    "squad": "Cooking Oil",
+    "deckId": "c520",
+    "releaseDate": "2025-03-27",
+    "synergyName": "ブレッディ"
   },
   {
     "id": "dolla",
@@ -4920,7 +5202,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c202_00_s",
     "pvpTier": "D",
-    "squad": "Talentum"
+    "squad": "Talentum",
+    "deckId": "c202",
+    "releaseDate": "2022-11-04",
+    "synergyName": "ドラー"
   },
   {
     "id": "helm",
@@ -4971,7 +5256,10 @@
     "releaseOrder": 313,
     "avatarImg": "si_c352_00_s",
     "pvpTier": "C",
-    "squad": "Aegis"
+    "squad": "Aegis",
+    "deckId": "c352",
+    "releaseDate": "2022-11-10",
+    "synergyName": "ヘルム"
   },
   {
     "id": "cocoa",
@@ -5025,7 +5313,10 @@
     "squad": "Maid For You",
     "traits": [
       "cover-healer"
-    ]
+    ],
+    "deckId": "c311",
+    "releaseDate": "2023-02-01",
+    "synergyName": "ココア"
   },
   {
     "id": "ram",
@@ -5079,7 +5370,10 @@
     "squad": "Emilia's Faction",
     "prefersTeammate": [
       "same-squad"
-    ]
+    ],
+    "deckId": "c822",
+    "releaseDate": "2024-03-21",
+    "synergyName": "ラム"
   },
   {
     "id": "maxwell",
@@ -5130,7 +5424,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c102_00_s",
     "pvpTier": "B",
-    "squad": "Matis"
+    "squad": "Matis",
+    "deckId": "c102",
+    "releaseDate": "2022-11-04",
+    "synergyName": "マクスウェル"
   },
   {
     "id": "milk",
@@ -5181,7 +5478,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c141_00_s",
     "pvpTier": "D",
-    "squad": "Cafe Sweety"
+    "squad": "Cafe Sweety",
+    "deckId": "c141",
+    "releaseDate": "2022-11-04",
+    "synergyName": "ミルク"
   },
   {
     "id": "milk-treasure",
@@ -5232,7 +5532,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c141_00_s",
     "pvpTier": "C",
-    "squad": "Cafe Sweety"
+    "squad": "Cafe Sweety",
+    "deckId": "c141treasure",
+    "releaseDate": "2025-01-16",
+    "synergyName": "宝ミルク"
   },
   {
     "id": "trony",
@@ -5283,7 +5586,10 @@
     "releaseOrder": 866,
     "avatarImg": "si_c501_00_s",
     "pvpTier": "E",
-    "squad": "Electric Shock"
+    "squad": "Electric Shock",
+    "deckId": "c501",
+    "releaseDate": "2024-05-16",
+    "synergyName": "トロニー"
   },
   {
     "id": "sakura-bloom-in-summer",
@@ -5334,7 +5640,10 @@
     "releaseOrder": 915,
     "avatarImg": "si_c284_00_s",
     "pvpTier": "B",
-    "squad": "Underworld Queen"
+    "squad": "Underworld Queen",
+    "deckId": "c284",
+    "releaseDate": "2024-07-04",
+    "synergyName": "水着サクラ"
   },
   {
     "id": "red-hood",
@@ -5385,7 +5694,10 @@
     "releaseOrder": 670,
     "avatarImg": "si_c470_00_s",
     "pvpTier": "B",
-    "squad": "Goddess"
+    "squad": "Goddess",
+    "deckId": "c470",
+    "releaseDate": "2023-11-02",
+    "synergyName": "レッドフード"
   },
   {
     "id": "rapunzel-pure-grace",
@@ -5436,7 +5748,10 @@
     "releaseOrder": 1034,
     "avatarImg": "si_c226_00_s",
     "pvpTier": "B",
-    "squad": "Goddess"
+    "squad": "Goddess",
+    "deckId": "c226",
+    "releaseDate": "2024-10-31",
+    "synergyName": "過去ラプン"
   },
   {
     "id": "mari",
@@ -5487,7 +5802,10 @@
     "releaseOrder": 971,
     "avatarImg": "si_c832_00_s",
     "pvpTier": "B",
-    "squad": "NERV"
+    "squad": "NERV",
+    "deckId": "c832",
+    "releaseDate": "2024-09-05",
+    "synergyName": "マリ"
   },
   {
     "id": "eunhwa-tactical-upgrade",
@@ -5541,7 +5859,10 @@
     "squad": "Absolute",
     "prefersTeammate": [
       "same-squad"
-    ]
+    ],
+    "deckId": "c095",
+    "releaseDate": "2025-08-14",
+    "synergyName": "ウンファ:tac"
   },
   {
     "id": "ade-agent-bunny",
@@ -5592,7 +5913,10 @@
     "releaseOrder": 1342,
     "avatarImg": "si_c315_00_s",
     "pvpTier": "S",
-    "squad": "Maid For You"
+    "squad": "Maid For You",
+    "deckId": "c315",
+    "releaseDate": "2025-09-04",
+    "synergyName": "バニーエード"
   },
   {
     "id": "milk-blooming-bunny",
@@ -5643,7 +5967,10 @@
     "releaseOrder": 1349,
     "avatarImg": "si_c143_00_s",
     "pvpTier": "SS",
-    "squad": "Cafe Sweety"
+    "squad": "Cafe Sweety",
+    "deckId": "c143",
+    "releaseDate": "2025-09-11",
+    "synergyName": "バニーミルク"
   },
   {
     "id": "yulha",
@@ -5694,7 +6021,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c171_00_s",
     "pvpTier": "D",
-    "squad": "Triangle"
+    "squad": "Triangle",
+    "deckId": "c171",
+    "releaseDate": "2022-11-04",
+    "synergyName": "ユルハ"
   },
   {
     "id": "admi",
@@ -5745,7 +6075,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c172_00_s",
     "pvpTier": "E",
-    "squad": "Triangle"
+    "squad": "Triangle",
+    "deckId": "c172",
+    "releaseDate": "2022-11-04",
+    "synergyName": "アドミ"
   },
   {
     "id": "sakura",
@@ -5796,7 +6129,10 @@
     "releaseOrder": 453,
     "avatarImg": "si_c282_00_s",
     "pvpTier": "B",
-    "squad": "Underworld Queen"
+    "squad": "Underworld Queen",
+    "deckId": "c282",
+    "releaseDate": "2023-03-30",
+    "synergyName": "サクラ"
   },
   {
     "id": "mary-bay-goddess",
@@ -5853,7 +6189,10 @@
     "squad": "Seraphim",
     "prefersTeammate": [
       "same-element"
-    ]
+    ],
+    "deckId": "c132",
+    "releaseDate": "2023-06-15",
+    "synergyName": "水着メアリー"
   },
   {
     "id": "frima",
@@ -5904,7 +6243,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c142_00_s",
     "pvpTier": "D",
-    "squad": "Cafe Sweety"
+    "squad": "Cafe Sweety",
+    "deckId": "c142",
+    "releaseDate": "2022-11-04",
+    "synergyName": "プリム"
   },
   {
     "id": "frima-treasure",
@@ -5955,7 +6297,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c142_00_s",
     "pvpTier": "D",
-    "squad": "Cafe Sweety"
+    "squad": "Cafe Sweety",
+    "deckId": "c142treasure",
+    "releaseDate": "2024-05-30",
+    "synergyName": "宝プリム"
   },
   {
     "id": "helm-aquamarine",
@@ -6006,7 +6351,10 @@
     "releaseOrder": 586,
     "avatarImg": "si_c353_00_s",
     "pvpTier": "D",
-    "squad": "Aegis"
+    "squad": "Aegis",
+    "deckId": "c353",
+    "releaseDate": "2023-08-10",
+    "synergyName": "水着ヘルム"
   },
   {
     "id": "2b",
@@ -6057,7 +6405,10 @@
     "releaseOrder": 608,
     "avatarImg": "si_c810_00_s",
     "pvpTier": "A",
-    "squad": "YoRHa"
+    "squad": "YoRHa",
+    "deckId": "c810",
+    "releaseDate": "2023-09-01",
+    "synergyName": "2B"
   },
   {
     "id": "blanc",
@@ -6114,7 +6465,10 @@
     "squad": "777",
     "prefersTeammate": [
       "same-squad"
-    ]
+    ],
+    "deckId": "c270",
+    "releaseDate": "2023-05-18",
+    "synergyName": "ブラン"
   },
   {
     "id": "brid",
@@ -6165,7 +6519,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c070_00_s",
     "pvpTier": "D",
-    "squad": "Infinity Rail"
+    "squad": "Infinity Rail",
+    "deckId": "c070",
+    "releaseDate": "2022-11-04",
+    "synergyName": "ブリッド"
   },
   {
     "id": "folkwang",
@@ -6216,7 +6573,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c242_00_s",
     "pvpTier": "D",
-    "squad": "Nepenthe"
+    "squad": "Nepenthe",
+    "deckId": "c242",
+    "releaseDate": "2022-11-04",
+    "synergyName": "フォルクヴァン"
   },
   {
     "id": "guillotine-winter-slayer",
@@ -6270,7 +6630,10 @@
     "squad": "Extrinsic",
     "prefersTeammate": [
       "same-element"
-    ]
+    ],
+    "deckId": "c182",
+    "releaseDate": "2024-12-12",
+    "synergyName": "冬チン"
   },
   {
     "id": "rapi",
@@ -6321,7 +6684,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c010_00_s",
     "pvpTier": "E",
-    "squad": "Counters"
+    "squad": "Counters",
+    "deckId": "c010",
+    "releaseDate": "2022-11-04",
+    "synergyName": "ラピ"
   },
   {
     "id": "rupee",
@@ -6375,7 +6741,10 @@
     "squad": "Talentum",
     "prefersTeammate": [
       "same-element"
-    ]
+    ],
+    "deckId": "c200",
+    "releaseDate": "2022-11-04",
+    "synergyName": "ルピー"
   },
   {
     "id": "rupee-winter-shopper",
@@ -6426,7 +6795,10 @@
     "releaseOrder": 341,
     "avatarImg": "si_c203_00_s",
     "pvpTier": "D",
-    "squad": "Talentum"
+    "squad": "Talentum",
+    "deckId": "c203",
+    "releaseDate": "2022-12-08",
+    "synergyName": "クリルピ"
   },
   {
     "id": "rosanna-chic-ocean",
@@ -6477,7 +6849,10 @@
     "releaseOrder": 922,
     "avatarImg": "si_c283_00_s",
     "pvpTier": "B",
-    "squad": "Underworld Queen"
+    "squad": "Underworld Queen",
+    "deckId": "c283",
+    "releaseDate": "2024-07-11",
+    "synergyName": "水着ロザンナ"
   },
   {
     "id": "mori",
@@ -6528,7 +6903,10 @@
     "releaseOrder": 1209,
     "avatarImg": "si_c590_00_s",
     "pvpTier": "E",
-    "squad": "Incubator"
+    "squad": "Incubator",
+    "deckId": "c590",
+    "releaseDate": "2025-04-24",
+    "synergyName": "モリー"
   },
   {
     "id": "privaty",
@@ -6579,7 +6957,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c170_00_s",
     "pvpTier": "C",
-    "squad": "Triangle"
+    "squad": "Triangle",
+    "deckId": "c170",
+    "releaseDate": "2022-11-04",
+    "synergyName": "プリバティ"
   },
   {
     "id": "sin",
@@ -6630,7 +7011,10 @@
     "releaseOrder": 376,
     "avatarImg": "si_c401_00_s",
     "pvpTier": "D",
-    "squad": "Real Kindness"
+    "squad": "Real Kindness",
+    "deckId": "c401",
+    "releaseDate": "2023-01-12",
+    "synergyName": "シン"
   },
   {
     "id": "dorothy",
@@ -6681,7 +7065,10 @@
     "releaseOrder": 481,
     "avatarImg": "si_c233_00_s",
     "pvpTier": "D",
-    "squad": "Inherit"
+    "squad": "Inherit",
+    "deckId": "c233",
+    "releaseDate": "2023-04-27",
+    "synergyName": "ドロシー"
   },
   {
     "id": "tove",
@@ -6732,7 +7119,10 @@
     "releaseOrder": 691,
     "avatarImg": "si_c192_00_s",
     "pvpTier": "D",
-    "squad": "Unlimited"
+    "squad": "Unlimited",
+    "deckId": "c192",
+    "releaseDate": "2023-11-23",
+    "synergyName": "トーブ"
   },
   {
     "id": "tove-treasure",
@@ -6783,7 +7173,10 @@
     "releaseOrder": 691,
     "avatarImg": "si_c192_00_s",
     "pvpTier": "B",
-    "squad": "Unlimited"
+    "squad": "Unlimited",
+    "deckId": "c192treasure",
+    "releaseDate": "2025-07-17",
+    "synergyName": "宝トーブ"
   },
   {
     "id": "eve",
@@ -6834,7 +7227,10 @@
     "releaseOrder": 1258,
     "avatarImg": "si_c850_00_s",
     "pvpTier": "C",
-    "squad": "7th Airborne Squad"
+    "squad": "7th Airborne Squad",
+    "deckId": "c850",
+    "releaseDate": "2025-06-12",
+    "synergyName": "イヴ"
   },
   {
     "id": "julia",
@@ -6885,7 +7281,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c150_00_s",
     "pvpTier": "D",
-    "squad": "Master Hand"
+    "squad": "Master Hand",
+    "deckId": "c150",
+    "releaseDate": "2022-11-04",
+    "synergyName": "ジュリア"
   },
   {
     "id": "julia-treasure",
@@ -6936,7 +7335,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c150_00_s",
     "pvpTier": "C",
-    "squad": "Master Hand"
+    "squad": "Master Hand",
+    "deckId": "c150treasure",
+    "releaseDate": "2025-07-17",
+    "synergyName": "宝ジュリア"
   },
   {
     "id": "miranda-treasure",
@@ -6987,7 +7389,10 @@
     "releaseOrder": 1356,
     "avatarImg": "si_c032_00_s",
     "pvpTier": "A",
-    "squad": "A.C.P.U."
+    "squad": "A.C.P.U.",
+    "deckId": "c032treasure",
+    "releaseDate": "2025-01-16",
+    "synergyName": "宝ミランダ"
   },
   {
     "id": "d",
@@ -7041,7 +7446,10 @@
     "squad": "Perilous Siege",
     "prefersTeammate": [
       "role:attacker"
-    ]
+    ],
+    "deckId": "c040",
+    "releaseDate": "2023-04-13",
+    "synergyName": "D"
   },
   {
     "id": "epinel",
@@ -7092,7 +7500,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c241_00_s",
     "pvpTier": "D",
-    "squad": "Nepenthe"
+    "squad": "Nepenthe",
+    "deckId": "c241",
+    "releaseDate": "2022-11-04",
+    "synergyName": "エピネル"
   },
   {
     "id": "alice-wonderland-bunny",
@@ -7149,7 +7560,10 @@
     "squad": "Unlimited",
     "prefersTeammate": [
       "same-element"
-    ]
+    ],
+    "deckId": "c195",
+    "releaseDate": "2024-06-06",
+    "synergyName": "バニーアリス"
   },
   {
     "id": "clay",
@@ -7200,7 +7614,10 @@
     "releaseOrder": 901,
     "avatarImg": "si_c551_00_s",
     "pvpTier": "D",
-    "squad": "Rewind"
+    "squad": "Rewind",
+    "deckId": "c551",
+    "releaseDate": "2024-06-20",
+    "synergyName": "クレイ"
   },
   {
     "id": "rei",
@@ -7251,7 +7668,10 @@
     "releaseOrder": 481,
     "avatarImg": "si_c392_00_s",
     "pvpTier": "D",
-    "squad": "School Circle"
+    "squad": "School Circle",
+    "deckId": "c392",
+    "releaseDate": "2023-04-27",
+    "synergyName": "ライ"
   },
   {
     "id": "liter",
@@ -7305,7 +7725,10 @@
     "traits": [
       "cover-healer"
     ],
-    "squad": "Mighty Tools"
+    "squad": "Mighty Tools",
+    "deckId": "c082",
+    "releaseDate": "2022-11-04",
+    "synergyName": "リター"
   },
   {
     "id": "mast",
@@ -7356,7 +7779,10 @@
     "releaseOrder": 565,
     "avatarImg": "si_c350_00_s",
     "pvpTier": "C",
-    "squad": "Aegis"
+    "squad": "Aegis",
+    "deckId": "c350",
+    "releaseDate": "2023-07-20",
+    "synergyName": "マスト"
   },
   {
     "id": "makima",
@@ -7407,7 +7833,10 @@
     "releaseOrder": 417,
     "avatarImg": "si_c800_00_s",
     "pvpTier": "C",
-    "squad": "Devil Hunter"
+    "squad": "Devil Hunter",
+    "deckId": "c800",
+    "releaseDate": "2023-02-22",
+    "synergyName": "マキマ"
   },
   {
     "id": "misato",
@@ -7461,7 +7890,10 @@
       "healer"
     ],
     "pvpTier": "E",
-    "squad": "NERV"
+    "squad": "NERV",
+    "deckId": "c833",
+    "releaseDate": "2024-08-22",
+    "synergyName": "ミサト"
   },
   {
     "id": "miranda",
@@ -7512,7 +7944,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c032_00_s",
     "pvpTier": "C",
-    "squad": "A.C.P.U."
+    "squad": "A.C.P.U.",
+    "deckId": "c032",
+    "releaseDate": "2022-11-04",
+    "synergyName": "ミランダ"
   },
   {
     "id": "nero",
@@ -7566,7 +8001,10 @@
     "requiresTeammate": [
       "healer"
     ],
-    "squad": "Happy Zoo"
+    "squad": "Happy Zoo",
+    "deckId": "c380",
+    "releaseDate": "2023-07-06",
+    "synergyName": "ネロ"
   },
   {
     "id": "novel",
@@ -7617,7 +8055,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c212_00_s",
     "pvpTier": "E",
-    "squad": "Protocol"
+    "squad": "Protocol",
+    "deckId": "c212",
+    "releaseDate": "2022-11-04",
+    "synergyName": "ノベル"
   },
   {
     "id": "volume",
@@ -7668,7 +8109,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c431_00_s",
     "pvpTier": "E",
-    "squad": "Prima Donna"
+    "squad": "Prima Donna",
+    "deckId": "c431",
+    "releaseDate": "2022-11-04",
+    "synergyName": "ボリューム"
   },
   {
     "id": "signal",
@@ -7719,7 +8163,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c022_00_s",
     "pvpTier": "E",
-    "squad": "The Scouts"
+    "squad": "The Scouts",
+    "deckId": "c022",
+    "releaseDate": "2022-11-04",
+    "synergyName": "シグナル"
   },
   {
     "id": "little-mermaid",
@@ -7770,7 +8217,10 @@
     "releaseOrder": 1209,
     "avatarImg": "si_c513_00_s",
     "pvpTier": "SS",
-    "squad": "Old Tales"
+    "squad": "Old Tales",
+    "deckId": "c513",
+    "releaseDate": "2025-04-24",
+    "synergyName": "セイレーン"
   },
   {
     "id": "sakura-suzuhara",
@@ -7821,7 +8271,10 @@
     "releaseOrder": 1146,
     "avatarImg": "si_c836_00_s",
     "pvpTier": "E",
-    "squad": "WILLE"
+    "squad": "WILLE",
+    "deckId": "c836",
+    "releaseDate": "2025-02-20",
+    "synergyName": "鈴原サクラ"
   },
   {
     "id": "nayuta",
@@ -7872,7 +8325,10 @@
     "releaseOrder": 1398,
     "avatarImg": "si_c223_00_s",
     "pvpTier": "S",
-    "squad": "Pioneer"
+    "squad": "Pioneer",
+    "deckId": "c223",
+    "releaseDate": "2025-10-30",
+    "synergyName": "ナユタ"
   },
   {
     "id": "modernia",
@@ -7923,7 +8379,10 @@
     "releaseOrder": 365,
     "avatarImg": "si_c260_00_s",
     "pvpTier": "A",
-    "squad": "Heretic"
+    "squad": "Heretic",
+    "deckId": "c260",
+    "releaseDate": "2023-01-01",
+    "synergyName": "モダニア"
   },
   {
     "id": "alice",
@@ -7974,7 +8433,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c191_00_s",
     "pvpTier": "SS",
-    "squad": "Unlimited"
+    "squad": "Unlimited",
+    "deckId": "c191",
+    "releaseDate": "2022-11-04",
+    "synergyName": "アリス"
   },
   {
     "id": "mihara-bonding-chain",
@@ -8025,7 +8487,10 @@
     "releaseOrder": 1216,
     "avatarImg": "si_c162_00_s",
     "pvpTier": "S",
-    "squad": "Wardress"
+    "squad": "Wardress",
+    "deckId": "c162",
+    "releaseDate": "2025-05-01",
+    "synergyName": "ミハラ.ボン"
   },
   {
     "id": "cinderella",
@@ -8076,7 +8541,10 @@
     "releaseOrder": 1034,
     "avatarImg": "si_c511_00_s",
     "pvpTier": "S",
-    "squad": "Old Tales"
+    "squad": "Old Tales",
+    "deckId": "c511",
+    "releaseDate": "2024-10-31",
+    "synergyName": "シンデレラ"
   },
   {
     "id": "rosanna",
@@ -8127,7 +8595,10 @@
     "releaseOrder": 516,
     "avatarImg": "si_c280_00_s",
     "pvpTier": "S",
-    "squad": "Underworld Queen"
+    "squad": "Underworld Queen",
+    "deckId": "c280",
+    "releaseDate": "2023-06-01",
+    "synergyName": "ロザンナ"
   },
   {
     "id": "ludmilla-winter-owner",
@@ -8178,7 +8649,10 @@
     "releaseOrder": 705,
     "avatarImg": "si_c194_00_s",
     "pvpTier": "B",
-    "squad": "Unlimited"
+    "squad": "Unlimited",
+    "deckId": "c194",
+    "releaseDate": "2023-12-07",
+    "synergyName": "ルドミラ温泉"
   },
   {
     "id": "asuka-wille",
@@ -8229,7 +8703,10 @@
     "releaseOrder": 1146,
     "avatarImg": "si_c835_00_s",
     "pvpTier": "E",
-    "squad": "WILLE"
+    "squad": "WILLE",
+    "deckId": "c835",
+    "releaseDate": "2025-02-20",
+    "synergyName": "眼帯アスカ"
   },
   {
     "id": "aria",
@@ -8280,7 +8757,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c432_00_s",
     "pvpTier": "E",
-    "squad": "Prima Donna"
+    "squad": "Prima Donna",
+    "deckId": "c432",
+    "releaseDate": "2022-11-04",
+    "synergyName": "アリア"
   },
   {
     "id": "emma",
@@ -8334,7 +8814,10 @@
       "healer"
     ],
     "pvpTier": "C",
-    "squad": "Absolute"
+    "squad": "Absolute",
+    "deckId": "c090",
+    "releaseDate": "2022-11-04",
+    "synergyName": "エマ"
   },
   {
     "id": "diesel",
@@ -8385,7 +8868,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c072_00_s",
     "pvpTier": "C",
-    "squad": "Infinity Rail"
+    "squad": "Infinity Rail",
+    "deckId": "c072",
+    "releaseDate": "2022-11-04",
+    "synergyName": "ディーゼル"
   },
   {
     "id": "diesel-treasure",
@@ -8436,7 +8922,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c072_00_s",
     "pvpTier": "C",
-    "squad": "Infinity Rail"
+    "squad": "Infinity Rail",
+    "deckId": "c072treasure",
+    "releaseDate": "2024-05-30",
+    "synergyName": "宝ディーゼル"
   },
   {
     "id": "flora",
@@ -8487,7 +8976,10 @@
     "releaseOrder": 1055,
     "avatarImg": "si_c411_00_s",
     "pvpTier": "B",
-    "squad": "Botanic Garden"
+    "squad": "Botanic Garden",
+    "deckId": "c411",
+    "releaseDate": "2024-11-21",
+    "synergyName": "フローラ"
   },
   {
     "id": "crown",
@@ -8538,7 +9030,10 @@
     "releaseOrder": 845,
     "avatarImg": "si_c330_00_s",
     "pvpTier": "C",
-    "squad": "White Knight"
+    "squad": "White Knight",
+    "deckId": "c330",
+    "releaseDate": "2024-04-25",
+    "synergyName": "クラウン"
   },
   {
     "id": "guillotine",
@@ -8589,7 +9084,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c180_00_s",
     "pvpTier": "D",
-    "squad": "Extrinsic"
+    "squad": "Extrinsic",
+    "deckId": "c180",
+    "releaseDate": "2022-11-04",
+    "synergyName": "ギロチン"
   },
   {
     "id": "kilo",
@@ -8640,7 +9138,10 @@
     "releaseOrder": 845,
     "avatarImg": "si_c361_00_s",
     "pvpTier": "B",
-    "squad": "Heavy Gram"
+    "squad": "Heavy Gram",
+    "deckId": "c361",
+    "releaseDate": "2024-04-25",
+    "synergyName": "キロ"
   },
   {
     "id": "rapi-red-hood",
@@ -8691,7 +9192,10 @@
     "releaseOrder": 1096,
     "avatarImg": "si_c016_00_s",
     "pvpTier": "SSS",
-    "squad": "Counters"
+    "squad": "Counters",
+    "deckId": "c016",
+    "releaseDate": "2025-01-01",
+    "synergyName": "ラピレッド"
   },
   {
     "id": "rem",
@@ -8742,7 +9246,10 @@
     "releaseOrder": 817,
     "avatarImg": "si_c820_00_s",
     "pvpTier": "C",
-    "squad": "Emilia's Faction"
+    "squad": "Emilia's Faction",
+    "deckId": "c820",
+    "releaseDate": "2024-03-28",
+    "synergyName": "レム"
   },
   {
     "id": "rei-ayanami",
@@ -8796,7 +9303,10 @@
     "squad": "NERV",
     "prefersTeammate": [
       "same-element"
-    ]
+    ],
+    "deckId": "c831",
+    "releaseDate": "2024-08-29",
+    "synergyName": "綾波レイ"
   },
   {
     "id": "mast-romantic-maid",
@@ -8847,7 +9357,10 @@
     "releaseOrder": 1125,
     "avatarImg": "si_c354_00_s",
     "pvpTier": "SS",
-    "squad": "Aegis"
+    "squad": "Aegis",
+    "deckId": "c354",
+    "releaseDate": "2025-01-30",
+    "synergyName": "メイドマスト"
   },
   {
     "id": "neon-blue-ocean",
@@ -8898,7 +9411,10 @@
     "releaseOrder": 537,
     "avatarImg": "si_c014_00_s",
     "pvpTier": "E",
-    "squad": "Counters"
+    "squad": "Counters",
+    "deckId": "c014",
+    "releaseDate": "2023-06-22",
+    "synergyName": "水着ネオン"
   },
   {
     "id": "soda",
@@ -8955,7 +9471,10 @@
     ],
     "prefersTeammate": [
       "same-element"
-    ]
+    ],
+    "deckId": "c312",
+    "releaseDate": "2023-02-08",
+    "synergyName": "ソーダ"
   },
   {
     "id": "elegg",
@@ -9006,7 +9525,10 @@
     "releaseOrder": 782,
     "avatarImg": "si_c500_00_s",
     "pvpTier": "B",
-    "squad": "Electric Shock"
+    "squad": "Electric Shock",
+    "deckId": "c500",
+    "releaseDate": "2024-02-22",
+    "synergyName": "エレグ"
   },
   {
     "id": "elegg-boom-and-shock",
@@ -9060,7 +9582,10 @@
     "squad": "Electric Shock",
     "prefersTeammate": [
       "same-element"
-    ]
+    ],
+    "deckId": "c502",
+    "releaseDate": "2025-07-24",
+    "synergyName": "水着エレグ"
   },
   {
     "id": "emma-tactical-upgrade",
@@ -9114,7 +9639,10 @@
     "squad": "Absolute",
     "prefersTeammate": [
       "same-squad"
-    ]
+    ],
+    "deckId": "c093",
+    "releaseDate": "2025-08-07",
+    "synergyName": "エマ:tac"
   },
   {
     "id": "delta-ninja-thief",
@@ -9168,7 +9696,10 @@
     "squad": "The Scouts",
     "prefersTeammate": [
       "role:defender"
-    ]
+    ],
+    "deckId": "c23",
+    "releaseDate": "2025-10-16",
+    "synergyName": "忍デルタ"
   },
   {
     "id": "snow-white-innocent-days",
@@ -9219,7 +9750,10 @@
     "releaseOrder": 670,
     "avatarImg": "si_c224_00_s",
     "pvpTier": "E",
-    "squad": "Goddess"
+    "squad": "Goddess",
+    "deckId": "c224",
+    "releaseDate": "2023-11-02",
+    "synergyName": "スノホワ過去"
   },
   {
     "id": "label",
@@ -9270,7 +9804,10 @@
     "releaseOrder": 1475,
     "avatarImg": "si_c582_00_s",
     "pvpTier": "A",
-    "squad": "Best Seller"
+    "squad": "Best Seller",
+    "deckId": "c582",
+    "releaseDate": "2026-01-15",
+    "synergyName": "レーベル"
   },
   {
     "id": "velvet",
@@ -9321,7 +9858,10 @@
     "releaseOrder": 1489,
     "avatarImg": "si_c316_00_s",
     "pvpTier": "C",
-    "squad": "Maid For You"
+    "squad": "Maid For You",
+    "deckId": "c316",
+    "releaseDate": "2026-01-29",
+    "synergyName": "ベルベット"
   },
   {
     "id": "chisato",
@@ -9372,7 +9912,10 @@
     "releaseOrder": 1503,
     "avatarImg": "si_c860_00_s",
     "pvpTier": "B",
-    "squad": "Café LycoReco"
+    "squad": "Café LycoReco",
+    "deckId": "c860",
+    "releaseDate": "2026-02-12",
+    "synergyName": "千束"
   },
   {
     "id": "takina",
@@ -9423,7 +9966,10 @@
     "releaseOrder": 1510,
     "avatarImg": "si_c861_00_s",
     "pvpTier": "SS",
-    "squad": "Café LycoReco"
+    "squad": "Café LycoReco",
+    "deckId": "c861",
+    "releaseDate": "2026-02-19",
+    "synergyName": "たきな"
   },
   {
     "id": "privaty-treasure",
@@ -9474,7 +10020,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c170_00_s",
     "pvpTier": "SS",
-    "squad": "Triangle"
+    "squad": "Triangle",
+    "deckId": "c170treasure",
+    "releaseDate": "2026-02-12",
+    "synergyName": "宝プリバティ"
   },
   {
     "id": "zwei-treasure",
@@ -9528,7 +10077,10 @@
       "cover-healer"
     ],
     "pvpTier": "B",
-    "squad": "School Circle"
+    "squad": "School Circle",
+    "deckId": "c390treasure",
+    "releaseDate": "2026-02-12",
+    "synergyName": "宝ツバイ"
   },
   {
     "id": "centi-treasure",
@@ -9579,7 +10131,10 @@
     "releaseOrder": 307,
     "avatarImg": "si_c080_00_s",
     "pvpTier": "S",
-    "squad": "Mighty Tools"
+    "squad": "Mighty Tools",
+    "deckId": "c080treasure",
+    "releaseDate": "2026-02-12",
+    "synergyName": "宝センチ"
   },
   {
     "id": "moran-treasure",
@@ -9630,7 +10185,10 @@
     "releaseOrder": 754,
     "avatarImg": "si_c281_00_s",
     "pvpTier": "SSS",
-    "squad": "Underworld Queen"
+    "squad": "Underworld Queen",
+    "deckId": "c281treasure",
+    "releaseDate": "2026-02-12",
+    "synergyName": "宝モラン"
   },
   {
     "id": "eh",
@@ -9681,7 +10239,10 @@
     "releaseOrder": 1517,
     "avatarImg": "eh",
     "pvpTier": "C",
-    "squad": "Exotic"
+    "squad": "Exotic",
+    "deckId": "c113",
+    "releaseDate": "2026-03-05",
+    "synergyName": "E.H."
   },
   {
     "id": "arcana-fortune-mate",
@@ -9732,7 +10293,10 @@
     "releaseOrder": 1524,
     "avatarImg": "arcana-fortune-mate",
     "pvpTier": "B",
-    "squad": "Best Seller"
+    "squad": "Best Seller",
+    "deckId": "c583",
+    "releaseDate": "2026-03-19",
+    "synergyName": "学校アルカナ"
   },
   {
     "id": "snow-crane",
@@ -9783,7 +10347,10 @@
     "releaseOrder": 1531,
     "avatarImg": "snow-crane",
     "pvpTier": "B",
-    "squad": "Veiled Order"
+    "squad": "Veiled Order",
+    "deckId": "c620",
+    "releaseDate": "2026-04-09",
+    "synergyName": "シラツル"
   },
   {
     "id": "anis-star",
@@ -9834,7 +10401,10 @@
     "releaseOrder": 1538,
     "avatarImg": "anis-star",
     "pvpTier": "SSS",
-    "squad": "Counters"
+    "squad": "Counters",
+    "deckId": "c017",
+    "releaseDate": "2026-04-23",
+    "synergyName": "スターアニス"
   },
   {
     "id": "neon-vision-eye",
@@ -9885,7 +10455,10 @@
     "releaseOrder": 1580,
     "avatarImg": "neon-vision-eye",
     "pvpTier": "S",
-    "squad": "Counters"
+    "squad": "Counters",
+    "deckId": "c018",
+    "releaseDate": "2026-04-30",
+    "synergyName": "ネオ.ネオン"
   },
   {
     "id": "mint",
@@ -9936,7 +10509,10 @@
     "releaseOrder": 1594,
     "avatarImg": "mint",
     "pvpTier": "B",
-    "squad": "T.T. STAR"
+    "squad": "T.T. STAR",
+    "deckId": "c600",
+    "releaseDate": "2026-05-14",
+    "synergyName": "ミント"
   },
   {
     "id": "prika",
@@ -9987,7 +10563,10 @@
     "releaseOrder": 1608,
     "avatarImg": "prika",
     "pvpTier": "B",
-    "squad": "T.T. STAR"
+    "squad": "T.T. STAR",
+    "deckId": "c601",
+    "releaseDate": "2026-05-28",
+    "synergyName": "プリカ"
   },
   {
     "id": "avistar",
@@ -10038,7 +10617,10 @@
     "releaseOrder": 1573,
     "avatarImg": "avistar",
     "pvpTier": "D",
-    "squad": "Overseer"
+    "squad": "Overseer",
+    "deckId": "c441",
+    "releaseDate": "2026-04-23",
+    "synergyName": "アビスタ"
   },
   {
     "id": "ark-ranger-black",
@@ -10089,7 +10671,10 @@
     "releaseOrder": 1622,
     "avatarImg": "ark-ranger-black",
     "pvpTier": "A",
-    "squad": "Ark Rangers"
+    "squad": "Ark Rangers",
+    "deckId": "c570",
+    "releaseDate": "2026-06-11",
+    "synergyName": "アークブラック"
   },
   {
     "id": "cinderella-crystal-wave",
@@ -10140,7 +10725,10 @@
     "releaseOrder": 1643,
     "avatarImg": "cinderella-crystal-wave",
     "pvpTier": "B",
-    "squad": "Old Tales"
+    "squad": "Old Tales",
+    "deckId": "c515",
+    "releaseDate": "2026-07-02",
+    "synergyName": "水着シンデレラ"
   },
   {
     "id": "marciana-marine-study",
@@ -10191,7 +10779,10 @@
     "releaseOrder": 1650,
     "avatarImg": "marciana-marine-study",
     "pvpTier": "B",
-    "squad": "Academia"
+    "squad": "Academia",
+    "deckId": "c322",
+    "releaseDate": "2026-07-09",
+    "synergyName": "水着マルチャーナ"
   },
   {
     "id": "sugar-treasure",
@@ -10242,7 +10833,10 @@
     "releaseOrder": 1664,
     "avatarImg": "si_c140_00_s",
     "pvpTier": "A",
-    "squad": "Cafe Sweety"
+    "squad": "Cafe Sweety",
+    "deckId": "c140treasure",
+    "releaseDate": "2026-07-23",
+    "synergyName": "宝シュガー"
   },
   {
     "id": "phantom-treasure",
@@ -10293,7 +10887,10 @@
     "releaseOrder": 1664,
     "avatarImg": "si_c580_00_s",
     "pvpTier": "B",
-    "squad": "Best Seller"
+    "squad": "Best Seller",
+    "deckId": "c580treasure",
+    "releaseDate": "2026-07-23",
+    "synergyName": "宝ファントム"
   },
   {
     "id": "flora-treasure",
@@ -10344,7 +10941,10 @@
     "releaseOrder": 1664,
     "avatarImg": "si_c411_00_s",
     "pvpTier": "B",
-    "squad": "Botanic Garden"
+    "squad": "Botanic Garden",
+    "deckId": "c411treasure",
+    "releaseDate": "2026-07-23",
+    "synergyName": "宝フローラ"
   },
   {
     "id": "rosanna-treasure",
@@ -10395,7 +10995,10 @@
     "releaseOrder": 1664,
     "avatarImg": "si_c280_00_s",
     "pvpTier": "SS",
-    "squad": "Underworld Queen"
+    "squad": "Underworld Queen",
+    "deckId": "c280treasure",
+    "releaseDate": "2026-07-23",
+    "synergyName": "宝ロザンナ"
   },
   {
     "id": "laplace-ultimate-hero",
@@ -10446,7 +11049,10 @@
     "releaseOrder": 1664,
     "avatarImg": "laplace-ultimate-hero",
     "pvpTier": "SS",
-    "squad": "Matis"
+    "squad": "Matis",
+    "deckId": "c103",
+    "releaseDate": "2026-07-23",
+    "synergyName": "ULTラプラス"
   },
   {
     "id": "maxwell-ordinary-mechanic",
@@ -10497,7 +11103,10 @@
     "releaseOrder": 1671,
     "avatarImg": "maxwell-ordinary-mechanic",
     "pvpTier": "A",
-    "squad": "Matis"
+    "squad": "Matis",
+    "deckId": "c105",
+    "releaseDate": "2026-07-30",
+    "synergyName": "MECHマクス"
   },
   {
     "id": "queen",
@@ -10548,7 +11157,10 @@
     "releaseOrder": 1685,
     "avatarImg": "queen",
     "pvpTier": "B",
-    "squad": "Phantom Thieves of Hearts"
+    "squad": "Phantom Thieves of Hearts",
+    "deckId": "c870",
+    "releaseDate": "2026-08-13",
+    "synergyName": "クイーン（真）"
   },
   {
     "id": "yukiko",
@@ -10599,7 +11211,10 @@
     "releaseOrder": 1692,
     "avatarImg": "yukiko",
     "pvpTier": "C",
-    "squad": "Self-Proclaimed Special Investigation Team"
+    "squad": "Self-Proclaimed Special Investigation Team",
+    "deckId": "c871",
+    "releaseDate": "2026-08-20",
+    "synergyName": "雪子"
   },
   {
     "id": "drake-great-villain",
@@ -10650,7 +11265,10 @@
     "releaseOrder": 1706,
     "avatarImg": "drake-great-villain",
     "pvpTier": "A",
-    "squad": "Matis"
+    "squad": "Matis",
+    "deckId": "c104",
+    "releaseDate": "2026-09-03",
+    "synergyName": "Greatドレイク"
   },
   {
     "id": "guilty-mighty-bunny",
@@ -10700,7 +11318,10 @@
     },
     "releaseOrder": 1720,
     "avatarImg": "guilty-mighty-bunny",
-    "squad": "Real Kindness"
+    "squad": "Real Kindness",
+    "deckId": "c404",
+    "releaseDate": "2026-09-17",
+    "synergyName": "バニーギルティ"
   },
   {
     "id": "sin-swift-bunny",
@@ -10750,7 +11371,10 @@
     },
     "releaseOrder": 1727,
     "avatarImg": "sin-swift-bunny",
-    "squad": "Real Kindness"
+    "squad": "Real Kindness",
+    "deckId": "c405",
+    "releaseDate": "2026-09-24",
+    "synergyName": "バニーシン"
   },
   {
     "id": "belorta-pumpkin-witch",
@@ -10800,6 +11424,217 @@
     },
     "releaseOrder": 1741,
     "avatarImg": "belorta-pumpkin-witch",
-    "squad": "The Carronades"
+    "squad": "The Carronades",
+    "deckId": "c063",
+    "releaseDate": "2026-10-08",
+    "synergyName": "魔女ベロータ"
+  },
+  {
+    "id": "scarlet-goddeath",
+    "name": {
+      "en": "Scarlet: Goddeath",
+      "zh-TW": "紅蓮:神殺",
+      "zh-CN": "红莲:神杀",
+      "ja": "紅蓮：神殺",
+      "ko": "홍련 : 신살"
+    },
+    "burst": "III",
+    "role": "attacker",
+    "element": "fire",
+    "manufacturer": "pilgrim",
+    "weapon": "AR",
+    "burstGen": {
+      "attack": {
+        "1RL": 0.136,
+        "2RL": 0.272,
+        "3SG": 0.204,
+        "5SG": 0.34,
+        "3RL": 0.408,
+        "7SG": 0.476,
+        "4RL": 0.51,
+        "5RL": 0.561
+      },
+      "defense": {
+        "1RL": 0.136,
+        "2RL": 0.272,
+        "3SG": 0.204,
+        "5SG": 0.34,
+        "3RL": 0.408,
+        "7SG": 0.476,
+        "4RL": 0.51,
+        "5RL": 0.561
+      }
+    },
+    "burstGenSource": "nikke-deck 的 2RL～4RL；1RL、1.5RL、5RL 為推算",
+    "suitability": {
+      "attack": 0,
+      "defense": 0
+    },
+    "releaseOrder": 1745,
+    "avatarImg": "scarlet-goddeath",
+    "deckId": "c472",
+    "source": "nikke-deck",
+    "releaseDate": "2026-11-05",
+    "synergyName": "神紅蓮",
+    "avatarUrl": "https://images.nikke-synergy.com/character-images/images/0227.png",
+    "avatarFile": "scarlet-goddeath.png"
+  },
+  {
+    "id": "rapunzel-sanctuary",
+    "name": {
+      "en": "Rapunzel: Sanctuary",
+      "zh-TW": "長髮公主:聖域",
+      "zh-CN": "長髮公主:聖域",
+      "ja": "ラプンツェル：サンクチュアリ",
+      "ko": "라푼젤 : 생츄어리"
+    },
+    "burst": "II",
+    "role": "supporter",
+    "element": "fire",
+    "manufacturer": "pilgrim",
+    "weapon": "RL",
+    "ammo": 6,
+    "reloadTime": 2.0,
+    "chargeTime": 1.0,
+    "maxCharge": 250,
+    "burstGen": {
+      "attack": {
+        "1RL": 0.056,
+        "2RL": 0.112,
+        "3SG": 0.056,
+        "5SG": 0.112,
+        "3RL": 0.168,
+        "7SG": 0.168,
+        "4RL": 0.224,
+        "5RL": 0.252
+      },
+      "defense": {
+        "1RL": 0.056,
+        "2RL": 0.112,
+        "3SG": 0.056,
+        "5SG": 0.112,
+        "3RL": 0.168,
+        "7SG": 0.168,
+        "4RL": 0.224,
+        "5RL": 0.252
+      }
+    },
+    "burstGenSource": "nikke-deck 的 2RL～4RL；1RL、1.5RL、5RL 為推算",
+    "suitability": {
+      "attack": 0,
+      "defense": 0
+    },
+    "releaseOrder": 1744,
+    "avatarImg": "rapunzel-sanctuary",
+    "deckId": "c473",
+    "source": "nikke-deck＋nikke-synergy",
+    "releaseDate": "2026-10-29",
+    "avatarUrl": "https://images.nikke-synergy.com/character-images/images/0225.png",
+    "avatarFile": "rapunzel-sanctuary.png",
+    "synergyName": "聖域ラプンツェル"
+  },
+  {
+    "id": "chime",
+    "name": {
+      "en": "Chime",
+      "zh-TW": "鐘鳴",
+      "zh-CN": "鐘鳴",
+      "ja": "チャイム",
+      "ko": "차임"
+    },
+    "burst": "II",
+    "role": "supporter",
+    "element": "iron",
+    "manufacturer": "pilgrim",
+    "weapon": "SMG",
+    "ammo": 120,
+    "reloadTime": 1.0,
+    "burstGen": {
+      "attack": {
+        "1RL": 0.0195,
+        "2RL": 0.039,
+        "3SG": 0.0292,
+        "5SG": 0.047,
+        "3RL": 0.058,
+        "7SG": 0.068,
+        "4RL": 0.077,
+        "5RL": 0.0865
+      },
+      "defense": {
+        "1RL": 0.0195,
+        "2RL": 0.039,
+        "3SG": 0.0292,
+        "5SG": 0.047,
+        "3RL": 0.058,
+        "7SG": 0.068,
+        "4RL": 0.077,
+        "5RL": 0.0865
+      }
+    },
+    "burstGenSource": "nikke-deck 的 2RL～4RL；1RL、1.5RL、5RL 為推算",
+    "suitability": {
+      "attack": 0,
+      "defense": 0
+    },
+    "releaseOrder": 1742,
+    "avatarImg": "chime",
+    "deckId": "c331",
+    "source": "nikke-deck＋nikke-synergy",
+    "releaseDate": "2025-10-30",
+    "avatarUrl": "https://images.nikke-synergy.com/character-images/images/0186.png",
+    "avatarFile": "chime.png",
+    "synergyName": "チャイム"
+  },
+  {
+    "id": "marian-queen",
+    "name": {
+      "en": "Marian: Queen",
+      "zh-TW": "瑪麗安:女王",
+      "zh-CN": "瑪麗安:女王",
+      "ja": "マリアン：クイーン",
+      "ko": "마리안 : 퀸"
+    },
+    "burst": "III",
+    "role": "attacker",
+    "element": "fire",
+    "manufacturer": "pilgrim",
+    "weapon": "MG",
+    "ammo": 300,
+    "reloadTime": 2.5,
+    "burstGen": {
+      "attack": {
+        "1RL": 0.0085,
+        "2RL": 0.017,
+        "3SG": 0.0128,
+        "5SG": 0.0215,
+        "3RL": 0.036,
+        "7SG": 0.042,
+        "4RL": 0.057,
+        "5RL": 0.0675
+      },
+      "defense": {
+        "1RL": 0.0085,
+        "2RL": 0.017,
+        "3SG": 0.0128,
+        "5SG": 0.0215,
+        "3RL": 0.036,
+        "7SG": 0.042,
+        "4RL": 0.057,
+        "5RL": 0.0675
+      }
+    },
+    "burstGenSource": "nikke-deck 的 2RL～4RL；1RL、1.5RL、5RL 為推算",
+    "suitability": {
+      "attack": 0,
+      "defense": 0
+    },
+    "releaseOrder": 1743,
+    "avatarImg": "marian-queen",
+    "deckId": "c019",
+    "source": "nikke-deck＋nikke-synergy",
+    "releaseDate": "2026-10-29",
+    "avatarUrl": "https://images.nikke-synergy.com/character-images/images/0226.png",
+    "avatarFile": "marian-queen.png",
+    "synergyName": "女王マリアン"
   }
 ]
