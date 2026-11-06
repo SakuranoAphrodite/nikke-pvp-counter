@@ -426,7 +426,7 @@ details.mods summary{color:var(--muted)}
     </ul>
     <h3 id="jump-help-update" class="jump-target">新角色出來怎麼辦</h3>
     <ul class="tips">
-      <li>每天第一次打開本頁時，如果有網路，會自動向本專案的 GitHub 倉庫抓最新的角色庫與模板並暫存在瀏覽器；頁首會顯示目前用的是「內建」「快取」還是「線上」資料，也可以按「檢查更新」手動抓。</li>
+      <li>每天第一次打開本頁時，如果有網路，會自動向本專案的 GitHub 倉庫抓最新的角色庫與模板並暫存在瀏覽器；頁首會顯示目前用的是「內建」「快取」還是「線上」資料，也可以按「檢查更新」手動抓；抓到的資料和目前相同時不會重算。</li>
       <li>想把新資料固定寫進這個檔案（離線也有），雙擊資料夾裡的 <code>更新資料.bat</code>，或執行 <code>python build\build.py --update</code>。</li>
       <li>角色庫的基底是上游 NIKKE Arena Planner（2026-10 之後沒再更新）；上游沒收錄的新角色由 <a href="https://nikke-deck.com/en/deck" target="_blank" rel="noopener">NIKKE DECK</a> 的資料自動補進來（每階充能、武器、爆裂、職業），角色卡標「新」；出場日期與繁中譯名來自 <a href="https://nikke-synergy.com/index_en" target="_blank" rel="noopener">NIKKE Synergy</a>（該站擋程式抓取，要用瀏覽器匯出，方法見 README）。新角色的威脅標籤與解法規則需要手動補，缺標籤的角色會顯示為「一般角色」，不影響速度計算。</li>
     </ul>
@@ -455,7 +455,11 @@ details.mods summary{color:var(--muted)}
 /* ====================== 資料 ====================== */
 let CHARACTERS = __CHARACTERS__;
 const TEMPLATES_EXTRA = __TEMPLATES_EXTRA__; // 本工具補充的 2026 體系模板，線上更新上游模板後仍會合併
-let TEMPLATES  = __TEMPLATES__.concat(TEMPLATES_EXTRA);
+const TEMPLATES_UPSTREAM = __TEMPLATES__;
+let TEMPLATES  = TEMPLATES_UPSTREAM.concat(TEMPLATES_EXTRA);
+const hashStr=s=>{ let h=2166136261; for(let i=0;i<s.length;i++){ h^=s.charCodeAt(i); h=Math.imul(h,16777619); } return (h>>>0).toString(16)+':'+s.length; }; // FNV-1a，只用來比對資料是否相同
+const dataSigOf=(chars,tpls)=>hashStr(JSON.stringify(chars))+'|'+hashStr(JSON.stringify(tpls));
+let dataSig=dataSigOf(CHARACTERS,TEMPLATES_UPSTREAM); // 目前套用的角色與模板資料的指紋（在 applyPrydwen 改動物件前算）；線上檢查抓到相同資料時不重算
 const BUILTIN_DATE = '__DATA_DATE__';
 const BUILTIN_COUNT = CHARACTERS.length; // 線上資料比內建少（倉庫還沒推送新版）時不套用，免得新角色消失
 const DATA_RAW = 'https://raw.githubusercontent.com/SakuranoAphrodite/nikke-pvp-counter/main/build/data/'; // 本專案倉庫合併後的角色庫（上游 arena-planner 基底＋nikke-deck 新角色＋nikke-synergy 出場日期）
@@ -618,10 +622,17 @@ const teamKey=ids=>[...ids].sort().join(',');
 const stripT=id=>id.replace(/-treasure$/,'');
 const teamKeyNT=ids=>[...ids].map(stripT).sort().join(',');
 const ARENA_IDX_NT=new Map(); (ARENA.teams||[]).forEach((t,i)=>{ const k=teamKeyNT(t[0].split(',')); if(!ARENA_IDX_NT.has(k)||ARENA.teams[ARENA_IDX_NT.get(k)][1]<t[1]) ARENA_IDX_NT.set(k,i); });
+/* 實戰隊伍索引：每筆隊伍先拆好角色 id（ids 原樣、nt 去掉珍藏後綴），再建「角色 → 出現在哪些隊」的倒排索引。
+   直接對位、相似隊、模板對位的查詢都改走索引，不再每查一次就把幾千筆隊伍逐筆拆字串（特殊競技場一次要查幾百組，原本要二十幾秒）。 */
+const ARENA_ROWS=(ARENA.teams||[]).map(t=>{ const ids=t[0].split(','); return {ids,nt:ids.map(stripT)}; });
+const ARENA_BY_ID=new Map(), ARENA_BY_NT=new Map();
+ARENA_ROWS.forEach((r,i)=>{ for(const id of r.ids){ let a=ARENA_BY_ID.get(id); if(!a){ a=[]; ARENA_BY_ID.set(id,a); } a.push(i); } for(const id of r.nt){ let a=ARENA_BY_NT.get(id); if(!a){ a=[]; ARENA_BY_NT.set(id,a); } a.push(i); } });
+/* 每筆隊伍含 ids 裡幾位（exact=false 時珍藏與一般版視為同一人）：回傳以隊伍編號為索引的計數陣列 */
+function arenaOverlap(ids,exact){ const cnt=new Uint8Array(ARENA_ROWS.length); const idx=exact?ARENA_BY_ID:ARENA_BY_NT; for(const id of new Set(ids.filter(Boolean).map(x=>exact?x:stripT(x)))){ const a=idx.get(id); if(a) for(const i of a) cnt[i]++; } return cnt; }
 const pct=(w,m)=>m?Math.round(w/m*100):null;
 function rowStats(row){ const ids=row[0].split(','); return {key:row[0],ids,m:row[1],w:row[2],am:row[3],aw:row[4],dm:row[5],dw:row[6],wr:pct(row[2],row[1]),awr:pct(row[4],row[3]),dwr:pct(row[6],row[5])}; }
 function arenaTeam(ids){ let i=ARENA_IDX.get(teamKey(ids)); if(i!==undefined) return {idx:i,row:ARENA.teams[i],exact:true}; i=ARENA_IDX_NT.get(teamKeyNT(ids)); return i===undefined?null:{idx:i,row:ARENA.teams[i],exact:false}; }
-function arenaSimilar(ids,minOverlap){ const set=new Set(ids), out=[]; for(let i=0;i<ARENA.teams.length;i++){ const row=ARENA.teams[i]; const ov=row[0].split(',').filter(x=>set.has(x)).length; if(ov>=minOverlap) out.push({idx:i,row,ov}); } return out.sort((a,b)=>b.ov-a.ov||b.row[1]-a.row[1]).slice(0,5); }
+function arenaSimilar(ids,minOverlap){ const cnt=arenaOverlap(ids,true), out=[]; for(let i=0;i<cnt.length;i++){ if(cnt[i]>=minOverlap) out.push({idx:i,row:ARENA.teams[i],ov:cnt[i]}); } return out.sort((a,b)=>b.ov-a.ov||b.row[1]-a.row[1]).slice(0,5); }
 function beatenBy(idx){ return (ARENA.beatenBy[String(idx)]||[]).map(([j,n,s])=>({idx:j,row:ARENA.teams[j],n,samples:s||[]})); }
 /* 直接對位：不經模板分類，找「含我方 k 位相同角色的隊」對上「含對方 k 位相同角色的隊」的實戰勝負。先試 k=4，不夠樣本再放寬到 3 */
 const _prCache=new Map();
@@ -630,8 +641,7 @@ function pairRecord(myIds,enemyIds){
   const nt=x=>x.replace(/-treasure$/,''); // 珍藏與一般版視為同一人（拉普拉斯究極英雄是另一個 id，不受影響）
   const ch0=chainOf(myIds); const core2=[ch0.b2,ch0.b3].filter(Boolean).map(x=>nt(x.c.id)).sort(); // 誰開 B2、B3（B1 多半只是電池，比對時忽略）
   const ck=teamKey(myIds)+'|'+teamKey(enemyIds)+'|'+core2.join(','); if(_prCache.has(ck)) return _prCache.get(ck);
-  const ov=(row,set)=>row[0].split(',').filter(x=>set.has(nt(x))).length;
-  const ms=new Set(myIds.filter(Boolean).map(nt)), es=new Set(enemyIds.filter(Boolean).map(nt));
+  const myCnt=arenaOverlap(myIds), enCnt=arenaOverlap(enemyIds), coreHas=core2.map(c=>arenaOverlap([c])), N=ARENA_ROWS.length; // 各隊含我方／對方幾位、是否含開 B2／B3 的核心
   let res=null;
   const myChain=[...chainSet(myIds)].map(nt).sort(); const myTrio=myChain.join(','); // 我方真正開爆裂的三位
   // 每個相似隊「用我這組三人開爆裂」的比例（資料有記各隊實際開法）；沒有記錄時視為 1
@@ -641,14 +651,14 @@ function pairRecord(myIds,enemyIds){
   for(const {k,chain} of attempts){
     if(chain&&myChain.length<3) continue;
     const my=new Set(), en=new Set(), share=new Map();
-    ARENA.teams.forEach((row,i)=>{ const u=row[0].split(',').map(nt); if(ov(row,ms)>=k&&(!chain||core2.every(c=>u.includes(c)))){ const f=chain?trioShare(row):1; if(f>0){ my.add(i); share.set(i,f); } } if(ov(row,es)>=k) en.add(i); });
+    for(let i=0;i<N;i++){ if(myCnt[i]>=k&&(!chain||coreHas.every(h=>h[i]>0))){ const f=chain?trioShare(ARENA.teams[i]):1; if(f>0){ my.add(i); share.set(i,f); } } if(enCnt[i]>=k) en.add(i); }
     let w=0,l=0; const wins=new Map(), losses=new Map(), lossMy=new Map();
     for(const e of en) for(const [j,n0] of (ARENA.beatenBy[String(e)]||[])) if(my.has(j)&&!en.has(j)){ const n=n0*(share.get(j)||1); w+=n; wins.set(j,(wins.get(j)||0)+n); }
     for(const m of my) for(const [j,n0] of (ARENA.beatenBy[String(m)]||[])) if(en.has(j)&&!my.has(j)){ const n=n0*(share.get(m)||1); l+=n; losses.set(j,(losses.get(j)||0)+n); lossMy.set(m,(lossMy.get(m)||0)+n); }
     w=Math.round(w*10)/10; l=Math.round(l*10)/10;
     // 這些對局裡「像我方的隊」各含我方哪幾位：用來提醒「相似隊多半沒有 X」
     const presence={}; for(const id of myIds.filter(Boolean)) presence[id]=0;
-    const addP=(j,n)=>{ const u=new Set(ARENA.teams[j][0].split(',').map(nt)); for(const id of myIds.filter(Boolean)) if(u.has(nt(id))) presence[id]+=n; };
+    const addP=(j,n)=>{ const u=new Set(ARENA_ROWS[j].nt); for(const id of myIds.filter(Boolean)) if(u.has(nt(id))) presence[id]+=n; };
     for(const [j,n] of wins) addP(j,n); for(const [m,n] of lossMy) addP(m,n); // 出現率只看「像我方的隊」（贏的那隊、輸的那隊都是我方側）
     const presencePct={}; for(const [id,c] of Object.entries(presence)) presencePct[id]=(w+l)?Math.round(c/(w+l)*100):0;
     const missing=(w+l)?Object.entries(presencePct).filter(([id,pct])=>pct<50).map(([id,pct])=>({id,pct})):[];
@@ -665,16 +675,15 @@ function pairRecord(myIds,enemyIds){
 const _tplMatch=new Map(), _arCache=new Map();
 function tplMatchSet(t){
   if(_tplMatch.has(t.id)) return _tplMatch.get(t.id);
-  const nt=x=>x.replace(/-treasure$/,''); const req=t.required.map(nt); const out=new Set();
-  (ARENA.teams||[]).forEach((row,i)=>{ const u=new Set(row[0].split(',').map(nt)); if(req.every(r=>u.has(r))) out.add(i); });
+  const req=t.required.map(stripT); const out=new Set();
+  const hs=req.map(r=>arenaOverlap([r])); for(let i=0;i<ARENA_ROWS.length;i++) if(hs.every(h=>h[i]>0)) out.add(i);
   _tplMatch.set(t.id,out); return out;
 }
 function archSet(a){ const out=new Set(); for(const t of TEMPLATES) if(t.archetype===a) for(const i of tplMatchSet(t)) out.add(i); return out; }
 const _likeCache=new Map();
 function likeSet(ids){ // 像這隊的隊：含 3 位相同角色（珍藏與一般版視為同一人）
   const key=teamKey(ids.filter(Boolean)); if(_likeCache.has(key)) return _likeCache.get(key);
-  const nt=x=>x.replace(/-treasure$/,''); const set=new Set(ids.filter(Boolean).map(nt)); const out=new Set();
-  (ARENA.teams||[]).forEach((row,i)=>{ if(row[0].split(',').filter(x=>set.has(nt(x))).length>=3) out.add(i); });
+  const cnt=arenaOverlap(ids), out=new Set(); for(let i=0;i<cnt.length;i++) if(cnt[i]>=3) out.add(i);
   _likeCache.set(key,out); return out;
 }
 function setRecord(sa,sb){ let w=0,l=0; for(const e of sb) for(const [j,n] of (ARENA.beatenBy[String(e)]||[])) if(sa.has(j)&&!sb.has(j)) w+=n; for(const m of sa) for(const [j,n] of (ARENA.beatenBy[String(m)]||[])) if(sb.has(j)&&!sa.has(j)) l+=n; return {w,l,n:w+l,r:w+l?w/(w+l):0.5}; }
@@ -1793,10 +1802,12 @@ async function checkOnlineData(manual){
     clearTimeout(timer);
     if(!Array.isArray(chars)||chars.length<100||!chars[0].burstGen||!Array.isArray(tpls)||!tpls.length) throw new Error('資料格式不符');
     if(chars.length<BUILTIN_COUNT) throw new Error(`線上資料（${chars.length} 名）比內建（${BUILTIN_COUNT} 名）舊，維持內建`);
+    const today=new Date().toISOString().slice(0,10); LS.set('lastCheck',today);
+    const sig=dataSigOf(chars,tpls);
+    if(sig===dataSig){ setDataStatus(describeData()+'，線上資料與目前相同，已是最新','ok'); return; } // 不重算、不重畫
     const added=chars.filter(c=>!byId[c.id]).map(c=>c.name['zh-TW']);
-    const today=new Date().toISOString().slice(0,10);
-    LS.set('dataCache',{chars,tpls,date:today}); LS.set('lastCheck',today);
-    applyData(chars,tpls,{source:'線上',date:today}); refresh();
+    LS.set('dataCache',{chars,tpls,date:today,sig});
+    applyData(chars,tpls,{source:'線上',date:today}); dataSig=sig; refresh();
     setDataStatus(describeData()+(added.length?`，新增：${added.slice(0,6).join('、')}${added.length>6?'…':''}`:'，已是最新'),'ok');
   }catch(e){
     clearTimeout(timer);
@@ -1805,7 +1816,8 @@ async function checkOnlineData(manual){
 }
 (function initData(){
   const cache=LS.get('dataCache',null);
-  if(cache&&Array.isArray(cache.chars)&&cache.chars.length>=CHARACTERS.length) applyData(cache.chars,cache.tpls,{source:'快取',date:cache.date});
+  // 快取比內建舊（內建資料日期較新）或與內建相同時不套用，省掉一次重算
+  if(cache&&Array.isArray(cache.chars)&&cache.chars.length>=CHARACTERS.length&&(cache.date||'')>=BUILTIN_DATE){ const sig=cache.sig||dataSigOf(cache.chars,cache.tpls); if(sig!==dataSig){ applyData(cache.chars,cache.tpls,{source:'快取',date:cache.date}); dataSig=sig; } }
   setDataStatus(describeData());
   $('#btnCheckData').onclick=()=>checkOnlineData(true);
   const today=new Date().toISOString().slice(0,10);
