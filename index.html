@@ -1317,11 +1317,37 @@ let spHistory=LS.get('spHistory',[]);   // 對方三隊的歷史 {date,enemy}
 records=LS.get('records',[]);
 enemyMods=LS.get('enemyMods',{}); mineMods=LS.get('mineMods',{});
 let pickerTarget=null; // {team:'enemy'|'mine'|'sp0'|'sp1'|'sp2', idx, multi, sel}
-let pickerFilter={burst:null,weapon:null,element:null,ownedOnly:false};
-let rosterFilter={burst:null,weapon:null,element:null,ownedOnly:false,sort:'tier',dir:-1,rl:'2RL'}; // sort：tier 階級／release 出場時間／speed 衝能速度；dir -1 = 高→低、新→舊、快→慢
+let pickerFilter={burst:null,weapon:null,element:null,ownedOnly:false,sort:'tier',dir:-1,rl:'2RL'};
+let rosterFilter={burst:null,weapon:null,element:null,ownedOnly:false,sort:'tier',dir:-1,rl:'2RL'}; // sort：tier 階級／release 出場時間／speed 衝能速度；dir -1 = 高→低、新→舊、快→慢（角色庫與選角視窗各自記住）
 const ROSTER_RL=[['2RL','2RL'],['5SG','2.5RL'],['3RL','3RL'],['7SG','3.5RL'],['4RL','4RL']]; // 衝能速度排序可選的階段，同 nikke-deck 的「Sort by RL」
 /* 角色一人在某階段（2RL～4RL）內充的爆裂能量：優先用 nikke-deck 的每階充能（和該站「Sort by RL」同一份數字），沒收錄的角色用 arena-planner 的 burstGen */
 function charGen(c,t){ const g=deckGen(c,t,null,false); if(g!=null) return g; const v=c.burstGen&&c.burstGen.attack?c.burstGen.attack[t]:null; return v==null?null:v; }
+/* 排序控制列（角色庫與選角視窗共用）：st 是 rosterFilter 或 pickerFilter，rerender 是重畫函式 */
+function sortControls(f,st,rerender){
+  const lbl=document.createElement('span'); lbl.className='muted'; lbl.style.cssText='align-self:center;margin-left:8px'; lbl.textContent='排序：'; f.appendChild(lbl);
+  const mkSort=(label,key,title)=>{ const on=st.sort===key; const b=document.createElement('button'); b.className='btn'+(on?' primary':''); b.title=title+'；再按一次反向'; b.textContent=label+(on?(st.dir<0?' ▼':' ▲'):''); b.onclick=()=>{ if(st.sort===key) st.dir=-st.dir; else { st.sort=key; st.dir=-1; } rerender(); }; f.appendChild(b); };
+  mkSort('階級','tier','PVP 階級高→低');
+  mkSort('出場時間','release','初次出場日期新→舊（nikke-synergy 的資料；珍藏版以珍藏品實裝日計）');
+  mkSort('衝能速度','speed','該角色一人在所選階段內充的爆裂能量多→少（nikke-deck 的每階充能，同該站的 Sort by RL；5 人相加到 100% 的那一階就是隊伍速度）');
+  if(st.sort==='speed') for(const [k,l] of ROSTER_RL){ const b=document.createElement('button'); b.className='btn'+(st.rl===k?' primary':''); b.textContent=l; b.title='以 '+l+' 內的充能排序'; b.onclick=()=>{st.rl=k; rerender();}; f.appendChild(b); }
+}
+const sortGen=(c,st)=>{ const g=charGen(c,st.rl); return g==null?-1:g; };
+/* 依 st 的排序設定就地排序角色清單；同分依繁中名 */
+function sortChars(list,st){
+  const byName=(a,b)=>a.name['zh-TW'].localeCompare(b.name['zh-TW'],'zh-Hant');
+  const asc=st.sort==='release'?(a,b)=>(a.releaseDate||'').localeCompare(b.releaseDate||'')||(a.releaseOrder||0)-(b.releaseOrder||0)
+           :st.sort==='speed'?(a,b)=>sortGen(a,st)-sortGen(b,st)
+           :(a,b)=>(TIER_RANK[a.pvpTier]||0)-(TIER_RANK[b.pvpTier]||0);
+  list.sort((a,b)=>st.dir*asc(a,b)||byName(a,b));
+  return list;
+}
+/* 角色卡上對應排序方式的資訊：衝能速度顯示該階段的充能％，出場時間顯示日期 */
+function sortBadge(c,st){
+  if(st.sort==='speed'){ const g=sortGen(c,st); if(g<0) return '<span class="badge">無充能資料</span>'; const l=(ROSTER_RL.find(x=>x[0]===st.rl)||ROSTER_RL[0])[1]; const u=DECK.units&&DECK.units[c.id]; return `<span class="badge" title="${u&&u.gen?'nikke-deck 的每階充能':'arena-planner 的充能資料'}：此角色一人在 ${l} 內充的爆裂能量">${l} ${(g*100).toFixed(1)}%</span>`; }
+  if(st.sort==='release') return `<span class="badge" title="初次出場日期（nikke-synergy）">${esc(c.releaseDate||'日期不明')}</span>`;
+  return '';
+}
+const newBadge=c=>c.source?'<span class="badge good" title="上游 arena-planner 尚未收錄；資料來自 nikke-deck（充能、武器、爆裂）與 nikke-synergy（出場日期、譯名）">新</span>':'';
 
 /* ====================== UI 工具 ====================== */
 const $=s=>document.querySelector(s);
@@ -1421,14 +1447,14 @@ function renderPickerFilters(){
   ['RL','SG','SR','AR','SMG','MG'].forEach(w=>mk(w,'weapon',w));
   ['fire','water','wind','electric','iron'].forEach(e=>mk(EL_ZH[e],'element',e));
   const ob=document.createElement('button'); ob.className='btn'+(pickerFilter.ownedOnly?' primary':''); ob.textContent=`只看擁有（${owned.size}）`; ob.onclick=()=>{ pickerFilter.ownedOnly=!pickerFilter.ownedOnly; renderPickerFilters(); renderPicker(); }; f.appendChild(ob);
+  sortControls(f,pickerFilter,()=>{ renderPickerFilters(); renderPicker(); });
 }
 function pickerCandidates(){
   const q=$('#pickerSearch').value.trim().toLowerCase();
   const norm=s=>s.toLowerCase().replace(/[\s:：·・\-_]/g,'');
   let list=CHARACTERS.filter(c=>(!pickerFilter.burst||c.burst===pickerFilter.burst)&&(!pickerFilter.weapon||c.weapon===pickerFilter.weapon)&&(!pickerFilter.element||c.element===pickerFilter.element)&&(!pickerFilter.ownedOnly||owned.has(c.id)));
   if(q){ const nq=norm(q); list=list.filter(c=>namesOf(c).some(n=>norm(n).includes(nq))); }
-  list.sort((a,b)=>(TIER_RANK[b.pvpTier]||0)-(TIER_RANK[a.pvpTier]||0)||a.name['zh-TW'].localeCompare(b.name['zh-TW'],'zh-Hant'));
-  return list;
+  return sortChars(list,pickerFilter);
 }
 function pickOne(c){
   const team=teamOf(pickerTarget.team);
@@ -1444,7 +1470,7 @@ function renderPicker(){
     const selected=pickerTarget.multi&&pickerTarget.sel.includes(c.id);
     const dis=pickerTarget.multi?(!selected&&(pickerTarget.sel.length>=5||other.has(c.id))):((inTeam.has(c.id)&&team[pickerTarget.idx]!==c.id)||other.has(c.id));
     d.className='pick'+(owned.has(c.id)?' owned':'')+(dis?' dis':'')+(selected?' sel':'');
-    d.innerHTML=`${selected?'<span class="badge good" style="float:right">P'+(pickerTarget.sel.indexOf(c.id)+1)+'</span>':''}${avatar(c.id)}<div class="pickbody"><b>${esc(c.name['zh-TW'])}</b><span class="en">${esc(c.name.en)}${(NICK[c.id]||[]).length?' · '+esc(NICK[c.id].slice(0,2).join('、')):''}</span><div>${burstBadge(c.burst)}${elBadge(c.element)}<span class="badge">${c.weapon}</span>${tierBadge(c)}</div></div>`;
+    d.innerHTML=`${selected?'<span class="badge good" style="float:right">P'+(pickerTarget.sel.indexOf(c.id)+1)+'</span>':''}${avatar(c.id)}<div class="pickbody"><b>${esc(c.name['zh-TW'])}</b><span class="en">${esc(c.name.en)}${(NICK[c.id]||[]).length?' · '+esc(NICK[c.id].slice(0,2).join('、')):''}</span><div>${burstBadge(c.burst)}${elBadge(c.element)}<span class="badge">${c.weapon}</span>${tierBadge(c)||deckRank(c.id)}${newBadge(c)}${sortBadge(c,pickerFilter)}</div></div>`;
     if(!dis||selected) d.onclick=()=>pickOne(c);
     el.appendChild(d);
   }
@@ -1459,33 +1485,18 @@ function renderRosterFilters(){
   ['RL','SG','SR','AR','SMG','MG'].forEach(w=>mk(w,'weapon',w));
   ['fire','water','wind','electric','iron'].forEach(e=>mk(EL_ZH[e],'element',e));
   const b=document.createElement('button'); b.className='btn'+(rosterFilter.ownedOnly?' primary':''); b.textContent='只看擁有'; b.onclick=()=>{rosterFilter.ownedOnly=!rosterFilter.ownedOnly; renderRoster();}; f.appendChild(b);
-  const lbl=document.createElement('span'); lbl.className='muted'; lbl.style.cssText='align-self:center;margin-left:8px'; lbl.textContent='排序：'; f.appendChild(lbl);
-  const mkSort=(label,key,title)=>{ const on=rosterFilter.sort===key; const b=document.createElement('button'); b.className='btn'+(on?' primary':''); b.title=title+'；再按一次反向'; b.textContent=label+(on?(rosterFilter.dir<0?' ▼':' ▲'):''); b.onclick=()=>{ if(rosterFilter.sort===key) rosterFilter.dir=-rosterFilter.dir; else { rosterFilter.sort=key; rosterFilter.dir=-1; } renderRoster(); }; f.appendChild(b); };
-  mkSort('階級','tier','PVP 階級高→低');
-  mkSort('出場時間','release','初次出場日期新→舊（nikke-synergy 的資料；珍藏版以珍藏品實裝日計）');
-  mkSort('衝能速度','speed','該角色一人在所選階段內充的爆裂能量多→少（nikke-deck 的每階充能，同該站的 Sort by RL；5 人相加到 100% 的那一階就是隊伍速度）');
-  if(rosterFilter.sort==='speed') for(const [k,l] of ROSTER_RL){ const b=document.createElement('button'); b.className='btn'+(rosterFilter.rl===k?' primary':''); b.textContent=l; b.title='以 '+l+' 內的充能排序'; b.onclick=()=>{rosterFilter.rl=k; renderRoster();}; f.appendChild(b); }
+  sortControls(f,rosterFilter,renderRoster);
 }
 function renderRoster(){
   renderRosterFilters();
   const q=$('#rosterSearch').value.trim().toLowerCase(); const norm=s=>s.toLowerCase().replace(/[\s:：·・\-_]/g,'');
   let list=CHARACTERS.filter(c=>(!rosterFilter.burst||c.burst===rosterFilter.burst)&&(!rosterFilter.weapon||c.weapon===rosterFilter.weapon)&&(!rosterFilter.element||c.element===rosterFilter.element)&&(!rosterFilter.ownedOnly||owned.has(c.id)));
   if(q){ const nq=norm(q); list=list.filter(c=>namesOf(c).some(n=>norm(n).includes(nq))); }
-  const byName=(a,b)=>a.name['zh-TW'].localeCompare(b.name['zh-TW'],'zh-Hant');
-  const s=rosterFilter.sort, dir=rosterFilter.dir, rl=rosterFilter.rl, gen=c=>{ const g=charGen(c,rl); return g==null?-1:g; };
-  const asc=s==='release'?(a,b)=>(a.releaseDate||'').localeCompare(b.releaseDate||'')||(a.releaseOrder||0)-(b.releaseOrder||0)
-           :s==='speed'?(a,b)=>gen(a)-gen(b)
-           :(a,b)=>(TIER_RANK[a.pvpTier]||0)-(TIER_RANK[b.pvpTier]||0);
-  list.sort((a,b)=>dir*asc(a,b)||byName(a,b));
-  const rlLabel=(ROSTER_RL.find(x=>x[0]===rl)||ROSTER_RL[0])[1];
+  sortChars(list,rosterFilter);
   const el=$('#rosterGrid'); el.innerHTML='';
   for(const c of list){
     const d=document.createElement('div'); d.className='pick'+(owned.has(c.id)?' owned':'');
-    const u=DECK.units&&DECK.units[c.id];
-    const extra=s==='speed'?(gen(c)<0?'<span class="badge">無充能資料</span>':`<span class="badge" title="${u&&u.gen?'nikke-deck 的每階充能':'arena-planner 的充能資料'}：此角色一人在 ${rlLabel} 內充的爆裂能量">${rlLabel} ${(gen(c)*100).toFixed(1)}%</span>`)
-               :s==='release'?`<span class="badge" title="初次出場日期（nikke-synergy）">${esc(c.releaseDate||'日期不明')}</span>`:'';
-    const isNew=c.source?'<span class="badge good" title="上游 arena-planner 尚未收錄；資料來自 nikke-deck（充能、武器、爆裂）與 nikke-synergy（出場日期、譯名）">新</span>':'';
-    d.innerHTML=`${avatar(c.id)}<div class="pickbody"><b>${owned.has(c.id)?'✔ ':''}${esc(c.name['zh-TW'])}</b><span class="en">${esc(c.name.en)}${(NICK[c.id]||[]).length?' · '+esc(NICK[c.id].slice(0,2).join('、')):''}</span><div>${burstBadge(c.burst)}${elBadge(c.element)}<span class="badge">${c.weapon}</span>${tierBadge(c)||deckRank(c.id)}${isNew}${extra}</div></div>`;
+    d.innerHTML=`${avatar(c.id)}<div class="pickbody"><b>${owned.has(c.id)?'✔ ':''}${esc(c.name['zh-TW'])}</b><span class="en">${esc(c.name.en)}${(NICK[c.id]||[]).length?' · '+esc(NICK[c.id].slice(0,2).join('、')):''}</span><div>${burstBadge(c.burst)}${elBadge(c.element)}<span class="badge">${c.weapon}</span>${tierBadge(c)||deckRank(c.id)}${newBadge(c)}${sortBadge(c,rosterFilter)}</div></div>`;
     d.onclick=()=>{ if(owned.has(c.id)) owned.delete(c.id); else owned.add(c.id); save(); renderRoster(); updateOwnedCount(); renderSolve(); };
     el.appendChild(d);
   }
