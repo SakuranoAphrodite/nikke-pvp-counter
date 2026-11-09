@@ -1,5 +1,5 @@
 {
- "exported": "2026-11-07",
+ "exported": "2026-11-09",
  "owned": [
   "blanc",
   "moran-treasure",
@@ -31,7 +31,8 @@
   "rumani",
   "scarlet-goddeath",
   "drake-treasure",
-  "mint"
+  "mint",
+  "anis"
  ],
  "history": [
   [
@@ -1060,6 +1061,24 @@
   }
  ],
  "mySaved": [
+  {
+   "name": "超光速1.5拉普",
+   "date": "2026-11-07",
+   "mine": [
+    "trina",
+    "laplace-ultimate-hero",
+    "anis-star",
+    "snow-white-heavy-arms",
+    "scarlet-goddeath"
+   ],
+   "enemy": [
+    "moran-treasure",
+    "noah",
+    "neon-vision-eye",
+    "trina",
+    "anis-star"
+   ]
+  },
   {
    "name": "打蔚藍樓",
    "date": "2026-11-06",
