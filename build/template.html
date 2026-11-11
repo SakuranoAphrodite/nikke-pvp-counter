@@ -1429,11 +1429,14 @@ function quickFill(team,text,noteEl){
 }
 
 /* ====================== 選角視窗 ====================== */
+/* 桌機（有滑鼠、可 hover）打開選角視窗就對焦搜尋框，方便直接打字＋Enter；手機／平板（觸控、無滑鼠）不對焦，否則虛擬鍵盤會彈出來遮住下面的角色 */
+const PICKER_AUTOFOCUS=!!(window.matchMedia&&window.matchMedia('(hover: hover) and (pointer: fine)').matches);
+function focusPickerSearch(){ if(PICKER_AUTOFOCUS) setTimeout(()=>$('#pickerSearch').focus(),50); }
 function openPicker(teamKey,idx){
   pickerTarget={team:teamKey,idx,multi:false};
   $('#pickerTitle').textContent=teamLabel(teamKey)+' P'+(idx+1)+'：選擇角色';
   $('#pickerApply').style.display='none'; $('#pickerTray').style.display='none';
-  $('#pickerSearch').value=''; $('#picker').classList.add('open'); renderPickerFilters(); renderPicker(); setTimeout(()=>$('#pickerSearch').focus(),50);
+  $('#pickerSearch').value=''; $('#picker').classList.add('open'); renderPickerFilters(); renderPicker(); focusPickerSearch();
 }
 /* 一次選整隊：連點 5 位，上方托盤顯示順序（P1→P5），按套用寫回 */
 function openTeamPicker(teamKey){
@@ -1441,7 +1444,7 @@ function openTeamPicker(teamKey){
   pickerTarget={team:teamKey,idx:null,multi:true,sel:team.filter(Boolean).slice(0,5)};
   $('#pickerTitle').textContent=teamLabel(teamKey)+'：依 P1→P5 順序連點 5 位';
   $('#pickerApply').style.display=''; $('#pickerTray').style.display='';
-  $('#pickerSearch').value=''; $('#picker').classList.add('open'); renderPickerFilters(); renderTray(); renderPicker(); setTimeout(()=>$('#pickerSearch').focus(),50);
+  $('#pickerSearch').value=''; $('#picker').classList.add('open'); renderPickerFilters(); renderTray(); renderPicker(); focusPickerSearch();
 }
 function renderTray(){
   const t=$('#pickerTray'); const sel=pickerTarget.sel; t.innerHTML='';
