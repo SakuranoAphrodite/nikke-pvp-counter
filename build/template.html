@@ -114,6 +114,7 @@ ul.tips li{margin:5px 0}
 .team .m{background:#0f121a;border:1px solid var(--line);border-radius:8px;padding:5px 6px;text-align:left;font-size:12px;display:flex;flex-wrap:wrap;gap:0 6px;align-items:flex-start}
 .team .m .body{flex:1;min-width:0}
 .team .m .body b{display:block;font-size:13px;line-height:1.2}
+.team .m .en{font-size:10px;color:var(--muted);word-break:break-all;line-height:1.2}
 .team .m .alt{flex-basis:100%;margin-top:3px}
 .team .m .pos{color:var(--muted);font-size:10px;white-space:nowrap}
 .team .m.req{border-color:var(--accent)}
@@ -166,7 +167,7 @@ details.mods summary{color:var(--muted)}
 .mods .mrow{display:inline-flex;gap:6px;align-items:center;margin:4px 12px 2px 0;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:3px 8px}
 .mods .mrow label{display:inline-flex;gap:3px;align-items:center;cursor:pointer}
 .mods .mrow label.dis{opacity:.4;cursor:not-allowed}
-/* 手機（寬 ≤600px）：隊伍格與成員卡改直排、一行五個，只留頭像與名字（爆裂／屬性／武器徽章、英文名、替補說明隱藏）；選角視窗一行四個，同樣只留頭像與名字。桌機與平板不變 */
+/* 手機（寬 ≤600px）：隊伍格與成員卡改直排、一行五個，只留頭像、中文名與英文名（爆裂／屬性／武器徽章、替補說明隱藏）；選角視窗改直排三欄，資訊（英文名、暱稱、徽章、階級）全部保留。桌機與平板不變 */
 @media(max-width:600px){
   .slots{grid-template-columns:repeat(5,1fr);gap:4px}
   .slot{flex-direction:column;align-items:center;justify-content:flex-start;gap:3px;padding:4px 2px 15px;min-height:0;text-align:center}
@@ -175,7 +176,8 @@ details.mods summary{color:var(--muted)}
   .slot .nm{font-size:11px;line-height:1.2}
   .slot .pos{display:block;margin:0}
   .slot .add{font-size:11px}
-  .slot .en,.slot .tags{display:none}
+  .slot .tags{display:none}
+  .slot .en{font-size:9px;line-height:1.15;word-break:normal;overflow-wrap:anywhere}
   .slot .mv{font-size:11px;padding:0 4px;bottom:1px;opacity:.85}
   .slot .mv.l{left:1px}.slot .mv.r{right:1px}
   .team .members{grid-template-columns:repeat(5,1fr);gap:4px}
@@ -184,13 +186,15 @@ details.mods summary{color:var(--muted)}
   .team .m .body b{font-size:11px;word-break:break-all}
   .team .m .pos{font-size:10px}
   .team .m .kind,.team .m .pos .badge,.team .m .tags,.team .m .alt{display:none}
+  .team .m .en{font-size:9px;line-height:1.15;word-break:normal;overflow-wrap:anywhere}
   .modal{padding:10px 6px}
   .modal .box{padding:10px}
-  .modal .list{grid-template-columns:repeat(4,1fr);gap:4px}
+  .modal .list{grid-template-columns:repeat(3,1fr);gap:4px}
   .pick{flex-direction:column;align-items:center;text-align:center;gap:3px;padding:5px 2px;position:relative}
   .pick .pickbody{width:100%}
   .pick .pickbody b{font-size:11px;word-break:break-all;line-height:1.2}
-  .pick .en,.pick .tags{display:none}
+  .pick .en{display:block;font-size:9px;line-height:1.15;word-break:normal;overflow-wrap:anywhere}
+  .pick .tags .badge{font-size:10px;padding:0 4px;margin:1px}
   .pick .selno{position:absolute;top:2px;right:2px;float:none}
 }
 </style>
@@ -1614,7 +1618,7 @@ function renderCounters(ctx){
 }
 function teamCard(r,eSpeed,idx){
   const t=r.tpl;
-  const members=r.slots.map((id,i)=>{ const c=byId[id]; const k=r.kind[i]; const cr=chainRole(r.slots,id); const alt=((r.alts&&r.alts[i]&&r.alts[i].length)?`<div class="alt">替補：${r.alts[i].map(nameOf).join('／')}</div>`:'')+((r.skipped&&r.skipped[i]&&r.skipped[i].length)?`<div class="alt" title="模板把這些角色排在前面，但你沒有（或已用在別格）">模板優先但缺：${r.skipped[i].map(nameOf).join('／')}</div>`:''); return `<div class="m ${k}">${avatar(id,'md')}<div class="body"><div class="pos">P${i+1} <span class="kind">${k==='req'?'核心':k==='sub'?'替補':'彈性'}</span> ${cr?'<span class="badge good" style="font-size:10px;padding:0 4px">開'+cr+'</span>':'<span class="badge" style="font-size:10px;padding:0 4px">軸外</span>'}</div><b>${esc(c.name['zh-TW'])}</b><div class="tags">${burstBadge(c.burst)}<span class="badge">${c.weapon}</span></div></div>${alt}</div>`; }).join('');
+  const members=r.slots.map((id,i)=>{ const c=byId[id]; const k=r.kind[i]; const cr=chainRole(r.slots,id); const alt=((r.alts&&r.alts[i]&&r.alts[i].length)?`<div class="alt">替補：${r.alts[i].map(nameOf).join('／')}</div>`:'')+((r.skipped&&r.skipped[i]&&r.skipped[i].length)?`<div class="alt" title="模板把這些角色排在前面，但你沒有（或已用在別格）">模板優先但缺：${r.skipped[i].map(nameOf).join('／')}</div>`:''); return `<div class="m ${k}">${avatar(id,'md')}<div class="body"><div class="pos">P${i+1} <span class="kind">${k==='req'?'核心':k==='sub'?'替補':'彈性'}</span> ${cr?'<span class="badge good" style="font-size:10px;padding:0 4px">開'+cr+'</span>':'<span class="badge" style="font-size:10px;padding:0 4px">軸外</span>'}</div><b>${esc(c.name['zh-TW'])}</b><div class="en">${esc(c.name.en)}</div><div class="tags">${burstBadge(c.burst)}<span class="badge">${c.weapon}</span></div></div>${alt}</div>`; }).join('');
   const cmp = r.variant?'':(r.speed.cycles<eSpeed.cycles?'<span class="badge good">比對方快</span>':r.speed.cycles===eSpeed.cycles?'<span class="badge warn">同速</span>':'<span class="badge bad">比對方慢</span>');
   const eArchs=detectArchetypes(enemy).map(a=>a.arch);
   const refs=refsFor(eArchs,enemy,t.archetype);
@@ -2076,7 +2080,7 @@ function spEntryCard(e,g,manual){
   const listIds=manual?spEnemy[g]:e.slots;
   const members=listIds.map((id,i)=>{ const c=byId[id]; const k=manual?'req':e.filler?'sub':e.kind[i]; const lab=manual?'對方':e.filler?'湊數':k==='req'?'核心':k==='sub'?'替補':'彈性'; const cr=chainRole(listIds,id);
     const alt=e.filler?'':(((e.alts&&e.alts[i]&&e.alts[i].length)?`<div class="alt">替補：${e.alts[i].map(nameOf).join('／')}</div>`:'')+((e.skipped&&e.skipped[i]&&e.skipped[i].length)?`<div class="alt" title="模板把這些角色排在前面，但你沒有（或已用在別場）">模板優先但缺：${e.skipped[i].map(nameOf).join('／')}</div>`:''));
-    return `<div class="m ${k}">${avatar(id,'md')}<div class="body"><div class="pos">P${i+1} <span class="kind">${lab}</span> ${cr?'<span class="badge good" style="font-size:10px;padding:0 4px">開'+cr+'</span>':'<span class="badge" style="font-size:10px;padding:0 4px">軸外</span>'}</div><b>${esc(c.name['zh-TW'])}</b><div class="tags">${burstBadge(c.burst)}<span class="badge">${c.weapon}</span></div></div>${alt}</div>`; }).join('');
+    return `<div class="m ${k}">${avatar(id,'md')}<div class="body"><div class="pos">P${i+1} <span class="kind">${lab}</span> ${cr?'<span class="badge good" style="font-size:10px;padding:0 4px">開'+cr+'</span>':'<span class="badge" style="font-size:10px;padding:0 4px">軸外</span>'}</div><b>${esc(c.name['zh-TW'])}</b><div class="en">${esc(c.name.en)}</div><div class="tags">${burstBadge(c.burst)}<span class="badge">${c.weapon}</span></div></div>${alt}</div>`; }).join('');
   const dc=(eSp.cycles+eCh.extraSec)-(e.speed.cycles+chainOf(e.slots).extraSec);
   const cmp=dc>0?'<span class="badge good">比對方快</span>':dc===0?'<span class="badge warn">同速</span>':'<span class="badge bad">比對方慢</span>';
   const head=e.filler?`<span class="badge ${e.sacrificed?'bad':'warn'}">${e.sacrificed?'放生：剩餘角色隊':'剩餘角色隊'}</span>`:e.manual?`<span class="badge">手動</span>${e.ev.myArch.length?`<span class="badge">${archName(e.ev.myArch[0].arch)}</span>`:''}`:`<b>${esc(e.tpl.name['zh-TW'])}${e.variant?'（'+e.variant+'）':''}</b><span class="badge">${archName(e.tpl.archetype)}</span>`;
