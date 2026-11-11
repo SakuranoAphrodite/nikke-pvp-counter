@@ -187,6 +187,8 @@ details.mods summary{color:var(--muted)}
 .mods .mrow label.dis{opacity:.4;cursor:not-allowed}
 /* 手機（寬 ≤600px）：隊伍格與成員卡改直排、一行五個，只留頭像、中文名與英文名（爆裂／屬性／武器徽章、替補說明隱藏）；選角視窗改直排三欄，資訊（英文名、暱稱、徽章、階級）全部保留。桌機與平板不變 */
 @media(max-width:600px){
+  nav{width:100%;margin-left:0;gap:4px}
+  nav button{flex:1 1 auto;padding:6px 6px;font-size:13px;white-space:nowrap;text-align:center}
   .slots{grid-template-columns:repeat(5,1fr);gap:4px}
   .slot{flex-direction:column;align-items:center;justify-content:flex-start;gap:3px;padding:4px 2px 15px;min-height:0;text-align:center}
   .slot:not(.filled){padding-bottom:4px;min-height:78px}
@@ -220,10 +222,8 @@ details.mods summary{color:var(--muted)}
 <body>
 <header>
   <h1>NIKKE 競技場解隊助手 <small>台港澳服／國際服資料 · <span id="dataStatus">資料版本 2026-11-06</span> <button class="btn" id="btnCheckData" style="padding:1px 8px;font-size:11px">檢查更新</button></small></h1>
-  <div class="seg" id="modeSeg">
-    <button data-mode="attack" class="active" title="我去打別人的防守隊">我方進攻</button>
-    <button data-mode="defense" title="我在排防守隊，對方是進攻隊">我方防守</button>
-    <select id="speedSrc" title="速度（充能達成率）用哪一套資料與公式計算" style="margin-left:8px"><option value="top">速度：nikke.top 逐幀模擬</option><option value="deck">速度：nikke-deck 公式</option><option value="planner">速度：arena-planner 資料</option></select>
+  <div class="seg">
+    <select id="speedSrc" title="速度（充能達成率）用哪一套資料與公式計算"><option value="top">速度：nikke.top 逐幀模擬</option><option value="deck">速度：nikke-deck 公式</option><option value="planner">速度：arena-planner 資料</option></select>
   </div>
   <nav>
     <button data-tab="solve" class="active">解隊</button>
@@ -865,9 +865,9 @@ function historyBlock(enemyIds,opts){
   opts=opts||{}; const m=recMatches(enemyIds);
   if(!m.length) return opts.compact||!records.length?'':`<div class="muted">對戰紀錄裡還沒有打過這組對手（也沒有 4 人相同的相似隊）。</div>`;
   const wins=m.filter(x=>x.r.result==='win'), losses=m.filter(x=>x.r.result!=='win');
-  const modeTxt=r=>r.mode==='attack'?'進攻':r.mode==='defense'?'防守':'特殊';
+  const modeTag=r=>r.mode==='sp'?'<span class="badge">特殊</span>':r.mode==='defense'?'<span class="badge" title="舊版紀錄：當時以「我方防守」計算；攻守規則統一後不再區分">防守（舊）</span>':'';
   const tag=x=>x.exact?(x.sameIds?(x.sameOrder?'':'<span class="badge" title="同樣 5 人，但對方站位和這次不同">站位不同</span>'):'<span class="badge" title="同樣 5 人，珍藏版不同">珍藏版不同</span>'):`<span class="badge warn" title="對方有 ${x.shared} 人和這次相同">相似隊 ${x.shared}/5</span>`;
-  const line=x=>`<div class="rec"><span class="d">${esc(x.r.date)}</span><span class="badge ${x.r.result==='win'?'good':'bad'}">${x.r.result==='win'?'勝':'負'}</span><span class="badge">${modeTxt(x.r)}</span>${tag(x)}<span class="t">我方：${x.r.mine.map(nameOf).join('／')}${x.r.note?` <span class="muted">（${esc(x.r.note)}）</span>`:''}${x.exact?'':`<br><span class="muted">對方：${x.r.enemy.map(nameOf).join('／')}</span>`}</span><button class="btn" data-rechist="${x.i}" title="把這場的我方隊伍帶入${opts.compact?'我方第 '+(opts.g+1)+' 隊':'「自己排一隊試算」'}">帶入我方</button></div>`;
+  const line=x=>`<div class="rec"><span class="d">${esc(x.r.date)}</span><span class="badge ${x.r.result==='win'?'good':'bad'}">${x.r.result==='win'?'勝':'負'}</span>${modeTag(x.r)}${tag(x)}<span class="t">我方：${x.r.mine.map(nameOf).join('／')}${x.r.note?` <span class="muted">（${esc(x.r.note)}）</span>`:''}${x.exact?'':`<br><span class="muted">對方：${x.r.enemy.map(nameOf).join('／')}</span>`}</span><button class="btn" data-rechist="${x.i}" title="把這場的我方隊伍帶入${opts.compact?'我方第 '+(opts.g+1)+' 隊':'「自己排一隊試算」'}">帶入我方</button></div>`;
   const exactWins=wins.filter(x=>x.exact).length, simWins=wins.length-exactWins;
   const head=wins.length?`你贏過這組對手 ${exactWins} 次${simWins?`（另有相似隊 ${simWins} 次）`:''}${losses.length?`，輸過 ${losses.length} 次`:''}`:`和這組對手（含相似隊）打過 ${losses.length} 次，都沒贏`;
   let h=`<div class="verdict ${wins.length?'good':'bad'}" style="font-size:14px;margin:4px 0">${head}</div>`;
@@ -879,7 +879,7 @@ function historyBlock(enemyIds,opts){
 function renderRecords(){
   const el=$('#records'); if(!records.length){ el.className='muted'; el.textContent='還沒有紀錄。'; return; }
   el.className='';
-  el.innerHTML=records.slice(0,30).map((r,i)=>`<div class="rec"><span class="d">${esc(r.date)}</span><span class="badge ${r.result==='win'?'good':'bad'}">${r.result==='win'?'勝':'負'}</span><span class="badge">${r.mode==='attack'?'進攻':r.mode==='defense'?'防守':'特殊'}</span><span class="t">對方：${r.enemy.map(nameOf).join('／')}<br>我方：${r.mine.map(nameOf).join('／')}${r.note?`<br><span class="muted">${esc(r.note)}</span>`:''}</span><button class="btn" data-recload="${i}" style="font-size:11px;padding:2px 8px">載入</button><span class="x" data-recdel="${i}" title="刪除">✕</span></div>`).join('')+(records.length>30?`<div class="muted">只顯示最近 30 筆，共 ${records.length} 筆。</div>`:'');
+  el.innerHTML=records.slice(0,30).map((r,i)=>`<div class="rec"><span class="d">${esc(r.date)}</span><span class="badge ${r.result==='win'?'good':'bad'}">${r.result==='win'?'勝':'負'}</span>${r.mode==='sp'?'<span class="badge">特殊</span>':r.mode==='defense'?'<span class="badge" title="舊版紀錄：當時以「我方防守」計算；攻守規則統一後不再區分">防守（舊）</span>':''}<span class="t">對方：${r.enemy.map(nameOf).join('／')}<br>我方：${r.mine.map(nameOf).join('／')}${r.note?`<br><span class="muted">${esc(r.note)}</span>`:''}</span><button class="btn" data-recload="${i}" style="font-size:11px;padding:2px 8px">載入</button><span class="x" data-recdel="${i}" title="刪除">✕</span></div>`).join('')+(records.length>30?`<div class="muted">只顯示最近 30 筆，共 ${records.length} 筆。</div>`:'');
   el.querySelectorAll('[data-recdel]').forEach(b=>b.onclick=()=>{ if(confirm('刪除這筆紀錄？')){ records.splice(+b.dataset.recdel,1); LS.set('records',records); refresh(); } });
   el.querySelectorAll('[data-recload]').forEach(b=>b.onclick=()=>{ const r=records[+b.dataset.recload]; enemy=[...r.enemy]; mine=[...r.mine]; save(); refresh(); window.scrollTo({top:0,behavior:'smooth'}); });
 }
@@ -1295,13 +1295,12 @@ function slowerVariant(f,t,targetTier,ownedSet,myMode){
   return null;
 }
 function buildCounters(enemyIds,mode,ownedSet,allowSub){
-  const myMode = mode; // 我方模式：attack 或 defense
+  const myMode = mode; // 攻守統一後固定為 attack；模板的 mode（進攻用／防守用）不再過濾
   const enemyMode = mode==='attack'?'defense':'attack';
   const eArch=detectArchetypes(enemyIds); const eArchIds=new Set(eArch.map(a=>a.arch));
   const eSpeed=speedOf(enemyIds,enemyMode,enemyMods); const eChain=chainOf(enemyIds);
   const results=[];
   for(const t of TEMPLATES){
-    if(t.mode!=='both'&&t.mode!==myMode) continue;
     const f0=fillTemplate(t,ownedSet,allowSub,null);
     if(!f0.ok) continue;
     const fills=[f0];
@@ -1359,7 +1358,7 @@ function buildCounters(enemyIds,mode,ownedSet,allowSub){
 
 /* ====================== 狀態 ====================== */
 const LS={get:(k,d)=>{try{const v=localStorage.getItem('nikkePvp.'+k);return v?JSON.parse(v):d}catch(e){return d}},set:(k,v)=>{try{localStorage.setItem('nikkePvp.'+k,JSON.stringify(v))}catch(e){}}};
-let mode=LS.get('mode','attack');
+const mode='attack';                   // 2026-10-29 更新後攻守目標規則統一，不再分進攻／防守：一律以進攻方參數算我方、防守方參數算對方（角色充能資料兩邊相同；nikke.top 模型只剩火箭筒各站位的開火延遲依 side 略有差異）
 speedSrc=LS.get('speedSrc','top');
 let enemy=LS.get('enemy',[null,null,null,null,null]);
 let mine=LS.get('mine',[null,null,null,null,null]);
@@ -1436,7 +1435,7 @@ function renderSlots(elId,team,teamKey){
     el.appendChild(d);
   });
 }
-function save(){ LS.set('enemy',enemy); LS.set('mine',mine); LS.set('spEnemy',spEnemy); LS.set('spMine',spMine); LS.set('owned',[...owned]); LS.set('mode',mode); LS.set('history',history); }
+function save(){ LS.set('enemy',enemy); LS.set('mine',mine); LS.set('spEnemy',spEnemy); LS.set('spMine',spMine); LS.set('owned',[...owned]); LS.set('history',history); }
 
 /* 名稱模糊比對 */
 const isSubseq=(a,b)=>{ let i=0; for(const ch of b){ if(ch===a[i]) i++; if(i>=a.length) return true; } return false; }; // a 的字依序出現在 b 裡
@@ -1665,7 +1664,7 @@ function renderBuilt(ctx){
   // 缺角提示
   if(ownedSet){
     const miss={};
-    for(const t of TEMPLATES){ if(t.mode!=='both'&&t.mode!==mode) continue; const eArch=detectArchetypes(enemy); const good=eArch.some(a=>a.tpl.counteredBy.includes(t.archetype)||t.counters.includes(a.arch)); if(!good) continue; t.required.filter(r=>!ownedSet.has(r)).forEach(r=>{ miss[r]=miss[r]||new Set(); miss[r].add(t.archetype); }); }
+    for(const t of TEMPLATES){ const eArch=detectArchetypes(enemy); const good=eArch.some(a=>a.tpl.counteredBy.includes(t.archetype)||t.counters.includes(a.arch)); if(!good) continue; t.required.filter(r=>!ownedSet.has(r)).forEach(r=>{ miss[r]=miss[r]||new Set(); miss[r].add(t.archetype); }); }
     const keys=Object.keys(miss); if(keys.length) el.innerHTML+=`<details><summary>如果想抽／養角色來解這隊，缺的核心角</summary><ul class="tips">${keys.map(k=>`<li><b>${esc(nameOf(k))}</b>：解鎖 ${[...miss[k]].map(a=>archName(a)).join('、')}</li>`).join('')}</ul></details>`;
   }
   el.querySelectorAll('[data-apply]').forEach(b=>b.onclick=()=>{ const r=lastBuilt[+b.dataset.apply]; mine=[...r.slots]; save(); refresh(); $('#mySlots').scrollIntoView({behavior:'smooth'}); });
@@ -1849,7 +1848,6 @@ function setCardCollapsed(card,on){ card.classList.toggle('collapsed',!!on); if(
 document.querySelectorAll('.card > h2').forEach((h,i)=>{ const card=h.parentElement; card.dataset.ckey=(card.closest('section')||{}).id+':'+i; if(collapsedSt[card.dataset.ckey]) card.classList.add('collapsed'); h.addEventListener('click',e=>{ if(e.target.closest('button,a,input,select')) return; setCardCollapsed(card,!card.classList.contains('collapsed')); }); });
 if($('#nickSearch')) $('#nickSearch').oninput=renderNickTable;
 if($('#speedSrc')){ $('#speedSrc').value=speedSrc; $('#speedSrc').onchange=()=>{ speedSrc=$('#speedSrc').value; LS.set('speedSrc',speedSrc); _prCache.clear(); refresh(); }; }
-document.querySelectorAll('#modeSeg button').forEach(b=>{ if(b.dataset.mode===mode) b.classList.add('active'); else b.classList.remove('active'); b.onclick=()=>{ mode=b.dataset.mode; document.querySelectorAll('#modeSeg button').forEach(x=>x.classList.toggle('active',x===b)); save(); refresh(); }; });
 $('#btnQuickEnemy').onclick=()=>{ quickFill(enemy,$('#quickEnemy').value,$('#quickEnemyNote')); save(); refresh(); };
 $('#quickEnemy').addEventListener('keydown',e=>{ if(e.key==='Enter') $('#btnQuickEnemy').click(); });
 $('#btnQuickMy').onclick=()=>{ quickFill(mine,$('#quickMy').value,$('#quickMyNote')); save(); refresh(); };
