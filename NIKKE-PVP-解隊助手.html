@@ -127,7 +127,8 @@ ul.tips li{margin:5px 0}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;z-index:20;align-items:flex-start;justify-content:center;padding:30px 10px;overflow:auto}
 .modal.open{display:flex}
 .modal .box{background:var(--panel);border:1px solid var(--line);border-radius:14px;width:min(960px,100%);padding:14px;max-height:90vh;display:flex;flex-direction:column}
-.modal .list{overflow:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px;margin-top:10px}
+.modal .list{overflow:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px;margin-top:10px;min-height:0}
+.modal .box>:not(.list){flex:none} /* 視窗高度不夠時只縮角色清單，托盤（已選 P1～P5）與篩選列不縮，否則托盤第二行會被篩選列蓋住 */
 .pick{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:6px;cursor:pointer;font-size:12px;line-height:1.3}
 .pick:hover{border-color:var(--accent)}
 .pick.owned{border-color:var(--good)}
@@ -165,6 +166,33 @@ details.mods summary{color:var(--muted)}
 .mods .mrow{display:inline-flex;gap:6px;align-items:center;margin:4px 12px 2px 0;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:3px 8px}
 .mods .mrow label{display:inline-flex;gap:3px;align-items:center;cursor:pointer}
 .mods .mrow label.dis{opacity:.4;cursor:not-allowed}
+/* 手機（寬 ≤600px）：隊伍格與成員卡改直排、一行五個，只留頭像與名字（爆裂／屬性／武器徽章、英文名、替補說明隱藏）；選角視窗一行四個，同樣只留頭像與名字。桌機與平板不變 */
+@media(max-width:600px){
+  .slots{grid-template-columns:repeat(5,1fr);gap:4px}
+  .slot{flex-direction:column;align-items:center;justify-content:flex-start;gap:3px;padding:4px 2px 15px;min-height:0;text-align:center}
+  .slot:not(.filled){padding-bottom:4px;min-height:78px}
+  .slot .body{width:100%}
+  .slot .nm{font-size:11px;line-height:1.2}
+  .slot .pos{display:block;margin:0}
+  .slot .add{font-size:11px}
+  .slot .en,.slot .tags{display:none}
+  .slot .mv{font-size:11px;padding:0 4px;bottom:1px;opacity:.85}
+  .slot .mv.l{left:1px}.slot .mv.r{right:1px}
+  .team .members{grid-template-columns:repeat(5,1fr);gap:4px}
+  .team .m{flex-direction:column;align-items:center;text-align:center;padding:4px 2px;gap:3px}
+  .team .m .body{width:100%}
+  .team .m .body b{font-size:11px;word-break:break-all}
+  .team .m .pos{font-size:10px}
+  .team .m .kind,.team .m .pos .badge,.team .m .tags,.team .m .alt{display:none}
+  .modal{padding:10px 6px}
+  .modal .box{padding:10px}
+  .modal .list{grid-template-columns:repeat(4,1fr);gap:4px}
+  .pick{flex-direction:column;align-items:center;text-align:center;gap:3px;padding:5px 2px;position:relative}
+  .pick .pickbody{width:100%}
+  .pick .pickbody b{font-size:11px;word-break:break-all;line-height:1.2}
+  .pick .en,.pick .tags{display:none}
+  .pick .selno{position:absolute;top:2px;right:2px;float:none}
+}
 </style>
 </head>
 <body>
@@ -1373,7 +1401,7 @@ function renderSlots(elId,team,teamKey){
   team.forEach((id,i)=>{
     const d=document.createElement('div'); d.className='slot'+(id?' filled':'');
     const c=id&&byId[id];
-    d.innerHTML=`<span class="x" title="移除">✕</span>`+(c?`${avatar(c.id,'md')}<div class="body"><div class="nm"><span class="pos">P${i+1}</span>${esc(c.name['zh-TW'])}</div><div class="en">${esc(c.name.en)}</div><div>${burstBadge(c.burst)}${elBadge(c.element)}<span class="badge">${c.weapon}</span></div></div>${i>0?'<span class="mv l" title="往左移一格">◀</span>':''}${i<4?'<span class="mv r" title="往右移一格">▶</span>':''}`:`<div class="add"><span class="pos">P${i+1}</span>＋ 選角色</div>`);
+    d.innerHTML=`<span class="x" title="移除">✕</span>`+(c?`${avatar(c.id,'md')}<div class="body"><div class="nm"><span class="pos">P${i+1}</span>${esc(c.name['zh-TW'])}</div><div class="en">${esc(c.name.en)}</div><div class="tags">${burstBadge(c.burst)}${elBadge(c.element)}<span class="badge">${c.weapon}</span></div></div>${i>0?'<span class="mv l" title="往左移一格">◀</span>':''}${i<4?'<span class="mv r" title="往右移一格">▶</span>':''}`:`<div class="add"><span class="pos">P${i+1}</span>＋ 選角色</div>`);
     d.onclick=e=>{ if(e.target.classList.contains('x')){ team[i]=null; save(); refresh(); return;} if(e.target.classList.contains('mv')){ swap(i,e.target.classList.contains('l')?i-1:i+1); return; } openPicker(teamKey,i); };
     // 拖曳換位（桌機）；手機用左右箭頭
     d.draggable=!!id;
@@ -1482,7 +1510,7 @@ function renderPicker(){
     const selected=pickerTarget.multi&&pickerTarget.sel.includes(c.id);
     const dis=pickerTarget.multi?(!selected&&(pickerTarget.sel.length>=5||other.has(c.id))):((inTeam.has(c.id)&&team[pickerTarget.idx]!==c.id)||other.has(c.id));
     d.className='pick'+(owned.has(c.id)?' owned':'')+(dis?' dis':'')+(selected?' sel':'');
-    d.innerHTML=`${selected?'<span class="badge good" style="float:right">P'+(pickerTarget.sel.indexOf(c.id)+1)+'</span>':''}${avatar(c.id)}<div class="pickbody"><b>${esc(c.name['zh-TW'])}</b><span class="en">${esc(c.name.en)}${(NICK[c.id]||[]).length?' · '+esc(NICK[c.id].slice(0,2).join('、')):''}</span><div>${burstBadge(c.burst)}${elBadge(c.element)}<span class="badge">${c.weapon}</span>${tierBadge(c)||deckRank(c.id)}${newBadge(c)}${sortBadge(c,pickerFilter)}</div></div>`;
+    d.innerHTML=`${selected?'<span class="badge good selno" style="float:right">P'+(pickerTarget.sel.indexOf(c.id)+1)+'</span>':''}${avatar(c.id)}<div class="pickbody"><b>${esc(c.name['zh-TW'])}</b><span class="en">${esc(c.name.en)}${(NICK[c.id]||[]).length?' · '+esc(NICK[c.id].slice(0,2).join('、')):''}</span><div class="tags">${burstBadge(c.burst)}${elBadge(c.element)}<span class="badge">${c.weapon}</span>${tierBadge(c)||deckRank(c.id)}${newBadge(c)}${sortBadge(c,pickerFilter)}</div></div>`;
     if(!dis||selected) d.onclick=()=>pickOne(c);
     el.appendChild(d);
   }
@@ -1586,7 +1614,7 @@ function renderCounters(ctx){
 }
 function teamCard(r,eSpeed,idx){
   const t=r.tpl;
-  const members=r.slots.map((id,i)=>{ const c=byId[id]; const k=r.kind[i]; const cr=chainRole(r.slots,id); const alt=((r.alts&&r.alts[i]&&r.alts[i].length)?`<div class="alt">替補：${r.alts[i].map(nameOf).join('／')}</div>`:'')+((r.skipped&&r.skipped[i]&&r.skipped[i].length)?`<div class="alt" title="模板把這些角色排在前面，但你沒有（或已用在別格）">模板優先但缺：${r.skipped[i].map(nameOf).join('／')}</div>`:''); return `<div class="m ${k}">${avatar(id,'md')}<div class="body"><div class="pos">P${i+1} ${k==='req'?'核心':k==='sub'?'替補':'彈性'} ${cr?'<span class="badge good" style="font-size:10px;padding:0 4px">開'+cr+'</span>':'<span class="badge" style="font-size:10px;padding:0 4px">軸外</span>'}</div><b>${esc(c.name['zh-TW'])}</b><div>${burstBadge(c.burst)}<span class="badge">${c.weapon}</span></div></div>${alt}</div>`; }).join('');
+  const members=r.slots.map((id,i)=>{ const c=byId[id]; const k=r.kind[i]; const cr=chainRole(r.slots,id); const alt=((r.alts&&r.alts[i]&&r.alts[i].length)?`<div class="alt">替補：${r.alts[i].map(nameOf).join('／')}</div>`:'')+((r.skipped&&r.skipped[i]&&r.skipped[i].length)?`<div class="alt" title="模板把這些角色排在前面，但你沒有（或已用在別格）">模板優先但缺：${r.skipped[i].map(nameOf).join('／')}</div>`:''); return `<div class="m ${k}">${avatar(id,'md')}<div class="body"><div class="pos">P${i+1} <span class="kind">${k==='req'?'核心':k==='sub'?'替補':'彈性'}</span> ${cr?'<span class="badge good" style="font-size:10px;padding:0 4px">開'+cr+'</span>':'<span class="badge" style="font-size:10px;padding:0 4px">軸外</span>'}</div><b>${esc(c.name['zh-TW'])}</b><div class="tags">${burstBadge(c.burst)}<span class="badge">${c.weapon}</span></div></div>${alt}</div>`; }).join('');
   const cmp = r.variant?'':(r.speed.cycles<eSpeed.cycles?'<span class="badge good">比對方快</span>':r.speed.cycles===eSpeed.cycles?'<span class="badge warn">同速</span>':'<span class="badge bad">比對方慢</span>');
   const eArchs=detectArchetypes(enemy).map(a=>a.arch);
   const refs=refsFor(eArchs,enemy,t.archetype);
@@ -2048,7 +2076,7 @@ function spEntryCard(e,g,manual){
   const listIds=manual?spEnemy[g]:e.slots;
   const members=listIds.map((id,i)=>{ const c=byId[id]; const k=manual?'req':e.filler?'sub':e.kind[i]; const lab=manual?'對方':e.filler?'湊數':k==='req'?'核心':k==='sub'?'替補':'彈性'; const cr=chainRole(listIds,id);
     const alt=e.filler?'':(((e.alts&&e.alts[i]&&e.alts[i].length)?`<div class="alt">替補：${e.alts[i].map(nameOf).join('／')}</div>`:'')+((e.skipped&&e.skipped[i]&&e.skipped[i].length)?`<div class="alt" title="模板把這些角色排在前面，但你沒有（或已用在別場）">模板優先但缺：${e.skipped[i].map(nameOf).join('／')}</div>`:''));
-    return `<div class="m ${k}">${avatar(id,'md')}<div class="body"><div class="pos">P${i+1} ${lab} ${cr?'<span class="badge good" style="font-size:10px;padding:0 4px">開'+cr+'</span>':'<span class="badge" style="font-size:10px;padding:0 4px">軸外</span>'}</div><b>${esc(c.name['zh-TW'])}</b><div>${burstBadge(c.burst)}<span class="badge">${c.weapon}</span></div></div>${alt}</div>`; }).join('');
+    return `<div class="m ${k}">${avatar(id,'md')}<div class="body"><div class="pos">P${i+1} <span class="kind">${lab}</span> ${cr?'<span class="badge good" style="font-size:10px;padding:0 4px">開'+cr+'</span>':'<span class="badge" style="font-size:10px;padding:0 4px">軸外</span>'}</div><b>${esc(c.name['zh-TW'])}</b><div class="tags">${burstBadge(c.burst)}<span class="badge">${c.weapon}</span></div></div>${alt}</div>`; }).join('');
   const dc=(eSp.cycles+eCh.extraSec)-(e.speed.cycles+chainOf(e.slots).extraSec);
   const cmp=dc>0?'<span class="badge good">比對方快</span>':dc===0?'<span class="badge warn">同速</span>':'<span class="badge bad">比對方慢</span>';
   const head=e.filler?`<span class="badge ${e.sacrificed?'bad':'warn'}">${e.sacrificed?'放生：剩餘角色隊':'剩餘角色隊'}</span>`:e.manual?`<span class="badge">手動</span>${e.ev.myArch.length?`<span class="badge">${archName(e.ev.myArch[0].arch)}</span>`:''}`:`<b>${esc(e.tpl.name['zh-TW'])}${e.variant?'（'+e.variant+'）':''}</b><span class="badge">${archName(e.tpl.archetype)}</span>`;
