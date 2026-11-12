@@ -1479,7 +1479,7 @@ let spEnemy=load3('spEnemy');
 let spMine=load3('spMine');            // 特殊競技場：我方手動三隊
 let spSaved=LS.get('spSaved',[]);       // 儲存的三隊組合 {name,date,mine,enemy}
 let mySaved=LS.get('mySaved',[]);       // 解隊分頁儲存的我方隊伍 {name,date,mine,enemy}
-let spRecords=LS.get('spRecords',[]);   // 特殊競技場紀錄 {name,date,enemy,mine,results}
+let spRecords=LS.get('spRecords',[]);   // 特殊競技場紀錄 {sid,name,date,enemy,mine,results}；sid 連到對戰紀錄裡那三場（records 另有 g＝第幾場 0–2），改名／刪除才能連動
 let spPlanType=LS.get('spPlanType','two');
 let spHistory=LS.get('spHistory',[]);   // 對方三隊的歷史 {name,date,enemy}
 records=LS.get('records',[]);
@@ -1985,7 +1985,7 @@ $('#recBulkBtn').onclick=()=>{ recBulk=!recBulk; if(!recBulk) recSel.clear(); re
 let importReplace=false; // 「匯入並取代」：以檔案內容完整取代本機的紀錄、歷史與儲存隊伍；「匯入 JSON」是合併
 $('#btnImport').onclick=()=>{ importReplace=false; $('#fileImport').click(); };
 $('#btnImportReplace').onclick=()=>{ if(!confirm('選好檔案後，會以檔案內容完整取代本機的角色庫、對戰紀錄、歷史與儲存隊伍（本機多出來的會被刪除），確定？')) return; importReplace=true; $('#fileImport').click(); };
-$('#fileImport').onchange=e=>{ const f=e.target.files[0]; if(!f) return; const replace=importReplace; importReplace=false; const r=new FileReader(); r.onload=()=>{ try{ const d=JSON.parse(r.result); if(!d||typeof d!=='object'||Array.isArray(d)) throw new Error('不是 roster.json 的格式'); if(Array.isArray(d.owned)) owned=new Set(d.owned.filter(i=>byId[i])); let msg; if(replace){ replaceImport(d); msg=`已匯入 ${owned.size} 名角色，並以檔案內容取代本機的紀錄、歷史與儲存隊伍。`; } else { const added=mergeImport(d); msg=`已匯入 ${owned.size} 名角色${added.length?'，合併新增 '+added.join('、'):'；紀錄與儲存隊伍沒有新資料'}。本機原有的都保留。`; } save(); renderRoster(); updateOwnedCount(); renderSolve(); renderSp(); alert(msg); }catch(err){ alert('讀取失敗：'+err.message); } }; r.readAsText(f); e.target.value=''; };
+$('#fileImport').onchange=e=>{ const f=e.target.files[0]; if(!f) return; const replace=importReplace; importReplace=false; const r=new FileReader(); r.onload=()=>{ try{ const d=JSON.parse(r.result); if(!d||typeof d!=='object'||Array.isArray(d)) throw new Error('不是 roster.json 的格式'); if(Array.isArray(d.owned)) owned=new Set(d.owned.filter(i=>byId[i])); let msg; if(replace){ replaceImport(d); msg=`已匯入 ${owned.size} 名角色，並以檔案內容取代本機的紀錄、歷史與儲存隊伍。`; } else { const added=mergeImport(d); msg=`已匯入 ${owned.size} 名角色${added.length?'，合併新增 '+added.join('、'):'；紀錄與儲存隊伍沒有新資料'}。本機原有的都保留。`; } migrateSpSid(); save(); renderRoster(); updateOwnedCount(); renderSolve(); renderSp(); alert(msg); }catch(err){ alert('讀取失敗：'+err.message); } }; r.readAsText(f); e.target.value=''; };
 
 /* ====================== 資料自動更新 ====================== */
 function setDataStatus(text,cls){ const el=$('#dataStatus'); el.textContent=text; el.style.color=cls==='ok'?'var(--good)':cls==='bad'?'var(--warn)':''; }
@@ -2024,6 +2024,7 @@ async function checkOnlineData(manual){
 /* ====================== 匯入合併 ====================== */
 // 「匯入 JSON」與「從 GitHub 載入資料」都是合併：本機已有的保留，只加入來源裡本機沒有的。
 // 同樣內容在單一來源裡出現幾次就算幾場（例如同日同隊打了兩場），兩邊取較多的那個數。
+// 特殊競技場紀錄與對戰紀錄的 sid 不進 keyOf（兩台裝置各自產生的 sid 不同，內容相同就算同一筆），合併或取代時整筆保留；匯入後再跑 migrateSpSid() 補舊檔沒有的 sid。
 const mergeKey=o=>JSON.stringify(o);
 function mergeList(local,remote,keyOf,ok,cap){
   local=Array.isArray(local)?local:[];
@@ -2071,7 +2072,7 @@ async function loadRemoteRoster(replace){
     let what;
     if(replace){ replaceImport(d); what='並以倉庫內容取代本機的紀錄、歷史與儲存隊伍'; }
     else { const added=mergeImport(d); what=added.length?'合併新增 '+added.join('、')+'，本機原有的都保留':'紀錄與儲存隊伍沒有新資料'; }
-    save(); renderRoster(); updateOwnedCount(); renderSolve(); renderSp();
+    migrateSpSid(); save(); renderRoster(); updateOwnedCount(); renderSolve(); renderSp();
     setRemoteStatus((same?`角色庫與倉庫的 roster.json 一致（${ids.length} 名），`:`已從倉庫的 roster.json 載入 ${ids.length} 名角色，`)+what+when+'。');
   }catch(e){ setRemoteStatus('讀取 roster.json 失敗：'+e.message); }
 }
@@ -2324,14 +2325,36 @@ function renderSpSaved(){
   el.querySelectorAll('[data-svrename]').forEach(b=>b.onclick=()=>{ const sv=spSaved[+b.dataset.svrename]; const name=prompt('這組三隊的名稱',sv.name); if(name&&name.trim()){ sv.name=name.trim(); LS.set('spSaved',spSaved); renderSpSaved(); } });
   el.querySelectorAll('[data-svdel]').forEach(b=>b.onclick=()=>{ const sv=spSaved[+b.dataset.svdel]; if(confirm(`刪除「${sv.name}」？`)){ spSaved.splice(+b.dataset.svdel,1); LS.set('spSaved',spSaved); refresh(); } });
 }
+/* 特殊競技場紀錄與對戰紀錄的連結：spRecords[i].sid === records[j].sid，records[j].g 是第幾場。
+   sid 只在這裡與 spRecordNow() 產生；對戰紀錄清單裡單筆改名／刪除不動 spRecords，特殊競技場分頁的改名／刪除則連動三場。 */
+function newSid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
+const spLinked=r=>r&&r.sid?records.filter(x=>x&&x.sid===r.sid):[]; // 這筆特殊競技場紀錄在對戰紀錄裡還在的場次
+const sameTeam=(a,b)=>Array.isArray(a)&&Array.isArray(b)&&a.length===b.length&&a.every((x,i)=>x===b[i]);
+/* 舊資料一次性補 sid：沒有 sid 的特殊競技場紀錄，找同日期、note 為「特殊競技場第 g+1 場」、對方與我方都和該場完全相同（含站位）、還沒有 sid 的對戰紀錄，
+   兩邊補上同一個 sid；一場都配不到就留空（列表會標「未連結」）。已有 sid 但某場在對戰紀錄裡找不到的，也用同樣規則補回（例如單筆刪掉後又從舊檔匯入）。
+   可重複執行：載入時跑一次，匯入舊檔後再跑一次。 */
+function migrateSpSid(){
+  let changed=0;
+  spRecords.forEach(sp=>{
+    if(!sp||!Array.isArray(sp.results)||!Array.isArray(sp.enemy)||!Array.isArray(sp.mine)) return;
+    const hits=[];
+    [0,1,2].forEach(g=>{ if(!sp.results[g]||(sp.sid&&records.some(x=>x&&x.sid===sp.sid&&x.g===g))) return; const x=records.find(x=>x&&!x.sid&&x.date===sp.date&&x.note===`特殊競技場第 ${g+1} 場`&&sameTeam(x.enemy,sp.enemy[g])&&sameTeam(x.mine,sp.mine[g])); if(x) hits.push([x,g]); });
+    if(!hits.length) return;
+    if(!sp.sid) sp.sid=newSid(); hits.forEach(([x,g])=>{ x.sid=sp.sid; x.g=g; }); changed++;
+  });
+  if(changed){ LS.set('spRecords',spRecords); LS.set('records',records); }
+  return changed;
+}
 function renderSpRecords(){
   const el=$('#spRecords'); if(!spRecords.length){ el.className='muted'; el.textContent='還沒有紀錄。'; return; }
   el.className='';
   const badge=r=>r==='win'?'<span class="badge good">勝</span>':r==='loss'?'<span class="badge bad">負</span>':'<span class="badge">未打</span>';
-  el.innerHTML=spRecords.slice(0,30).map((r,i)=>{ const w=r.results.filter(x=>x==='win').length, l=r.results.filter(x=>x==='loss').length; return `<div class="rec"><span class="d">${esc(r.date)}</span><span class="badge ${w>=2?'good':l>=2?'bad':''}">${w} 勝 ${l} 負</span><span class="t">${r.name?`<b>${esc(r.name)}</b><br>`:''}${[0,1,2].map(g=>`第 ${g+1} 場 ${badge(r.results[g])} 我方 ${r.mine[g].map(nameOf).join('／')} <span class="muted">vs</span> ${r.enemy[g].map(nameOf).join('／')}`).join('<br>')}</span><button class="btn" data-sprload="${i}" style="font-size:11px;padding:2px 8px">載入</button><button class="btn" data-sprrename="${i}" style="font-size:11px;padding:2px 8px" title="改名">改名</button><span class="x" data-sprdel="${i}" title="刪除">✕</span></div>`; }).join('');
+  const gone=(r,g)=>r.results[g]&&r.sid&&!records.some(x=>x&&x.sid===r.sid&&x.g===g)?' <span class="badge" title="這場已從對戰紀錄清單刪除，這裡仍保留">已不在對戰紀錄</span>':''; // 對戰紀錄那邊單筆刪掉後，這裡看得出來
+  const unlinked=r=>r.sid?'':'<span class="badge" title="舊資料：對戰紀錄裡找不到對應的場次，改名與刪除不會連動">未連結</span>';
+  el.innerHTML=spRecords.slice(0,30).map((r,i)=>{ const w=r.results.filter(x=>x==='win').length, l=r.results.filter(x=>x==='loss').length; return `<div class="rec"><span class="d">${esc(r.date)}</span><span class="badge ${w>=2?'good':l>=2?'bad':''}">${w} 勝 ${l} 負</span>${unlinked(r)}<span class="t">${r.name?`<b>${esc(r.name)}</b><br>`:''}${[0,1,2].map(g=>`第 ${g+1} 場 ${badge(r.results[g])}${gone(r,g)} 我方 ${r.mine[g].map(nameOf).join('／')} <span class="muted">vs</span> ${r.enemy[g].map(nameOf).join('／')}`).join('<br>')}</span><button class="btn" data-sprload="${i}" style="font-size:11px;padding:2px 8px">載入</button><button class="btn" data-sprrename="${i}" style="font-size:11px;padding:2px 8px" title="改名">改名</button><span class="x" data-sprdel="${i}" title="刪除">✕</span></div>`; }).join('');
   el.querySelectorAll('[data-sprload]').forEach(b=>b.onclick=()=>{ const r=spRecords[+b.dataset.sprload]; spMine=r.mine.map(t=>[...t]); spEnemy=r.enemy.map(t=>[...t]); save(); refresh(); });
-  el.querySelectorAll('[data-sprrename]').forEach(b=>b.onclick=()=>{ const r=spRecords[+b.dataset.sprrename]; const name=prompt('這筆紀錄的名稱（留空＝不取名）',r.name||''); if(name===null) return; r.name=name.trim(); LS.set('spRecords',spRecords); refresh(); });
-  el.querySelectorAll('[data-sprdel]').forEach(b=>b.onclick=()=>{ if(confirm('刪除這筆紀錄？（已寫入對戰紀錄的三場不會一起刪）')){ spRecords.splice(+b.dataset.sprdel,1); LS.set('spRecords',spRecords); refresh(); } });
+  el.querySelectorAll('[data-sprrename]').forEach(b=>b.onclick=()=>{ const r=spRecords[+b.dataset.sprrename]; const linked=spLinked(r); const name=prompt('這筆紀錄的名稱（留空＝不取名）'+(linked.length?`；對戰紀錄裡連結的 ${linked.length} 場會一起改名`:''),r.name||''); if(name===null) return; r.name=name.trim(); LS.set('spRecords',spRecords); if(linked.length){ linked.forEach(x=>x.name=r.name); LS.set('records',records); } refresh(); });
+  el.querySelectorAll('[data-sprdel]').forEach(b=>b.onclick=()=>{ const r=spRecords[+b.dataset.sprdel]; const n=spLinked(r).length; if(!confirm(n?`刪除這筆紀錄，連同對戰紀錄裡的 ${n} 筆一起刪？`:'刪除這筆紀錄？（對戰紀錄裡沒有連結的場次，那邊不會動）')) return; spRecords.splice(+b.dataset.sprdel,1); LS.set('spRecords',spRecords); if(n){ records=records.filter(x=>!(x&&x.sid===r.sid)); LS.set('records',records); } refresh(); });
 }
 function spRecordNow(){
   if(!spMine.every(t=>t.every(Boolean))||!spEnemy.every(t=>t.every(Boolean))) return alert('我方三隊（③）與對方三隊（①）都要填滿才能記錄。');
@@ -2340,8 +2363,9 @@ function spRecordNow(){
   const date=new Date().toISOString().slice(0,10);
   const key=spEnemy.map(t=>t.join()).join('|'); const hn=spHistory.find(h=>h.enemy.map(t=>t.join()).join('|')===key); // 對方三隊在歷史裡有取名時，預設用那個名字
   const name=(prompt('這筆紀錄的名稱（可留空，例如：對手暱稱、第幾週）',hn&&hn.name?hn.name:'')||'').trim();
-  spRecords.unshift({date,name,enemy:spEnemy.map(t=>[...t]),mine:spMine.map(t=>[...t]),results}); spRecords=spRecords.slice(0,200); LS.set('spRecords',spRecords);
-  results.forEach((r,g)=>{ if(r) records.unshift({date,mode:'sp',name,enemy:[...spEnemy[g]],mine:[...spMine[g]],result:r,note:`特殊競技場第 ${g+1} 場`}); });
+  const sid=newSid(); // 同一個 sid 寫進這筆與對戰紀錄裡的三場，之後改名／刪除才能連動
+  spRecords.unshift({sid,date,name,enemy:spEnemy.map(t=>[...t]),mine:spMine.map(t=>[...t]),results}); spRecords=spRecords.slice(0,200); LS.set('spRecords',spRecords);
+  results.forEach((r,g)=>{ if(r) records.unshift({sid,g,date,mode:'sp',name,enemy:[...spEnemy[g]],mine:[...spMine[g]],result:r,note:`特殊競技場第 ${g+1} 場`}); });
   records=records.slice(0,300); LS.set('records',records);
   [0,1,2].forEach(g=>$('#spRes'+g).value=''); refresh();
 }
@@ -2392,7 +2416,7 @@ document.addEventListener('click',e=>{
 });
 loadRemoteReferences(); // roster.json 不自動讀取，只有「從 GitHub 載入資料」按鈕才載入
 
-updateOwnedCount(); refresh();
+migrateSpSid(); updateOwnedCount(); refresh();
 </script>
 </body>
 </html>
