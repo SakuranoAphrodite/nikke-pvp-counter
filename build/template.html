@@ -161,8 +161,10 @@ ul.tips li{margin:5px 0}
 .hist button{font-size:12px}
 .swap{margin-left:auto;display:inline-flex;gap:4px}.swap .btn{padding:2px 9px;font-size:13px}.swap .btn:disabled{opacity:.35;cursor:default}
 .hitem{display:inline-flex;align-items:stretch;max-width:100%}.hitem>.btn{border-radius:8px 0 0 8px;min-width:0}
-.hitem>.x{display:flex;align-items:center;padding:0 10px;border:1px solid var(--line);border-left:0;border-radius:0 8px 8px 0;background:var(--panel2);color:var(--muted);cursor:pointer;font-size:13px;user-select:none}
+.hitem>.x{display:flex;align-items:center;padding:0 10px;border:1px solid var(--line);border-left:0;border-radius:0;background:var(--panel2);color:var(--muted);cursor:pointer;font-size:13px;user-select:none}
+.hitem>.x:last-child{border-radius:0 8px 8px 0}
 .hitem>.x:hover{color:var(--bad);border-color:var(--bad)}
+.hitem>.x.ren:hover{color:var(--accent);border-color:var(--accent)}
 .verdict{font-size:18px;font-weight:700;margin:6px 0}
 .verdict.good{color:var(--good)}.verdict.bad{color:var(--bad)}.verdict.warn{color:var(--warn)}
 details summary{cursor:pointer;color:var(--accent2);font-size:13px}
@@ -245,7 +247,7 @@ details.mods summary{color:var(--muted)}
       <input type="text" id="quickEnemy" placeholder="快速輸入：名字或簡稱用空格隔開（紅蓮 豺狼 白兔 桑迪 特蕾），一個詞對一個角色，按 Enter" style="flex:1;min-width:260px">
       <button class="btn" id="btnQuickEnemy">套用</button>
       <button class="btn primary" id="btnPickEnemy" title="在視窗裡連點 5 位，一次選完">一次選整隊</button>
-      <button class="btn" id="btnSaveEnemy">存到歷史</button>
+      <button class="btn" id="btnSaveEnemy" title="把這 5 人存進對方隊伍歷史，可以取個名字（例如對手暱稱）；已在歷史裡的話會改名">存到歷史</button>
       <button class="btn" data-copy="enemy" title="複製成「名字／名字／…」文字，可直接貼回快速輸入">複製</button>
       <button class="btn danger" id="btnClearEnemy">清空</button>
     </div>
@@ -316,8 +318,8 @@ details.mods summary{color:var(--muted)}
     <div class="team spteam"><div class="hd"><b>對方第 3 隊</b><span class="muted">照遊戲裡 P1→P5 的順序填</span><span class="swap" title="手動交換隊伍順序"><button class="btn" data-spswap="2,-1" title="和上一隊交換順序">↑</button><button class="btn" data-spswap="2,1" title="和下一隊交換順序" disabled>↓</button></span></div><div class="slots" id="spSlots2"></div>
       <div class="row" style="margin-top:8px"><input type="text" id="spQuick2" placeholder="名字或簡稱用空格隔開，按 Enter" style="flex:1;min-width:200px"><button class="btn" data-spquick="2">套用</button><button class="btn primary" data-sppick="2">一次選整隊</button><button class="btn" data-copy="sp2">複製</button><button class="btn danger" data-spclear="2">清空</button></div>
       <div class="muted" id="spNote2" style="font-size:12px"></div><div id="spAnalysis2" class="muted" style="margin-top:6px"></div></div>
-    <div class="row"><button class="btn" id="btnSpSaveHistory">三隊存到歷史</button><button class="btn danger" id="btnSpClearAll">清空三隊</button></div>
-    <div class="muted" style="font-size:12px;margin-top:6px">歷史（點擊載入對方三隊；按右邊的 ✕ 或按住 Shift 點擊刪除）：</div>
+    <div class="row"><button class="btn" id="btnSpSaveHistory" title="把對方三隊存進歷史，可以取個名字（例如對手暱稱）；已在歷史裡的話會改名">三隊存到歷史</button><button class="btn danger" id="btnSpClearAll">清空三隊</button></div>
+    <div class="muted" style="font-size:12px;margin-top:6px">歷史（點擊載入對方三隊；✎ 改名；按右邊的 ✕ 或按住 Shift 點擊刪除）：</div>
     <div class="row" id="spHistory"></div>
   </div>
   <div class="card">
@@ -841,8 +843,10 @@ async function loadRemoteReferences(){
 let records=[]; // 實際內容在狀態區由 LS 載入
 function addRecord(result){
   if(enemy.some(x=>!x)||mine.some(x=>!x)) return alert('對方隊伍（①）與我方隊伍（④）都要填滿 5 人才能記錄。');
+  const hn=history.find(h=>h.team.join()===enemy.join()); // 對方隊伍在歷史裡有取名時，預設用那個名字
+  const name=(prompt('這筆紀錄的名稱（可留空，例如：對手暱稱、第幾場）',hn?hn.name:'')||'').trim();
   const note=prompt('備註（可留空，例如：對方戰力高一成、火箭射偏、對方先爆）')||'';
-  records.unshift({date:new Date().toISOString().slice(0,10),mode,enemy:[...enemy],mine:[...mine],result,note});
+  records.unshift({date:new Date().toISOString().slice(0,10),mode,name,enemy:[...enemy],mine:[...mine],result,note});
   records=records.slice(0,300); LS.set('records',records); refresh();
 }
 function recordStats(enemyIds,myIds){
@@ -867,7 +871,7 @@ function historyBlock(enemyIds,opts){
   const wins=m.filter(x=>x.r.result==='win'), losses=m.filter(x=>x.r.result!=='win');
   const modeTag=r=>r.mode==='sp'?'<span class="badge">特殊</span>':r.mode==='defense'?'<span class="badge" title="舊版紀錄：當時以「我方防守」計算；攻守規則統一後不再區分">防守（舊）</span>':'';
   const tag=x=>x.exact?(x.sameIds?(x.sameOrder?'':'<span class="badge" title="同樣 5 人，但對方站位和這次不同">站位不同</span>'):'<span class="badge" title="同樣 5 人，珍藏版不同">珍藏版不同</span>'):`<span class="badge warn" title="對方有 ${x.shared} 人和這次相同">相似隊 ${x.shared}/5</span>`;
-  const line=x=>`<div class="rec"><span class="d">${esc(x.r.date)}</span><span class="badge ${x.r.result==='win'?'good':'bad'}">${x.r.result==='win'?'勝':'負'}</span>${modeTag(x.r)}${tag(x)}<span class="t">我方：${x.r.mine.map(nameOf).join('／')}${x.r.note?` <span class="muted">（${esc(x.r.note)}）</span>`:''}${x.exact?'':`<br><span class="muted">對方：${x.r.enemy.map(nameOf).join('／')}</span>`}</span><button class="btn" data-rechist="${x.i}" title="把這場的我方隊伍帶入${opts.compact?'我方第 '+(opts.g+1)+' 隊':'「自己排一隊試算」'}">帶入我方</button></div>`;
+  const line=x=>`<div class="rec"><span class="d">${esc(x.r.date)}</span><span class="badge ${x.r.result==='win'?'good':'bad'}">${x.r.result==='win'?'勝':'負'}</span>${modeTag(x.r)}${tag(x)}<span class="t">${x.r.name?`<b>${esc(x.r.name)}</b> `:''}我方：${x.r.mine.map(nameOf).join('／')}${x.r.note?` <span class="muted">（${esc(x.r.note)}）</span>`:''}${x.exact?'':`<br><span class="muted">對方：${x.r.enemy.map(nameOf).join('／')}</span>`}</span><button class="btn" data-rechist="${x.i}" title="把這場的我方隊伍帶入${opts.compact?'我方第 '+(opts.g+1)+' 隊':'「自己排一隊試算」'}">帶入我方</button></div>`;
   const exactWins=wins.filter(x=>x.exact).length, simWins=wins.length-exactWins;
   const head=wins.length?`你贏過這組對手 ${exactWins} 次${simWins?`（另有相似隊 ${simWins} 次）`:''}${losses.length?`，輸過 ${losses.length} 次`:''}`:`和這組對手（含相似隊）打過 ${losses.length} 次，都沒贏`;
   let h=`<div class="verdict ${wins.length?'good':'bad'}" style="font-size:14px;margin:4px 0">${head}</div>`;
@@ -879,8 +883,9 @@ function historyBlock(enemyIds,opts){
 function renderRecords(){
   const el=$('#records'); if(!records.length){ el.className='muted'; el.textContent='還沒有紀錄。'; return; }
   el.className='';
-  el.innerHTML=records.slice(0,30).map((r,i)=>`<div class="rec"><span class="d">${esc(r.date)}</span><span class="badge ${r.result==='win'?'good':'bad'}">${r.result==='win'?'勝':'負'}</span>${r.mode==='sp'?'<span class="badge">特殊</span>':r.mode==='defense'?'<span class="badge" title="舊版紀錄：當時以「我方防守」計算；攻守規則統一後不再區分">防守（舊）</span>':''}<span class="t">對方：${r.enemy.map(nameOf).join('／')}<br>我方：${r.mine.map(nameOf).join('／')}${r.note?`<br><span class="muted">${esc(r.note)}</span>`:''}</span><button class="btn" data-recload="${i}" style="font-size:11px;padding:2px 8px">載入</button><span class="x" data-recdel="${i}" title="刪除">✕</span></div>`).join('')+(records.length>30?`<div class="muted">只顯示最近 30 筆，共 ${records.length} 筆。</div>`:'');
+  el.innerHTML=records.slice(0,30).map((r,i)=>`<div class="rec"><span class="d">${esc(r.date)}</span><span class="badge ${r.result==='win'?'good':'bad'}">${r.result==='win'?'勝':'負'}</span>${r.mode==='sp'?'<span class="badge">特殊</span>':r.mode==='defense'?'<span class="badge" title="舊版紀錄：當時以「我方防守」計算；攻守規則統一後不再區分">防守（舊）</span>':''}<span class="t">${r.name?`<b>${esc(r.name)}</b><br>`:''}對方：${r.enemy.map(nameOf).join('／')}<br>我方：${r.mine.map(nameOf).join('／')}${r.note?`<br><span class="muted">${esc(r.note)}</span>`:''}</span><button class="btn" data-recload="${i}" style="font-size:11px;padding:2px 8px">載入</button><button class="btn" data-recrename="${i}" style="font-size:11px;padding:2px 8px" title="改名">改名</button><span class="x" data-recdel="${i}" title="刪除">✕</span></div>`).join('')+(records.length>30?`<div class="muted">只顯示最近 30 筆，共 ${records.length} 筆。</div>`:'');
   el.querySelectorAll('[data-recdel]').forEach(b=>b.onclick=()=>{ if(confirm('刪除這筆紀錄？')){ records.splice(+b.dataset.recdel,1); LS.set('records',records); refresh(); } });
+  el.querySelectorAll('[data-recrename]').forEach(b=>b.onclick=()=>{ const r=records[+b.dataset.recrename]; const name=prompt('這筆紀錄的名稱（留空＝不取名）',r.name||''); if(name===null) return; r.name=name.trim(); LS.set('records',records); refresh(); });
   el.querySelectorAll('[data-recload]').forEach(b=>b.onclick=()=>{ const r=records[+b.dataset.recload]; enemy=[...r.enemy]; mine=[...r.mine]; save(); refresh(); window.scrollTo({top:0,behavior:'smooth'}); });
 }
 function renderSourceHelp(){
@@ -1363,16 +1368,19 @@ speedSrc=LS.get('speedSrc','top');
 let enemy=LS.get('enemy',[null,null,null,null,null]);
 let mine=LS.get('mine',[null,null,null,null,null]);
 let owned=new Set(LS.get('owned',[]));
-let history=LS.get('history',[]);
+// 對方隊伍歷史 {name,team}；舊版只存 5 個 id 的陣列，載入與匯入時一律轉成物件
+const histTeam=h=>Array.isArray(h)?h:(h&&Array.isArray(h.team)?h.team:[]);
+const normHist=h=>({name:String((h&&!Array.isArray(h)&&h.name)||'').trim(),team:histTeam(h)});
+let history=LS.get('history',[]).map(normHist).filter(h=>h.team.length===5);
 const EMPTY5=()=>[null,null,null,null,null];
 const load3=k=>{ const v=LS.get(k,null); return (Array.isArray(v)&&v.length===3&&v.every(t=>Array.isArray(t)&&t.length===5))?v:[EMPTY5(),EMPTY5(),EMPTY5()]; };
 let spEnemy=load3('spEnemy');
 let spMine=load3('spMine');            // 特殊競技場：我方手動三隊
 let spSaved=LS.get('spSaved',[]);       // 儲存的三隊組合 {name,date,mine,enemy}
 let mySaved=LS.get('mySaved',[]);       // 解隊分頁儲存的我方隊伍 {name,date,mine,enemy}
-let spRecords=LS.get('spRecords',[]);   // 特殊競技場紀錄 {date,enemy,mine,results}
+let spRecords=LS.get('spRecords',[]);   // 特殊競技場紀錄 {name,date,enemy,mine,results}
 let spPlanType=LS.get('spPlanType','two');
-let spHistory=LS.get('spHistory',[]);   // 對方三隊的歷史 {date,enemy}
+let spHistory=LS.get('spHistory',[]);   // 對方三隊的歷史 {name,date,enemy}
 records=LS.get('records',[]);
 enemyMods=LS.get('enemyMods',{}); mineMods=LS.get('mineMods',{});
 let pickerTarget=null; // {team:'enemy'|'mine'|'sp0'|'sp1'|'sp2', idx, multi, sel}
@@ -1762,10 +1770,11 @@ function renderMyEval(ctx){
 }
 function renderHistory(){
   const el=$('#enemyHistory'); el.innerHTML='';
-  history.forEach((hst,i)=>{ const w=document.createElement('span'); w.className='hitem'; const b=document.createElement('button'); b.className='btn'; b.textContent=hst.map(nameOf).join('／'); b.title='點擊載入；按住 Shift 點擊（或按右邊的 ✕）刪除'; const del=()=>{ history.splice(i,1); save(); renderHistory(); };
-    b.onclick=e=>{ if(e.shiftKey){ del(); return; } enemy=[...hst]; save(); refresh(); };
-    const x=document.createElement('span'); x.className='x'; x.textContent='✕'; x.title='刪除這筆歷史'; x.setAttribute('role','button'); x.onclick=()=>{ if(confirm(`刪除歷史「${hst.map(nameOf).join('／')}」？`)) del(); };
-    w.appendChild(b); w.appendChild(x); el.appendChild(w); });
+  history.forEach((hst,i)=>{ const w=document.createElement('span'); w.className='hitem'; const b=document.createElement('button'); b.className='btn'; b.innerHTML=(hst.name?`<b>${esc(hst.name)}</b> `:'')+hst.team.map(nameOf).join('／'); b.title='點擊載入；按住 Shift 點擊（或按右邊的 ✕）刪除'; const del=()=>{ history.splice(i,1); save(); renderHistory(); };
+    b.onclick=e=>{ if(e.shiftKey){ del(); return; } enemy=[...hst.team]; save(); refresh(); };
+    const rn=document.createElement('span'); rn.className='x ren'; rn.textContent='✎'; rn.title='改名'; rn.setAttribute('role','button'); rn.onclick=()=>{ const name=prompt('這組對方隊伍的名稱（留空＝不取名）',hst.name||''); if(name===null) return; hst.name=name.trim(); save(); renderHistory(); };
+    const x=document.createElement('span'); x.className='x'; x.textContent='✕'; x.title='刪除這筆歷史'; x.setAttribute('role','button'); x.onclick=()=>{ if(confirm(`刪除歷史「${hst.name?hst.name+'：':''}${hst.team.map(nameOf).join('／')}」？`)) del(); };
+    w.appendChild(b); w.appendChild(rn); w.appendChild(x); el.appendChild(w); });
 }
 function renderMySaved(){
   const el=$('#mySavedList'); if(!el) return; const cnt=$('#mySavedCount'); if(cnt) cnt.textContent=mySaved.length?`（${mySaved.length} 隊）`:'';
@@ -1856,7 +1865,7 @@ $('#btnClearEnemy').onclick=()=>{ enemy=[null,null,null,null,null]; save(); refr
 $('#btnClearMy').onclick=()=>{ mine=[null,null,null,null,null]; save(); refresh(); };
 $('#btnArrangeMy').onclick=()=>{ if(mine.filter(Boolean).length<5) return alert('先排滿 5 人'); mine=autoArrange(mine); save(); refresh(); };
 $('#btnSaveMy').onclick=()=>{ if(mine.some(x=>!x)) return alert('先排滿 5 人'); const name=prompt('這隊的名稱',`隊伍 ${mySaved.length+1}`); if(name===null) return; const dup=mySaved.findIndex(sv=>sv.mine.join()===mine.join()); if(dup>=0&&!confirm(`已有同樣 5 人同站位的「${mySaved[dup].name}」，仍要再存一份嗎？`)) return; mySaved.unshift({name:(name.trim()||`隊伍 ${mySaved.length+1}`),date:new Date().toISOString().slice(0,10),mine:[...mine],enemy:enemy.every(Boolean)?[...enemy]:null}); mySaved=mySaved.slice(0,200); LS.set('mySaved',mySaved); renderMySaved(); };
-$('#btnSaveEnemy').onclick=()=>{ if(enemy.some(x=>!x)) return alert('先填滿 5 個角色'); if(!history.some(h=>h.join()===enemy.join())) history.unshift([...enemy]); history=history.slice(0,20); save(); renderHistory(); };
+$('#btnSaveEnemy').onclick=()=>{ if(enemy.some(x=>!x)) return alert('先填滿 5 個角色'); const ex=history.find(h=>h.team.join()===enemy.join()); const name=prompt(ex?'這組對方隊伍已在歷史裡，改名為（留空＝不取名）':'這組對方隊伍的名稱（可留空，例如：對手暱稱、排名）',ex?ex.name:''); if(name===null) return; if(ex) ex.name=name.trim(); else history.unshift({name:name.trim(),team:[...enemy]}); history=history.slice(0,20); save(); renderHistory(); };
 $('#chkOnlyOwned').onchange=refresh; $('#chkAllowSub').onchange=refresh;
 $('#pickerClose').onclick=closePicker; $('#picker').addEventListener('click',e=>{ if(e.target.id==='picker') closePicker(); });
 $('#pickerSearch').addEventListener('input',renderPicker);
@@ -1928,7 +1937,7 @@ const isTeamLoose=x=>x==null||(Array.isArray(x)&&x.length===5&&x.every(i=>i===nu
 const isTeam3=x=>Array.isArray(x)&&x.length===3&&x.every(isTeam);
 const isTeam3Loose=x=>x==null||(Array.isArray(x)&&x.length===3&&x.every(isTeamLoose));
 const MERGE_SPEC=[
-  {key:'history',label:'組對方隊伍歷史',ok:isTeam,keyOf:h=>mergeKey(h),cap:20,get:()=>history,set:v=>{ history=v; }},
+  {key:'history',label:'組對方隊伍歷史',ok:x=>isTeam(histTeam(x)),keyOf:x=>mergeKey(histTeam(x)),cap:20,get:()=>history,set:v=>{ history=v.map(normHist); }},
   {key:'records',label:'筆對戰紀錄',ok:x=>!!x&&isTeam(x.enemy)&&isTeam(x.mine)&&!!x.result,keyOf:x=>mergeKey([x.date,x.mode,x.enemy,x.mine,x.result,x.note||'']),cap:300,get:()=>records,set:v=>{ records=v; LS.set('records',v); }},
   {key:'mySaved',label:'隊儲存的我方隊伍',ok:x=>!!x&&isTeam(x.mine)&&isTeamLoose(x.enemy),keyOf:x=>mergeKey([x.name,x.mine,x.enemy||null]),cap:200,get:()=>mySaved,set:v=>{ mySaved=v; LS.set('mySaved',v); }},
   {key:'spHistory',label:'組特殊競技場對方三隊',ok:x=>!!x&&isTeam3(x.enemy),keyOf:x=>mergeKey(x.enemy),cap:30,get:()=>spHistory,set:v=>{ spHistory=v; LS.set('spHistory',v); }},
@@ -2160,10 +2169,11 @@ function renderSp(){
 function renderSpHistory(){
   const el=$('#spHistory'); if(!el) return; el.innerHTML='';
   if(!spHistory.length){ el.innerHTML='<span class="muted">還沒有。</span>'; return; }
-  spHistory.forEach((h,i)=>{ const w=document.createElement('span'); w.className='hitem'; const b=document.createElement('button'); b.className='btn'; b.style.textAlign='left'; b.innerHTML=`<span class="muted" style="font-size:11px">${esc(h.date)}</span> `+h.enemy.map((t,g)=>`${g+1}：${t.map(nameOf).join('／')}`).join('<br>'); b.title='點擊載入對方三隊；按住 Shift 點擊（或按右邊的 ✕）刪除'; const del=()=>{ spHistory.splice(i,1); LS.set('spHistory',spHistory); renderSpHistory(); };
+  spHistory.forEach((h,i)=>{ const w=document.createElement('span'); w.className='hitem'; const b=document.createElement('button'); b.className='btn'; b.style.textAlign='left'; b.innerHTML=(h.name?`<b>${esc(h.name)}</b> `:'')+`<span class="muted" style="font-size:11px">${esc(h.date)}</span> `+h.enemy.map((t,g)=>`${g+1}：${t.map(nameOf).join('／')}`).join('<br>'); b.title='點擊載入對方三隊；按住 Shift 點擊（或按右邊的 ✕）刪除'; const del=()=>{ spHistory.splice(i,1); LS.set('spHistory',spHistory); renderSpHistory(); };
     b.onclick=e=>{ if(e.shiftKey){ del(); return; } spEnemy=h.enemy.map(t=>[...t]); save(); refresh(); };
-    const x=document.createElement('span'); x.className='x'; x.textContent='✕'; x.title='刪除這筆歷史'; x.setAttribute('role','button'); x.onclick=()=>{ if(confirm(`刪除 ${h.date} 這組對方三隊的歷史？`)) del(); };
-    w.appendChild(b); w.appendChild(x); el.appendChild(w); });
+    const rn=document.createElement('span'); rn.className='x ren'; rn.textContent='✎'; rn.title='改名'; rn.setAttribute('role','button'); rn.onclick=()=>{ const name=prompt('這組對方三隊的名稱（留空＝不取名）',h.name||''); if(name===null) return; h.name=name.trim(); LS.set('spHistory',spHistory); renderSpHistory(); };
+    const x=document.createElement('span'); x.className='x'; x.textContent='✕'; x.title='刪除這筆歷史'; x.setAttribute('role','button'); x.onclick=()=>{ if(confirm(`刪除${h.name?'「'+h.name+'」':' '+h.date+' '}這組對方三隊的歷史？`)) del(); };
+    w.appendChild(b); w.appendChild(rn); w.appendChild(x); el.appendChild(w); });
 }
 /* ---------- 我方手動三隊 ---------- */
 function renderSpManual(){
@@ -2203,17 +2213,19 @@ function spmAutoMap(){
 function renderSpSaved(){
   const el=$('#spSavedList'); if(!spSaved.length){ el.className='muted'; el.textContent='還沒有儲存。'; return; }
   el.className='';
-  el.innerHTML=spSaved.map((sv,i)=>`<div class="rec"><span class="d">${esc(sv.date)}</span><span class="t"><b>${esc(sv.name)}</b><br>${sv.mine.map((t,g)=>`第 ${g+1} 隊：${t.map(nameOf).join('／')}`).join('<br>')}${sv.enemy&&sv.enemy.every(t=>t.every(Boolean))?`<br><span class="muted">當時對方：${sv.enemy.map(t=>t.map(nameOf).join('／')).join(' ｜ ')}</span>`:''}</span><button class="btn" data-svload="${i}" style="font-size:11px;padding:2px 8px">載入我方</button>${sv.enemy&&sv.enemy.every(t=>t.every(Boolean))?`<button class="btn" data-svboth="${i}" style="font-size:11px;padding:2px 8px">載入雙方</button>`:''}<span class="x" data-svdel="${i}" title="刪除">✕</span></div>`).join('');
+  el.innerHTML=spSaved.map((sv,i)=>`<div class="rec"><span class="d">${esc(sv.date)}</span><span class="t"><b>${esc(sv.name)}</b><br>${sv.mine.map((t,g)=>`第 ${g+1} 隊：${t.map(nameOf).join('／')}`).join('<br>')}${sv.enemy&&sv.enemy.every(t=>t.every(Boolean))?`<br><span class="muted">當時對方：${sv.enemy.map(t=>t.map(nameOf).join('／')).join(' ｜ ')}</span>`:''}</span><button class="btn" data-svload="${i}" style="font-size:11px;padding:2px 8px">載入我方</button>${sv.enemy&&sv.enemy.every(t=>t.every(Boolean))?`<button class="btn" data-svboth="${i}" style="font-size:11px;padding:2px 8px">載入雙方</button>`:''}<button class="btn" data-svrename="${i}" style="font-size:11px;padding:2px 8px" title="改名">改名</button><span class="x" data-svdel="${i}" title="刪除">✕</span></div>`).join('');
   el.querySelectorAll('[data-svload]').forEach(b=>b.onclick=()=>{ spMine=spSaved[+b.dataset.svload].mine.map(t=>[...t]); save(); refresh(); });
   el.querySelectorAll('[data-svboth]').forEach(b=>b.onclick=()=>{ const sv=spSaved[+b.dataset.svboth]; spMine=sv.mine.map(t=>[...t]); spEnemy=sv.enemy.map(t=>[...t]); save(); refresh(); });
-  el.querySelectorAll('[data-svdel]').forEach(b=>b.onclick=()=>{ if(confirm('刪除這組儲存？')){ spSaved.splice(+b.dataset.svdel,1); LS.set('spSaved',spSaved); refresh(); } });
+  el.querySelectorAll('[data-svrename]').forEach(b=>b.onclick=()=>{ const sv=spSaved[+b.dataset.svrename]; const name=prompt('這組三隊的名稱',sv.name); if(name&&name.trim()){ sv.name=name.trim(); LS.set('spSaved',spSaved); renderSpSaved(); } });
+  el.querySelectorAll('[data-svdel]').forEach(b=>b.onclick=()=>{ const sv=spSaved[+b.dataset.svdel]; if(confirm(`刪除「${sv.name}」？`)){ spSaved.splice(+b.dataset.svdel,1); LS.set('spSaved',spSaved); refresh(); } });
 }
 function renderSpRecords(){
   const el=$('#spRecords'); if(!spRecords.length){ el.className='muted'; el.textContent='還沒有紀錄。'; return; }
   el.className='';
   const badge=r=>r==='win'?'<span class="badge good">勝</span>':r==='loss'?'<span class="badge bad">負</span>':'<span class="badge">未打</span>';
-  el.innerHTML=spRecords.slice(0,30).map((r,i)=>{ const w=r.results.filter(x=>x==='win').length, l=r.results.filter(x=>x==='loss').length; return `<div class="rec"><span class="d">${esc(r.date)}</span><span class="badge ${w>=2?'good':l>=2?'bad':''}">${w} 勝 ${l} 負</span><span class="t">${[0,1,2].map(g=>`第 ${g+1} 場 ${badge(r.results[g])} 我方 ${r.mine[g].map(nameOf).join('／')} <span class="muted">vs</span> ${r.enemy[g].map(nameOf).join('／')}`).join('<br>')}</span><button class="btn" data-sprload="${i}" style="font-size:11px;padding:2px 8px">載入</button><span class="x" data-sprdel="${i}" title="刪除">✕</span></div>`; }).join('');
+  el.innerHTML=spRecords.slice(0,30).map((r,i)=>{ const w=r.results.filter(x=>x==='win').length, l=r.results.filter(x=>x==='loss').length; return `<div class="rec"><span class="d">${esc(r.date)}</span><span class="badge ${w>=2?'good':l>=2?'bad':''}">${w} 勝 ${l} 負</span><span class="t">${r.name?`<b>${esc(r.name)}</b><br>`:''}${[0,1,2].map(g=>`第 ${g+1} 場 ${badge(r.results[g])} 我方 ${r.mine[g].map(nameOf).join('／')} <span class="muted">vs</span> ${r.enemy[g].map(nameOf).join('／')}`).join('<br>')}</span><button class="btn" data-sprload="${i}" style="font-size:11px;padding:2px 8px">載入</button><button class="btn" data-sprrename="${i}" style="font-size:11px;padding:2px 8px" title="改名">改名</button><span class="x" data-sprdel="${i}" title="刪除">✕</span></div>`; }).join('');
   el.querySelectorAll('[data-sprload]').forEach(b=>b.onclick=()=>{ const r=spRecords[+b.dataset.sprload]; spMine=r.mine.map(t=>[...t]); spEnemy=r.enemy.map(t=>[...t]); save(); refresh(); });
+  el.querySelectorAll('[data-sprrename]').forEach(b=>b.onclick=()=>{ const r=spRecords[+b.dataset.sprrename]; const name=prompt('這筆紀錄的名稱（留空＝不取名）',r.name||''); if(name===null) return; r.name=name.trim(); LS.set('spRecords',spRecords); refresh(); });
   el.querySelectorAll('[data-sprdel]').forEach(b=>b.onclick=()=>{ if(confirm('刪除這筆紀錄？（已寫入對戰紀錄的三場不會一起刪）')){ spRecords.splice(+b.dataset.sprdel,1); LS.set('spRecords',spRecords); refresh(); } });
 }
 function spRecordNow(){
@@ -2221,8 +2233,10 @@ function spRecordNow(){
   const results=[0,1,2].map(g=>$('#spRes'+g).value||null);
   if(results.every(r=>!r)) return alert('至少選一場的勝負。');
   const date=new Date().toISOString().slice(0,10);
-  spRecords.unshift({date,enemy:spEnemy.map(t=>[...t]),mine:spMine.map(t=>[...t]),results}); spRecords=spRecords.slice(0,200); LS.set('spRecords',spRecords);
-  results.forEach((r,g)=>{ if(r) records.unshift({date,mode:'sp',enemy:[...spEnemy[g]],mine:[...spMine[g]],result:r,note:`特殊競技場第 ${g+1} 場`}); });
+  const key=spEnemy.map(t=>t.join()).join('|'); const hn=spHistory.find(h=>h.enemy.map(t=>t.join()).join('|')===key); // 對方三隊在歷史裡有取名時，預設用那個名字
+  const name=(prompt('這筆紀錄的名稱（可留空，例如：對手暱稱、第幾週）',hn&&hn.name?hn.name:'')||'').trim();
+  spRecords.unshift({date,name,enemy:spEnemy.map(t=>[...t]),mine:spMine.map(t=>[...t]),results}); spRecords=spRecords.slice(0,200); LS.set('spRecords',spRecords);
+  results.forEach((r,g)=>{ if(r) records.unshift({date,mode:'sp',name,enemy:[...spEnemy[g]],mine:[...spMine[g]],result:r,note:`特殊競技場第 ${g+1} 場`}); });
   records=records.slice(0,300); LS.set('records',records);
   [0,1,2].forEach(g=>$('#spRes'+g).value=''); refresh();
 }
@@ -2249,7 +2263,7 @@ for(let g=0;g<3;g++){
 }
 $('#btnSpmFromPlan').onclick=()=>{ if(!spPlan||spPlan.error) return alert('上面還沒有推薦結果（對方三隊要先填滿）。'); spMine=spPlan.entries.map(e=>[...e.slots]); save(); refresh(); };
 $('#btnSpmAutoMap').onclick=spmAutoMap;
-$('#btnSpSaveHistory').onclick=()=>{ if(!spEnemy.every(t=>t.every(Boolean))) return alert('對方三隊要填滿才能存到歷史。'); const key=spEnemy.map(t=>t.join()).join('|'); if(!spHistory.some(h=>h.enemy.map(t=>t.join()).join('|')===key)) spHistory.unshift({date:new Date().toISOString().slice(0,10),enemy:spEnemy.map(t=>[...t])}); spHistory=spHistory.slice(0,30); LS.set('spHistory',spHistory); spEnemy.forEach(t=>{ if(!history.some(h=>h.join()===t.join())) history.unshift([...t]); }); history=history.slice(0,20); save(); renderHistory(); renderSpHistory(); };
+$('#btnSpSaveHistory').onclick=()=>{ if(!spEnemy.every(t=>t.every(Boolean))) return alert('對方三隊要填滿才能存到歷史。'); const key=spEnemy.map(t=>t.join()).join('|'); const ex=spHistory.find(h=>h.enemy.map(t=>t.join()).join('|')===key); const raw=prompt(ex?'這組對方三隊已在歷史裡，改名為（留空＝不取名）':'這組對方三隊的名稱（可留空，例如：對手暱稱、排名）',ex?(ex.name||''):''); if(raw===null) return; const name=raw.trim(); if(ex) ex.name=name; else spHistory.unshift({name,date:new Date().toISOString().slice(0,10),enemy:spEnemy.map(t=>[...t])}); spHistory=spHistory.slice(0,30); LS.set('spHistory',spHistory); spEnemy.forEach((t,g)=>{ if(!history.some(h=>h.team.join()===t.join())) history.unshift({name:name?`${name} 第 ${g+1} 隊`:'',team:[...t]}); }); history=history.slice(0,20); save(); renderHistory(); renderSpHistory(); };
 $('#btnSpmSave').onclick=()=>{ if(!spMine.every(t=>t.every(Boolean))) return alert('我方三隊要填滿才能儲存。'); const name=prompt('這組三隊的名稱',`三隊 ${spSaved.length+1}`); if(name===null) return; spSaved.unshift({name:name||`三隊 ${spSaved.length+1}`,date:new Date().toISOString().slice(0,10),mine:spMine.map(t=>[...t]),enemy:spEnemy.map(t=>[...t])}); spSaved=spSaved.slice(0,50); LS.set('spSaved',spSaved); refresh(); };
 $('#btnSpmClear').onclick=()=>{ if(confirm('清空我方三隊？')){ spMine=[EMPTY5(),EMPTY5(),EMPTY5()]; save(); refresh(); } };
 $('#btnSpRecord').onclick=spRecordNow;
