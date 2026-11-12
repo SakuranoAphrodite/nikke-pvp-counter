@@ -36,69 +36,96 @@
   "soda"
  ],
  "history": [
-  [
-   "noah",
-   "anis-star",
-   "vesti-tactical-upgrade",
-   "centi-treasure",
-   "biscuit"
-  ],
-  [
-   "neon-vision-eye",
-   "helm-treasure",
-   "little-mermaid",
-   "nayuta",
-   "snow-white-heavy-arms"
-  ],
-  [
-   "moran-treasure",
-   "scarlet-goddeath",
-   "liberalio",
-   "blanc",
-   "jackal"
-  ],
-  [
-   "noah",
-   "anis-star",
-   "laplace-ultimate-hero",
-   "nayuta",
-   "moran-treasure"
-  ],
-  [
-   "noah",
-   "anis-star",
-   "snow-white-heavy-arms",
-   "moran-treasure",
-   "helm-treasure"
-  ],
-  [
-   "jackal",
-   "snow-white-heavy-arms",
-   "blanc",
-   "biscuit",
-   "cinderella"
-  ],
-  [
-   "moran-treasure",
-   "noah",
-   "neon-vision-eye",
-   "trina",
-   "anis-star"
-  ],
-  [
-   "nayuta",
-   "centi-treasure",
-   "helm-treasure",
-   "red-hood",
-   "laplace-treasure"
-  ],
-  [
-   "anis-star",
-   "blanc",
-   "snow-white-heavy-arms",
-   "rapi-red-hood",
-   "biscuit"
-  ]
+  {
+   "name": "",
+   "team": [
+    "noah",
+    "anis-star",
+    "vesti-tactical-upgrade",
+    "centi-treasure",
+    "biscuit"
+   ]
+  },
+  {
+   "name": "",
+   "team": [
+    "neon-vision-eye",
+    "helm-treasure",
+    "little-mermaid",
+    "nayuta",
+    "snow-white-heavy-arms"
+   ]
+  },
+  {
+   "name": "",
+   "team": [
+    "moran-treasure",
+    "scarlet-goddeath",
+    "liberalio",
+    "blanc",
+    "jackal"
+   ]
+  },
+  {
+   "name": "",
+   "team": [
+    "noah",
+    "anis-star",
+    "laplace-ultimate-hero",
+    "nayuta",
+    "moran-treasure"
+   ]
+  },
+  {
+   "name": "",
+   "team": [
+    "noah",
+    "anis-star",
+    "snow-white-heavy-arms",
+    "moran-treasure",
+    "helm-treasure"
+   ]
+  },
+  {
+   "name": "",
+   "team": [
+    "jackal",
+    "snow-white-heavy-arms",
+    "blanc",
+    "biscuit",
+    "cinderella"
+   ]
+  },
+  {
+   "name": "",
+   "team": [
+    "moran-treasure",
+    "noah",
+    "neon-vision-eye",
+    "trina",
+    "anis-star"
+   ]
+  },
+  {
+   "name": "",
+   "team": [
+    "nayuta",
+    "centi-treasure",
+    "helm-treasure",
+    "red-hood",
+    "laplace-treasure"
+   ]
+  },
+  {
+   "name": "",
+   "team": [
+    "anis-star",
+    "blanc",
+    "snow-white-heavy-arms",
+    "rapi-red-hood",
+    "biscuit"
+   ]
+  }
  ],
  "records": [
   {
@@ -119,7 +146,9 @@
     "vesti-tactical-upgrade"
    ],
    "result": "loss",
-   "note": "特殊競技場第 3 場"
+   "note": "特殊競技場第 3 場",
+   "sid": "mwd9dk23xmnm",
+   "g": 2
   },
   {
    "date": "2026-11-12",
@@ -139,7 +168,9 @@
     "neon-vision-eye"
    ],
    "result": "win",
-   "note": "特殊競技場第 2 場"
+   "note": "特殊競技場第 2 場",
+   "sid": "mwd9dk23xmnm",
+   "g": 1
   },
   {
    "date": "2026-11-12",
@@ -159,7 +190,9 @@
     "centi-treasure"
    ],
    "result": "win",
-   "note": "特殊競技場第 1 場"
+   "note": "特殊競技場第 1 場",
+   "sid": "mwd9dk23xmnm",
+   "g": 0
   },
   {
    "date": "2026-11-12",
@@ -179,7 +212,9 @@
     "neon-vision-eye"
    ],
    "result": "win",
-   "note": "特殊競技場第 3 場"
+   "note": "特殊競技場第 3 場",
+   "sid": "mwd9dk23et9o",
+   "g": 2
   },
   {
    "date": "2026-11-12",
@@ -199,7 +234,9 @@
     "centi-treasure"
    ],
    "result": "win",
-   "note": "特殊競技場第 2 場"
+   "note": "特殊競技場第 2 場",
+   "sid": "mwd9dk23et9o",
+   "g": 1
   },
   {
    "date": "2026-11-12",
@@ -219,7 +256,9 @@
     "maiden-ice-rose"
    ],
    "result": "loss",
-   "note": "特殊競技場第 1 場"
+   "note": "特殊競技場第 1 場",
+   "sid": "mwd9dk23et9o",
+   "g": 0
   },
   {
    "date": "2026-11-12",
@@ -239,7 +278,9 @@
     "centi-treasure"
    ],
    "result": "loss",
-   "note": "特殊競技場第 3 場"
+   "note": "特殊競技場第 3 場",
+   "sid": "mwd9dk230wcs",
+   "g": 2
   },
   {
    "date": "2026-11-12",
@@ -259,7 +300,9 @@
     "neon-vision-eye"
    ],
    "result": "win",
-   "note": "特殊競技場第 2 場"
+   "note": "特殊競技場第 2 場",
+   "sid": "mwd9dk230wcs",
+   "g": 1
   },
   {
    "date": "2026-11-12",
@@ -279,7 +322,9 @@
     "maiden-ice-rose"
    ],
    "result": "loss",
-   "note": "特殊競技場第 1 場"
+   "note": "特殊競技場第 1 場",
+   "sid": "mwd9dk230wcs",
+   "g": 0
   },
   {
    "date": "2026-11-12",
@@ -299,7 +344,9 @@
     "neon-vision-eye"
    ],
    "result": "win",
-   "note": "特殊競技場第 3 場"
+   "note": "特殊競技場第 3 場",
+   "sid": "mwd9dk23daia",
+   "g": 2
   },
   {
    "date": "2026-11-12",
@@ -319,7 +366,9 @@
     "centi-treasure"
    ],
    "result": "win",
-   "note": "特殊競技場第 2 場"
+   "note": "特殊競技場第 2 場",
+   "sid": "mwd9dk23daia",
+   "g": 1
   },
   {
    "date": "2026-11-12",
@@ -339,7 +388,9 @@
     "maiden-ice-rose"
    ],
    "result": "loss",
-   "note": "特殊競技場第 1 場"
+   "note": "特殊競技場第 1 場",
+   "sid": "mwd9dk23daia",
+   "g": 0
   },
   {
    "date": "2026-11-11",
@@ -419,7 +470,9 @@
     "privaty-treasure"
    ],
    "result": "win",
-   "note": "特殊競技場第 3 場"
+   "note": "特殊競技場第 3 場",
+   "sid": "mwd9dk2352x1",
+   "g": 2
   },
   {
    "date": "2026-11-07",
@@ -459,7 +512,9 @@
     "snow-white-heavy-arms"
    ],
    "result": "win",
-   "note": "特殊競技場第 1 場"
+   "note": "特殊競技場第 1 場",
+   "sid": "mwd9dk2352x1",
+   "g": 0
   },
   {
    "date": "2026-11-07",
@@ -499,7 +554,9 @@
     "liberalio"
    ],
    "result": "loss",
-   "note": "特殊競技場第 2 場"
+   "note": "特殊競技場第 2 場",
+   "sid": "mwd9dk2352x1",
+   "g": 1
   },
   {
    "date": "2026-11-07",
@@ -539,7 +596,9 @@
     "liberalio"
    ],
    "result": "loss",
-   "note": "特殊競技場第 3 場"
+   "note": "特殊競技場第 3 場",
+   "sid": "mwd9dk23st2m",
+   "g": 2
   },
   {
    "date": "2026-11-06",
@@ -559,7 +618,9 @@
     "scarlet-goddeath"
    ],
    "result": "loss",
-   "note": "特殊競技場第 2 場"
+   "note": "特殊競技場第 2 場",
+   "sid": "mwd9dk23st2m",
+   "g": 1
   },
   {
    "date": "2026-11-06",
@@ -579,7 +640,9 @@
     "snow-white-heavy-arms"
    ],
    "result": "win",
-   "note": "特殊競技場第 1 場"
+   "note": "特殊競技場第 1 場",
+   "sid": "mwd9dk23st2m",
+   "g": 0
   },
   {
    "date": "2026-11-06",
@@ -599,7 +662,9 @@
     "vesti-tactical-upgrade"
    ],
    "result": "loss",
-   "note": "特殊競技場第 3 場"
+   "note": "特殊競技場第 3 場",
+   "sid": "mwd9dk237pbj",
+   "g": 2
   },
   {
    "date": "2026-11-06",
@@ -619,7 +684,9 @@
     "maiden-ice-rose"
    ],
    "result": "loss",
-   "note": "特殊競技場第 2 場"
+   "note": "特殊競技場第 2 場",
+   "sid": "mwd9dk237pbj",
+   "g": 1
   },
   {
    "date": "2026-11-06",
@@ -639,7 +706,9 @@
     "snow-white-heavy-arms"
    ],
    "result": "win",
-   "note": "特殊競技場第 1 場"
+   "note": "特殊競技場第 1 場",
+   "sid": "mwd9dk237pbj",
+   "g": 0
   },
   {
    "date": "2026-11-06",
@@ -699,7 +768,9 @@
     "snow-white-heavy-arms"
    ],
    "result": "win",
-   "note": "特殊競技場第 3 場"
+   "note": "特殊競技場第 3 場",
+   "sid": "mwd9dk23my9v",
+   "g": 2
   },
   {
    "date": "2026-11-01",
@@ -719,7 +790,9 @@
     "neon-vision-eye"
    ],
    "result": "win",
-   "note": "特殊競技場第 2 場"
+   "note": "特殊競技場第 2 場",
+   "sid": "mwd9dk23my9v",
+   "g": 1
   },
   {
    "date": "2026-11-01",
@@ -739,7 +812,9 @@
     "trina"
    ],
    "result": "loss",
-   "note": "特殊競技場第 1 場"
+   "note": "特殊競技場第 1 場",
+   "sid": "mwd9dk23my9v",
+   "g": 0
   },
   {
    "date": "2026-11-01",
@@ -759,7 +834,9 @@
     "crown"
    ],
    "result": "loss",
-   "note": "特殊競技場第 3 場"
+   "note": "特殊競技場第 3 場",
+   "sid": "mwd9dk23ua9f",
+   "g": 2
   },
   {
    "date": "2026-11-01",
@@ -779,7 +856,9 @@
     "liberalio"
    ],
    "result": "loss",
-   "note": "特殊競技場第 2 場"
+   "note": "特殊競技場第 2 場",
+   "sid": "mwd9dk23ua9f",
+   "g": 1
   },
   {
    "date": "2026-11-01",
@@ -799,7 +878,9 @@
     "trina"
    ],
    "result": "win",
-   "note": "特殊競技場第 1 場"
+   "note": "特殊競技場第 1 場",
+   "sid": "mwd9dk23ua9f",
+   "g": 0
   },
   {
    "date": "2026-11-01",
@@ -819,7 +900,9 @@
     "snow-white-heavy-arms"
    ],
    "result": "win",
-   "note": "特殊競技場第 3 場"
+   "note": "特殊競技場第 3 場",
+   "sid": "mwd9dk23t8uv",
+   "g": 2
   },
   {
    "date": "2026-11-01",
@@ -839,7 +922,9 @@
     "neon-vision-eye"
    ],
    "result": "loss",
-   "note": "特殊競技場第 2 場"
+   "note": "特殊競技場第 2 場",
+   "sid": "mwd9dk23t8uv",
+   "g": 1
   },
   {
    "date": "2026-11-01",
@@ -859,7 +944,9 @@
     "trina"
    ],
    "result": "loss",
-   "note": "特殊競技場第 1 場"
+   "note": "特殊競技場第 1 場",
+   "sid": "mwd9dk23t8uv",
+   "g": 0
   },
   {
    "date": "2026-11-01",
@@ -879,7 +966,9 @@
     "snow-white-heavy-arms"
    ],
    "result": "win",
-   "note": "特殊競技場第 3 場"
+   "note": "特殊競技場第 3 場",
+   "sid": "mwd9dk237z7a",
+   "g": 2
   },
   {
    "date": "2026-11-01",
@@ -899,7 +988,9 @@
     "trina"
    ],
    "result": "loss",
-   "note": "特殊競技場第 2 場"
+   "note": "特殊競技場第 2 場",
+   "sid": "mwd9dk237z7a",
+   "g": 1
   },
   {
    "date": "2026-11-01",
@@ -919,7 +1010,9 @@
     "neon-vision-eye"
    ],
    "result": "win",
-   "note": "特殊競技場第 1 場"
+   "note": "特殊競技場第 1 場",
+   "sid": "mwd9dk237z7a",
+   "g": 0
   },
   {
    "date": "2026-10-29",
@@ -939,7 +1032,9 @@
     "centi-treasure"
    ],
    "result": "loss",
-   "note": "特殊競技場第 3 場"
+   "note": "特殊競技場第 3 場",
+   "sid": "mwd9dk2331x7",
+   "g": 2
   },
   {
    "date": "2026-10-29",
@@ -959,7 +1054,9 @@
     "neon-vision-eye"
    ],
    "result": "loss",
-   "note": "特殊競技場第 2 場"
+   "note": "特殊競技場第 2 場",
+   "sid": "mwd9dk2331x7",
+   "g": 1
   },
   {
    "date": "2026-10-29",
@@ -979,7 +1076,9 @@
     "snow-white-heavy-arms"
    ],
    "result": "loss",
-   "note": "特殊競技場第 1 場"
+   "note": "特殊競技場第 1 場",
+   "sid": "mwd9dk2331x7",
+   "g": 0
   },
   {
    "date": "2026-10-28",
@@ -999,7 +1098,9 @@
     "vesti-tactical-upgrade"
    ],
    "result": "loss",
-   "note": "特殊競技場第 3 場"
+   "note": "特殊競技場第 3 場",
+   "sid": "mwd9dk23888t",
+   "g": 2
   },
   {
    "date": "2026-10-28",
@@ -1019,7 +1120,9 @@
     "centi-treasure"
    ],
    "result": "win",
-   "note": "特殊競技場第 2 場"
+   "note": "特殊競技場第 2 場",
+   "sid": "mwd9dk23888t",
+   "g": 1
   },
   {
    "date": "2026-10-28",
@@ -1039,7 +1142,9 @@
     "snow-white-heavy-arms"
    ],
    "result": "win",
-   "note": "特殊競技場第 1 場"
+   "note": "特殊競技場第 1 場",
+   "sid": "mwd9dk23888t",
+   "g": 0
   },
   {
    "date": "2026-10-28",
@@ -1199,7 +1304,9 @@
     "little-mermaid"
    ],
    "result": "win",
-   "note": "特殊競技場第 3 場"
+   "note": "特殊競技場第 3 場",
+   "sid": "mwd9dk2341eh",
+   "g": 2
   },
   {
    "date": "2026-10-22",
@@ -1219,7 +1326,9 @@
     "snow-white-heavy-arms"
    ],
    "result": "loss",
-   "note": "特殊競技場第 2 場"
+   "note": "特殊競技場第 2 場",
+   "sid": "mwd9dk2341eh",
+   "g": 1
   },
   {
    "date": "2026-10-22",
@@ -1239,7 +1348,9 @@
     "scarlet-black-shadow"
    ],
    "result": "loss",
-   "note": "特殊競技場第 1 場"
+   "note": "特殊競技場第 1 場",
+   "sid": "mwd9dk2341eh",
+   "g": 0
   },
   {
    "date": "2026-10-22",
@@ -1484,32 +1595,6 @@
    ]
   },
   {
-   "date": "2026-11-01",
-   "enemy": [
-    [
-     "drake-treasure",
-     "crown",
-     "anis-star",
-     "helm-treasure",
-     "mast-romantic-maid"
-    ],
-    [
-     "moran-treasure",
-     "ade-agent-bunny",
-     "privaty-treasure",
-     "snow-white-heavy-arms",
-     "vesti-tactical-upgrade"
-    ],
-    [
-     "neon-vision-eye",
-     "little-mermaid",
-     "naga",
-     "cinderella-crystal-wave",
-     "rapi-red-hood"
-    ]
-   ]
-  },
-  {
    "date": "2026-10-22",
    "enemy": [
     [
@@ -1533,7 +1618,8 @@
      "biscuit",
      "cinderella"
     ]
-   ]
+   ],
+   "name": "第二名"
   }
  ],
  "spSaved": [
@@ -1841,7 +1927,9 @@
     "win",
     "win",
     "loss"
-   ]
+   ],
+   "name": "打第二名會贏的陣容",
+   "sid": "mwd9dk23xmnm"
   },
   {
    "date": "2026-11-12",
@@ -1895,7 +1983,9 @@
     "loss",
     "win",
     "win"
-   ]
+   ],
+   "name": "打akaha會贏的陣容",
+   "sid": "mwd9dk23et9o"
   },
   {
    "date": "2026-11-12",
@@ -1949,7 +2039,9 @@
     "loss",
     "win",
     "loss"
-   ]
+   ],
+   "name": "不要直接用打akaha一樣的陣容打第二名",
+   "sid": "mwd9dk230wcs"
   },
   {
    "date": "2026-11-12",
@@ -2003,7 +2095,8 @@
     "loss",
     "win",
     "win"
-   ]
+   ],
+   "sid": "mwd9dk23daia"
   },
   {
    "date": "2026-11-07",
@@ -2057,7 +2150,8 @@
     "win",
     "loss",
     "win"
-   ]
+   ],
+   "sid": "mwd9dk2352x1"
   },
   {
    "date": "2026-11-06",
@@ -2111,7 +2205,8 @@
     "win",
     "loss",
     "loss"
-   ]
+   ],
+   "sid": "mwd9dk23st2m"
   },
   {
    "date": "2026-11-06",
@@ -2165,7 +2260,8 @@
     "win",
     "loss",
     "loss"
-   ]
+   ],
+   "sid": "mwd9dk237pbj"
   },
   {
    "date": "2026-11-01",
@@ -2219,7 +2315,8 @@
     "loss",
     "win",
     "win"
-   ]
+   ],
+   "sid": "mwd9dk23my9v"
   },
   {
    "date": "2026-11-01",
@@ -2273,7 +2370,8 @@
     "win",
     "loss",
     "loss"
-   ]
+   ],
+   "sid": "mwd9dk23ua9f"
   },
   {
    "date": "2026-11-01",
@@ -2327,7 +2425,8 @@
     "loss",
     "loss",
     "win"
-   ]
+   ],
+   "sid": "mwd9dk23t8uv"
   },
   {
    "date": "2026-11-01",
@@ -2381,7 +2480,8 @@
     "win",
     "loss",
     "win"
-   ]
+   ],
+   "sid": "mwd9dk237z7a"
   },
   {
    "date": "2026-10-29",
@@ -2435,7 +2535,8 @@
     "loss",
     "loss",
     "loss"
-   ]
+   ],
+   "sid": "mwd9dk2331x7"
   },
   {
    "date": "2026-10-28",
@@ -2489,7 +2590,8 @@
     "win",
     "win",
     "loss"
-   ]
+   ],
+   "sid": "mwd9dk23888t"
   },
   {
    "date": "2026-10-22",
@@ -2543,7 +2645,8 @@
     "loss",
     "loss",
     "win"
-   ]
+   ],
+   "sid": "mwd9dk2341eh"
   }
  ]
 }
