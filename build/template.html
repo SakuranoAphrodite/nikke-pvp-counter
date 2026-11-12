@@ -182,6 +182,21 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px;border-t
 .rec .t{flex:1;min-width:200px}
 .rec .x{cursor:pointer;color:var(--muted)}
 .rec .x:hover{color:var(--bad)}
+.recfilter select{background:#0f121a;border:1px solid var(--line);color:var(--text);border-radius:8px;padding:5px 8px;font-size:13px}
+details.recg{border-bottom:1px solid var(--line);padding:3px 0}
+details.recg:last-child{border-bottom:none}
+details.recg>summary{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:12px;color:var(--text);list-style:none;padding:3px 0}
+details.recg>summary::-webkit-details-marker{display:none}
+details.recg>summary::before{content:'▸';color:var(--muted);width:10px;flex:none}
+details.recg[open]>summary::before{content:'▾'}
+details.recg>summary .t{flex:1;min-width:200px}
+details.recg>summary .d{color:var(--muted)}
+details.recg>summary:hover .t{color:var(--accent2)}
+.recg-body{padding:0 0 4px 16px}
+.rec input[type=checkbox],details.recg>summary input[type=checkbox]{margin:0 2px 0 0;accent-color:var(--accent);flex:none;cursor:pointer}
+.rec .dn{font-size:11px;white-space:nowrap}
+.rec .dn:hover{color:var(--accent2)}
+@media(max-width:600px){.recg-body{padding-left:0}}
 details.mods{margin-top:6px;font-size:12px}
 details.mods summary{color:var(--muted)}
 .mods .mrow{display:inline-flex;gap:6px;align-items:center;margin:4px 12px 2px 0;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:3px 8px}
@@ -291,7 +306,17 @@ details.mods summary{color:var(--muted)}
       <button class="btn danger" id="btnRecLoss">記錄：這場輸了</button>
       <span class="muted">以①的對方隊伍與④的我方隊伍為準，存在瀏覽器本機，匯出 JSON 時會一起帶走。</span>
     </div>
-    <div id="records" class="muted" style="margin-top:8px"></div>
+    <div class="row recfilter" style="margin-top:8px">
+      <select id="recView" title="顯示方式：依對手分組（同 5 人算一組，珍藏版與站位不分）或逐筆列出"><option value="group">依對手分組</option><option value="list">逐筆列出</option></select>
+      <select id="recMode" title="只看哪種模式的紀錄"><option value="">競技場＋特殊</option><option value="arena">只看競技場</option><option value="sp">只看特殊競技場</option></select>
+      <select id="recResult" title="只看贏的或輸的"><option value="">勝＋負</option><option value="win">只看贏的</option><option value="loss">只看輸的</option></select>
+      <select id="recPeriod" title="只看這段期間的紀錄；版本更替後太舊的紀錄參考價值會下降"><option value="30">最近 30 天</option><option value="90">最近 90 天</option><option value="180">最近半年</option><option value="0">全部期間</option></select>
+      <input type="text" id="recQ" placeholder="搜尋角色、名稱或備註（例：白兔）" style="max-width:260px;font-size:13px;padding:5px 8px">
+      <button class="btn" id="recBulkBtn" title="勾選多筆一起刪、從某一筆起往下全勾、或直接刪掉目前篩選到的／某天以前的">批次刪除</button>
+    </div>
+    <div class="muted" id="recSummary" style="margin-top:6px;font-size:12px"></div>
+    <div class="row" id="recBulkBar" style="margin-top:6px;gap:6px;display:none"></div>
+    <div id="records" class="muted" style="margin-top:4px"></div>
   </div>
   <div class="card">
     <h2 id="jump-built" class="jump-target">⑥ 用我的角色庫組反制隊 <span class="muted" id="rosterNote"></span><span class="muted" style="font-weight:400;font-size:12px">（清單很長，可點標題收起）</span></h2>
@@ -880,11 +905,87 @@ function historyBlock(enemyIds,opts){
   if(losses.length) h+=`<details><summary class="muted">輸的 ${losses.length} 場（看看哪些隊不行）</summary>${losses.map(line).join('')}</details>`;
   return h;
 }
+/* 對戰紀錄清單：預設依對手分組（同 5 人算一組，珍藏版與站位不分），可切回逐筆；可篩模式／勝負／期間／搜尋字。篩選條件存在 LS recFilter（搜尋字除外）。
+   批次刪除（recBulk）：每筆有勾選框，可整組勾、從某筆起「以下全勾」，或直接刪掉目前篩選到的／比期間更早的；勾選以紀錄物件為鍵，refresh() 重繪不會掉。 */
+let recFilter={view:'group',mode:'',result:'',period:'90'}; // 實際內容在狀態區由 LS 載入
+const recOpen=new Set(); // 展開中的對手分組；refresh() 重繪後維持展開
+let recShowAll=false, recBulk=false; const recSel=new Set();
+const recGroupKey=ids=>ids.map(recBase).sort().join('|');
+const recSince=()=>{ const days=+recFilter.period||0; return days?new Date(Date.now()-days*864e5).toISOString().slice(0,10):''; };
+function recFiltered(){
+  const norm=x=>String(x==null?'':x).toLowerCase().replace(/[\s:：·・\-_]/g,'');
+  const q=$('#recQ'); const nq=norm(q?q.value.trim():'');
+  const since=recSince();
+  const hit=id=>{ const c=byId[id]; return c?namesOf(c).some(n=>norm(n).includes(nq)):norm(id).includes(nq); };
+  const out=[];
+  records.forEach((r,i)=>{
+    if(!Array.isArray(r.enemy)||!Array.isArray(r.mine)) return;
+    if(recFilter.mode==='sp'&&r.mode!=='sp') return;
+    if(recFilter.mode==='arena'&&r.mode==='sp') return;
+    if(recFilter.result&&r.result!==recFilter.result) return;
+    if(since&&String(r.date||'')<since) return;
+    if(nq&&!(norm(r.name).includes(nq)||norm(r.note).includes(nq)||r.enemy.some(hit)||r.mine.some(hit))) return;
+    out.push({r,i});
+  });
+  return out;
+}
+function recDelete(list,what){ // list：紀錄物件陣列
+  if(!list.length) return;
+  if(!confirm(`刪除${what}，共 ${list.length} 筆？刪了不能復原（要留備份先按上方「匯出 JSON」）；特殊競技場分頁的紀錄不會一起刪。`)) return;
+  const del=new Set(list); records=records.filter(r=>!del.has(r)); recSel.clear(); LS.set('records',records); refresh();
+}
 function renderRecords(){
-  const el=$('#records'); if(!records.length){ el.className='muted'; el.textContent='還沒有紀錄。'; return; }
+  const el=$('#records'), sum=$('#recSummary'), bar=$('#recBulkBar'), bulkBtn=$('#recBulkBtn');
+  if(bulkBtn){ bulkBtn.textContent=recBulk?'結束批次刪除':'批次刪除'; bulkBtn.classList.toggle('primary',recBulk); }
+  if(bar) bar.style.display=recBulk&&records.length?'':'none';
+  if(!records.length){ el.className='muted'; el.textContent='還沒有紀錄。'; if(sum) sum.textContent=''; return; }
   el.className='';
-  el.innerHTML=records.slice(0,30).map((r,i)=>`<div class="rec"><span class="d">${esc(r.date)}</span><span class="badge ${r.result==='win'?'good':'bad'}">${r.result==='win'?'勝':'負'}</span>${r.mode==='sp'?'<span class="badge">特殊</span>':r.mode==='defense'?'<span class="badge" title="舊版紀錄：當時以「我方防守」計算；攻守規則統一後不再區分">防守（舊）</span>':''}<span class="t">${r.name?`<b>${esc(r.name)}</b><br>`:''}對方：${r.enemy.map(nameOf).join('／')}<br>我方：${r.mine.map(nameOf).join('／')}${r.note?`<br><span class="muted">${esc(r.note)}</span>`:''}</span><button class="btn" data-recload="${i}" style="font-size:11px;padding:2px 8px">載入</button><button class="btn" data-recrename="${i}" style="font-size:11px;padding:2px 8px" title="改名">改名</button><span class="x" data-recdel="${i}" title="刪除">✕</span></div>`).join('')+(records.length>30?`<div class="muted">只顯示最近 30 筆，共 ${records.length} 筆。</div>`:'');
-  el.querySelectorAll('[data-recdel]').forEach(b=>b.onclick=()=>{ if(confirm('刪除這筆紀錄？')){ records.splice(+b.dataset.recdel,1); LS.set('records',records); refresh(); } });
+  for(const r of [...recSel]) if(!records.includes(r)) recSel.delete(r); // 匯入取代後殘留的舊物件
+  const f=recFiltered(), hidden=records.length-f.length;
+  const hiddenText=hidden?`，另有 ${hidden} 筆不符合篩選（共 ${records.length} 筆）`:`（共 ${records.length} 筆）`;
+  const bulkHint=recBulk?' 批次刪除：勾選要刪的，或按某一筆的「↓以下全勾」從那筆起全部勾起來，再按「刪除勾選的」。':'';
+  const modeTag=r=>r.mode==='sp'?'<span class="badge">特殊</span>':r.mode==='defense'?'<span class="badge" title="舊版紀錄：當時以「我方防守」計算；攻守規則統一後不再區分">防守（舊）</span>':'';
+  const diffTag=(r,rep)=>r.enemy.join()===rep.enemy.join()?'':[...r.enemy].sort().join()===[...rep.enemy].sort().join()?'<span class="badge" title="同樣 5 人，但對方站位和最近一場不同">站位不同</span>':'<span class="badge" title="同樣 5 人，珍藏版不同">珍藏版不同</span>';
+  const cb=(x,inGroup)=>recBulk?`<input type="checkbox" data-recsel="${x.i}"${recSel.has(x.r)?' checked':''} title="勾選這筆"><span class="x dn" data-recdown="${x.i}" title="${inGroup?'勾選這筆以及這組裡更早的全部':'勾選這筆以及下面的全部'}">↓以下全勾</span>`:'';
+  const btns=i=>`<button class="btn" data-recload="${i}" style="font-size:11px;padding:2px 8px" title="把這場的對方與我方隊伍載入①與④">載入</button><button class="btn" data-recrename="${i}" style="font-size:11px;padding:2px 8px" title="改名">改名</button><span class="x" data-recdel="${i}" title="刪除">✕</span>`;
+  const row=(x,rep)=>{ const r=x.r, dt=rep?diffTag(r,rep):''; return `<div class="rec">${cb(x,!!rep)}<span class="d">${esc(r.date)}</span><span class="badge ${r.result==='win'?'good':'bad'}">${r.result==='win'?'勝':'負'}</span>${modeTag(r)}${dt}<span class="t">${r.name?`<b>${esc(r.name)}</b><br>`:''}${!rep||dt?`對方：${r.enemy.map(nameOf).join('／')}<br>`:''}我方：${r.mine.map(nameOf).join('／')}${r.note?`<br><span class="muted">${esc(r.note)}</span>`:''}</span>${btns(x.i)}</div>`; };
+  const groups=new Map();
+  if(recFilter.view==='group'){
+    f.forEach(x=>{ const k=recGroupKey(x.r.enemy); if(!groups.has(k)) groups.set(k,[]); groups.get(k).push(x); }); // records 新的在前，所以分組順序＝最近打過的對手在前
+    if(sum) sum.textContent=`符合篩選 ${f.length} 筆、${groups.size} 組對手${hiddenText}。點一組展開單場；同 5 人算一組，珍藏版與站位不分。`+bulkHint;
+    el.innerHTML=groups.size?[...groups.entries()].map(([k,l])=>{
+      const rep=l[0].r, w=l.filter(x=>x.r.result==='win').length, lo=l.length-w, spN=l.filter(x=>x.r.mode==='sp').length;
+      const hn=history.find(h=>Array.isArray(h.team)&&recGroupKey(h.team)===k);
+      const byMine=new Map(); l.forEach(x=>{ const mk=[...x.r.mine].sort().join(); const m=byMine.get(mk)||{mine:x.r.mine,w:0,l:0}; m[x.r.result==='win'?'w':'l']++; byMine.set(mk,m); });
+      const best=[...byMine.values()].sort((a,b)=>b.w-a.w||a.l-b.l)[0];
+      const bestLine=best&&best.w?`<span class="muted">最常贏的我方隊伍：${best.mine.map(nameOf).join('／')}（${best.w} 勝 ${best.l} 負${byMine.size>1?`，共用過 ${byMine.size} 種隊`:''}）</span>`:`<span class="muted">用過 ${byMine.size} 種我方隊伍，都沒贏</span>`;
+      const gcb=recBulk?`<input type="checkbox" data-recgsel="${esc(k)}"${l.every(x=>recSel.has(x.r))?' checked':''} title="勾選這組全部">`:'';
+      return `<details class="recg"${recOpen.has(k)?' open':''} data-recg="${esc(k)}"><summary>${gcb}<span class="badge ${w&&!lo?'good':lo&&!w?'bad':'warn'}">${w} 勝 ${lo} 負</span>${spN?`<span class="badge" title="其中 ${spN} 筆來自特殊競技場">特殊 ${spN}</span>`:''}<span class="t">${hn&&hn.name?`<b>${esc(hn.name)}</b> `:''}${rep.enemy.map(nameOf).join('／')}</span><span class="d" title="最近一場">${esc(rep.date)}</span></summary><div class="recg-body"><div class="row" style="margin:4px 0 6px;gap:6px">${bestLine}<button class="btn" data-recgload="${esc(k)}" style="font-size:11px;padding:2px 8px" title="把這組對手（最近一場的站位）載入①，不動我方">載入對手</button><button class="btn" data-recgdel="${esc(k)}" style="font-size:11px;padding:2px 8px" title="刪除這組對手在目前篩選範圍內的全部紀錄">刪除這組 ${l.length} 筆</button></div>${l.map(x=>row(x,rep)).join('')}</div></details>`;
+    }).join(''):'<div class="muted">沒有符合篩選的紀錄。</div>';
+  } else {
+    if(sum) sum.textContent=`符合篩選 ${f.length} 筆${hiddenText}。`+bulkHint;
+    const show=recShowAll||recBulk?f:f.slice(0,30);
+    el.innerHTML=(show.map(x=>row(x,null)).join('')||'<div class="muted">沒有符合篩選的紀錄。</div>')+(f.length>show.length?`<div class="muted" style="margin-top:6px">只顯示最近 30 筆，符合篩選共 ${f.length} 筆。<button class="btn" id="recMore" style="font-size:11px;padding:2px 8px;margin-left:6px">顯示全部</button></div>`:'');
+    const more=$('#recMore'); if(more) more.onclick=()=>{ recShowAll=true; renderRecords(); };
+  }
+  if(recBulk&&bar){
+    const since=recSince(), days=+recFilter.period||0;
+    const older=since?records.filter(r=>String(r.date||'')<since):[];
+    const fset=new Set(f.map(x=>x.r)); const selHidden=[...recSel].filter(r=>!fset.has(r)).length;
+    bar.innerHTML=`<span class="muted">已勾選 ${recSel.size} 筆${selHidden?`（其中 ${selHidden} 筆不在目前篩選內）`:''}</span><button class="btn" id="recSelAll" style="font-size:12px;padding:3px 10px">全勾符合篩選的 ${f.length} 筆</button><button class="btn" id="recSelNone" style="font-size:12px;padding:3px 10px"${recSel.size?'':' disabled'}>清除勾選</button><button class="btn danger" id="recDelSel" style="font-size:12px;padding:3px 10px"${recSel.size?'':' disabled'}>刪除勾選的 ${recSel.size} 筆</button><button class="btn danger" id="recDelFiltered" style="font-size:12px;padding:3px 10px"${f.length?'':' disabled'} title="目前篩選列篩到的全部">刪除目前篩選到的 ${f.length} 筆</button>${since?`<button class="btn danger" id="recDelOlder" style="font-size:12px;padding:3px 10px"${older.length?'':' disabled'} title="只看日期，不管其他篩選條件">刪除 ${days} 天以前的 ${older.length} 筆</button>`:''}`;
+    $('#recSelAll').onclick=()=>{ f.forEach(x=>recSel.add(x.r)); renderRecords(); };
+    $('#recSelNone').onclick=()=>{ recSel.clear(); renderRecords(); };
+    $('#recDelSel').onclick=()=>recDelete([...recSel],'勾選的紀錄');
+    $('#recDelFiltered').onclick=()=>recDelete(f.map(x=>x.r),'目前篩選到的紀錄');
+    const o=$('#recDelOlder'); if(o) o.onclick=()=>recDelete(older,`${days} 天以前的紀錄`);
+  }
+  el.querySelectorAll('details.recg').forEach(d=>d.addEventListener('toggle',()=>{ if(d.open) recOpen.add(d.dataset.recg); else recOpen.delete(d.dataset.recg); }));
+  el.querySelectorAll('[data-recsel]').forEach(c=>c.onchange=()=>{ const r=records[+c.dataset.recsel]; if(!r) return; if(c.checked) recSel.add(r); else recSel.delete(r); renderRecords(); });
+  el.querySelectorAll('[data-recdown]').forEach(b=>b.onclick=()=>{ const scope=b.closest('.recg-body')||el; const all=[...scope.querySelectorAll('[data-recsel]')]; const from=all.findIndex(c=>c.dataset.recsel===b.dataset.recdown); if(from<0) return; all.slice(from).forEach(c=>{ const r=records[+c.dataset.recsel]; if(r) recSel.add(r); }); renderRecords(); });
+  el.querySelectorAll('[data-recgsel]').forEach(c=>{ const l=groups.get(c.dataset.recgsel)||[]; const n=l.filter(x=>recSel.has(x.r)).length; c.indeterminate=n>0&&n<l.length; c.onclick=e=>{ e.preventDefault(); e.stopPropagation(); const all=n===l.length; l.forEach(x=>all?recSel.delete(x.r):recSel.add(x.r)); renderRecords(); }; }); // preventDefault：不讓 details 跟著展開／收合
+  el.querySelectorAll('[data-recgload]').forEach(b=>b.onclick=()=>{ const l=groups.get(b.dataset.recgload); if(!l) return; enemy=[...l[0].r.enemy]; save(); refresh(); window.scrollTo({top:0,behavior:'smooth'}); });
+  el.querySelectorAll('[data-recgdel]').forEach(b=>b.onclick=()=>{ const l=groups.get(b.dataset.recgdel); if(!l) return; if(!confirm(`刪除這組對手的 ${l.length} 筆紀錄？（只刪目前篩選範圍內的）`)) return; const idx=new Set(l.map(x=>x.i)); records=records.filter((_,i)=>!idx.has(i)); recSel.clear(); LS.set('records',records); refresh(); });
+  el.querySelectorAll('[data-recdel]').forEach(b=>b.onclick=()=>{ if(confirm('刪除這筆紀錄？')){ records.splice(+b.dataset.recdel,1); recSel.clear(); LS.set('records',records); refresh(); } });
   el.querySelectorAll('[data-recrename]').forEach(b=>b.onclick=()=>{ const r=records[+b.dataset.recrename]; const name=prompt('這筆紀錄的名稱（留空＝不取名）',r.name||''); if(name===null) return; r.name=name.trim(); LS.set('records',records); refresh(); });
   el.querySelectorAll('[data-recload]').forEach(b=>b.onclick=()=>{ const r=records[+b.dataset.recload]; enemy=[...r.enemy]; mine=[...r.mine]; save(); refresh(); window.scrollTo({top:0,behavior:'smooth'}); });
 }
@@ -1382,6 +1483,7 @@ let spRecords=LS.get('spRecords',[]);   // 特殊競技場紀錄 {name,date,enem
 let spPlanType=LS.get('spPlanType','two');
 let spHistory=LS.get('spHistory',[]);   // 對方三隊的歷史 {name,date,enemy}
 records=LS.get('records',[]);
+recFilter=Object.assign(recFilter,LS.get('recFilter',{}));
 enemyMods=LS.get('enemyMods',{}); mineMods=LS.get('mineMods',{});
 let pickerTarget=null; // {team:'enemy'|'mine'|'sp0'|'sp1'|'sp2', idx, multi, sel}
 let pickerFilter={burst:null,weapon:null,element:null,ownedOnly:false,sort:'tier',dir:-1,rl:'2RL'};
@@ -1877,6 +1979,9 @@ $('#btnOwnAll').onclick=()=>{ if(confirm('把全部角色標成擁有？')){ own
 $('#btnOwnNone').onclick=()=>{ if(confirm('清空角色庫？')){ owned=new Set(); save(); renderRoster(); renderSolve(); } };
 $('#btnExport').onclick=()=>{ const blob=new Blob([JSON.stringify({exported:new Date().toISOString().slice(0,10),owned:[...owned],history,records,mySaved,spHistory,spSaved,spRecords},null,1)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='roster.json'; a.click(); };
 $('#btnRecWin').onclick=()=>addRecord('win'); $('#btnRecLoss').onclick=()=>addRecord('loss');
+[['recView','view'],['recMode','mode'],['recResult','result'],['recPeriod','period']].forEach(([id,k])=>{ const sel=$('#'+id); if([...sel.options].some(o=>o.value===String(recFilter[k]))) sel.value=String(recFilter[k]); else recFilter[k]=sel.value; sel.onchange=()=>{ recFilter[k]=sel.value; LS.set('recFilter',recFilter); recShowAll=false; renderRecords(); }; });
+$('#recQ').addEventListener('input',()=>{ recShowAll=false; renderRecords(); });
+$('#recBulkBtn').onclick=()=>{ recBulk=!recBulk; if(!recBulk) recSel.clear(); renderRecords(); };
 let importReplace=false; // 「匯入並取代」：以檔案內容完整取代本機的紀錄、歷史與儲存隊伍；「匯入 JSON」是合併
 $('#btnImport').onclick=()=>{ importReplace=false; $('#fileImport').click(); };
 $('#btnImportReplace').onclick=()=>{ if(!confirm('選好檔案後，會以檔案內容完整取代本機的角色庫、對戰紀錄、歷史與儲存隊伍（本機多出來的會被刪除），確定？')) return; importReplace=true; $('#fileImport').click(); };
