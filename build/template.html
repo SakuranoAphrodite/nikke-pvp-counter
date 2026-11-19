@@ -803,7 +803,7 @@ const SERVER_ZH={G:'國際服',J:'JP',K:'KR',GLOBAL:'國際服',JP:'JP',KR:'KR'}
 function sampleText(s){ const [season,stage,side,server]=String(s).split('|'); return `${season} ${stage}（${SERVER_ZH[server]||server}，${SIDE_ZH[side]||side}）`; }
 function archVsRecord(myArch,enemyArchs){ let w=0,l=0; for(const e of enemyArchs){ w+=ARENA.archVs[myArch+'>'+e]||0; l+=ARENA.archVs[e+'>'+myArch]||0; } return {w,l}; }
 const teamLine=st=>st.ids.map(anyName).join('／');
-const deckRank=id=>{ const u=DECK.units&&DECK.units[id]; return u&&u.rank&&u.rank!=='N/A'?`<span class="badge" title="nikke-deck 的 PVP 階級（另一份獨立評價）">deck ${esc(u.rank)}</span>`:''; };
+const deckRank=id=>{ if(byId[id]&&byId[id].tierSrc==='deck') return ''; const u=DECK.units&&DECK.units[id]; return u&&u.rank&&u.rank!=='N/A'?`<span class="badge" title="nikke-deck 的 PVP 階級（另一份獨立評價）">deck ${esc(u.rank)}</span>`:''; };
 function posInfo(id){ const c=ARENA.charPos&&ARENA.charPos[id]; if(!c||!c.n) return ''; const best=c.pos.map((p,i)=>({i:i+1,n:p[0],pct:p[1],wr:p[2]})).sort((a,b)=>b.n-a.n)[0]; return `<span class="badge" title="冠軍競技場：出場 ${c.n} 次，整體勝率 ${pct(c.w,c.m)}%">實戰常放 P${best.i}（${best.pct}%，該位勝率 ${best.wr==null?'–':best.wr}%）</span>`; }
 function arenaBlock(ids){
   if(!ARENA.teams||!ARENA.teams.length) return '';
@@ -851,8 +851,10 @@ let REFERENCES = __REFERENCES__;
 /* 綽號（build/data/nicknames.json）：搜尋時與正式名一起比對 */
 const NICK = __NICKNAMES__;
 const PRYDWEN = __PRYDWEN__; // Prydwen PVP 階級表（{updated, tiers:{id:tier}}）
-/* 角色的 PVP 階級：以 Prydwen 現行的 PVP 階級為準（上游 arena-planner 的 pvpTier 本來就是某時間點抄 Prydwen 的，但沒跟著更新）；原值保留在 plannerTier */
-function applyPrydwen(chars){ for(const c of chars){ if(c.plannerTier===undefined) c.plannerTier=c.pvpTier; const t=PRYDWEN.tiers&&PRYDWEN.tiers[c.id]; if(t) c.pvpTier=t; } }
+/* 角色的 PVP 階級：以 Prydwen 現行的 PVP 階級為準（上游 arena-planner 的 pvpTier 本來就是某時間點抄 Prydwen 的，但沒跟著更新）；原值保留在 plannerTier。
+   Prydwen 快照與上游都還沒評的新角色，暫用 nikke-deck 的 PVP 階級（標 tierSrc='deck'），排序與評分才不會把她當成最低階；快照補上她之後就改用 Prydwen 的值 */
+const DECK_TIER_OK=/^(SSS|SS|S|A|B|C|D|E)$/; // nikke-deck 的 rank 另有 N/A、UNBALANCED，這兩種不當階級用
+function applyPrydwen(chars){ for(const c of chars){ if(c.plannerTier===undefined) c.plannerTier=c.pvpTier; const t=PRYDWEN.tiers&&PRYDWEN.tiers[c.id]; if(t){ c.pvpTier=t; continue; } if(!c.pvpTier){ const u=DECK.units&&DECK.units[c.id]; if(u&&DECK_TIER_OK.test(u.rank||'')){ c.pvpTier=u.rank; c.tierSrc='deck'; } } } }
 applyPrydwen(CHARACTERS);
 const namesOf=c=>[c.name['zh-TW'],c.name['zh-CN'],c.name.en,c.name.ja,c.id].concat(NICK[c.id]||[]);
 /* 頭像：avatars/<avatarImg>.webp（來自上游倉庫），缺檔時自動隱藏 */
@@ -1536,7 +1538,7 @@ const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
 const burstBadge=b=>`<span class="badge ${b==='Λ'?'bL':'b'+({I:1,II:2,III:3})[b]}">${b==='Λ'?'Λ':'B'+({I:1,II:2,III:3})[b]}</span>`;
 const elBadge=e=>`<span class="badge ${e}">${EL_ZH[e]||e}</span>`;
-const tierBadge=(c)=>{ if(!c) return ''; if(typeof c==='string') c={pvpTier:c}; const t=c.pvpTier; if(!t) return ''; const pry=PRYDWEN.tiers&&PRYDWEN.tiers[c.id]; const title=pry?`Prydwen PVP 階級（${PRYDWEN.updated}）${c.plannerTier&&c.plannerTier!==t?'；arena-planner 舊值 '+c.plannerTier:''}`:'arena-planner 的 pvpTier（Prydwen 未評）'; return `<span class="badge tier ${t}" title="${esc(title)}">${t}</span>${c.plannerTier&&c.plannerTier!==t?`<span class="badge" title="上游 arena-planner 的舊階級">planner ${esc(c.plannerTier)}</span>`:''}`; };
+const tierBadge=(c)=>{ if(!c) return ''; if(typeof c==='string') c={pvpTier:c}; const t=c.pvpTier; if(!t) return ''; if(c.tierSrc==='deck') return `<span class="badge tier ${t}" title="nikke-deck 的 PVP 階級：Prydwen（${esc(PRYDWEN.updated)} 的快照）與 arena-planner 都還沒評這名角色，排序與評分暫時用它">deck ${t}</span>`; const pry=PRYDWEN.tiers&&PRYDWEN.tiers[c.id]; const title=pry?`Prydwen PVP 階級（${PRYDWEN.updated}）${c.plannerTier&&c.plannerTier!==t?'；arena-planner 舊值 '+c.plannerTier:''}`:'arena-planner 的 pvpTier（Prydwen 未評）'; return `<span class="badge tier ${t}" title="${esc(title)}">${t}</span>${c.plannerTier&&c.plannerTier!==t?`<span class="badge" title="上游 arena-planner 的舊階級">planner ${esc(c.plannerTier)}</span>`:''}`; };
 function unitLine(id){ const c=byId[id]; if(!c) return esc(id); return `${avatar(id,'s')} <b>${esc(c.name['zh-TW'])}</b> <span class="muted">${esc(c.name.en)}</span> ${burstBadge(c.burst)}${elBadge(c.element)}<span class="badge">${c.weapon}</span><span class="badge">${ROLE_ZH[c.role]}</span>${tierBadge(c)}${deckRank(id)}`; }
 function tagBadges(id){ return (UNIT_TAGS[id]||[]).map(t=>`<span class="badge tag">${t}</span>`).join(''); }
 

@@ -22,7 +22,7 @@
 - 頁首可切換成 nikke-deck.com 的每階充能資料與公式（含技能 10 預設版本、超頻 17% 版本、量子魔方、超級巨星阿妮斯的每擊加成），結果與該站一致；頁首可切換回 nikke-arena-planner 的資料。公式來源：nikke-deck 前端 `app-deck-details.getBurstGeneration`。
 
 - `build/fetch_arena_stats.py` 會從 [にけあり！NIKKE 競技場分析器](https://nikkeari.cc/zh-CN) 的公開 API 抓冠軍競技場的對戰紀錄（JP／KR／國際服，每回合含進攻隊、防守隊與勝方），整理成 `build/data/arena-stats.json`：每個 5 人組合的場次、勝率、進攻／防守勝率、被哪些隊伍打贏過、含某核心角的隊伍整體勝率、角色常用站位。工具會在「對方分析」顯示這隊（或 4 人相同的相近隊）的實戰戰績，在「解法建議」列出實戰中打贏過它的隊伍並可一鍵帶入。判斷勝負時另有「直接對位」：含我方 4 位（不足 20 場放寬到 3 位）相同角色的隊伍對上含對方 4 位（或 3 位）相同角色的隊伍的實戰勝負，珍藏與一般版視為同一人；它和模板寫的克制關係衝突時以實戰為準（例如「娜由塔一閃」模板宣稱克制布蘭兒不屈隊，但對超級巨星阿妮斯＋布蘭兒隊實戰只有約三成，工具就不再給克制加分）。
-- 同一支腳本也會抓 [NIKKE DECK](https://nikke-deck.com/en/deck) 的 `data.json`，整理成 `build/data/deck-speed.json`：哪些角色有「充能速度 17%」超頻選項、量子魔方 Lv7 的充能加成，以及它的 PVP 階級（在角色旁以「deck」標籤顯示，作為第二份獨立評價）。
+- 同一支腳本也會抓 [NIKKE DECK](https://nikke-deck.com/en/deck) 的 `data.json`，整理成 `build/data/deck-speed.json`：哪些角色有「充能速度 17%」超頻選項、量子魔方 Lv7 的充能加成，以及它的 PVP 階級（在角色旁以「deck」標籤顯示，作為第二份獨立評價；Prydwen 與上游都還沒評的新角色，排序與評分暫時用這個階級，標籤顯示為有底色的「deck X」）。
 - 「進階」區可以勾選對方或我方角色的超頻 17%／量子魔方 Lv7，速度判定會隨之改變；模型與數值來自 nikke-deck 與 NIKKE Synergy 的機制文章，是估算值。
 - 更新：`python build/fetch_arena_stats.py --refresh`（原始回應存在 `build/data/raw/`，不進倉庫），再執行 `python build/build.py`。請勿高頻呼叫對方的 API。
 
@@ -87,7 +87,7 @@
 | `build/data/templates-mined.json` | `build/mine_templates.py` 從 nikkeari 的 24,000 回合挖出的 24 個核心家族：場次、勝率、常見補位、站位、互剋（統計結果，非人工驗證） |
 | `build/data/community-teams.json` | 社群明確列出的新人／特殊競技場隊伍（JP wikiwiki、GameWith、Yahoo知恵袋、KR arca／dcinside／ruliweb、Gamemeca，2025-07～2026-10），含來源、日期、站位、速度、打得贏與輸給誰 |
 | `build/data/templates-community.json` | `build/community_templates.py` 把上面的隊伍轉成的 36 個模板（名稱標「（社群）」） |
-| `build/data/prydwen-raw.json` → `prydwen-pvp.json` | Prydwen 的 PVP 階級表（2026-10-12）。Prydwen 擋程式抓取，raw 檔是用瀏覽器開 PVP 分頁整理的，`prydwen_map.py` 對應成角色 id。頁面以它為角色的 PVP 階級（上游 arena-planner 的 pvpTier 本來就是各角色加入時抄 Prydwen 的，但沒跟著更新；舊值顯示為「planner X」） |
+| `build/data/prydwen-raw.json` → `prydwen-pvp.json` | Prydwen 的 PVP 階級表（2026-11-09）。Prydwen 擋程式抓取，raw 檔是用瀏覽器開 PVP 分頁整理的，`prydwen_map.py` 對應成角色 id；出了新角色或 Prydwen 改版後要重抓 raw 檔再跑一次，否則新角色只會有 nikke-deck 的暫代階級。頁面以它為角色的 PVP 階級（上游 arena-planner 的 pvpTier 本來就是各角色加入時抄 Prydwen 的，但沒跟著更新；舊值顯示為「planner X」） |
 | `build/data/nicknames.json` | 角色綽號／別名（白兔、黑兔、偶像阿妮斯、白雪重武、EMT…），搜尋時與正式名一起比對，可自行增補 |
 | `avatars/` | 角色頭像（`build/fetch_avatars.py` 從上游倉庫下載，檔名為角色的 avatarImg 代碼）。圖片為遊戲素材，版權屬 SHIFT UP／Level Infinite，僅作粉絲工具展示 |
 

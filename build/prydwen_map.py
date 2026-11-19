@@ -20,7 +20,8 @@ for tier, names in raw["lists"].items():
             continue
         ALIAS = {"Ada Wong": "Ada", "Mari Makinami Illustrious": "Mari", "Chisato Nishikigi": "Chisato", "Queen (Makoto Niijima)": "Queen",
                  "Takina Inoue": "Takina", "Yukiko Amagi": "Yukiko", "Jill Valentine": "Jill", "Misato Katsuragi": "Misato",
-                 "Asuka Shikinami Langley": "Asuka", "Asuka Shikinami Langley: Wille": "Asuka: WILLE"}
+                 "Asuka Shikinami Langley": "Asuka", "Asuka Shikinami Langley: Wille": "Asuka: WILLE",
+                 "Siren": "Little Mermaid"}  # Prydwen 用 Siren 稱呼小美人魚（同一名角色：朝聖者 B1 SMG 風壓支援）
         n = ALIAS.get(n, n)
         base = re.sub(r"\s*\(Treasure\)", "", n)
         base = re.sub(r"^Red Hood B[123]$", "Red Hood", base)
