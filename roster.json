@@ -1,5 +1,5 @@
 {
- "exported": "2026-11-19",
+ "exported": "2026-11-24",
  "owned": [
   "blanc",
   "moran-treasure",
@@ -131,6 +131,351 @@
  ],
  "records": [
   {
+   "sid": "mwshnvpfyhdc",
+   "g": 2,
+   "date": "2026-11-22",
+   "mode": "sp",
+   "name": "索達暈到白兔 拉皮放第三個",
+   "enemy": [
+    "moran-treasure",
+    "noah",
+    "neon-vision-eye",
+    "trina",
+    "anis-star"
+   ],
+   "mine": [
+    "anis-star",
+    "blanc",
+    "rapi-red-hood",
+    "biscuit",
+    "liberalio"
+   ],
+   "result": "win",
+   "note": "特殊競技場第 3 場"
+  },
+  {
+   "sid": "mwshnvpfyhdc",
+   "g": 1,
+   "date": "2026-11-22",
+   "mode": "sp",
+   "name": "索達暈到白兔 拉皮放第三個",
+   "enemy": [
+    "nayuta",
+    "centi-treasure",
+    "helm-treasure",
+    "red-hood",
+    "laplace-treasure"
+   ],
+   "mine": [
+    "nayuta",
+    "helm-treasure",
+    "red-hood",
+    "snow-white-heavy-arms",
+    "centi-treasure"
+   ],
+   "result": "win",
+   "note": "特殊競技場第 2 場"
+  },
+  {
+   "sid": "mwshnvpfyhdc",
+   "g": 0,
+   "date": "2026-11-22",
+   "mode": "sp",
+   "name": "索達暈到白兔 拉皮放第三個",
+   "enemy": [
+    "jackal",
+    "snow-white-heavy-arms",
+    "blanc",
+    "biscuit",
+    "cinderella"
+   ],
+   "mine": [
+    "soda",
+    "trina",
+    "laplace-ultimate-hero",
+    "jackal",
+    "scarlet-goddeath"
+   ],
+   "result": "win",
+   "note": "特殊競技場第 1 場"
+  },
+  {
+   "sid": "mwshmma8va0n",
+   "g": 2,
+   "date": "2026-11-22",
+   "mode": "sp",
+   "name": "索達要暈到白兔才會贏 這速度太慢拉皮會先被秒才開出白兔",
+   "enemy": [
+    "moran-treasure",
+    "noah",
+    "neon-vision-eye",
+    "trina",
+    "anis-star"
+   ],
+   "mine": [
+    "anis-star",
+    "blanc",
+    "rapi-red-hood",
+    "biscuit",
+    "maiden-ice-rose"
+   ],
+   "result": "loss",
+   "note": "特殊競技場第 3 場"
+  },
+  {
+   "sid": "mwshmma8va0n",
+   "g": 1,
+   "date": "2026-11-22",
+   "mode": "sp",
+   "name": "索達要暈到白兔才會贏 這速度太慢拉皮會先被秒才開出白兔",
+   "enemy": [
+    "nayuta",
+    "centi-treasure",
+    "helm-treasure",
+    "red-hood",
+    "laplace-treasure"
+   ],
+   "mine": [
+    "nayuta",
+    "helm-treasure",
+    "red-hood",
+    "snow-white-heavy-arms",
+    "centi-treasure"
+   ],
+   "result": "win",
+   "note": "特殊競技場第 2 場"
+  },
+  {
+   "sid": "mwshmma8va0n",
+   "g": 0,
+   "date": "2026-11-22",
+   "mode": "sp",
+   "name": "索達要暈到白兔才會贏 這速度太慢拉皮會先被秒才開出白兔",
+   "enemy": [
+    "jackal",
+    "snow-white-heavy-arms",
+    "blanc",
+    "biscuit",
+    "cinderella"
+   ],
+   "mine": [
+    "soda",
+    "trina",
+    "laplace-ultimate-hero",
+    "jackal",
+    "scarlet-goddeath"
+   ],
+   "result": "loss",
+   "note": "特殊競技場第 1 場"
+  },
+  {
+   "sid": "mwqa8h5m18ml",
+   "g": 2,
+   "date": "2026-11-21",
+   "mode": "sp",
+   "name": "不屈會歪給水母 然後又卡換彈",
+   "enemy": [
+    "moran-treasure",
+    "noah",
+    "neon-vision-eye",
+    "trina",
+    "anis-star"
+   ],
+   "mine": [
+    "soda",
+    "trina",
+    "laplace-ultimate-hero",
+    "jackal",
+    "scarlet-goddeath"
+   ],
+   "result": "loss",
+   "note": "特殊競技場第 3 場"
+  },
+  {
+   "sid": "mwqa8h5m18ml",
+   "g": 1,
+   "date": "2026-11-21",
+   "mode": "sp",
+   "name": "不屈會歪給水母 然後又卡換彈",
+   "enemy": [
+    "nayuta",
+    "centi-treasure",
+    "helm-treasure",
+    "red-hood",
+    "laplace-treasure"
+   ],
+   "mine": [
+    "nayuta",
+    "helm-treasure",
+    "red-hood",
+    "snow-white-heavy-arms",
+    "centi-treasure"
+   ],
+   "result": "win",
+   "note": "特殊競技場第 2 場"
+  },
+  {
+   "sid": "mwqa8h5m18ml",
+   "g": 0,
+   "date": "2026-11-21",
+   "mode": "sp",
+   "name": "不屈會歪給水母 然後又卡換彈",
+   "enemy": [
+    "jackal",
+    "snow-white-heavy-arms",
+    "blanc",
+    "biscuit",
+    "cinderella"
+   ],
+   "mine": [
+    "anis-star",
+    "blanc",
+    "biscuit",
+    "rapi-red-hood",
+    "liberalio"
+   ],
+   "result": "loss",
+   "note": "特殊競技場第 1 場"
+  },
+  {
+   "sid": "mwqa76vncnnx",
+   "g": 2,
+   "date": "2026-11-21",
+   "mode": "sp",
+   "name": "貝斯地換彈打輸 索達會暈兩個嘲諷的",
+   "enemy": [
+    "moran-treasure",
+    "noah",
+    "neon-vision-eye",
+    "trina",
+    "anis-star"
+   ],
+   "mine": [
+    "soda",
+    "trina",
+    "laplace-ultimate-hero",
+    "jackal",
+    "scarlet-goddeath"
+   ],
+   "result": "loss",
+   "note": "特殊競技場第 3 場"
+  },
+  {
+   "sid": "mwqa76vncnnx",
+   "g": 1,
+   "date": "2026-11-21",
+   "mode": "sp",
+   "name": "貝斯地換彈打輸 索達會暈兩個嘲諷的",
+   "enemy": [
+    "nayuta",
+    "centi-treasure",
+    "helm-treasure",
+    "red-hood",
+    "laplace-treasure"
+   ],
+   "mine": [
+    "nayuta",
+    "helm-treasure",
+    "red-hood",
+    "snow-white-heavy-arms",
+    "centi-treasure"
+   ],
+   "result": "win",
+   "note": "特殊競技場第 2 場"
+  },
+  {
+   "sid": "mwqa76vncnnx",
+   "g": 0,
+   "date": "2026-11-21",
+   "mode": "sp",
+   "name": "貝斯地換彈打輸 索達會暈兩個嘲諷的",
+   "enemy": [
+    "jackal",
+    "snow-white-heavy-arms",
+    "blanc",
+    "biscuit",
+    "cinderella"
+   ],
+   "mine": [
+    "anis-star",
+    "blanc",
+    "vesti-tactical-upgrade",
+    "neon-vision-eye",
+    "biscuit"
+   ],
+   "result": "loss",
+   "note": "特殊競技場第 1 場"
+  },
+  {
+   "sid": "mwqa3qlinyry",
+   "g": 2,
+   "date": "2026-11-21",
+   "mode": "sp",
+   "name": "白兔又會歪了",
+   "enemy": [
+    "moran-treasure",
+    "noah",
+    "neon-vision-eye",
+    "trina",
+    "anis-star"
+   ],
+   "mine": [
+    "anis-star",
+    "blanc",
+    "scarlet-goddeath",
+    "neon-vision-eye",
+    "biscuit"
+   ],
+   "result": "loss",
+   "note": "特殊競技場第 3 場"
+  },
+  {
+   "sid": "mwqa3qlinyry",
+   "g": 1,
+   "date": "2026-11-21",
+   "mode": "sp",
+   "name": "白兔又會歪了",
+   "enemy": [
+    "nayuta",
+    "centi-treasure",
+    "helm-treasure",
+    "red-hood",
+    "laplace-treasure"
+   ],
+   "mine": [
+    "nayuta",
+    "helm-treasure",
+    "red-hood",
+    "snow-white-heavy-arms",
+    "centi-treasure"
+   ],
+   "result": "win",
+   "note": "特殊競技場第 2 場"
+  },
+  {
+   "sid": "mwqa3qlinyry",
+   "g": 0,
+   "date": "2026-11-21",
+   "mode": "sp",
+   "name": "白兔又會歪了",
+   "enemy": [
+    "jackal",
+    "snow-white-heavy-arms",
+    "blanc",
+    "biscuit",
+    "cinderella"
+   ],
+   "mine": [
+    "moran-treasure",
+    "trina",
+    "laplace-ultimate-hero",
+    "liberalio",
+    "jackal"
+   ],
+   "result": "loss",
+   "note": "特殊競技場第 1 場"
+  },
+  {
    "date": "2026-11-12",
    "mode": "sp",
    "enemy": [
@@ -149,7 +494,7 @@
    ],
    "result": "loss",
    "note": "特殊競技場第 3 場",
-   "sid": "mwd9dk23xmnm",
+   "sid": "mwe7y3o1e6lv",
    "g": 2
   },
   {
@@ -171,7 +516,7 @@
    ],
    "result": "win",
    "note": "特殊競技場第 2 場",
-   "sid": "mwd9dk23xmnm",
+   "sid": "mwe7y3o1e6lv",
    "g": 1
   },
   {
@@ -193,7 +538,7 @@
    ],
    "result": "win",
    "note": "特殊競技場第 1 場",
-   "sid": "mwd9dk23xmnm",
+   "sid": "mwe7y3o1e6lv",
    "g": 0
   },
   {
@@ -215,7 +560,7 @@
    ],
    "result": "win",
    "note": "特殊競技場第 3 場",
-   "sid": "mwd9dk23et9o",
+   "sid": "mwe7y3o1yl2h",
    "g": 2
   },
   {
@@ -237,7 +582,7 @@
    ],
    "result": "win",
    "note": "特殊競技場第 2 場",
-   "sid": "mwd9dk23et9o",
+   "sid": "mwe7y3o1yl2h",
    "g": 1
   },
   {
@@ -259,7 +604,7 @@
    ],
    "result": "loss",
    "note": "特殊競技場第 1 場",
-   "sid": "mwd9dk23et9o",
+   "sid": "mwe7y3o1yl2h",
    "g": 0
   },
   {
@@ -281,7 +626,7 @@
    ],
    "result": "loss",
    "note": "特殊競技場第 3 場",
-   "sid": "mwd9dk230wcs",
+   "sid": "mwe7y3o110v1",
    "g": 2
   },
   {
@@ -303,7 +648,7 @@
    ],
    "result": "win",
    "note": "特殊競技場第 2 場",
-   "sid": "mwd9dk230wcs",
+   "sid": "mwe7y3o110v1",
    "g": 1
   },
   {
@@ -325,7 +670,7 @@
    ],
    "result": "loss",
    "note": "特殊競技場第 1 場",
-   "sid": "mwd9dk230wcs",
+   "sid": "mwe7y3o110v1",
    "g": 0
   },
   {
@@ -347,7 +692,7 @@
    ],
    "result": "win",
    "note": "特殊競技場第 3 場",
-   "sid": "mwd9dk23daia",
+   "sid": "mwe7y3o1jq5c",
    "g": 2
   },
   {
@@ -369,7 +714,7 @@
    ],
    "result": "win",
    "note": "特殊競技場第 2 場",
-   "sid": "mwd9dk23daia",
+   "sid": "mwe7y3o1jq5c",
    "g": 1
   },
   {
@@ -391,7 +736,7 @@
    ],
    "result": "loss",
    "note": "特殊競技場第 1 場",
-   "sid": "mwd9dk23daia",
+   "sid": "mwe7y3o1jq5c",
    "g": 0
   },
   {
@@ -473,7 +818,7 @@
    ],
    "result": "win",
    "note": "特殊競技場第 3 場",
-   "sid": "mwd9dk2352x1",
+   "sid": "mwe7y3o183fr",
    "g": 2
   },
   {
@@ -515,7 +860,7 @@
    ],
    "result": "win",
    "note": "特殊競技場第 1 場",
-   "sid": "mwd9dk2352x1",
+   "sid": "mwe7y3o183fr",
    "g": 0
   },
   {
@@ -557,7 +902,7 @@
    ],
    "result": "loss",
    "note": "特殊競技場第 2 場",
-   "sid": "mwd9dk2352x1",
+   "sid": "mwe7y3o183fr",
    "g": 1
   },
   {
@@ -599,7 +944,7 @@
    ],
    "result": "loss",
    "note": "特殊競技場第 3 場",
-   "sid": "mwd9dk23st2m",
+   "sid": "mwe7y3o1z28h",
    "g": 2
   },
   {
@@ -621,7 +966,7 @@
    ],
    "result": "loss",
    "note": "特殊競技場第 2 場",
-   "sid": "mwd9dk23st2m",
+   "sid": "mwe7y3o1z28h",
    "g": 1
   },
   {
@@ -643,7 +988,7 @@
    ],
    "result": "win",
    "note": "特殊競技場第 1 場",
-   "sid": "mwd9dk23st2m",
+   "sid": "mwe7y3o1z28h",
    "g": 0
   },
   {
@@ -665,7 +1010,7 @@
    ],
    "result": "loss",
    "note": "特殊競技場第 3 場",
-   "sid": "mwd9dk237pbj",
+   "sid": "mwe7y3o166ss",
    "g": 2
   },
   {
@@ -687,7 +1032,7 @@
    ],
    "result": "loss",
    "note": "特殊競技場第 2 場",
-   "sid": "mwd9dk237pbj",
+   "sid": "mwe7y3o166ss",
    "g": 1
   },
   {
@@ -709,7 +1054,7 @@
    ],
    "result": "win",
    "note": "特殊競技場第 1 場",
-   "sid": "mwd9dk237pbj",
+   "sid": "mwe7y3o166ss",
    "g": 0
   },
   {
@@ -771,7 +1116,7 @@
    ],
    "result": "win",
    "note": "特殊競技場第 3 場",
-   "sid": "mwd9dk23my9v",
+   "sid": "mwe7y3o16wqc",
    "g": 2
   },
   {
@@ -793,7 +1138,7 @@
    ],
    "result": "win",
    "note": "特殊競技場第 2 場",
-   "sid": "mwd9dk23my9v",
+   "sid": "mwe7y3o16wqc",
    "g": 1
   },
   {
@@ -815,7 +1160,7 @@
    ],
    "result": "loss",
    "note": "特殊競技場第 1 場",
-   "sid": "mwd9dk23my9v",
+   "sid": "mwe7y3o16wqc",
    "g": 0
   },
   {
@@ -837,7 +1182,7 @@
    ],
    "result": "loss",
    "note": "特殊競技場第 3 場",
-   "sid": "mwd9dk23ua9f",
+   "sid": "mwe7y3o1pfui",
    "g": 2
   },
   {
@@ -859,7 +1204,7 @@
    ],
    "result": "loss",
    "note": "特殊競技場第 2 場",
-   "sid": "mwd9dk23ua9f",
+   "sid": "mwe7y3o1pfui",
    "g": 1
   },
   {
@@ -881,7 +1226,7 @@
    ],
    "result": "win",
    "note": "特殊競技場第 1 場",
-   "sid": "mwd9dk23ua9f",
+   "sid": "mwe7y3o1pfui",
    "g": 0
   },
   {
@@ -903,7 +1248,7 @@
    ],
    "result": "win",
    "note": "特殊競技場第 3 場",
-   "sid": "mwd9dk23t8uv",
+   "sid": "mwe7y3o1ubwt",
    "g": 2
   },
   {
@@ -925,7 +1270,7 @@
    ],
    "result": "loss",
    "note": "特殊競技場第 2 場",
-   "sid": "mwd9dk23t8uv",
+   "sid": "mwe7y3o1ubwt",
    "g": 1
   },
   {
@@ -947,7 +1292,7 @@
    ],
    "result": "loss",
    "note": "特殊競技場第 1 場",
-   "sid": "mwd9dk23t8uv",
+   "sid": "mwe7y3o1ubwt",
    "g": 0
   },
   {
@@ -969,7 +1314,7 @@
    ],
    "result": "win",
    "note": "特殊競技場第 3 場",
-   "sid": "mwd9dk237z7a",
+   "sid": "mwe7y3o1nsvo",
    "g": 2
   },
   {
@@ -991,7 +1336,7 @@
    ],
    "result": "loss",
    "note": "特殊競技場第 2 場",
-   "sid": "mwd9dk237z7a",
+   "sid": "mwe7y3o1nsvo",
    "g": 1
   },
   {
@@ -1013,7 +1358,7 @@
    ],
    "result": "win",
    "note": "特殊競技場第 1 場",
-   "sid": "mwd9dk237z7a",
+   "sid": "mwe7y3o1nsvo",
    "g": 0
   },
   {
@@ -1035,7 +1380,7 @@
    ],
    "result": "loss",
    "note": "特殊競技場第 3 場",
-   "sid": "mwd9dk2331x7",
+   "sid": "mwe7y3o1d6np",
    "g": 2
   },
   {
@@ -1057,7 +1402,7 @@
    ],
    "result": "loss",
    "note": "特殊競技場第 2 場",
-   "sid": "mwd9dk2331x7",
+   "sid": "mwe7y3o1d6np",
    "g": 1
   },
   {
@@ -1079,7 +1424,7 @@
    ],
    "result": "loss",
    "note": "特殊競技場第 1 場",
-   "sid": "mwd9dk2331x7",
+   "sid": "mwe7y3o1d6np",
    "g": 0
   },
   {
@@ -1101,7 +1446,7 @@
    ],
    "result": "loss",
    "note": "特殊競技場第 3 場",
-   "sid": "mwd9dk23888t",
+   "sid": "mwe7y3o408xb",
    "g": 2
   },
   {
@@ -1123,7 +1468,7 @@
    ],
    "result": "win",
    "note": "特殊競技場第 2 場",
-   "sid": "mwd9dk23888t",
+   "sid": "mwe7y3o408xb",
    "g": 1
   },
   {
@@ -1145,7 +1490,7 @@
    ],
    "result": "win",
    "note": "特殊競技場第 1 場",
-   "sid": "mwd9dk23888t",
+   "sid": "mwe7y3o408xb",
    "g": 0
   },
   {
@@ -1307,7 +1652,7 @@
    ],
    "result": "win",
    "note": "特殊競技場第 3 場",
-   "sid": "mwd9dk2341eh",
+   "sid": "mwe7y3o4yxeu",
    "g": 2
   },
   {
@@ -1329,7 +1674,7 @@
    ],
    "result": "loss",
    "note": "特殊競技場第 2 場",
-   "sid": "mwd9dk2341eh",
+   "sid": "mwe7y3o4yxeu",
    "g": 1
   },
   {
@@ -1351,7 +1696,7 @@
    ],
    "result": "loss",
    "note": "特殊競技場第 1 場",
-   "sid": "mwd9dk2341eh",
+   "sid": "mwe7y3o4yxeu",
    "g": 0
   },
   {
@@ -1571,6 +1916,33 @@
  ],
  "spHistory": [
   {
+   "name": "想和你看五月晚霞",
+   "date": "2026-11-22",
+   "enemy": [
+    [
+     "jackal",
+     "snow-white-heavy-arms",
+     "blanc",
+     "biscuit",
+     "cinderella"
+    ],
+    [
+     "nayuta",
+     "centi-treasure",
+     "helm-treasure",
+     "red-hood",
+     "laplace-treasure"
+    ],
+    [
+     "moran-treasure",
+     "noah",
+     "neon-vision-eye",
+     "trina",
+     "anis-star"
+    ]
+   ]
+  },
+  {
    "date": "2026-11-11",
    "enemy": [
     [
@@ -1595,33 +1967,6 @@
      "biscuit"
     ]
    ]
-  },
-  {
-   "date": "2026-10-22",
-   "enemy": [
-    [
-     "nayuta",
-     "centi-treasure",
-     "helm-treasure",
-     "red-hood",
-     "laplace-treasure"
-    ],
-    [
-     "moran-treasure",
-     "noah",
-     "neon-vision-eye",
-     "trina",
-     "anis-star"
-    ],
-    [
-     "jackal",
-     "snow-white-heavy-arms",
-     "blanc",
-     "biscuit",
-     "cinderella"
-    ]
-   ],
-   "name": "第二名"
   }
  ],
  "spSaved": [
@@ -1878,6 +2223,286 @@
  ],
  "spRecords": [
   {
+   "sid": "mwshnvpfyhdc",
+   "date": "2026-11-22",
+   "name": "索達暈到白兔 拉皮放第三個",
+   "enemy": [
+    [
+     "jackal",
+     "snow-white-heavy-arms",
+     "blanc",
+     "biscuit",
+     "cinderella"
+    ],
+    [
+     "nayuta",
+     "centi-treasure",
+     "helm-treasure",
+     "red-hood",
+     "laplace-treasure"
+    ],
+    [
+     "moran-treasure",
+     "noah",
+     "neon-vision-eye",
+     "trina",
+     "anis-star"
+    ]
+   ],
+   "mine": [
+    [
+     "soda",
+     "trina",
+     "laplace-ultimate-hero",
+     "jackal",
+     "scarlet-goddeath"
+    ],
+    [
+     "nayuta",
+     "helm-treasure",
+     "red-hood",
+     "snow-white-heavy-arms",
+     "centi-treasure"
+    ],
+    [
+     "anis-star",
+     "blanc",
+     "rapi-red-hood",
+     "biscuit",
+     "liberalio"
+    ]
+   ],
+   "results": [
+    "win",
+    "win",
+    "win"
+   ]
+  },
+  {
+   "sid": "mwshmma8va0n",
+   "date": "2026-11-22",
+   "name": "索達要暈到白兔才會贏 這速度太慢拉皮會先被秒才開出白兔",
+   "enemy": [
+    [
+     "jackal",
+     "snow-white-heavy-arms",
+     "blanc",
+     "biscuit",
+     "cinderella"
+    ],
+    [
+     "nayuta",
+     "centi-treasure",
+     "helm-treasure",
+     "red-hood",
+     "laplace-treasure"
+    ],
+    [
+     "moran-treasure",
+     "noah",
+     "neon-vision-eye",
+     "trina",
+     "anis-star"
+    ]
+   ],
+   "mine": [
+    [
+     "soda",
+     "trina",
+     "laplace-ultimate-hero",
+     "jackal",
+     "scarlet-goddeath"
+    ],
+    [
+     "nayuta",
+     "helm-treasure",
+     "red-hood",
+     "snow-white-heavy-arms",
+     "centi-treasure"
+    ],
+    [
+     "anis-star",
+     "blanc",
+     "rapi-red-hood",
+     "biscuit",
+     "maiden-ice-rose"
+    ]
+   ],
+   "results": [
+    "loss",
+    "win",
+    "loss"
+   ]
+  },
+  {
+   "sid": "mwqa8h5m18ml",
+   "date": "2026-11-21",
+   "name": "不屈會歪給水母 然後又卡換彈",
+   "enemy": [
+    [
+     "jackal",
+     "snow-white-heavy-arms",
+     "blanc",
+     "biscuit",
+     "cinderella"
+    ],
+    [
+     "nayuta",
+     "centi-treasure",
+     "helm-treasure",
+     "red-hood",
+     "laplace-treasure"
+    ],
+    [
+     "moran-treasure",
+     "noah",
+     "neon-vision-eye",
+     "trina",
+     "anis-star"
+    ]
+   ],
+   "mine": [
+    [
+     "anis-star",
+     "blanc",
+     "biscuit",
+     "rapi-red-hood",
+     "liberalio"
+    ],
+    [
+     "nayuta",
+     "helm-treasure",
+     "red-hood",
+     "snow-white-heavy-arms",
+     "centi-treasure"
+    ],
+    [
+     "soda",
+     "trina",
+     "laplace-ultimate-hero",
+     "jackal",
+     "scarlet-goddeath"
+    ]
+   ],
+   "results": [
+    "loss",
+    "win",
+    "loss"
+   ]
+  },
+  {
+   "sid": "mwqa76vncnnx",
+   "date": "2026-11-21",
+   "name": "貝斯地換彈打輸 索達會暈兩個嘲諷的",
+   "enemy": [
+    [
+     "jackal",
+     "snow-white-heavy-arms",
+     "blanc",
+     "biscuit",
+     "cinderella"
+    ],
+    [
+     "nayuta",
+     "centi-treasure",
+     "helm-treasure",
+     "red-hood",
+     "laplace-treasure"
+    ],
+    [
+     "moran-treasure",
+     "noah",
+     "neon-vision-eye",
+     "trina",
+     "anis-star"
+    ]
+   ],
+   "mine": [
+    [
+     "anis-star",
+     "blanc",
+     "vesti-tactical-upgrade",
+     "neon-vision-eye",
+     "biscuit"
+    ],
+    [
+     "nayuta",
+     "helm-treasure",
+     "red-hood",
+     "snow-white-heavy-arms",
+     "centi-treasure"
+    ],
+    [
+     "soda",
+     "trina",
+     "laplace-ultimate-hero",
+     "jackal",
+     "scarlet-goddeath"
+    ]
+   ],
+   "results": [
+    "loss",
+    "win",
+    "loss"
+   ]
+  },
+  {
+   "sid": "mwqa3qlinyry",
+   "date": "2026-11-21",
+   "name": "白兔又會歪了",
+   "enemy": [
+    [
+     "jackal",
+     "snow-white-heavy-arms",
+     "blanc",
+     "biscuit",
+     "cinderella"
+    ],
+    [
+     "nayuta",
+     "centi-treasure",
+     "helm-treasure",
+     "red-hood",
+     "laplace-treasure"
+    ],
+    [
+     "moran-treasure",
+     "noah",
+     "neon-vision-eye",
+     "trina",
+     "anis-star"
+    ]
+   ],
+   "mine": [
+    [
+     "moran-treasure",
+     "trina",
+     "laplace-ultimate-hero",
+     "liberalio",
+     "jackal"
+    ],
+    [
+     "nayuta",
+     "helm-treasure",
+     "red-hood",
+     "snow-white-heavy-arms",
+     "centi-treasure"
+    ],
+    [
+     "anis-star",
+     "blanc",
+     "scarlet-goddeath",
+     "neon-vision-eye",
+     "biscuit"
+    ]
+   ],
+   "results": [
+    "loss",
+    "win",
+    "loss"
+   ]
+  },
+  {
    "date": "2026-11-12",
    "enemy": [
     [
@@ -1930,8 +2555,7 @@
     "win",
     "loss"
    ],
-   "name": "打第二名會贏的陣容",
-   "sid": "mwd9dk23xmnm"
+   "sid": "mwe7y3o1e6lv"
   },
   {
    "date": "2026-11-12",
@@ -1986,8 +2610,7 @@
     "win",
     "win"
    ],
-   "name": "打akaha會贏的陣容",
-   "sid": "mwd9dk23et9o"
+   "sid": "mwe7y3o1yl2h"
   },
   {
    "date": "2026-11-12",
@@ -2042,8 +2665,7 @@
     "win",
     "loss"
    ],
-   "name": "不要直接用打akaha一樣的陣容打第二名",
-   "sid": "mwd9dk230wcs"
+   "sid": "mwe7y3o110v1"
   },
   {
    "date": "2026-11-12",
@@ -2098,7 +2720,7 @@
     "win",
     "win"
    ],
-   "sid": "mwd9dk23daia"
+   "sid": "mwe7y3o1jq5c"
   },
   {
    "date": "2026-11-07",
@@ -2153,7 +2775,7 @@
     "loss",
     "win"
    ],
-   "sid": "mwd9dk2352x1"
+   "sid": "mwe7y3o183fr"
   },
   {
    "date": "2026-11-06",
@@ -2208,7 +2830,7 @@
     "loss",
     "loss"
    ],
-   "sid": "mwd9dk23st2m"
+   "sid": "mwe7y3o1z28h"
   },
   {
    "date": "2026-11-06",
@@ -2263,7 +2885,7 @@
     "loss",
     "loss"
    ],
-   "sid": "mwd9dk237pbj"
+   "sid": "mwe7y3o166ss"
   },
   {
    "date": "2026-11-01",
@@ -2318,7 +2940,7 @@
     "win",
     "win"
    ],
-   "sid": "mwd9dk23my9v"
+   "sid": "mwe7y3o16wqc"
   },
   {
    "date": "2026-11-01",
@@ -2373,7 +2995,7 @@
     "loss",
     "loss"
    ],
-   "sid": "mwd9dk23ua9f"
+   "sid": "mwe7y3o1pfui"
   },
   {
    "date": "2026-11-01",
@@ -2428,7 +3050,7 @@
     "loss",
     "win"
    ],
-   "sid": "mwd9dk23t8uv"
+   "sid": "mwe7y3o1ubwt"
   },
   {
    "date": "2026-11-01",
@@ -2483,7 +3105,7 @@
     "loss",
     "win"
    ],
-   "sid": "mwd9dk237z7a"
+   "sid": "mwe7y3o1nsvo"
   },
   {
    "date": "2026-10-29",
@@ -2538,7 +3160,7 @@
     "loss",
     "loss"
    ],
-   "sid": "mwd9dk2331x7"
+   "sid": "mwe7y3o1d6np"
   },
   {
    "date": "2026-10-28",
@@ -2593,7 +3215,7 @@
     "win",
     "loss"
    ],
-   "sid": "mwd9dk23888t"
+   "sid": "mwe7y3o408xb"
   },
   {
    "date": "2026-10-22",
@@ -2648,7 +3270,7 @@
     "loss",
     "win"
    ],
-   "sid": "mwd9dk2341eh"
+   "sid": "mwe7y3o4yxeu"
   }
  ]
 }
