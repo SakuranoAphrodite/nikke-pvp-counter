@@ -722,6 +722,15 @@ function arenaTeam(ids){ let i=ARENA_IDX.get(teamKey(ids)); if(i!==undefined) re
 function arenaSimilar(ids,minOverlap){ const cnt=arenaOverlap(ids,true), out=[]; for(let i=0;i<cnt.length;i++){ if(cnt[i]>=minOverlap) out.push({idx:i,row:ARENA.teams[i],ov:cnt[i]}); } return out.sort((a,b)=>b.ov-a.ov||b.row[1]-a.row[1]).slice(0,5); }
 function beatenBy(idx){ return (ARENA.beatenBy[String(idx)]||[]).map(([j,n,s])=>({idx:j,row:ARENA.teams[j],n,samples:s||[]})); }
 /* 直接對位：不經模板分類，找「含我方 k 位相同角色的隊」對上「含對方 k 位相同角色的隊」的實戰勝負。先試 k=4，不夠樣本再放寬到 3 */
+/* ====================== 運算快取 ====================== */
+/* chainOf／detectArchetypes／speedOf／evalMatch／recordStats 的結果只由輸入（隊伍與站位、進階設定、速度來源、資料）決定，可以重用。
+   特殊競技場的三隊搜尋會對同一支隊伍重算上萬次（chainOf 二十萬次、evalMatch 一萬次，不重複的輸入只有幾百組），快取後約快 3～4 倍。
+   角色或模板資料換掉（線上更新）時由 invalidateCalc() 全部清掉；對戰紀錄改變時只清 rec（見 saveRecords）。 */
+const _memo={chain:new Map(),arch:new Map(),speed:new Map(),eval:new Map(),rec:new Map(),plan:new Map()};
+const idsKey=ids=>ids.map(i=>i||'').join(',');                      // 站位順序影響爆裂鏈，所以不排序
+const modsKey=(ids,mods)=>mods?ids.map(i=>i&&mods[i]?i+':'+JSON.stringify(mods[i]):'').join(','):''; // 只看隊上成員的超頻／魔方設定
+function memo(map,key,fn){ if(map.has(key)) return map.get(key); const v=fn(); if(map.size>=20000) map.clear(); map.set(key,v); return v; }
+function invalidateCalc(){ for(const m of Object.values(_memo)) m.clear(); _simCache.clear(); _prCache.clear(); _arCache.clear(); _likeCache.clear(); _tplMatch.clear(); }
 const _prCache=new Map();
 function pairRecord(myIds,enemyIds){
   if(!ARENA.teams||!ARENA.teams.length) return null;
@@ -877,15 +886,18 @@ async function loadRemoteReferences(){
 
 /* ====================== 對戰紀錄 ====================== */
 let records=[]; // 實際內容在狀態區由 LS 載入
+let _recVer=0; // 對戰紀錄的版本：每次存檔 +1，三隊搜尋的快取用它判斷紀錄有沒有變
+function saveRecords(){ LS.set('records',records); _recVer++; _memo.rec.clear(); }
 function addRecord(result){
   if(enemy.some(x=>!x)||mine.some(x=>!x)) return alert('對方隊伍（①）與我方隊伍（④）都要填滿 5 人才能記錄。');
   const hn=history.find(h=>h.team.join()===enemy.join()); // 對方隊伍在歷史裡有取名時，預設用那個名字
   const name=(prompt('這筆紀錄的名稱（可留空，例如：對手暱稱、第幾場）',hn?hn.name:'')||'').trim();
   const note=prompt('備註（可留空，例如：對方戰力高一成、火箭射偏、對方先爆）')||'';
   records.unshift({date:new Date().toISOString().slice(0,10),mode,name,enemy:[...enemy],mine:[...mine],result,note});
-  records=records.slice(0,300); LS.set('records',records); refresh();
+  records=records.slice(0,300); saveRecords(); refresh();
 }
-function recordStats(enemyIds,myIds){
+function recordStats(enemyIds,myIds){ return memo(_memo.rec,idsKey(enemyIds)+'|'+(myIds?[...myIds].sort().join(','):''),()=>recordStatsRaw(enemyIds,myIds)); }
+function recordStatsRaw(enemyIds,myIds){
   const eArch=detectArchetypes(enemyIds).map(a=>a.arch);
   const w=l=>({win:l.filter(r=>r.result==='win').length,loss:l.filter(r=>r.result==='loss').length,n:l.length});
   const same=records.filter(r=>r.enemy.join()===enemyIds.join());
@@ -962,7 +974,7 @@ function recFiltered(){
 function recDelete(list,what){ // list：紀錄物件陣列
   if(!list.length) return;
   if(!confirm(`刪除${what}，共 ${list.length} 筆？刪了不能復原（要留備份先按上方「匯出 JSON」）；特殊競技場分頁的紀錄不會一起刪。`)) return;
-  const del=new Set(list); records=records.filter(r=>!del.has(r)); recSel.clear(); LS.set('records',records); refresh();
+  const del=new Set(list); records=records.filter(r=>!del.has(r)); recSel.clear(); saveRecords(); refresh();
 }
 function renderRecords(){
   const el=$('#records'), sum=$('#recSummary'), bar=$('#recBulkBar'), bulkBtn=$('#recBulkBtn');
@@ -999,9 +1011,9 @@ function renderRecords(){
   if(recBulk&&bar){ const days=+recFilter.period||0, since=sinceOf(days); bulkBar(bar,{sel:recSel,filtered:f.map(x=>x.r),older:since?records.filter(r=>String(r.date||'')<since):[],days,del:recDelete,rerender:renderRecords}); }
   wireOpen(el,recOpen); bulkWire(el,'rec',{sel:recSel,at:i=>records[i],groups,rerender:renderRecords});
   el.querySelectorAll('[data-recgload]').forEach(b=>b.onclick=()=>{ const l=groups.get(b.dataset.recgload); if(!l) return; enemy=[...l[0].r.enemy]; save(); refresh(); window.scrollTo({top:0,behavior:'smooth'}); });
-  el.querySelectorAll('[data-recgdel]').forEach(b=>b.onclick=()=>{ const l=groups.get(b.dataset.recgdel); if(!l) return; if(!confirm(`刪除這組對手的 ${l.length} 筆紀錄？（只刪目前篩選範圍內的）`)) return; const idx=new Set(l.map(x=>x.i)); records=records.filter((_,i)=>!idx.has(i)); recSel.clear(); LS.set('records',records); refresh(); });
-  el.querySelectorAll('[data-recdel]').forEach(b=>b.onclick=()=>{ if(confirm('刪除這筆紀錄？')){ records.splice(+b.dataset.recdel,1); recSel.clear(); LS.set('records',records); refresh(); } });
-  el.querySelectorAll('[data-recrename]').forEach(b=>b.onclick=()=>{ const r=records[+b.dataset.recrename]; const name=prompt('這筆紀錄的名稱（留空＝不取名）',r.name||''); if(name===null) return; r.name=name.trim(); LS.set('records',records); refresh(); });
+  el.querySelectorAll('[data-recgdel]').forEach(b=>b.onclick=()=>{ const l=groups.get(b.dataset.recgdel); if(!l) return; if(!confirm(`刪除這組對手的 ${l.length} 筆紀錄？（只刪目前篩選範圍內的）`)) return; const idx=new Set(l.map(x=>x.i)); records=records.filter((_,i)=>!idx.has(i)); recSel.clear(); saveRecords(); refresh(); });
+  el.querySelectorAll('[data-recdel]').forEach(b=>b.onclick=()=>{ if(confirm('刪除這筆紀錄？')){ records.splice(+b.dataset.recdel,1); recSel.clear(); saveRecords(); refresh(); } });
+  el.querySelectorAll('[data-recrename]').forEach(b=>b.onclick=()=>{ const r=records[+b.dataset.recrename]; const name=prompt('這筆紀錄的名稱（留空＝不取名）',r.name||''); if(name===null) return; r.name=name.trim(); saveRecords(); refresh(); });
   el.querySelectorAll('[data-recload]').forEach(b=>b.onclick=()=>{ const r=records[+b.dataset.recload]; enemy=[...r.enemy]; mine=[...r.mine]; save(); refresh(); window.scrollTo({top:0,behavior:'smooth'}); });
 }
 function renderSourceHelp(){
@@ -1019,7 +1031,7 @@ const ROLE_ZH={attacker:'火力',supporter:'支援',defender:'防禦'};
 let byId=Object.fromEntries(CHARACTERS.map(c=>[c.id,c]));
 const nameOf=id=>esc(byId[id]?byId[id].name['zh-TW']:id); // 一律跳脫：資料或匯入檔裡的名字／id 不能夾帶 HTML
 let dataInfo={source:'內建',date:BUILTIN_DATE};
-function applyData(chars,tpls,info){ applyPrydwen(chars); CHARACTERS=chars; const ids=new Set(tpls.map(t=>t.id)); TEMPLATES=tpls.concat(TEMPLATES_EXTRA.filter(t=>!ids.has(t.id))); byId=Object.fromEntries(chars.map(c=>[c.id,c])); dataInfo=info; }
+function applyData(chars,tpls,info){ applyPrydwen(chars); CHARACTERS=chars; const ids=new Set(tpls.map(t=>t.id)); TEMPLATES=tpls.concat(TEMPLATES_EXTRA.filter(t=>!ids.has(t.id))); byId=Object.fromEntries(chars.map(c=>[c.id,c])); dataInfo=info; invalidateCalc(); }
 
 /* 速度資料來源：deck = nikke-deck.com 的每階充能與公式（預設）；planner = nikke-arena-planner 的資料 */
 let speedSrc='top'; // top = nikke.top 逐幀模擬（預設）；實際值在狀態區由 localStorage 載入
@@ -1037,7 +1049,8 @@ function deckGen(c,t,md,star){
   if(star&&c.id!=='anis-star'){ const h=((ol&&u.hits17)?u.hits17:u.hits||[])[k]||0; g+=0.084*(u.ratio||1)*h; }
   return g/100;
 }
-function speedOf(ids,mode,mods){
+function speedOf(ids,mode,mods){ return memo(_memo.speed,speedSrc+'|'+mode+'|'+idsKey(ids)+'|'+modsKey(ids,mods),()=>speedOfRaw(ids,mode,mods)); }
+function speedOfRaw(ids,mode,mods){
   if(speedSrc==='top'){ const sim=simTeam(ids,mode,mods,null,400); if(sim){ const totals={}; for(const t of ['1RL',...TIERS]) totals[t]=sim.at(TOP_F[t])/100; let tier='5RL',reached=false; for(const t of TIERS){ if(sim.fullF!==null&&sim.fullF<=TOP_F[t]){tier=t;reached=true;break;} } return {tier,totals,reached,cycles:CYCLES[tier],sec:TIER_SEC[tier],sim}; } }
   const chars=ids.map(i=>byId[i]).filter(Boolean);
   const totals={}; const star=chars.some(c=>c.id==='anis-star');
@@ -1226,7 +1239,8 @@ document.addEventListener('pointerleave',e=>{ if(e.target&&e.target.classList&&e
 const REENTER_B1={'tia':0.533,'rupee-winter-shopper':1.5,'avistar':0.533,'alice-wonderland-bunny':0.533,'anis-star':0.533}; // 額外延遲秒數：一般為一段爆裂的間隔（NIKKE Synergy 0.533s、KR 實測 0.516s），露菲依 nikke.gg 為 1.5s
 const REENTER_B2={'viper-treasure':0.533};
 const isStdB1=x=>x.c.burst==='I'&&!(x.c.id in REENTER_B1);
-function chainOf(ids){
+function chainOf(ids){ return memo(_memo.chain,idsKey(ids),()=>chainOfRaw(ids)); }
+function chainOfRaw(ids){
   const chars=ids.map((id,i)=>({c:byId[id],pos:i+1,b:byId[id]?byId[id].burst:null})).filter(x=>x.c);
   const stdB1=chars.filter(isStdB1);
   // 拉毗小紅帽只在隊上完全沒有 B1 角色時才改用 B1；超級巨星阿妮斯仍算隊伍已有 B1。
@@ -1306,7 +1320,8 @@ function autoArrange(ids){
   return slots;
 }
 const needChain=(t,r)=>t.chainCore?t.chainCore.includes(r):burstDependent(r);
-function detectArchetypes(ids){
+function detectArchetypes(ids){ return memo(_memo.arch,idsKey(ids),()=>detectArchetypesRaw(ids)); }
+function detectArchetypesRaw(ids){
   const set=new Set(ids); const out={};
   const cs=ids.filter(Boolean).length>=3?chainSet(ids):null; // 靠爆裂的核心角必須在軸內，體系才算成立
   for(const t of TEMPLATES){
@@ -1544,12 +1559,12 @@ function tagBadges(id){ return (UNIT_TAGS[id]||[]).map(t=>`<span class="badge ta
 
 function renderSlots(elId,team,teamKey){
   const el=$(elId); el.innerHTML='';
-  const swap=(a,b)=>{ if(a<0||b<0||a>4||b>4||a===b) return; [team[a],team[b]]=[team[b],team[a]]; save(); refresh(); };
+  const swap=(a,b)=>{ if(a<0||b<0||a>4||b>4||a===b) return; [team[a],team[b]]=[team[b],team[a]]; save(); refreshTeam(teamKey); };
   team.forEach((id,i)=>{
     const d=document.createElement('div'); d.className='slot'+(id?' filled':'');
     const c=id&&byId[id];
     d.innerHTML=`<span class="x" title="移除">✕</span>`+(c?`${avatar(c.id,'md')}<div class="body"><div class="nm"><span class="pos">P${i+1}</span>${esc(c.name['zh-TW'])}</div><div class="en">${esc(c.name.en)}</div><div class="tags">${burstBadge(c.burst)}${elBadge(c.element)}<span class="badge">${c.weapon}</span></div></div>${i>0?'<span class="mv l" title="往左移一格">◀</span>':''}${i<4?'<span class="mv r" title="往右移一格">▶</span>':''}`:`<div class="add"><span class="pos">P${i+1}</span>＋ 選角色</div>`);
-    d.onclick=e=>{ if(e.target.classList.contains('x')){ team[i]=null; save(); refresh(); return;} if(e.target.classList.contains('mv')){ swap(i,e.target.classList.contains('l')?i-1:i+1); return; } openPicker(teamKey,i); };
+    d.onclick=e=>{ if(e.target.classList.contains('x')){ team[i]=null; save(); refreshTeam(teamKey); return;} if(e.target.classList.contains('mv')){ swap(i,e.target.classList.contains('l')?i-1:i+1); return; } openPicker(teamKey,i); };
     // 拖曳換位（桌機）；手機用左右箭頭
     d.draggable=!!id;
     d.addEventListener('dragstart',e=>{ e.dataTransfer.setData('text/plain',String(i)); e.dataTransfer.effectAllowed='move'; d.classList.add('dragging'); });
@@ -1646,7 +1661,7 @@ function pickerCandidates(){
 function pickOne(c){
   const team=teamOf(pickerTarget.team);
   if(pickerTarget.multi){ const sel=pickerTarget.sel; const k=sel.indexOf(c.id); if(k>=0) sel.splice(k,1); else if(sel.length<5) sel.push(c.id); renderTray(); renderPicker(); return; }
-  team[pickerTarget.idx]=c.id; save(); closePicker(); refresh();
+  const key=pickerTarget.team; team[pickerTarget.idx]=c.id; save(); closePicker(); refreshTeam(key);
 }
 function renderPicker(){
   const team=teamOf(pickerTarget.team);
@@ -1794,13 +1809,24 @@ function renderBuilt(ctx){
   }
   el.querySelectorAll('[data-apply]').forEach(b=>b.onclick=()=>{ const r=lastBuilt[+b.dataset.apply]; mine=[...r.slots]; save(); refresh(); $('#mySlots').scrollIntoView({behavior:'smooth'}); });
 }
-/* 單場對戰判斷（解隊試算與特殊競技場共用）：回傳分數、理由、勝負判定與粗估勝率 */
+/* 單場對戰判斷（解隊試算與特殊競技場共用）：回傳分數、理由、勝負判定與粗估勝率。
+   重的部分（克制、速度、對位統計）在 evalCore 且有快取；只有依你自己的對戰紀錄修正勝率的最後一步每次算，紀錄一改就能反映。 */
 function evalMatch(myIds,enemyIds,myMods,eMods){
   myMods=myMods||{}; eMods=eMods||{};
+  const core=memo(_memo.eval,speedSrc+'|'+idsKey(myIds)+'|'+idsKey(enemyIds)+'|'+modsKey(myIds,myMods)+'|'+modsKey(enemyIds,eMods),()=>evalCore(myIds,enemyIds,myMods,eMods));
+  const ev={...core,good:core.good.slice(),bad:core.bad.slice()}; // 淺拷貝：呼叫端會改 p（湊數隊上限 35%），不能動到快取裡的物件
+  if(!core.myCh.valid){ ev.p=0.05; ev.st=null; return ev; }
+  const st=recordStats(enemyIds,myIds); const pr=core.pr;
+  let p={good:0.75,warn:0.5,bad:0.25}[core.verdict];
+  if(pr&&pr.n>=20) p=(p+pr.r)/2; // 有直接對位資料時與它平均
+  if(st.pair.n>=2) p=(st.pair.win+1)/(st.pair.n+2); // 自己打過兩場以上就用實戰結果估
+  ev.p=p; ev.st=st; return ev;
+}
+function evalCore(myIds,enemyIds,myMods,eMods){
   const enemyMode=mode==='attack'?'defense':'attack';
   const ctx={ids:enemyIds,set:new Set(enemyIds),speed:speedOf(enemyIds,enemyMode,eMods),chain:chainOf(enemyIds),has:(...a)=>a.some(x=>enemyIds.includes(x)),weaponCount:w=>enemyIds.filter(i=>byId[i]&&byId[i].weapon===w).length};
   const mySp=speedOf(myIds,mode,myMods); const myCh=chainOf(myIds); const myArch=detectArchetypes(myIds); const myHeur=heuristicArchetypes(myIds);
-  if(!myCh.valid) return {pts:-9,good:[],bad:[`我方爆裂鏈不完整（缺 ${myCh.missing.join('、')}），永遠開不了全爆裂`],verdict:'bad',label:'劣勢',p:0.05,mySp,myCh,myArch,myHeur,ctx,st:null};
+  if(!myCh.valid) return {pts:-9,good:[],bad:[`我方爆裂鏈不完整（缺 ${myCh.missing.join('、')}），永遠開不了全爆裂`],verdict:'bad',label:'劣勢',mySp,myCh,myArch,myHeur,ctx,pr:null};
   const eArch=detectArchetypes(enemyIds); let pts=0; const good=[],bad=[];
   const pr=pairRecord(myIds,enemyIds); const prOK=!!(pr&&pr.n>=20);
   for(const m of myArch){ const parts=[]; let w=0,l=0;
@@ -1860,11 +1886,7 @@ function evalMatch(myIds,enemyIds,myMods,eMods){
     if(myIds[1]&&byId[myIds[1]].role==='attacker'&&!burstDependent(myIds[1])&&(TIER_RANK[byId[myIds[1]].pvpTier]||0)>=6) posWarn.push(`${nameOf(myIds[1])} 放 P2：P2 是最容易死的位置（P1 火箭濺射＋P1 進掩體時被集火）`);
     if(posWarn.length){ pts-=0.5*posWarn.length; posWarn.forEach(w=>bad.push('站位：'+w)); } }
   const verdict=prOK?(pr.r>=0.6?'good':pr.r<=0.4?'bad':'warn'):(pts>=2?'good':pts<=-1.5?'bad':'warn');
-  const st=recordStats(enemyIds,myIds);
-  let p={good:0.75,warn:0.5,bad:0.25}[verdict];
-  if(pr&&pr.n>=20) p=(p+pr.r)/2; // 有直接對位資料時與它平均
-  if(st.pair.n>=2) p=(st.pair.win+1)/(st.pair.n+2); // 自己打過兩場以上就用實戰結果估
-  return {pts,good,bad,verdict,label:{good:'優勢',warn:'五五波',bad:'劣勢'}[verdict],p,mySp,myCh,myArch,myHeur,ctx,st};
+  return {pts,good,bad,verdict,label:{good:'優勢',warn:'五五波',bad:'劣勢'}[verdict],mySp,myCh,myArch,myHeur,ctx,pr};
 }
 function renderMyEval(ctx){
   const el=$('#myEval'); const ids=mine.filter(Boolean);
@@ -1911,6 +1933,8 @@ function renderSolve(){
   const ctx=renderAnalysis(); renderCounters(ctx); renderBuilt(ctx); renderMyEval(ctx); renderHistory(); renderRecords(); renderSourceHelp(); renderArenaNote();
 }
 function refresh(){ updateOwnedCount(); renderSolve(); renderSp(); updateJumpNav(); }
+/* 只重畫被改到的分頁：解隊分頁的兩隊不影響特殊競技場的結果，反之亦然；選角、快速輸入、換位、清空都走這裡 */
+function refreshTeam(key){ updateOwnedCount(); if(key==='enemy'||key==='mine') renderSolve(); else renderSp(); updateJumpNav(); }
 function renderNickTable(){
   const el=$('#nickTable'); if(!el) return; const q=(($('#nickSearch')||{}).value||'').trim().toLowerCase();
   const rows=CHARACTERS.filter(c=>(NICK[c.id]||[]).length).filter(c=>!q||namesOf(c).some(n=>String(n).toLowerCase().includes(q)));
@@ -1973,21 +1997,21 @@ const collapsedSt=LS.get('collapsed',{});
 function setCardCollapsed(card,on){ card.classList.toggle('collapsed',!!on); if(card.dataset.ckey){ collapsedSt[card.dataset.ckey]=!!on; LS.set('collapsed',collapsedSt); } }
 document.querySelectorAll('.card > h2').forEach((h,i)=>{ const card=h.parentElement; card.dataset.ckey=(card.closest('section')||{}).id+':'+i; if(collapsedSt[card.dataset.ckey]) card.classList.add('collapsed'); h.addEventListener('click',e=>{ if(e.target.closest('button,a,input,select')) return; setCardCollapsed(card,!card.classList.contains('collapsed')); }); });
 if($('#nickSearch')) $('#nickSearch').oninput=renderNickTable;
-if($('#speedSrc')){ $('#speedSrc').value=speedSrc; $('#speedSrc').onchange=()=>{ speedSrc=$('#speedSrc').value; LS.set('speedSrc',speedSrc); _prCache.clear(); refresh(); }; }
-$('#btnQuickEnemy').onclick=()=>{ quickFill(enemy,$('#quickEnemy').value,$('#quickEnemyNote')); save(); refresh(); };
+if($('#speedSrc')){ $('#speedSrc').value=speedSrc; $('#speedSrc').onchange=()=>{ speedSrc=$('#speedSrc').value; LS.set('speedSrc',speedSrc); invalidateCalc(); refresh(); }; }
+$('#btnQuickEnemy').onclick=()=>{ quickFill(enemy,$('#quickEnemy').value,$('#quickEnemyNote')); save(); refreshTeam('enemy'); };
 $('#quickEnemy').addEventListener('keydown',e=>{ if(e.key==='Enter') $('#btnQuickEnemy').click(); });
-$('#btnQuickMy').onclick=()=>{ quickFill(mine,$('#quickMy').value,$('#quickMyNote')); save(); refresh(); };
+$('#btnQuickMy').onclick=()=>{ quickFill(mine,$('#quickMy').value,$('#quickMyNote')); save(); refreshTeam('mine'); };
 $('#quickMy').addEventListener('keydown',e=>{ if(e.key==='Enter') $('#btnQuickMy').click(); });
-$('#btnClearEnemy').onclick=()=>{ enemy=[null,null,null,null,null]; save(); refresh(); };
-$('#btnClearMy').onclick=()=>{ mine=[null,null,null,null,null]; save(); refresh(); };
-$('#btnArrangeMy').onclick=()=>{ if(mine.filter(Boolean).length<5) return alert('先排滿 5 人'); mine=autoArrange(mine); save(); refresh(); };
+$('#btnClearEnemy').onclick=()=>{ enemy=[null,null,null,null,null]; save(); refreshTeam('enemy'); };
+$('#btnClearMy').onclick=()=>{ mine=[null,null,null,null,null]; save(); refreshTeam('mine'); };
+$('#btnArrangeMy').onclick=()=>{ if(mine.filter(Boolean).length<5) return alert('先排滿 5 人'); mine=autoArrange(mine); save(); refreshTeam('mine'); };
 $('#btnSaveMy').onclick=()=>{ if(mine.some(x=>!x)) return alert('先排滿 5 人'); const name=prompt('這隊的名稱',`隊伍 ${mySaved.length+1}`); if(name===null) return; const dup=mySaved.findIndex(sv=>sv.mine.join()===mine.join()); if(dup>=0&&!confirm(`已有同樣 5 人同站位的「${mySaved[dup].name}」，仍要再存一份嗎？`)) return; mySaved.unshift({name:(name.trim()||`隊伍 ${mySaved.length+1}`),date:new Date().toISOString().slice(0,10),mine:[...mine],enemy:enemy.every(Boolean)?[...enemy]:null}); mySaved=mySaved.slice(0,200); LS.set('mySaved',mySaved); renderMySaved(); };
 $('#btnSaveEnemy').onclick=()=>{ if(enemy.some(x=>!x)) return alert('先填滿 5 個角色'); const ex=history.find(h=>h.team.join()===enemy.join()); const name=prompt(ex?'這組對方隊伍已在歷史裡，改名為（留空＝不取名）':'這組對方隊伍的名稱（可留空，例如：對手暱稱、排名）',ex?ex.name:''); if(name===null) return; if(ex) ex.name=name.trim(); else history.unshift({name:name.trim(),team:[...enemy]}); history=history.slice(0,20); save(); renderHistory(); };
 $('#chkOnlyOwned').onchange=refresh; $('#chkAllowSub').onchange=refresh;
 $('#pickerClose').onclick=closePicker; $('#picker').addEventListener('click',e=>{ if(e.target.id==='picker') closePicker(); });
 $('#pickerSearch').addEventListener('input',renderPicker);
 $('#pickerSearch').addEventListener('keydown',e=>{ if(e.key==='Enter'){ const l=pickerCandidates(); const team=teamOf(pickerTarget.team); const other=otherIdsFor(pickerTarget.team); const first=pickerTarget.multi?l.find(c=>!pickerTarget.sel.includes(c.id)&&!other.has(c.id)):l.find(c=>!team.includes(c.id)&&!other.has(c.id)); if(first){ pickOne(first); if(pickerTarget&&pickerTarget.multi){ $('#pickerSearch').value=''; renderPicker(); } } } if(e.key==='Escape') closePicker(); });
-$('#pickerApply').onclick=()=>{ if(!pickerTarget||!pickerTarget.multi) return; const team=teamOf(pickerTarget.team); const sel=pickerTarget.sel; for(let i=0;i<5;i++) team[i]=sel[i]||null; save(); closePicker(); refresh(); };
+$('#pickerApply').onclick=()=>{ if(!pickerTarget||!pickerTarget.multi) return; const key=pickerTarget.team; const team=teamOf(key); const sel=pickerTarget.sel; for(let i=0;i<5;i++) team[i]=sel[i]||null; save(); closePicker(); refreshTeam(key); };
 $('#btnPickEnemy').onclick=()=>openTeamPicker('enemy'); $('#btnPickMy').onclick=()=>openTeamPicker('mine');
 $('#rosterSearch').addEventListener('input',renderRoster);
 $('#btnOwnAll').onclick=()=>{ if(confirm('把全部角色標成擁有？')){ owned=new Set(CHARACTERS.map(c=>c.id)); save(); renderRoster(); renderSolve(); } };
@@ -2059,7 +2083,7 @@ const isTeam3=x=>Array.isArray(x)&&x.length===3&&x.every(isTeam);
 const isTeam3Loose=x=>x==null||(Array.isArray(x)&&x.length===3&&x.every(isTeamLoose));
 const MERGE_SPEC=[
   {key:'history',label:'組對方隊伍歷史',ok:x=>isTeam(histTeam(x)),keyOf:x=>mergeKey(histTeam(x)),cap:20,get:()=>history,set:v=>{ history=v.map(normHist); }},
-  {key:'records',label:'筆對戰紀錄',ok:x=>!!x&&isTeam(x.enemy)&&isTeam(x.mine)&&!!x.result,keyOf:x=>mergeKey([x.date,x.mode,x.enemy,x.mine,x.result,x.note||'']),cap:300,get:()=>records,set:v=>{ records=v; LS.set('records',v); }},
+  {key:'records',label:'筆對戰紀錄',ok:x=>!!x&&isTeam(x.enemy)&&isTeam(x.mine)&&!!x.result,keyOf:x=>mergeKey([x.date,x.mode,x.enemy,x.mine,x.result,x.note||'']),cap:300,get:()=>records,set:v=>{ records=v; saveRecords(); }},
   {key:'mySaved',label:'隊儲存的我方隊伍',ok:x=>!!x&&isTeam(x.mine)&&isTeamLoose(x.enemy),keyOf:x=>mergeKey([x.name,x.mine,x.enemy||null]),cap:200,get:()=>mySaved,set:v=>{ mySaved=v; LS.set('mySaved',v); }},
   {key:'spHistory',label:'組特殊競技場對方三隊',ok:x=>!!x&&isTeam3(x.enemy),keyOf:x=>mergeKey(x.enemy),cap:30,get:()=>spHistory,set:v=>{ spHistory=v; LS.set('spHistory',v); }},
   {key:'spSaved',label:'組儲存的特殊競技場三隊',ok:x=>!!x&&isTeam3(x.mine)&&isTeam3Loose(x.enemy),keyOf:x=>mergeKey([x.name,x.mine,x.enemy||null]),cap:50,get:()=>spSaved,set:v=>{ spSaved=v; LS.set('spSaved',v); }},
@@ -2120,7 +2144,6 @@ function fillerTeam(poolIds,usedSet){
 }
 function spFillerEntry(f,g){ const ev=evalMatch(f,spEnemy[g],mineMods,{}); ev.p=Math.min(ev.p,0.35); return {filler:true,slots:f,kind:['sub','sub','sub','sub','sub'],speed:speedOf(f,mode,mineMods),ev,score:0}; }
 // 某一場的反制候選（沿用解隊的 buildCounters），排除其他場已用的角色
-const _spEvCache=new Map();
 function spCands(g,excludeSet,ownedSet,allowSub,n){
   const base=ownedSet?[...ownedSet]:CHARACTERS.map(c=>c.id);
   const pool=new Set(base.filter(i=>!excludeSet.has(i)));
@@ -2130,7 +2153,7 @@ function spCands(g,excludeSet,ownedSet,allowSub,n){
   for(const t of spMine){
     if(!t.every(Boolean)||t.some(i=>excludeSet.has(i)||!byId[i])||(ownedSet&&t.some(i=>!ownedSet.has(i)))) continue;
     if(list.some(x=>teamKey(x.slots)===teamKey(t))) continue;
-    const ck=g+'|'+teamKey(t); let ev=_spEvCache.get(ck); if(!ev){ ev=evalMatch(t,spEnemy[g],mineMods,{}); _spEvCache.set(ck,ev); }
+    const ev=evalMatch(t,spEnemy[g],mineMods,{});
     list.push({manual:true,slots:[...t],kind:['req','req','req','req','req'],speed:speedOf(t,mode,mineMods),ev,score:Math.round((ev.p-0.5)*2000),why:ev.good,warn:ev.bad});
   }
   // 依估計勝率排序再截斷（模板分數只當同分時的次序）
@@ -2138,10 +2161,19 @@ function spCands(g,excludeSet,ownedSet,allowSub,n){
   return list.slice(0,n);
 }
 let spPlan=null;
+/* 三隊搜尋是整個頁面最重的運算（約 0.3～2 秒）。它的輸入只有：對方三隊、我方三隊、角色庫（勾「只用我擁有的角色」時）、兩個勾選、
+   我方進階設定、速度來源、對戰紀錄；輸入沒變就直接用上次的結果，所以在解隊分頁選角或切換組法都不會重跑。 */
 function buildSpPlan(){
-  _spEvCache.clear();
   const onlyOwned=$('#spOnlyOwned').checked, allowSub=$('#spAllowSub').checked;
   const ownedSet=onlyOwned?owned:null; if(onlyOwned&&!owned.size) return {error:'角色庫是空的，先去「我的角色庫」勾選，或取消「只用我擁有的角色」。'};
+  const key=JSON.stringify([spEnemy,spMine,ownedSet?[...ownedSet].sort():null,allowSub,mineMods,speedSrc,_recVer]);
+  let res=_memo.plan.get(key);
+  if(!res){ res=searchSpPlan(ownedSet,allowSub); if(_memo.plan.size>=8) _memo.plan.clear(); _memo.plan.set(key,res); }
+  if(res.error) return res;
+  const chosen=res.byType[spPlanType]||res.best;
+  return {...chosen,byType:res.byType,all:res.all};
+}
+function searchSpPlan(ownedSet,allowSub){
   const poolIds=ownedSet?[...ownedSet]:CHARACTERS.map(c=>c.id);
   const p2of3=([a,b,c])=>a*b*c+a*b*(1-c)+a*(1-b)*c+(1-a)*b*c;
   const all=[]; let best=null;
@@ -2179,8 +2211,7 @@ function buildSpPlan(){
     sacrifice:pick((a,b)=>a.P-b.P||a.score-b.score,pl=>pl.fillers.length===1),
     fast:pick((a,b)=>a.fast-b.fast||a.P-b.P||a.score-b.score),
   };
-  const chosen=byType[spPlanType]||best;
-  return {...chosen,byType,all:all.length};
+  return {best,byType,all:all.length};
 }
 const SP_PLAN_TYPES={two:{label:'兩勝機率最高',desc:'三場至少贏兩場的機率最高（預設）'},expected:{label:'期望勝場最高',desc:'三場勝率加總最高，適合三場都要算分的情況'},stable:{label:'三場求穩',desc:'最弱的那一場勝率最高，不放生'},sacrifice:{label:'放生一場',desc:'刻意放生一場、反制核心集中在另外兩場'},fast:{label:'速度優先',desc:'比對方快的場次最多，再看兩勝機率'}};
 /* 贏點摘要：這隊靠誰、軸怎麼開、實戰撐住的是哪幾位、哪些沒驗證、優勢來自哪裡 */
@@ -2252,7 +2283,7 @@ function reasonsHtml(good,bad,extraWarn){
   const ref=[...good.filter(isRefLine).map(g=>'✔ '+esc(g)),...bad.filter(isRefLine).map(b=>'<span style="color:var(--warn)">⚠ '+esc(b)+'</span>')];
   return main.join('<br>')+(ref.length?`<details style="margin-top:4px"><summary class="muted">參考：模板體系的對位與克制（${ref.length} 條，勝負判定已以直接對位為準，這些不計分）</summary>${ref.join('<br>')}</details>`:'');
 }
-function spEntryCard(e,g,manual){
+function spEntryCard(e,g,manual,sacrificed){ // sacrificed：這場是刻意放生的湊數隊
   const eSp=e.ev.ctx.speed, eCh=e.ev.ctx.chain;
   // 手動區：我方已在上方格子顯示，判斷卡改列對方五人（含誰開爆裂、誰軸外）
   const listIds=manual?spEnemy[g]:e.slots;
@@ -2261,8 +2292,8 @@ function spEntryCard(e,g,manual){
     return `<div class="m ${k}">${avatar(id,'md')}<div class="body"><div class="pos">P${i+1} <span class="kind">${lab}</span> ${cr?'<span class="badge good" style="font-size:10px;padding:0 4px">開'+cr+'</span>':'<span class="badge" style="font-size:10px;padding:0 4px">軸外</span>'}</div><b>${esc(c.name['zh-TW'])}</b><div class="en">${esc(c.name.en)}</div><div class="tags">${burstBadge(c.burst)}<span class="badge">${c.weapon}</span></div></div>${alt}</div>`; }).join('');
   const dc=(eSp.cycles+eCh.extraSec)-(e.speed.cycles+chainOf(e.slots).extraSec);
   const cmp=dc>0?'<span class="badge good">比對方快</span>':dc===0?'<span class="badge warn">同速</span>':'<span class="badge bad">比對方慢</span>';
-  const head=e.filler?`<span class="badge ${e.sacrificed?'bad':'warn'}">${e.sacrificed?'放生：剩餘角色隊':'剩餘角色隊'}</span>`:e.manual?`<span class="badge">手動</span>${e.ev.myArch.length?`<span class="badge">${archName(e.ev.myArch[0].arch)}</span>`:''}`:`<b>${esc(e.tpl.name['zh-TW'])}${e.variant?'（'+e.variant+'）':''}</b><span class="badge">${archName(e.tpl.archetype)}</span>`;
-  return `<div class="team"><div class="hd"><b>第 ${g+1} 場</b>${head}<span class="badge">我方 ${e.speed.tier}</span><span class="badge">對方 ${eSp.tier}</span>${cmp}<span class="verdict ${e.ev.verdict}" style="font-size:14px;margin:0">${e.ev.label}（約 ${Math.round(e.ev.p*100)}%）</span><button class="btn" data-copyteam="${e.slots.join(',')}" style="margin-left:auto" title="複製隊伍文字">複製</button><button class="btn" data-${manual?'spmapply':'spapply'}="${g}">帶入試算</button></div><div class="muted">${manual?`我方：${e.slots.map(nameOf).join('／')}（見上方格子）；下面是對方第 ${g+1} 隊`:`對方：${spEnemy[g].map(nameOf).join('／')}`}</div><div class="members">${members}</div>${detBlock((manual?'spm:':'sp-plan:')+g,'贏點與判斷依據',`<div class="why">${winSummary(e.slots,spEnemy[g],e.ev,{lines:e.ev.good,myMods:mineMods})}${reasonsHtml(e.ev.good,e.ev.bad,(e.warn||[]).filter(w=>/替補/.test(w)))}${e.filler?'<br><span style="color:var(--warn)">⚠ '+(e.sacrificed?'這場刻意放生：反制核心留給另外兩場，這隊是剩餘角色中最強、爆裂鏈完整的組合。':'角色庫組不出針對這場的反制隊，這隊是剩餘角色中最強、爆裂鏈完整的組合。')+'</span>':''}</div>${e.tpl?`<div class="muted" style="margin-top:4px">${esc(e.tpl.notes['zh-TW'])}</div>`:''}`)}</div>`;
+  const head=e.filler?`<span class="badge ${sacrificed?'bad':'warn'}">${sacrificed?'放生：剩餘角色隊':'剩餘角色隊'}</span>`:e.manual?`<span class="badge">手動</span>${e.ev.myArch.length?`<span class="badge">${archName(e.ev.myArch[0].arch)}</span>`:''}`:`<b>${esc(e.tpl.name['zh-TW'])}${e.variant?'（'+e.variant+'）':''}</b><span class="badge">${archName(e.tpl.archetype)}</span>`;
+  return `<div class="team"><div class="hd"><b>第 ${g+1} 場</b>${head}<span class="badge">我方 ${e.speed.tier}</span><span class="badge">對方 ${eSp.tier}</span>${cmp}<span class="verdict ${e.ev.verdict}" style="font-size:14px;margin:0">${e.ev.label}（約 ${Math.round(e.ev.p*100)}%）</span><button class="btn" data-copyteam="${e.slots.join(',')}" style="margin-left:auto" title="複製隊伍文字">複製</button><button class="btn" data-${manual?'spmapply':'spapply'}="${g}">帶入試算</button></div><div class="muted">${manual?`我方：${e.slots.map(nameOf).join('／')}（見上方格子）；下面是對方第 ${g+1} 隊`:`對方：${spEnemy[g].map(nameOf).join('／')}`}</div><div class="members">${members}</div>${detBlock((manual?'spm:':'sp-plan:')+g,'贏點與判斷依據',`<div class="why">${winSummary(e.slots,spEnemy[g],e.ev,{lines:e.ev.good,myMods:mineMods})}${reasonsHtml(e.ev.good,e.ev.bad,(e.warn||[]).filter(w=>/替補/.test(w)))}${e.filler?'<br><span style="color:var(--warn)">⚠ '+(sacrificed?'這場刻意放生：反制核心留給另外兩場，這隊是剩餘角色中最強、爆裂鏈完整的組合。':'角色庫組不出針對這場的反制隊，這隊是剩餘角色中最強、爆裂鏈完整的組合。')+'</span>':''}</div>${e.tpl?`<div class="muted" style="margin-top:4px">${esc(e.tpl.notes['zh-TW'])}</div>`:''}`)}</div>`;
 }
 function renderSp(){
   for(let g=0;g<3;g++){ renderSlots('#spSlots'+g,spEnemy[g],SP_KEYS[g]); spMini(g); }
@@ -2278,10 +2309,10 @@ function renderSp(){
   let h=`<div class="verdict ${plan.P>=0.6?'good':plan.P>=0.4?'warn':'bad'}">${SP_PLAN_TYPES[spPlanType]?SP_PLAN_TYPES[spPlanType].label+'：':''}預期勝場 ${plan.expected.toFixed(1)}／3，至少兩勝的估計機率約 ${pctP}%<span class="muted" style="font-size:12px;font-weight:400">（比較了 ${plan.all} 種三隊組合）</span></div>`;
   const nf=plan.fillers.length;
   if(nf===0) h+=`<div class="muted">策略：三場都派反制隊，角色不重複。</div>`;
-  else if(nf===1){ plan.entries[plan.fillers[0]].sacrificed=true; h+=`<div class="muted">策略：放生第 ${plan.fillers[0]+1} 場，反制核心集中在另外兩場；放生的那場仍派剩餘角色中最強的組合。</div>`; }
+  else if(nf===1){ h+=`<div class="muted">策略：放生第 ${plan.fillers[0]+1} 場，反制核心集中在另外兩場；放生的那場仍派剩餘角色中最強的組合。</div>`; }
   else if(nf===2) h+=`<div class="muted">角色庫只夠組出一隊反制隊，其餘兩場派剩餘角色中最強的組合。</div>`;
   else h+=`<div class="muted">角色庫組不出任何反制模板，三場都是剩餘角色組合；建議先補核心角。</div>`;
-  h+=plan.entries.map((e,g)=>spEntryCard(e,g)).join('');
+  h+=plan.entries.map((e,g)=>spEntryCard(e,g,false,nf===1&&plan.fillers[0]===g)).join('');
   h+=`<div class="muted">機率為粗估：優勢 75%、五五波 50%、劣勢 25%、剩餘角色隊最高 35%；自己對這組對手打過兩場以上時改用實戰結果。用來比較不同配法的相對好壞，不是實際勝率。</div>`;
   el.innerHTML=h;
   el.querySelectorAll('[data-spapply]').forEach(b=>b.onclick=()=>{ const g=+b.dataset.spapply; enemy=[...spEnemy[g]]; mine=[...spPlan.entries[g].slots]; save(); switchTab('solve'); refresh(); $('#mySlots').scrollIntoView({behavior:'smooth'}); });
@@ -2321,7 +2352,7 @@ function spmQuick(g){
   const other=spmOtherIds(g); const seen=new Set(); const dup=[];
   spMine[g]=spMine[g].map(i=>{ if(!i) return null; if(other.has(i)||seen.has(i)){ dup.push(nameOf(i)); return null; } seen.add(i); return i; });
   if(dup.length) $('#spmNote'+g).innerHTML+=` <span style="color:var(--bad)">已在其他隊或重複，已略過：${esc(dup.join('、'))}</span>`;
-  save(); refresh();
+  save(); refreshTeam(SPM_KEYS[g]);
 }
 function spmAutoMap(){
   if(!spMine.every(t=>t.every(Boolean))||!spEnemy.every(t=>t.every(Boolean))) return alert('我方三隊與對方三隊都要填滿才能配對。');
@@ -2357,7 +2388,7 @@ function migrateSpSid(){
     if(!hits.length) return;
     if(!sp.sid) sp.sid=newSid(); hits.forEach(([x,g])=>{ x.sid=sp.sid; x.g=g; }); changed++;
   });
-  if(changed){ LS.set('spRecords',spRecords); LS.set('records',records); }
+  if(changed){ LS.set('spRecords',spRecords); saveRecords(); }
   return changed;
 }
 /* 特殊競技場紀錄清單：預設依對手三隊分組（每隊同 5 人算同一隊，珍藏版、站位與三隊先後順序不分），組內先列「每隊對手被哪些我方隊贏過」再列單次嘗試；
@@ -2387,7 +2418,7 @@ function spRecDelete(list,what){ // list：特殊競技場紀錄物件陣列；�
   const sids=new Set(list.map(r=>r.sid).filter(Boolean)); const linked=sids.size?records.filter(x=>x&&sids.has(x.sid)).length:0;
   if(!confirm(`刪除${what}，共 ${list.length} 筆${linked?`，連同對戰紀錄裡連結的 ${linked} 場一起刪`:''}？刪了不能復原（要留備份先按「匯出全部紀錄」）。`)) return;
   const del=new Set(list); spRecords=spRecords.filter(r=>!del.has(r)); spRecSel.clear(); LS.set('spRecords',spRecords);
-  if(linked){ records=records.filter(x=>!(x&&sids.has(x.sid))); LS.set('records',records); }
+  if(linked){ records=records.filter(x=>!(x&&sids.has(x.sid))); saveRecords(); }
   refresh();
 }
 function renderSpRecords(){
@@ -2433,8 +2464,8 @@ function renderSpRecords(){
   el.querySelectorAll('[data-spgload]').forEach(b=>b.onclick=()=>{ const l=groups.get(b.dataset.spgload); if(!l) return; spEnemy=l[0].r.enemy.map(t=>[...t]); save(); refresh(); const t=document.getElementById('jump-sp-enemy'); if(t) t.scrollIntoView({behavior:'smooth',block:'start'}); });
   el.querySelectorAll('[data-spgdel]').forEach(b=>b.onclick=()=>{ const l=groups.get(b.dataset.spgdel); if(l) spRecDelete(l.map(x=>x.r),'這組對手的紀錄'); });
   el.querySelectorAll('[data-sprload]').forEach(b=>b.onclick=()=>{ const r=spRecords[+b.dataset.sprload]; if(!r) return; spMine=r.mine.map(t=>[...t]); spEnemy=r.enemy.map(t=>[...t]); save(); refresh(); const t=document.getElementById('jump-sp-enemy'); if(t) t.scrollIntoView({behavior:'smooth',block:'start'}); });
-  el.querySelectorAll('[data-sprrename]').forEach(b=>b.onclick=()=>{ const r=spRecords[+b.dataset.sprrename]; const linked=spLinked(r); const name=prompt('這筆紀錄的名稱（留空＝不取名）'+(linked.length?`；對戰紀錄裡連結的 ${linked.length} 場會一起改名`:''),r.name||''); if(name===null) return; r.name=name.trim(); LS.set('spRecords',spRecords); if(linked.length){ linked.forEach(x=>x.name=r.name); LS.set('records',records); } refresh(); });
-  el.querySelectorAll('[data-sprdel]').forEach(b=>b.onclick=()=>{ const r=spRecords[+b.dataset.sprdel]; const n=spLinked(r).length; if(!confirm(n?`刪除這筆紀錄，連同對戰紀錄裡的 ${n} 筆一起刪？`:'刪除這筆紀錄？（對戰紀錄裡沒有連結的場次，那邊不會動）')) return; spRecords.splice(+b.dataset.sprdel,1); spRecSel.clear(); LS.set('spRecords',spRecords); if(n){ records=records.filter(x=>!(x&&x.sid===r.sid)); LS.set('records',records); } refresh(); });
+  el.querySelectorAll('[data-sprrename]').forEach(b=>b.onclick=()=>{ const r=spRecords[+b.dataset.sprrename]; const linked=spLinked(r); const name=prompt('這筆紀錄的名稱（留空＝不取名）'+(linked.length?`；對戰紀錄裡連結的 ${linked.length} 場會一起改名`:''),r.name||''); if(name===null) return; r.name=name.trim(); LS.set('spRecords',spRecords); if(linked.length){ linked.forEach(x=>x.name=r.name); saveRecords(); } refresh(); });
+  el.querySelectorAll('[data-sprdel]').forEach(b=>b.onclick=()=>{ const r=spRecords[+b.dataset.sprdel]; const n=spLinked(r).length; if(!confirm(n?`刪除這筆紀錄，連同對戰紀錄裡的 ${n} 筆一起刪？`:'刪除這筆紀錄？（對戰紀錄裡沒有連結的場次，那邊不會動）')) return; spRecords.splice(+b.dataset.sprdel,1); spRecSel.clear(); LS.set('spRecords',spRecords); if(n){ records=records.filter(x=>!(x&&x.sid===r.sid)); saveRecords(); } refresh(); });
 }
 function spRecordNow(){
   if(!spMine.every(t=>t.every(Boolean))||!spEnemy.every(t=>t.every(Boolean))) return alert('我方三隊（③）與對方三隊（①）都要填滿才能記錄。');
@@ -2446,7 +2477,7 @@ function spRecordNow(){
   const sid=newSid(); // 同一個 sid 寫進這筆與對戰紀錄裡的三場，之後改名／刪除才能連動
   spRecords.unshift({sid,date,name,enemy:spEnemy.map(t=>[...t]),mine:spMine.map(t=>[...t]),results}); spRecords=spRecords.slice(0,200); LS.set('spRecords',spRecords);
   results.forEach((r,g)=>{ if(r) records.unshift({sid,g,date,mode:'sp',name,enemy:[...spEnemy[g]],mine:[...spMine[g]],result:r,note:`特殊競技場第 ${g+1} 場`}); });
-  records=records.slice(0,300); LS.set('records',records);
+  records=records.slice(0,300); saveRecords();
   [0,1,2].forEach(g=>$('#spRes'+g).value=''); refresh();
 }
 function spQuick(g){
@@ -2454,21 +2485,21 @@ function spQuick(g){
   const other=spOtherIds(g); const seen=new Set(); const dup=[];
   spEnemy[g]=spEnemy[g].map(i=>{ if(!i) return null; if(other.has(i)||seen.has(i)){ dup.push(nameOf(i)); return null; } seen.add(i); return i; });
   if(dup.length) $('#spNote'+g).innerHTML+=` <span style="color:var(--bad)">已在其他隊或重複，已略過：${esc(dup.join('、'))}</span>`;
-  save(); refresh();
+  save(); refreshTeam(SP_KEYS[g]);
 }
 for(let g=0;g<3;g++){
   $('#spQuick'+g).addEventListener('keydown',e=>{ if(e.key==='Enter') spQuick(g); });
   document.querySelector(`[data-spquick="${g}"]`).onclick=()=>spQuick(g);
   document.querySelector(`[data-sppick="${g}"]`).onclick=()=>openTeamPicker(SP_KEYS[g]);
-  document.querySelector(`[data-spclear="${g}"]`).onclick=()=>{ spEnemy[g]=EMPTY5(); save(); refresh(); };
+  document.querySelector(`[data-spclear="${g}"]`).onclick=()=>{ spEnemy[g]=EMPTY5(); save(); refreshTeam(SP_KEYS[g]); };
 }
 $('#btnSpClearAll').onclick=()=>{ if(confirm('清空對方三隊？')){ spEnemy=[EMPTY5(),EMPTY5(),EMPTY5()]; save(); refresh(); } };
 for(let g=0;g<3;g++){
   $('#spmQuick'+g).addEventListener('keydown',e=>{ if(e.key==='Enter') spmQuick(g); });
   document.querySelector(`[data-spmquick="${g}"]`).onclick=()=>spmQuick(g);
   document.querySelector(`[data-spmpick="${g}"]`).onclick=()=>openTeamPicker(SPM_KEYS[g]);
-  document.querySelector(`[data-spmarr="${g}"]`).onclick=()=>{ spMine[g]=autoArrange([...spMine[g]]); save(); refresh(); };
-  document.querySelector(`[data-spmclear="${g}"]`).onclick=()=>{ spMine[g]=EMPTY5(); save(); refresh(); };
+  document.querySelector(`[data-spmarr="${g}"]`).onclick=()=>{ spMine[g]=autoArrange([...spMine[g]]); save(); refreshTeam(SPM_KEYS[g]); };
+  document.querySelector(`[data-spmclear="${g}"]`).onclick=()=>{ spMine[g]=EMPTY5(); save(); refreshTeam(SPM_KEYS[g]); };
 }
 $('#btnSpmFromPlan').onclick=()=>{ if(!spPlan||spPlan.error) return alert('上面還沒有推薦結果（對方三隊要先填滿）。'); spMine=spPlan.entries.map(e=>[...e.slots]); save(); refresh(); };
 $('#btnSpmAutoMap').onclick=spmAutoMap;
