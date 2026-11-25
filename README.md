@@ -22,6 +22,7 @@
 - 頁首可切換成 nikke-deck.com 的每階充能資料與公式（含技能 10 預設版本、超頻 17% 版本、量子魔方、超級巨星阿妮斯的每擊加成），結果與該站一致；頁首可切換回 nikke-arena-planner 的資料。公式來源：nikke-deck 前端 `app-deck-details.getBurstGeneration`。
 
 - `build/fetch_arena_stats.py` 會從 [にけあり！NIKKE 競技場分析器](https://nikkeari.cc/zh-CN) 的公開 API 抓冠軍競技場的對戰紀錄（JP／KR／國際服，每回合含進攻隊、防守隊與勝方），整理成 `build/data/arena-stats.json`：每個 5 人組合的場次、勝率、進攻／防守勝率、被哪些隊伍打贏過、含某核心角的隊伍整體勝率、角色常用站位。工具會在「對方分析」顯示這隊（或 4 人相同的相近隊）的實戰戰績，在「解法建議」列出實戰中打贏過它的隊伍並可一鍵帶入。判斷勝負時另有「直接對位」：含我方 4 位（不足 20 場放寬到 3 位）相同角色的隊伍對上含對方 4 位（或 3 位）相同角色的隊伍的實戰勝負，珍藏與一般版視為同一人；它和模板寫的克制關係衝突時以實戰為準（例如「娜由塔一閃」模板宣稱克制布蘭兒不屈隊，但對超級巨星阿妮斯＋布蘭兒隊實戰只有約三成，工具就不再給克制加分）。
+- 資料跨越 2026-10-29 的攻守目標規則統一（SR 一律打 P5、SG 一律打 P1）：β31～β40 的 24,000 回合是舊規則對局，正規賽季（Season 1 起，8 人制、每季約 400 回合）是新規則對局。腳本依賽事開打日標記每回合屬於哪一邊，arena-stats.json 的 `newRule` 記錄新規則賽季與回合數、每個隊伍另記新規則場數與勝場，頁面在隊伍戰績後標出「其中新規則賽季 n 場 m 勝」、說明文字寫出兩邊各幾回合。目前兩邊一起計算（新規則樣本還太少，單獨用會沒有結果），看到舊規則才成立的勝負關係（例如紅蓮站 P5 靠防守方霰彈槍餵）時要自己打折。
 - 同一支腳本也會抓 [NIKKE DECK](https://nikke-deck.com/en/deck) 的 `data.json`，整理成 `build/data/deck-speed.json`：哪些角色有「充能速度 17%」超頻選項、量子魔方 Lv7 的充能加成，以及它的 PVP 階級（在角色旁以「deck」標籤顯示，作為第二份獨立評價；Prydwen 與上游都還沒評的新角色，排序與評分暫時用這個階級，標籤顯示為有底色的「deck X」）。
 - 「進階」區可以勾選對方或我方角色的超頻 17%／量子魔方 Lv7，速度判定會隨之改變；模型與數值來自 nikke-deck 與 NIKKE Synergy 的機制文章，是估算值。
 - 更新：`python build/fetch_arena_stats.py --refresh`（原始回應存在 `build/data/raw/`，不進倉庫），再執行 `python build/build.py`。請勿高頻呼叫對方的 API。
@@ -84,7 +85,8 @@
 | `build/data/synergy-raw.json` | NIKKE Synergy 的角色表匯出檔（227 名，含珍藏版與 R／SR）與譯名表，由 `synergy_export.js` 在瀏覽器產生 |
 | `build/data/templates.json` | 上游的 23 個主流隊伍模板與互剋關係 |
 | `build/data/templates-extra.json` | 本工具補充的 2026 體系模板（超級巨星阿妮斯＋餅乾核心、娜由塔一閃、豺狼＋貝斯蒂不屈、諾雅諾伊斯餅乾灰姑娘），獨立嵌入，線上更新上游模板後仍會合併 |
-| `build/data/templates-mined.json` | `build/mine_templates.py` 從 nikkeari 的 24,000 回合挖出的 24 個核心家族：場次、勝率、常見補位、站位、互剋（統計結果，非人工驗證） |
+| `build/data/templates-mined.json` | `build/mine_templates.py` 從 nikkeari 的 24,390 回合挖出的 24 個核心家族：場次、勝率、常見補位、站位、互剋（統計結果，非人工驗證） |
+| `build/data/arena-rounds-archive.json.gz` | nikkeari β31～β40（2026-06～10 的 beta 賽季）24,000 回合的封存。nikkeari 的 API 自 2026-11 起只回傳正規賽季（Season 1 起），舊賽季抓不回來了，`fetch_arena_stats.py` 每次都會把這份封存併進統計；沒有 raw 快取的新環境會從它還原出挖掘腳本要讀的 raw 檔 |
 | `build/data/community-teams.json` | 社群明確列出的新人／特殊競技場隊伍（JP wikiwiki、GameWith、Yahoo知恵袋、KR arca／dcinside／ruliweb、Gamemeca，2025-07～2026-10），含來源、日期、站位、速度、打得贏與輸給誰 |
 | `build/data/templates-community.json` | `build/community_templates.py` 把上面的隊伍轉成的 36 個模板（名稱標「（社群）」） |
 | `build/data/prydwen-raw.json` → `prydwen-pvp.json` | Prydwen 的 PVP 階級表（2026-11-09）。Prydwen 擋程式抓取，raw 檔是用瀏覽器開 PVP 分頁整理的，`prydwen_map.py` 對應成角色 id；出了新角色或 Prydwen 改版後要重抓 raw 檔再跑一次，否則新角色只會有 nikke-deck 的暫代階級。頁面以它為角色的 PVP 階級（上游 arena-planner 的 pvpTier 本來就是各角色加入時抄 Prydwen 的，但沒跟著更新；舊值顯示為「planner X」） |
@@ -95,9 +97,9 @@
 
 arena-stats.json 的每個隊伍另記錄「實際開爆裂的三位」的場次分布，直接對位會依你的排法（誰開 B2／B3）加權；贏點摘要的「開誰的爆裂」會比較同一隊改由另一位開 B2／B3 時的實戰結果，沒有資料時寫明。每張推薦卡、特殊競技場卡與我方隊伍判斷的最上方有「贏點」摘要：優勢來自哪裡（速度先手、克制、後手鏡像、同型隊實戰勝率）、軸怎麼開（誰開 B1／B2／B3、誰軸外、各自靠什麼）、實戰撐住的是哪幾位（相似隊裡含她的場次百分比）、哪些成員在相似隊裡很少出現因此未驗證。
 
-所有模板寫的克制／被克制關係，工具在使用前都會先拿實戰驗證：找「含我方體系核心角的隊」對上「含對方體系核心角的隊」的勝負（30 場以上才算），實戰相反的宣稱不採用並在判斷依據說明，五五波的不加分，支持的會附上場數。`build/audit_counters.py` 可離線列出所有與實戰相反的宣稱（2026-10-21：298 條可驗證的宣稱中有 44 條相反）。
+所有模板寫的克制／被克制關係，工具在使用前都會先拿實戰驗證：找「含我方體系核心角的隊」對上「含對方體系核心角的隊」的勝負（30 場以上才算），實戰相反的宣稱不採用並在判斷依據說明，五五波的不加分，支持的會附上場數。`build/audit_counters.py` 可離線列出所有與實戰相反的宣稱（2026-10-21：298 條可驗證的宣稱中有 44 條相反；2026-11-25 併入 Season 1 後：309 條中有 41 條相反）。
 
-模板分四層：上游模板、本工具補充、資料挖掘、社群隊伍；更新流程是 `fetch_arena_stats.py --refresh` → `mine_templates.py` → `community_templates.py` → `build.py`。社群隊伍要新增時直接在 `community-teams.json` 加一筆再跑轉換。社群來源沒給站位的隊伍，轉換時會依序用「冠軍競技場同樣 5 人最常用的排法」→「各角色最常站的位置」→ 粗排來決定順序，說明文字會標示用了哪一種。
+模板分四層：上游模板、本工具補充、資料挖掘、社群隊伍；更新流程是 `fetch_arena_stats.py --refresh` → `mine_templates.py` → `community_templates.py` → `audit_counters.py` → `build.py`（`--refresh` 只重抓 API 還提供的正規賽季；β 賽季一律來自封存檔，不會被覆蓋）。社群隊伍要新增時直接在 `community-teams.json` 加一筆再跑轉換。社群來源沒給站位的隊伍，轉換時會依序用「冠軍競技場同樣 5 人最常用的排法」→「各角色最常站的位置」→ 粗排來決定順序，說明文字會標示用了哪一種。
 
 ## 哪裡可以找到這類隊伍資料與討論
 
