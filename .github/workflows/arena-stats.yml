@@ -1,0 +1,70 @@
+name: 更新冠軍競技場實戰資料
+
+# 每週自動跑一次「抓 nikkeari → 挖體系模板 → 社群模板 → 克制稽核 → 重建 HTML」，有新回合才提交並推到 main，
+# GitHub Pages 隨之更新。正規賽季兩週一季、週四結束，nikkeari 多在隔天發布資料，所以排在週六早上（台灣 10:00）。
+# 手動觸發：Actions 分頁 → 這個 workflow → Run workflow。本機對應的是 更新實戰資料.bat。
+on:
+  schedule:
+    - cron: "0 2 * * 6"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: arena-stats
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      # 重建會覆寫 index.html。若有人直接在 GitHub 上改了 index.html 而沒改 build/template.html，
+      # 這裡會先發現並中止，不然那些改動會被這次自動提交洗掉。
+      - name: 確認 index.html 與 template.html 一致
+        run: |
+          python -X utf8 build/build.py
+          if ! git diff --quiet -- index.html; then
+            echo "::error::index.html 與 build/template.html 的產出不一致：有人直接改了 index.html。請先把改動搬進 build/template.html 再重跑。"
+            git --no-pager diff --stat -- index.html
+            exit 1
+          fi
+
+      - name: 記錄目前回合數
+        id: before
+        run: |
+          echo "rounds=$(python -c "import json;print(json.load(open('build/data/arena-stats.json',encoding='utf-8'))['rounds'])")" >> "$GITHUB_OUTPUT"
+
+      # --strict：nikkeari 抓不到就中止，不會產生只剩封存的縮水資料；--no-deck：階級與充能資料另由 build.py --update 管
+      - name: 抓 nikkeari 並重算
+        run: |
+          python -X utf8 build/fetch_arena_stats.py --refresh --strict --no-deck
+          python -X utf8 build/mine_templates.py
+          python -X utf8 build/community_templates.py
+          python -X utf8 build/audit_counters.py
+          python -X utf8 build/build.py
+
+      - name: 有新回合才提交
+        env:
+          BEFORE: ${{ steps.before.outputs.rounds }}
+        run: |
+          after=$(python -c "import json;print(json.load(open('build/data/arena-stats.json',encoding='utf-8'))['rounds'])")
+          echo "回合數 $BEFORE → $after"
+          if [ "$after" -le "$BEFORE" ]; then
+            echo "沒有新回合，不提交。"
+            exit 0
+          fi
+          latest=$(python -c "import json;d=json.load(open('build/data/arena-stats.json',encoding='utf-8'));print(d['seasons'][-1]);print(d['newRule']['rounds'])" | paste -sd' ')
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html "NIKKE-PVP-解隊助手.html" \
+            build/data/arena-stats.json build/data/arena-rounds-archive.json.gz \
+            build/data/templates-mined.json build/data/templates-community.json build/data/counter-audit.json
+          git commit -m "自動更新冠軍競技場實戰資料：$BEFORE → $after 回合（最新賽季與新規則回合數：$latest）"
+          git push

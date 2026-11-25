@@ -62,7 +62,7 @@ def main():
         return out if len(out) == 5 else None
 
     rounds = []  # (ordered_team, won, server)
-    for f in RAW.glob("ari_matchups_*.json"):
+    for f in sorted(RAW.glob("ari_matchups_*.json")):  # 固定順序：Linux（自動排程）與 Windows 挖出的結果才會一致
         server = f.stem.split("_")[-1]
         for r in json.loads(f.read_text(encoding="utf-8")).get("matchups", []):
             a = resolve(r["attacker_team"], r.get("attacker_collections"))

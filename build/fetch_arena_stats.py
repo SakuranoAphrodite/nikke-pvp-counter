@@ -11,6 +11,13 @@
                                 舊賽季抓不回來了，所以保留當時的回應；每次執行都會把封存併進統計，並標記哪些回合是
                                 2026-10-29 攻守目標規則統一之後的「新規則」對局（見 NEW_RULE_FROM）。
 
+參數：
+  --refresh   重抓 API（否則用 raw/ 快取）；只影響 API 還提供的正規賽季，β 賽季一律來自封存檔
+  --strict    任一伺服器抓不到就中止（自動排程用，避免對方站掛掉時產生只剩封存的縮水資料）
+  --no-deck   不順帶抓 nikke-deck 的充能／階級資料（交給 build.py --update）
+  內容沒變時保留原本的抓取日期，所以重跑不會只因日期而產生 git 變更。
+  自動排程：.github/workflows/arena-stats.yml 每週跑一次整條流程，有新回合才提交；本機可雙擊 更新實戰資料.bat。
+
 資料來源與授權：
   nikkeari.cc 為個人粉絲站，資料來自志願玩家提供的截圖；本腳本只讀取其公開 API，請勿高頻呼叫。
   nikke-deck.com 的 data.json 為其網站資料檔；僅用來推導超頻／魔方對速度的影響與其階級表。
@@ -26,6 +33,8 @@ RAW.mkdir(parents=True, exist_ok=True)
 UA = {"User-Agent": "Mozilla/5.0 (nikke-pvp-counter fetch script)", "Referer": "https://nikkeari.cc/zh-CN"}
 ARI = "https://nikkeari.cc"
 SERVERS = ["GLOBAL", "JP", "KR"]
+STRICT = "--strict" in sys.argv      # 任一伺服器的 API 抓不到就中止（給自動排程用：不要在對方站掛掉時產生只剩封存的縮水資料）
+NO_DECK = "--no-deck" in sys.argv    # 不順帶抓 nikke-deck（階級與充能資料交給 build.py --update 管）
 NEW_RULE_FROM = "2026-10-29"  # 攻守目標規則統一（SR 一律打 P5、SG 一律打 P1）；此日之後開打的賽季算「新規則」對局
 ARCHIVE = DATA / "arena-rounds-archive.json.gz"  # β 賽季回合封存（API 已不再提供），見檔頭說明
 ARCHIVE_KEEP = ("tournament_id", "tournament_name", "stage", "match_id", "round_number", "attacker_player_id",
@@ -91,9 +100,9 @@ def load_archive():
         g.write(blob)
     data = buf.getvalue()
     n_rounds = sum(len(v["matchups"]) for v in arch.values())
-    if not ARCHIVE.exists() or ARCHIVE.read_bytes() != data:
+    if from_raw and (not ARCHIVE.exists() or ARCHIVE.read_bytes() != data):  # 只有 raw 提供新內容時才改寫；純還原不重新壓縮（不同 zlib 版本壓出的位元組會不同）
         ARCHIVE.write_bytes(data)
-        print(f"改寫封存 {ARCHIVE.name}：{n_rounds} 回合、{len(data) // 1024} KB（來自 raw：{'、'.join(from_raw) or '無'}）")
+        print(f"改寫封存 {ARCHIVE.name}：{n_rounds} 回合、{len(data) // 1024} KB（來自 raw：{'、'.join(from_raw)}）")
     else:
         print(f"β 賽季封存 {ARCHIVE.name}：{n_rounds} 回合，內容不變")
     for s, v in arch.items():  # 還原 raw/ 缺少的 .beta 檔（三種都還原，第二次執行才不會以殘缺的 raw 改寫封存）
@@ -197,6 +206,8 @@ def main():
                 mu = cached(f"ari_matchups_{server}.json", lambda: get(ARI + "/api/dashboard/cross-tournament/matchups?t=%d" % int(time.time()), body))
                 rounds = list(mu.get("matchups", mu))
             except Exception as e:
+                if STRICT:
+                    raise SystemExit(f"{server} matchups 抓取失敗（--strict 中止，不產生只剩封存的資料）：{e}")
                 print(server, "matchups 失敗", e)
         # 併入封存的 β 賽季回合（同一回合若 API 仍有回傳就不重複算）
         seen = {(r.get("tournament_id"), r.get("match_id"), r.get("round_number")) for r in rounds}
@@ -209,6 +220,8 @@ def main():
                 st = cached(f"ari_stats_{server}.json", lambda: get(ARI + "/api/dashboard/cross-tournament/stats?t=%d" % int(time.time()), body))
                 stats_list.append(st.get("character_stats", []))
             except Exception as e:
+                if STRICT:
+                    raise SystemExit(f"{server} stats 抓取失敗（--strict 中止）：{e}")
                 print(server, "stats 失敗", e)
         for src_i, cs in enumerate(stats_list):  # 站位統計：封存（#0）與現行 API（#1）分開存，輸出時各伺服器、各來源加總
             for c in cs:
@@ -327,10 +340,18 @@ def main():
         "names": extra_names,
         "unmapped": [u[1] for u in unmapped if u[2] > 0],
     }
-    (DATA / "arena-stats.json").write_text(json.dumps(out, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    out_file = DATA / "arena-stats.json"
+    prev = json.loads(out_file.read_text(encoding="utf-8")) if out_file.exists() else None
+    strip = lambda d: {k: v for k, v in d.items() if k != "fetched"}
+    if prev and strip(prev) == strip(out):  # 內容沒變就保留原抓取日期：排程每週跑也不會只因日期變動而產生提交
+        out["fetched"] = prev["fetched"]
+        print("arena-stats.json 內容不變，保留抓取日期", prev["fetched"])
+    out_file.write_text(json.dumps(out, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     print(f"arena-stats.json：{len(teams_arr)} 隊、{total_rounds} 回合（新規則 {new_rounds}）、{len(arch_stats)} 體系；{per_server}")
 
     # ---------- nikke-deck 充能變體與階級（共用 nikkedeck.py；build.py --update 也會產生同一份） ----------
+    if NO_DECK:
+        return
     try:
         import nikkedeck
         nikkedeck.write_speed(nikkedeck.fetch("--refresh" in sys.argv), chars)

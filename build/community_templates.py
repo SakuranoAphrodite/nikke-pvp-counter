@@ -49,7 +49,7 @@ def main():
         ari2my = {a["id"]: by_ja.get(_norm(a["name"])) for a in json.loads((RAW / "ari_characters.json").read_text(encoding="utf-8"))}
     nt = lambda i: i[:-9] if i.endswith("-treasure") else i
     order_count = collections.defaultdict(collections.Counter)  # frozenset(nt ids) -> Counter(tuple of nt ids in order)
-    for f in glob.glob(str(RAW / "ari_matchups_*.json")):
+    for f in sorted(glob.glob(str(RAW / "ari_matchups_*.json"))):  # 固定順序，跨平台結果一致
         for r in json.loads(Path(f).read_text(encoding="utf-8")).get("matchups", []):
             for team in (r["attacker_team"], r["defender_team"]):
                 m = [ari2my.get(i) for i in team]

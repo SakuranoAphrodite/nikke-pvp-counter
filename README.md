@@ -99,7 +99,10 @@ arena-stats.json 的每個隊伍另記錄「實際開爆裂的三位」的場次
 
 所有模板寫的克制／被克制關係，工具在使用前都會先拿實戰驗證：找「含我方體系核心角的隊」對上「含對方體系核心角的隊」的勝負（30 場以上才算），實戰相反的宣稱不採用並在判斷依據說明，五五波的不加分，支持的會附上場數。`build/audit_counters.py` 可離線列出所有與實戰相反的宣稱（2026-10-21：298 條可驗證的宣稱中有 44 條相反；2026-11-25 併入 Season 1 後：309 條中有 41 條相反）。
 
-模板分四層：上游模板、本工具補充、資料挖掘、社群隊伍；更新流程是 `fetch_arena_stats.py --refresh` → `mine_templates.py` → `community_templates.py` → `audit_counters.py` → `build.py`（`--refresh` 只重抓 API 還提供的正規賽季；β 賽季一律來自封存檔，不會被覆蓋）。社群隊伍要新增時直接在 `community-teams.json` 加一筆再跑轉換。社群來源沒給站位的隊伍，轉換時會依序用「冠軍競技場同樣 5 人最常用的排法」→「各角色最常站的位置」→ 粗排來決定順序，說明文字會標示用了哪一種。
+模板分四層：上游模板、本工具補充、資料挖掘、社群隊伍；更新流程是 `fetch_arena_stats.py --refresh` → `mine_templates.py` → `community_templates.py` → `audit_counters.py` → `build.py`（`--refresh` 只重抓 API 還提供的正規賽季；β 賽季一律來自封存檔，不會被覆蓋）。這條流程有兩種免動手的跑法：
+
+- **自動排程**：`.github/workflows/arena-stats.yml` 每週六早上（台灣 10:00）在 GitHub 上跑一次，有新回合才提交並推到 main，GitHub Pages 幾分鐘後更新；沒有新回合就什麼都不動（內容不變時腳本會保留原抓取日期）。nikkeari 抓不到時中止（`--strict`），不會產生只剩封存的縮水資料；不順帶抓 nikke-deck（`--no-deck`），階級與充能資料仍由 `build.py --update` 管。跑之前會先確認 index.html 與 template.html 的產出一致，若有人直接改了 index.html 會中止並提示，所以改頁面一律改 `build/template.html`。想立刻跑：Actions 分頁 → 這個 workflow → Run workflow。
+- **本機一鍵**：雙擊 `更新實戰資料.bat`（同一條流程，跑完自己 commit／push）。角色庫、階級與充能資料的更新仍是 `更新資料.bat`。社群隊伍要新增時直接在 `community-teams.json` 加一筆再跑轉換。社群來源沒給站位的隊伍，轉換時會依序用「冠軍競技場同樣 5 人最常用的排法」→「各角色最常站的位置」→ 粗排來決定順序，說明文字會標示用了哪一種。
 
 ## 哪裡可以找到這類隊伍資料與討論
 
