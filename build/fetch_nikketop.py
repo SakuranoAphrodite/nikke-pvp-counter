@@ -125,7 +125,13 @@ def main(refresh: bool):
         "units": units,
         "unmatched": unmatched,
     }
-    (DATA / "nikketop.json").write_text(json.dumps(out, ensure_ascii=False, indent=0), encoding="utf-8")
+    out_file = DATA / "nikketop.json"
+    prev = json.loads(out_file.read_text(encoding="utf-8")) if out_file.exists() else None
+    strip = lambda d: {k: v for k, v in d.items() if k != "fetched"}
+    if prev and strip(prev) == strip(out):  # 內容沒變就保留原抓取日期：排程每週跑也不會只因日期變動而產生提交
+        out["fetched"] = prev["fetched"]
+        print("nikketop.json 內容不變，保留抓取日期", prev["fetched"])
+    out_file.write_text(json.dumps(out, ensure_ascii=False, indent=0), encoding="utf-8")
     print(f"對應 {len(units)} 名角色，{len(unmatched)} 名沒有對應（{', '.join(u['en'] for u in unmatched)}）")
     print(f"寫入 {DATA / 'nikketop.json'}")
 

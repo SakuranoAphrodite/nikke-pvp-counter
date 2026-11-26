@@ -1,8 +1,9 @@
-name: 更新冠軍競技場實戰資料
+name: 每週更新實戰資料與角色庫
 
-# 每週自動跑一次「抓 nikkeari → 挖體系模板 → 社群模板 → 克制稽核 → 重建 HTML」，有新回合才提交並推到 main，
-# GitHub Pages 隨之更新。正規賽季兩週一季、週四結束，nikkeari 多在隔天發布資料，所以排在週六早上（台灣 10:00）。
-# 手動觸發：Actions 分頁 → 這個 workflow → Run workflow。本機對應的是 更新實戰資料.bat。
+# 每週自動跑一次「更新角色庫（上游 arena-planner 模板、nikke-deck 的新角色與充能、nikke.top 逐幀參數、新角色頭像）→ 抓 nikkeari → 挖體系模板 → 社群模板 → 克制稽核 → 重建 HTML」，
+# 有新回合或角色資料變了才提交並推到 main，GitHub Pages 隨之更新。正規賽季兩週一季、週四結束，nikkeari 多在隔天發布資料，所以排在週六早上（台灣 10:00）。
+# 手動觸發：Actions 分頁 → 這個 workflow → Run workflow。本機對應的是 更新資料.bat（角色庫）與 更新實戰資料.bat（實戰資料）。
+# nikke-synergy 擋程式抓取，出場日期與繁中譯名仍要用瀏覽器匯出 synergy-raw.json 放進倉庫（見 README「新角色出來怎麼辦」），放進去之後這裡會自動合併並補頭像。
 on:
   schedule:
     - cron: "0 2 * * 6"
@@ -41,7 +42,30 @@ jobs:
         run: |
           echo "rounds=$(python -c "import json;print(json.load(open('build/data/arena-stats.json',encoding='utf-8'))['rounds'])")" >> "$GITHUB_OUTPUT"
 
-      # --strict：nikkeari 抓不到就中止，不會產生只剩封存的縮水資料；--no-deck：階級與充能資料另由 build.py --update 管
+      # --strict：nikke-deck 抓不到、或合併後少了任何一名現有角色就中止（CI 沒有 data/raw/ 快取，照舊退回快取會把 nikke-deck 補的角色洗掉）。
+      # 這段失敗只警告並還原檔案，後面的實戰資料照常更新。頭像：上游倉庫清單用 GITHUB_TOKEN 呼叫 GitHub API；新角色頭像來自 synergy-raw.json 記的網址。
+      # 內容沒變時 build.py 與 fetch_nikketop.py 會保留原資料日期，所以 changed 只在真的有新資料時為 1。
+      - name: 更新角色庫（上游模板、nikke-deck、nikke.top、頭像）
+        id: chars
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          if python -X utf8 build/build.py --update --strict; then
+            python -X utf8 build/fetch_avatars.py || echo "::warning::頭像下載失敗，這次不補頭像"
+          else
+            echo "::warning::角色庫更新失敗，這次只更新實戰資料（build/data 與產出已還原）"
+            git checkout -- build/data avatars index.html "NIKKE-PVP-解隊助手.html"
+          fi
+          if [ -n "$(git status --porcelain -- build/data/characters.json build/data/templates.json build/data/deck-speed.json build/data/nikketop.json build/data/version.json avatars)" ]; then
+            echo "changed=1" >> "$GITHUB_OUTPUT"
+            echo "角色資料有變動："
+            git --no-pager status --short -- build/data avatars
+          else
+            echo "changed=0" >> "$GITHUB_OUTPUT"
+            echo "角色資料沒有變動。"
+          fi
+
+      # --strict：nikkeari 抓不到就中止，不會產生只剩封存的縮水資料；--no-deck：nikke-deck 已在上一步抓過（deck-speed.json 由 build.py 產生）
       - name: 抓 nikkeari 並重算
         run: |
           python -X utf8 build/fetch_arena_stats.py --refresh --strict --no-deck
@@ -50,21 +74,39 @@ jobs:
           python -X utf8 build/audit_counters.py
           python -X utf8 build/build.py
 
-      - name: 有新回合才提交
+      - name: 有新回合或角色資料變了才提交
         env:
           BEFORE: ${{ steps.before.outputs.rounds }}
+          CHANGED: ${{ steps.chars.outputs.changed }}
         run: |
           after=$(python -c "import json;print(json.load(open('build/data/arena-stats.json',encoding='utf-8'))['rounds'])")
-          echo "回合數 $BEFORE → $after"
-          if [ "$after" -le "$BEFORE" ]; then
-            echo "沒有新回合，不提交。"
+          echo "回合數 $BEFORE → $after；角色資料變動：$CHANGED"
+          if [ "$after" -le "$BEFORE" ] && [ "$CHANGED" != "1" ]; then
+            echo "沒有新回合、角色資料也沒變，不提交。"
             exit 0
           fi
-          latest=$(python -c "import json;d=json.load(open('build/data/arena-stats.json',encoding='utf-8'));print(d['seasons'][-1]);print(d['newRule']['rounds'])" | paste -sd' ')
+          parts=""
+          if [ "$after" -gt "$BEFORE" ]; then
+            latest=$(python -c "import json;d=json.load(open('build/data/arena-stats.json',encoding='utf-8'));print(d['seasons'][-1]);print(d['newRule']['rounds'])" | paste -sd' ')
+            parts="實戰資料 $BEFORE → $after 回合（最新賽季與新規則回合數：$latest）"
+          fi
+          if [ "$CHANGED" = "1" ]; then
+            summary=$(python -X utf8 - <<'EOF'
+          import json, subprocess
+          old = {c["id"] for c in json.loads(subprocess.run(["git", "show", "HEAD:build/data/characters.json"], capture_output=True, check=True).stdout.decode("utf-8"))}
+          new = json.load(open("build/data/characters.json", encoding="utf-8"))
+          added = [c["name"]["zh-TW"] for c in new if c["id"] not in old]
+          print("角色庫新增 " + "、".join(added) if added else "角色資料更新（充能、階級、上游模板、nikke.top 參數或頭像）")
+          EOF
+          )
+            parts="${parts:+$parts；}$summary"
+          fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add index.html "NIKKE-PVP-解隊助手.html" \
-            build/data/arena-stats.json build/data/arena-rounds-archive.json.gz \
-            build/data/templates-mined.json build/data/templates-community.json build/data/counter-audit.json
-          git commit -m "自動更新冠軍競技場實戰資料：$BEFORE → $after 回合（最新賽季與新規則回合數：$latest）"
+          git add index.html "NIKKE-PVP-解隊助手.html" avatars build/data/arena-stats.json build/data/arena-rounds-archive.json.gz build/data/templates-mined.json build/data/templates-community.json build/data/counter-audit.json build/data/characters.json build/data/templates.json build/data/deck-speed.json build/data/nikketop.json build/data/version.json
+          if git diff --cached --quiet; then
+            echo "沒有可提交的變動。"
+            exit 0
+          fi
+          git commit -m "自動更新：$parts"
           git push

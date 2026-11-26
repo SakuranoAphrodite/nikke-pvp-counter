@@ -10,6 +10,8 @@
                              #   4. nikke.top 的逐幀充能參數（fetch_nikketop.py --refresh）
   python build.py --merge    # 不重抓上游與 nikke-deck（用 data/raw/ 的快取），只重新合併角色庫再產生；
                              # 例如剛換了新的 synergy-raw.json 時用這個
+  加 --strict（排程用）：nikke-deck 抓不到、或合併後少了任何一名現有角色，就中止而不是退回快取，模板也還原；沒有快取的 CI 若照舊退回會把 nikke-deck 補的角色洗掉。
+  version.json 的資料日期只在角色庫、模板、充能或 nikke.top 資料真的變了時才更新，排程每週跑也不會只因日期變動而產生提交。
 
 角色庫 = 上游 characters.json（基底，id 與各模板、標籤、綽號相通）＋ nikke-deck 補的新角色 ＋ nikke-synergy 的出場日期。
 """
@@ -30,6 +32,8 @@ FILES = ["characters.json", "templates.json"]
 NAME_FIX = {
     "scarlet-goddeath": {"zh-TW": "紅蓮:神殺", "zh-CN": "红莲:神杀"},
 }
+STRICT = "--strict" in sys.argv
+DATED = ["templates.json", "characters.json", "deck-speed.json", "nikketop.json"]  # 這些檔有變才算資料更新（決定 version.json 的日期）
 
 
 def fetch(name):
@@ -42,8 +46,13 @@ def read_json(p, default=None):
     return json.loads(p.read_text(encoding="utf-8")) if p.exists() else default
 
 
+def snapshot():
+    return {n: (DATA / n).read_bytes() if (DATA / n).exists() else None for n in DATED}
+
+
 def update():
     """抓上游的 characters.json（存到 raw/ 當合併基底）與 templates.json，再合併角色庫。"""
+    snap = snapshot()
     RAW.mkdir(parents=True, exist_ok=True)
     for name in FILES:
         raw = fetch(name)
@@ -51,7 +60,12 @@ def update():
         dest = RAW / ("upstream_" + name) if name == "characters.json" else DATA / name
         dest.write_bytes(raw)
         print(f"更新 {name}（{len(raw):,} bytes）← {UPSTREAM}")
-    merge(refresh=True)
+    try:
+        merge(refresh=True, snap=snap)
+    except SystemExit:  # --strict 中止：模板已先寫入，連它一起還原，不留下「新模板＋舊角色庫」的半套狀態
+        if snap.get("templates.json") is not None:
+            (DATA / "templates.json").write_bytes(snap["templates.json"])
+        raise
 
 
 def merge_characters(upstream, deck, syn):
@@ -107,7 +121,8 @@ def merge_characters(upstream, deck, syn):
     return chars, added, unmapped
 
 
-def merge(refresh=False):
+def merge(refresh=False, snap=None):
+    snap = snap or snapshot()
     up_file = RAW / "upstream_characters.json"
     if up_file.exists():
         upstream = read_json(up_file)
@@ -117,12 +132,17 @@ def merge(refresh=False):
     try:
         deck = nikkedeck.fetch(refresh)
     except Exception as e:
+        if STRICT:
+            raise SystemExit(f"nikke-deck 抓取失敗，--strict 中止，不改角色庫：{e}")
         print("nikke-deck 抓取失敗，這次不補新角色：", e)
         deck = read_json(RAW / "deck_data.json")
     syn = synergy.load()
     if not syn:
         print("沒有 data/synergy-raw.json：角色不會有出場日期。匯出方法見 build/synergy.py 開頭說明")
     chars, added, unmapped = merge_characters(upstream, deck, syn)
+    missing = {c["id"] for c in read_json(DATA / "characters.json", [])} - {c["id"] for c in chars}
+    if STRICT and missing:  # 上游或 nikke-deck 的資料不完整時既有角色會消失；排程寧可不更新也不要把角色洗掉（只比人數會漏掉一邊多一邊少的情況）
+        raise SystemExit(f"合併後少了現有的 {len(missing)} 名角色（{'、'.join(sorted(missing))}），--strict 中止，不改角色庫")
     (DATA / "characters.json").write_text(json.dumps(chars, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     dated = sum(1 for c in chars if c.get("releaseDate"))
     print(f"角色庫：上游 {len(upstream)} 名 + nikke-deck 補 {len(added)} 名 = {len(chars)} 名，{dated} 名有出場日期"
@@ -133,17 +153,22 @@ def merge(refresh=False):
         print("  synergy 對不到的角色（可在 synergy.py 的 OVERRIDE 補）：" + "、".join(f"{r['name']}={r.get('en') or '?'}" for r in unmapped))
     if deck:
         nikkedeck.write_speed(deck, chars)
-    ver = read_json(DATA / "version.json", {})
-    today = datetime.date.today().isoformat()
-    ver.update({"fetched": today, "deck": (deck or {}).get("lastUpdated"), "synergy": (syn or {}).get("exported")})
-    if refresh:
-        ver["planner"] = today
-    (DATA / "version.json").write_text(json.dumps(ver, ensure_ascii=False), encoding="utf-8")
-    try:  # nikke.top 的逐幀參數要在角色庫合併後才能把新角色對上
+    try:  # nikke.top 的逐幀參數要在角色庫合併後才能把新角色對上；該腳本找不到 bundle 時以 SystemExit 結束，這裡一併接住
         import fetch_nikketop
         fetch_nikketop.main(refresh)
-    except Exception as e:
+    except (Exception, SystemExit) as e:
         print("nikke.top 更新失敗（速度計算會退回 nikke-deck／arena-planner 的數值）：", e)
+    ver = read_json(DATA / "version.json", {})
+    changed = [n for n in DATED if snapshot()[n] != snap.get(n)]
+    if changed or not ver.get("fetched"):
+        today = datetime.date.today().isoformat()
+        ver.update({"fetched": today, "deck": (deck or {}).get("lastUpdated"), "synergy": (syn or {}).get("exported")})
+        if refresh:
+            ver["planner"] = today
+        (DATA / "version.json").write_text(json.dumps(ver, ensure_ascii=False), encoding="utf-8")
+        print("資料有變（" + "、".join(changed) + f"），資料日期更新為 {ver['fetched']}")
+    else:
+        print(f"角色庫、模板、充能與 nikke.top 資料都沒變，保留資料日期 {ver['fetched']}")
 
 
 def build():

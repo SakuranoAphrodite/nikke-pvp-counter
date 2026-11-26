@@ -101,7 +101,7 @@ arena-stats.json 的每個隊伍另記錄「實際開爆裂的三位」的場次
 
 模板分四層：上游模板、本工具補充、資料挖掘、社群隊伍；更新流程是 `fetch_arena_stats.py --refresh` → `mine_templates.py` → `community_templates.py` → `audit_counters.py` → `build.py`（`--refresh` 只重抓 API 還提供的正規賽季；β 賽季一律來自封存檔，不會被覆蓋）。這條流程有兩種免動手的跑法：
 
-- **自動排程**：`.github/workflows/arena-stats.yml` 每週六早上（台灣 10:00）在 GitHub 上跑一次，有新回合才提交並推到 main，GitHub Pages 幾分鐘後更新；沒有新回合就什麼都不動（內容不變時腳本會保留原抓取日期）。nikkeari 抓不到時中止（`--strict`），不會產生只剩封存的縮水資料；不順帶抓 nikke-deck（`--no-deck`），階級與充能資料仍由 `build.py --update` 管。跑之前會先確認 index.html 與 template.html 的產出一致，若有人直接改了 index.html 會中止並提示，所以改頁面一律改 `build/template.html`。想立刻跑：Actions 分頁 → 這個 workflow → Run workflow。
+- **自動排程**：`.github/workflows/arena-stats.yml` 每週六早上（台灣 10:00）在 GitHub 上跑一次：先 `build.py --update --strict` 更新角色庫（上游模板、nikke-deck 的新 SSR 與每階充能、nikke.top 逐幀參數）並下載新角色頭像，再抓 nikkeari 重算實戰資料；有新回合或角色資料變了才提交並推到 main，GitHub Pages 幾分鐘後更新，兩邊都沒變就什麼都不動（內容不變時各腳本會保留原資料日期）。nikkeari 抓不到時中止（`--strict`），不會產生只剩封存的縮水資料；角色庫那段抓不到時只警告並還原檔案，實戰資料照常更新。`build.py --strict` 讓 nikke-deck 抓不到、或合併後少了任何一名現有角色時中止並還原：CI 沒有 `data/raw/` 快取，照本機的做法退回快取會把 nikke-deck 補的角色洗掉。跑之前會先確認 index.html 與 template.html 的產出一致，若有人直接改了 index.html 會中止並提示，所以改頁面一律改 `build/template.html`。想立刻跑：Actions 分頁 → 這個 workflow → Run workflow。
 - **本機一鍵**：雙擊 `更新實戰資料.bat`（同一條流程，跑完自己 commit／push）。角色庫、階級與充能資料的更新仍是 `更新資料.bat`。社群隊伍要新增時直接在 `community-teams.json` 加一筆再跑轉換。社群來源沒給站位的隊伍，轉換時會依序用「冠軍競技場同樣 5 人最常用的排法」→「各角色最常站的位置」→ 粗排來決定順序，說明文字會標示用了哪一種。
 
 ## 哪裡可以找到這類隊伍資料與討論
@@ -126,21 +126,21 @@ arena-stats.json 的每個隊伍另記錄「實際開爆裂的三位」的場次
 
 更新方式：
 
-1. **自動**：每天第一次打開 HTML 時，若有網路，會向本專案的 GitHub 倉庫抓合併後的 `build/data/characters.json` 與 `templates.json`，暫存在瀏覽器並立即套用（線上資料比內建少時不套用）。頁首會顯示資料來源（內建／快取／線上）與日期，也有「檢查更新」按鈕可手動觸發。
+1. **自動**：每天第一次打開 HTML 時，若有網路，會向本專案的 GitHub 倉庫抓合併後的 `build/data/characters.json` 與 `templates.json`，暫存在瀏覽器並立即套用（線上資料比內建少時不套用）。頁首會顯示資料來源（內建／快取／線上）與日期，也有「檢查更新」按鈕可手動觸發。倉庫這邊則由每週六的 GitHub Actions 排程跑 `build.py --update`，nikke-deck 有的新 SSR 會自動進角色庫並推上 GitHub，不必本機操作；譯名表還沒有的新角色先用英文名，沒有出場日期與頭像，等你把下面第 3 步的 `synergy-raw.json` 放進倉庫後下一次排程會補上。
 2. **半自動**：雙擊 `更新資料.bat`，或執行下面的指令，會抓上游、nikke-deck 與 nikke.top、合併角色庫、寫回 `build/data/` 並重新產生成品 HTML，離線時也會有新角色：
 
 ```bash
 python build/build.py --update
 ```
 
-   nikke-deck 補進來的角色會標「新」，繁中名與出場日期取自 `synergy-raw.json`；兩邊都沒有繁中名的角色（例如剛公布、譯名表還沒更新的）可在 `build.py` 的 `NAME_FIX` 手動補，綽號在 `nicknames.json` 補。新角色的頭像上游沒有，執行 `python build/fetch_avatars.py` 會依 `characters.json` 記的 nikke-synergy 角色圖網址下載到 `avatars/`。
+   nikke-deck 補進來的角色會標「新」，繁中名與出場日期取自 `synergy-raw.json`；兩邊都沒有繁中名的角色（例如剛公布、譯名表還沒更新的）可在 `build.py` 的 `NAME_FIX` 手動補，綽號在 `nicknames.json` 補。新角色的頭像上游沒有，執行 `python build/fetch_avatars.py` 會依 `characters.json` 記的 nikke-synergy 角色圖網址下載到 `avatars/`（排程也會跑這一步）。
 3. **更新出場日期（nikke-synergy）**：用瀏覽器打開 <https://nikke-synergy.com/index_en>，按 F12 打開 Console，把 `build/synergy_export.js` 整個貼進去執行，會下載 `synergy-raw.json`（網站前端已載入到瀏覽器裡的角色表與譯名表，不含技能文字與圖片）；放到 `build/data/` 後執行：
 
 ```bash
 python build/build.py --merge
 ```
 
-   `--merge` 不重抓上游與 nikke-deck（用 `build/data/raw/` 的快取），只重新合併角色庫再產生 HTML。沒有 `synergy-raw.json` 時一切照常，只是角色沒有出場日期、排序退回上游的 `releaseOrder`。
+   `--merge` 不重抓上游與 nikke-deck（用 `build/data/raw/` 的快取），只重新合併角色庫再產生 HTML。沒有 `synergy-raw.json` 時一切照常，只是角色沒有出場日期、排序退回上游的 `releaseOrder`。不想本機跑的話，只把新的 `synergy-raw.json` commit 推上 GitHub 也可以，週六的排程會合併譯名與出場日期並補頭像。
 4. **手動**：可直接編輯 `build/data/characters.json` 新增角色（照既有格式填爆裂類型、武器與各速度階的充能值），再執行 `python build/build.py`；但 `--update`／`--merge` 會從上游快取重新合併，手動加的角色要放進 `templates-extra.json` 那類獨立檔案才不會被蓋掉。
 
 nikke-deck 補的角色，充能數值直接用該站的 2RL～4RL 五階；1RL、1.5RL 與 5RL 是推算值（1RL 取 2RL 的一半、5RL 以 3RL→4RL 的增量外推），記在 `burstGenSource` 欄位。速度計算預設走 nikke.top 的逐幀模擬，該站有收錄的新角色不受這個推算影響。
