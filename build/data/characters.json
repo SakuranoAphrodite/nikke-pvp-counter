@@ -11430,108 +11430,167 @@
     "synergyName": "魔女ベロータ"
   },
   {
-    "id": "scarlet-goddeath",
+    "id": "marian-queen",
     "name": {
-      "en": "Scarlet: Goddeath",
-      "zh-TW": "紅蓮:神殺",
-      "zh-CN": "红莲:神杀",
-      "ja": "紅蓮：神殺",
-      "ko": "홍련 : 신살"
+      "en": "Marian: Queen",
+      "zh-TW": "瑪麗安:女王",
+      "zh-CN": "玛丽安:女王",
+      "ja": "マリアン：クイーン"
     },
     "burst": "III",
     "role": "attacker",
     "element": "fire",
     "manufacturer": "pilgrim",
-    "weapon": "AR",
+    "weapon": "MG",
+    "weaponDmg": 5.57,
+    "ammo": 300,
+    "reloadTime": 2.5,
+    "chargeTime": 0,
+    "maxCharge": null,
+    "chargeCoefficient": 0.0005,
+    "hitMultiplier": 1,
     "burstGen": {
       "attack": {
-        "1RL": 0.136,
-        "2RL": 0.272,
-        "3SG": 0.204,
-        "5SG": 0.34,
-        "3RL": 0.408,
-        "7SG": 0.476,
-        "4RL": 0.51,
-        "5RL": 0.561
+        "1RL": 0.0035,
+        "2RL": 0.016,
+        "3SG": 0.008,
+        "5SG": 0.025,
+        "3RL": 0.0345,
+        "7SG": 0.0435,
+        "4RL": 0.053,
+        "5RL": 0.0735
       },
       "defense": {
-        "1RL": 0.136,
-        "2RL": 0.272,
-        "3SG": 0.204,
-        "5SG": 0.34,
-        "3RL": 0.408,
-        "7SG": 0.476,
-        "4RL": 0.51,
-        "5RL": 0.561
+        "1RL": 0.0035,
+        "2RL": 0.016,
+        "3SG": 0.008,
+        "5SG": 0.025,
+        "3RL": 0.0345,
+        "7SG": 0.0435,
+        "4RL": 0.053,
+        "5RL": 0.0735
       }
     },
-    "burstGenSource": "nikke-deck 的 2RL～4RL；1RL、1.5RL、5RL 為推算",
     "suitability": {
-      "attack": 0,
-      "defense": 0
+      "attack": 2,
+      "defense": -1
     },
-    "releaseOrder": 1745,
-    "avatarImg": "scarlet-goddeath",
-    "deckId": "c472",
-    "source": "nikke-deck",
-    "releaseDate": "2026-11-05",
-    "synergyName": "神紅蓮",
-    "avatarUrl": "https://images.nikke-synergy.com/character-images/images/0227.png",
-    "avatarFile": "scarlet-goddeath.png"
+    "releaseOrder": 1762,
+    "avatarImg": "marian-queen",
+    "squad": "Counters",
+    "deckId": "c019",
+    "releaseDate": "2026-10-29",
+    "synergyName": "女王マリアン"
   },
   {
     "id": "rapunzel-sanctuary",
     "name": {
       "en": "Rapunzel: Sanctuary",
       "zh-TW": "長髮公主:聖域",
-      "zh-CN": "長髮公主:聖域",
-      "ja": "ラプンツェル：サンクチュアリ",
-      "ko": "라푼젤 : 생츄어리"
+      "zh-CN": "长发公主:圣域",
+      "ja": "ラプンツェル：サンクチュアリ"
     },
     "burst": "II",
     "role": "supporter",
     "element": "fire",
     "manufacturer": "pilgrim",
     "weapon": "RL",
+    "weaponDmg": 61.3,
     "ammo": 6,
-    "reloadTime": 2.0,
-    "chargeTime": 1.0,
+    "reloadTime": 2,
+    "chargeTime": 1,
     "maxCharge": 250,
+    "chargeCoefficient": 0.015,
+    "hitMultiplier": 0,
     "burstGen": {
       "attack": {
-        "1RL": 0.056,
-        "2RL": 0.112,
-        "3SG": 0.056,
-        "5SG": 0.112,
-        "3RL": 0.168,
-        "7SG": 0.168,
-        "4RL": 0.224,
-        "5RL": 0.252
+        "1RL": 0.09,
+        "2RL": 0.18,
+        "3SG": 0.09,
+        "5SG": 0.18,
+        "3RL": 0.27,
+        "7SG": 0.27,
+        "4RL": 0.36,
+        "5RL": 0.45
       },
       "defense": {
-        "1RL": 0.056,
-        "2RL": 0.112,
-        "3SG": 0.056,
-        "5SG": 0.112,
-        "3RL": 0.168,
-        "7SG": 0.168,
-        "4RL": 0.224,
-        "5RL": 0.252
+        "1RL": 0.09,
+        "2RL": 0.18,
+        "3SG": 0.09,
+        "5SG": 0.18,
+        "3RL": 0.27,
+        "7SG": 0.27,
+        "4RL": 0.36,
+        "5RL": 0.45
       }
     },
-    "burstGenSource": "nikke-deck 的 2RL～4RL；1RL、1.5RL、5RL 為推算",
     "suitability": {
-      "attack": 0,
-      "defense": 0
+      "attack": 2,
+      "defense": -1
     },
-    "releaseOrder": 1744,
+    "releaseOrder": 1762,
     "avatarImg": "rapunzel-sanctuary",
+    "squad": "Goddess",
+    "traits": [
+      "healer"
+    ],
     "deckId": "c473",
-    "source": "nikke-deck＋nikke-synergy",
     "releaseDate": "2026-10-29",
-    "avatarUrl": "https://images.nikke-synergy.com/character-images/images/0225.png",
-    "avatarFile": "rapunzel-sanctuary.png",
     "synergyName": "聖域ラプンツェル"
+  },
+  {
+    "id": "scarlet-goddeath",
+    "name": {
+      "en": "Scarlet: Goddeath",
+      "zh-TW": "紅蓮:弒神",
+      "zh-CN": "红莲:弑神",
+      "ja": "紅蓮：神殺"
+    },
+    "burst": "III",
+    "role": "attacker",
+    "element": "fire",
+    "manufacturer": "pilgrim",
+    "weapon": "AR",
+    "weaponDmg": 107.57,
+    "ammo": 9,
+    "reloadTime": 1.17,
+    "chargeTime": 0,
+    "maxCharge": null,
+    "chargeCoefficient": 0.017,
+    "hitMultiplier": 0,
+    "burstGen": {
+      "attack": {
+        "1RL": 0.136,
+        "2RL": 0.272,
+        "3SG": 0.204,
+        "5SG": 0.306,
+        "3RL": 0.374,
+        "7SG": 0.408,
+        "4RL": 0.476,
+        "5RL": 0.476
+      },
+      "defense": {
+        "1RL": 0.136,
+        "2RL": 0.272,
+        "3SG": 0.204,
+        "5SG": 0.306,
+        "3RL": 0.374,
+        "7SG": 0.408,
+        "4RL": 0.476,
+        "5RL": 0.476
+      }
+    },
+    "suitability": {
+      "attack": 2,
+      "defense": -1
+    },
+    "releaseOrder": 1769,
+    "avatarImg": "scarlet-goddeath",
+    "pvpTier": "SS",
+    "squad": "Goddess",
+    "deckId": "c472",
+    "releaseDate": "2026-11-05",
+    "synergyName": "神紅蓮"
   },
   {
     "id": "chime",
@@ -11576,7 +11635,7 @@
       "attack": 0,
       "defense": 0
     },
-    "releaseOrder": 1742,
+    "releaseOrder": 1770,
     "avatarImg": "chime",
     "deckId": "c331",
     "source": "nikke-deck＋nikke-synergy",
@@ -11584,57 +11643,5 @@
     "avatarUrl": "https://images.nikke-synergy.com/character-images/images/0186.png",
     "avatarFile": "chime.png",
     "synergyName": "チャイム"
-  },
-  {
-    "id": "marian-queen",
-    "name": {
-      "en": "Marian: Queen",
-      "zh-TW": "瑪麗安:女王",
-      "zh-CN": "瑪麗安:女王",
-      "ja": "マリアン：クイーン",
-      "ko": "마리안 : 퀸"
-    },
-    "burst": "III",
-    "role": "attacker",
-    "element": "fire",
-    "manufacturer": "pilgrim",
-    "weapon": "MG",
-    "ammo": 300,
-    "reloadTime": 2.5,
-    "burstGen": {
-      "attack": {
-        "1RL": 0.0085,
-        "2RL": 0.017,
-        "3SG": 0.0128,
-        "5SG": 0.0215,
-        "3RL": 0.036,
-        "7SG": 0.042,
-        "4RL": 0.057,
-        "5RL": 0.0675
-      },
-      "defense": {
-        "1RL": 0.0085,
-        "2RL": 0.017,
-        "3SG": 0.0128,
-        "5SG": 0.0215,
-        "3RL": 0.036,
-        "7SG": 0.042,
-        "4RL": 0.057,
-        "5RL": 0.0675
-      }
-    },
-    "burstGenSource": "nikke-deck 的 2RL～4RL；1RL、1.5RL、5RL 為推算",
-    "suitability": {
-      "attack": 0,
-      "defense": 0
-    },
-    "releaseOrder": 1743,
-    "avatarImg": "marian-queen",
-    "deckId": "c019",
-    "source": "nikke-deck＋nikke-synergy",
-    "releaseDate": "2026-10-29",
-    "avatarUrl": "https://images.nikke-synergy.com/character-images/images/0226.png",
-    "avatarFile": "marian-queen.png",
-    "synergyName": "女王マリアン"
   }
 ]

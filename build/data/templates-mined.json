@@ -63,20 +63,22 @@
    "nayuta-rush",
    "rosanna-counter",
    "sg-burst",
+   "noah-launcher",
    "noah-stall",
    "scarlet-nuke",
-   "vesti-tu",
+   "tactical-trio",
    "cinderella-carry",
    "moran-system",
-   "mermaid-disrupt",
    "blanc-indom",
+   "mermaid-disrupt",
    "share-wall"
   ],
   "counteredBy": [
    "mined-1",
    "mined-4",
    "mined-13",
-   "mined-20"
+   "mined-20",
+   "soda-laplace"
   ],
   "priority": 2,
   "chainRate": {
@@ -175,6 +177,11 @@
      "win": 96
     },
     {
+     "vs": "noah-launcher",
+     "games": 995,
+     "win": 72
+    },
+    {
      "vs": "noah-stall",
      "games": 144,
      "win": 62
@@ -185,9 +192,9 @@
      "win": 81
     },
     {
-     "vs": "vesti-tu",
-     "games": 909,
-     "win": 84
+     "vs": "tactical-trio",
+     "games": 375,
+     "win": 89
     },
     {
      "vs": "cinderella-carry",
@@ -200,19 +207,26 @@
      "win": 73
     },
     {
+     "vs": "blanc-indom",
+     "games": 487,
+     "win": 75
+    },
+    {
      "vs": "mermaid-disrupt",
      "games": 127,
      "win": 77
     },
     {
-     "vs": "blanc-indom",
-     "games": 346,
-     "win": 70
-    },
-    {
      "vs": "share-wall",
      "games": 34,
      "win": 79
+    }
+   ],
+   "vsArchBad": [
+    {
+     "vs": "soda-laplace",
+     "games": 315,
+     "win": 20
     }
    ]
   },
@@ -280,13 +294,12 @@
    "mined-17",
    "rosanna-counter",
    "sg-burst",
-   "vesti-tu",
    "mermaid-disrupt",
+   "noah-launcher",
    "moran-system",
    "cinderella-carry",
    "anis-star-system",
    "noah-stall",
-   "blanc-indom",
    "scarlet-nuke"
   ],
   "counteredBy": [
@@ -361,14 +374,14 @@
      "win": 75
     },
     {
-     "vs": "vesti-tu",
-     "games": 648,
-     "win": 61
-    },
-    {
      "vs": "mermaid-disrupt",
      "games": 46,
      "win": 87
+    },
+    {
+     "vs": "noah-launcher",
+     "games": 652,
+     "win": 63
     },
     {
      "vs": "moran-system",
@@ -389,11 +402,6 @@
      "vs": "noah-stall",
      "games": 103,
      "win": 72
-    },
-    {
-     "vs": "blanc-indom",
-     "games": 181,
-     "win": 66
     },
     {
      "vs": "scarlet-nuke",
@@ -473,8 +481,7 @@
    "mined-18",
    "mined-19",
    "mined-14",
-   "vesti-tu",
-   "blanc-indom",
+   "tactical-trio",
    "scarlet-nuke",
    "helm-carry",
    "nayuta-carry",
@@ -531,14 +538,9 @@
    ],
    "vsArch": [
     {
-     "vs": "vesti-tu",
-     "games": 478,
-     "win": 68
-    },
-    {
-     "vs": "blanc-indom",
-     "games": 156,
-     "win": 61
+     "vs": "tactical-trio",
+     "games": 240,
+     "win": 72
     },
     {
      "vs": "scarlet-nuke",
@@ -651,8 +653,8 @@
    "nayuta-rush",
    "rosanna-counter",
    "sg-burst",
-   "blanc-indom",
-   "vesti-tu",
+   "soda-laplace",
+   "tactical-trio",
    "scarlet-nuke",
    "mermaid-disrupt"
   ],
@@ -664,6 +666,7 @@
    "mined-10",
    "mined-12",
    "mined-18",
+   "noah-launcher",
    "anis-star-system",
    "noah-stall"
   ],
@@ -719,14 +722,14 @@
      "win": 92
     },
     {
-     "vs": "blanc-indom",
-     "games": 142,
-     "win": 66
+     "vs": "soda-laplace",
+     "games": 221,
+     "win": 76
     },
     {
-     "vs": "vesti-tu",
-     "games": 450,
-     "win": 84
+     "vs": "tactical-trio",
+     "games": 224,
+     "win": 92
     },
     {
      "vs": "scarlet-nuke",
@@ -740,6 +743,11 @@
     }
    ],
    "vsArchBad": [
+    {
+     "vs": "noah-launcher",
+     "games": 476,
+     "win": 38
+    },
     {
      "vs": "anis-star-system",
      "games": 377,
@@ -813,12 +821,11 @@
    "mined-7",
    "mined-6",
    "mermaid-disrupt",
-   "vesti-tu",
+   "noah-launcher",
    "moran-system",
    "anis-star-system",
    "scarlet-nuke",
    "cinderella-carry",
-   "blanc-indom",
    "noah-stall",
    "rosanna-counter",
    "sg-burst"
@@ -883,9 +890,9 @@
      "win": 86
     },
     {
-     "vs": "vesti-tu",
-     "games": 422,
-     "win": 61
+     "vs": "noah-launcher",
+     "games": 442,
+     "win": 66
     },
     {
      "vs": "moran-system",
@@ -906,11 +913,6 @@
      "vs": "cinderella-carry",
      "games": 129,
      "win": 90
-    },
-    {
-     "vs": "blanc-indom",
-     "games": 120,
-     "win": 62
     },
     {
      "vs": "noah-stall",
@@ -1002,7 +1004,6 @@
    "helm-carry",
    "nayuta-carry",
    "nayuta-rush",
-   "vesti-tu",
    "scarlet-nuke",
    "rosanna-counter",
    "sg-burst",
@@ -1081,11 +1082,6 @@
      "vs": "nayuta-rush",
      "games": 268,
      "win": 63
-    },
-    {
-     "vs": "vesti-tu",
-     "games": 417,
-     "win": 61
     },
     {
      "vs": "scarlet-nuke",
@@ -1172,10 +1168,11 @@
    "cinderella-carry",
    "rosanna-counter",
    "sg-burst",
-   "vesti-tu",
+   "tactical-trio",
    "helm-carry",
    "nayuta-carry",
    "nayuta-rush",
+   "noah-launcher",
    "scarlet-nuke",
    "moran-system",
    "blanc-indom",
@@ -1185,7 +1182,8 @@
    "mined-0",
    "mined-1",
    "mined-4",
-   "mined-9"
+   "mined-9",
+   "soda-laplace"
   ],
   "priority": 2,
   "chainRate": {
@@ -1244,9 +1242,9 @@
      "win": 96
     },
     {
-     "vs": "vesti-tu",
-     "games": 269,
-     "win": 83
+     "vs": "tactical-trio",
+     "games": 101,
+     "win": 86
     },
     {
      "vs": "helm-carry",
@@ -1264,6 +1262,11 @@
      "win": 77
     },
     {
+     "vs": "noah-launcher",
+     "games": 289,
+     "win": 74
+    },
+    {
      "vs": "scarlet-nuke",
      "games": 80,
      "win": 78
@@ -1275,13 +1278,20 @@
     },
     {
      "vs": "blanc-indom",
-     "games": 99,
-     "win": 61
+     "games": 142,
+     "win": 68
     },
     {
      "vs": "mermaid-disrupt",
      "games": 41,
      "win": 78
+    }
+   ],
+   "vsArchBad": [
+    {
+     "vs": "soda-laplace",
+     "games": 103,
+     "win": 17
     }
    ]
   },
@@ -1342,7 +1352,8 @@
    "helm-carry",
    "nayuta-carry",
    "nayuta-rush",
-   "vesti-tu",
+   "noah-launcher",
+   "tactical-trio",
    "rosanna-counter",
    "sg-burst",
    "mermaid-disrupt"
@@ -1355,6 +1366,7 @@
    "mined-9",
    "anis-star-system",
    "noah-stall",
+   "soda-laplace",
    "cinderella-carry"
   ],
   "priority": 2,
@@ -1389,6 +1401,11 @@
      "win": 33
     },
     {
+     "vs": "soda-laplace",
+     "games": 70,
+     "win": 26
+    },
+    {
      "vs": "cinderella-carry",
      "games": 115,
      "win": 36
@@ -1416,9 +1433,14 @@
      "win": 61
     },
     {
-     "vs": "vesti-tu",
-     "games": 265,
+     "vs": "noah-launcher",
+     "games": 278,
      "win": 63
+    },
+    {
+     "vs": "tactical-trio",
+     "games": 107,
+     "win": 64
     },
     {
      "vs": "rosanna-counter",
@@ -1496,12 +1518,14 @@
    "mined-10",
    "mined-3",
    "mined-2",
+   "noah-launcher",
+   "blanc-indom",
    "nayuta-carry",
    "helm-carry",
    "nayuta-rush",
    "rosanna-counter",
    "sg-burst",
-   "vesti-tu",
+   "tactical-trio",
    "moran-system"
   ],
   "counteredBy": [
@@ -1510,7 +1534,8 @@
    "mined-4",
    "mined-6",
    "anis-star-system",
-   "noah-stall"
+   "noah-stall",
+   "soda-laplace"
   ],
   "priority": 2,
   "chainRate": {
@@ -1549,6 +1574,16 @@
    ],
    "vsArch": [
     {
+     "vs": "noah-launcher",
+     "games": 248,
+     "win": 62
+    },
+    {
+     "vs": "blanc-indom",
+     "games": 138,
+     "win": 64
+    },
+    {
      "vs": "nayuta-carry",
      "games": 234,
      "win": 74
@@ -1574,9 +1609,9 @@
      "win": 92
     },
     {
-     "vs": "vesti-tu",
-     "games": 233,
-     "win": 78
+     "vs": "tactical-trio",
+     "games": 107,
+     "win": 91
     },
     {
      "vs": "moran-system",
@@ -1594,6 +1629,11 @@
      "vs": "noah-stall",
      "games": 42,
      "win": 33
+    },
+    {
+     "vs": "soda-laplace",
+     "games": 94,
+     "win": 23
     }
    ]
   },
@@ -1660,17 +1700,19 @@
    "nayuta-carry",
    "nayuta-rush",
    "mermaid-disrupt",
+   "noah-launcher",
    "noah-stall",
    "scarlet-nuke",
    "rosanna-counter",
    "sg-burst",
-   "vesti-tu",
    "cinderella-carry",
-   "blanc-indom"
+   "blanc-indom",
+   "tactical-trio"
   ],
   "counteredBy": [
    "mined-1",
-   "mined-4"
+   "mined-4",
+   "soda-laplace"
   ],
   "priority": 2,
   "chainRate": {
@@ -1728,6 +1770,11 @@
      "win": 71
     },
     {
+     "vs": "noah-launcher",
+     "games": 236,
+     "win": 62
+    },
+    {
      "vs": "noah-stall",
      "games": 36,
      "win": 69
@@ -1748,19 +1795,26 @@
      "win": 95
     },
     {
-     "vs": "vesti-tu",
-     "games": 210,
-     "win": 82
-    },
-    {
      "vs": "cinderella-carry",
      "games": 89,
      "win": 67
     },
     {
      "vs": "blanc-indom",
-     "games": 73,
-     "win": 71
+     "games": 115,
+     "win": 75
+    },
+    {
+     "vs": "tactical-trio",
+     "games": 93,
+     "win": 86
+    }
+   ],
+   "vsArchBad": [
+    {
+     "vs": "soda-laplace",
+     "games": 66,
+     "win": 8
     }
    ]
   },
@@ -1823,9 +1877,10 @@
    "mined-3",
    "mined-2",
    "mined-4",
+   "soda-laplace",
    "scarlet-nuke",
-   "vesti-tu",
    "nayuta-carry",
+   "noah-launcher",
    "helm-carry",
    "nayuta-rush"
   ],
@@ -1870,33 +1925,26 @@
      "win": 67
     }
    ],
-   "vsArchBad": [
-    {
-     "vs": "cinderella-carry",
-     "games": 50,
-     "win": 24
-    },
-    {
-     "vs": "anis-star-system",
-     "games": 127,
-     "win": 23
-    }
-   ],
    "vsArch": [
+    {
+     "vs": "soda-laplace",
+     "games": 87,
+     "win": 64
+    },
     {
      "vs": "scarlet-nuke",
      "games": 49,
      "win": 67
     },
     {
-     "vs": "vesti-tu",
-     "games": 169,
-     "win": 61
-    },
-    {
      "vs": "nayuta-carry",
      "games": 152,
      "win": 77
+    },
+    {
+     "vs": "noah-launcher",
+     "games": 166,
+     "win": 70
     },
     {
      "vs": "helm-carry",
@@ -1907,6 +1955,18 @@
      "vs": "nayuta-rush",
      "games": 105,
      "win": 72
+    }
+   ],
+   "vsArchBad": [
+    {
+     "vs": "cinderella-carry",
+     "games": 50,
+     "win": 24
+    },
+    {
+     "vs": "anis-star-system",
+     "games": 127,
+     "win": 23
     }
    ]
   },
@@ -1970,7 +2030,8 @@
    "nayuta-carry",
    "nayuta-rush",
    "cinderella-carry",
-   "vesti-tu",
+   "tactical-trio",
+   "noah-launcher",
    "moran-system",
    "rosanna-counter",
    "sg-burst"
@@ -2015,9 +2076,14 @@
      "win": 61
     },
     {
-     "vs": "vesti-tu",
-     "games": 115,
-     "win": 80
+     "vs": "tactical-trio",
+     "games": 58,
+     "win": 91
+    },
+    {
+     "vs": "noah-launcher",
+     "games": 136,
+     "win": 78
     },
     {
      "vs": "moran-system",
@@ -2094,7 +2160,7 @@
    "mined-3",
    "moran-system",
    "cinderella-carry",
-   "vesti-tu",
+   "tactical-trio",
    "nayuta-carry",
    "nayuta-rush"
   ],
@@ -2136,9 +2202,9 @@
      "win": 63
     },
     {
-     "vs": "vesti-tu",
-     "games": 142,
-     "win": 75
+     "vs": "tactical-trio",
+     "games": 64,
+     "win": 88
     },
     {
      "vs": "nayuta-carry",
@@ -2154,8 +2220,8 @@
    "vsArchBad": [
     {
      "vs": "blanc-indom",
-     "games": 49,
-     "win": 31
+     "games": 80,
+     "win": 21
     },
     {
      "vs": "anis-star-system",
@@ -2222,8 +2288,8 @@
    "mined-0",
    "moran-system",
    "cinderella-carry",
-   "anis-star-system",
-   "blanc-indom"
+   "noah-launcher",
+   "anis-star-system"
   ],
   "counteredBy": [
    "mined-3",
@@ -2262,14 +2328,14 @@
      "win": 72
     },
     {
+     "vs": "noah-launcher",
+     "games": 142,
+     "win": 67
+    },
+    {
      "vs": "anis-star-system",
      "games": 110,
      "win": 72
-    },
-    {
-     "vs": "blanc-indom",
-     "games": 39,
-     "win": 62
     }
    ],
    "vsArchBad": [
@@ -2340,15 +2406,18 @@
   "preferredSpeed": "3RL",
   "counters": [
    "mined-1",
-   "vesti-tu",
+   "soda-laplace",
+   "blanc-indom",
    "cinderella-carry",
    "rosanna-counter",
-   "sg-burst"
+   "sg-burst",
+   "tactical-trio"
   ],
   "counteredBy": [
    "mined-0",
    "mined-2",
    "moran-system",
+   "noah-launcher",
    "anis-star-system"
   ],
   "priority": 2,
@@ -2377,6 +2446,11 @@
      "win": 35
     },
     {
+     "vs": "noah-launcher",
+     "games": 118,
+     "win": 40
+    },
+    {
      "vs": "anis-star-system",
      "games": 105,
      "win": 31
@@ -2384,9 +2458,14 @@
    ],
    "vsArch": [
     {
-     "vs": "vesti-tu",
-     "games": 110,
-     "win": 82
+     "vs": "soda-laplace",
+     "games": 35,
+     "win": 83
+    },
+    {
+     "vs": "blanc-indom",
+     "games": 46,
+     "win": 61
     },
     {
      "vs": "cinderella-carry",
@@ -2402,6 +2481,11 @@
      "vs": "sg-burst",
      "games": 31,
      "win": 94
+    },
+    {
+     "vs": "tactical-trio",
+     "games": 62,
+     "win": 89
     }
    ]
   },
@@ -2463,14 +2547,17 @@
    "helm-carry",
    "nayuta-carry",
    "nayuta-rush",
-   "vesti-tu",
+   "tactical-trio",
    "scarlet-nuke",
    "cinderella-carry",
+   "noah-launcher",
    "moran-system",
    "rosanna-counter",
    "sg-burst"
   ],
-  "counteredBy": [],
+  "counteredBy": [
+   "blanc-indom"
+  ],
   "priority": 2,
   "chainRate": {
    "anis-sparkling-summer": 78,
@@ -2502,9 +2589,9 @@
      "win": 87
     },
     {
-     "vs": "vesti-tu",
-     "games": 82,
-     "win": 74
+     "vs": "tactical-trio",
+     "games": 43,
+     "win": 86
     },
     {
      "vs": "scarlet-nuke",
@@ -2515,6 +2602,11 @@
      "vs": "cinderella-carry",
      "games": 45,
      "win": 67
+    },
+    {
+     "vs": "noah-launcher",
+     "games": 97,
+     "win": 78
     },
     {
      "vs": "moran-system",
@@ -2530,6 +2622,13 @@
      "vs": "sg-burst",
      "games": 40,
      "win": 98
+    }
+   ],
+   "vsArchBad": [
+    {
+     "vs": "blanc-indom",
+     "games": 41,
+     "win": 29
     }
    ]
   },
@@ -2589,14 +2688,15 @@
   "preferredSpeed": "3RL",
   "counters": [
    "scarlet-nuke",
-   "vesti-tu",
    "rosanna-counter",
-   "sg-burst"
+   "sg-burst",
+   "tactical-trio"
   ],
   "counteredBy": [
    "mined-0",
    "anis-star-system",
-   "cinderella-carry"
+   "cinderella-carry",
+   "noah-launcher"
   ],
   "priority": 2,
   "chainRate": {
@@ -2618,11 +2718,6 @@
      "win": 82
     },
     {
-     "vs": "vesti-tu",
-     "games": 108,
-     "win": 63
-    },
-    {
      "vs": "rosanna-counter",
      "games": 86,
      "win": 83
@@ -2631,6 +2726,11 @@
      "vs": "sg-burst",
      "games": 86,
      "win": 83
+    },
+    {
+     "vs": "tactical-trio",
+     "games": 46,
+     "win": 76
     }
    ],
    "vsArchBad": [
@@ -2643,6 +2743,11 @@
      "vs": "cinderella-carry",
      "games": 64,
      "win": 36
+    },
+    {
+     "vs": "noah-launcher",
+     "games": 111,
+     "win": 39
     }
    ]
   },
@@ -2696,15 +2801,18 @@
   "counters": [
    "mined-5",
    "mined-2",
+   "noah-launcher",
+   "blanc-indom",
    "moran-system",
-   "vesti-tu",
+   "tactical-trio",
    "helm-carry",
    "nayuta-carry",
    "nayuta-rush"
   ],
   "counteredBy": [
    "mined-1",
-   "mined-4"
+   "mined-4",
+   "soda-laplace"
   ],
   "priority": 2,
   "chainRate": {
@@ -2733,14 +2841,24 @@
    ],
    "vsArch": [
     {
+     "vs": "noah-launcher",
+     "games": 77,
+     "win": 74
+    },
+    {
+     "vs": "blanc-indom",
+     "games": 52,
+     "win": 65
+    },
+    {
      "vs": "moran-system",
      "games": 77,
      "win": 86
     },
     {
-     "vs": "vesti-tu",
-     "games": 83,
-     "win": 86
+     "vs": "tactical-trio",
+     "games": 45,
+     "win": 96
     },
     {
      "vs": "helm-carry",
@@ -2756,6 +2874,13 @@
      "vs": "nayuta-rush",
      "games": 59,
      "win": 93
+    }
+   ],
+   "vsArchBad": [
+    {
+     "vs": "soda-laplace",
+     "games": 55,
+     "win": 27
     }
    ]
   },
@@ -2815,13 +2940,15 @@
    "mined-4",
    "mined-3",
    "blanc-indom",
-   "vesti-tu",
+   "tactical-trio",
    "helm-carry",
    "nayuta-carry",
-   "nayuta-rush"
+   "nayuta-rush",
+   "soda-laplace"
   ],
   "counteredBy": [
-   "mined-2"
+   "mined-2",
+   "noah-launcher"
   ],
   "priority": 2,
   "chainRate": {
@@ -2855,13 +2982,13 @@
    "vsArch": [
     {
      "vs": "blanc-indom",
-     "games": 37,
-     "win": 78
+     "games": 46,
+     "win": 61
     },
     {
-     "vs": "vesti-tu",
-     "games": 79,
-     "win": 90
+     "vs": "tactical-trio",
+     "games": 34,
+     "win": 94
     },
     {
      "vs": "helm-carry",
@@ -2877,6 +3004,18 @@
      "vs": "nayuta-rush",
      "games": 63,
      "win": 81
+    },
+    {
+     "vs": "soda-laplace",
+     "games": 50,
+     "win": 74
+    }
+   ],
+   "vsArchBad": [
+    {
+     "vs": "noah-launcher",
+     "games": 74,
+     "win": 38
     }
    ]
   },
@@ -2939,7 +3078,7 @@
    "helm-carry",
    "nayuta-carry",
    "nayuta-rush",
-   "vesti-tu"
+   "soda-laplace"
   ],
   "counteredBy": [
    "mined-0",
@@ -2988,9 +3127,9 @@
      "win": 94
     },
     {
-     "vs": "vesti-tu",
-     "games": 60,
-     "win": 63
+     "vs": "soda-laplace",
+     "games": 46,
+     "win": 91
     }
    ],
    "vsArchBad": [
@@ -3059,6 +3198,7 @@
    "helm-carry",
    "nayuta-rush",
    "anis-star-system",
+   "soda-laplace",
    "moran-system"
   ],
   "counteredBy": [
@@ -3110,6 +3250,11 @@
      "vs": "anis-star-system",
      "games": 52,
      "win": 75
+    },
+    {
+     "vs": "soda-laplace",
+     "games": 38,
+     "win": 92
     },
     {
      "vs": "moran-system",
@@ -3174,8 +3319,8 @@
   "preferredSpeed": "3RL",
   "counters": [
    "blanc-indom",
-   "vesti-tu",
-   "moran-system"
+   "moran-system",
+   "noah-launcher"
   ],
   "counteredBy": [
    "mined-0"
@@ -3196,18 +3341,18 @@
    "vsArch": [
     {
      "vs": "blanc-indom",
-     "games": 30,
-     "win": 60
-    },
-    {
-     "vs": "vesti-tu",
-     "games": 62,
-     "win": 68
+     "games": 42,
+     "win": 67
     },
     {
      "vs": "moran-system",
      "games": 58,
      "win": 64
+    },
+    {
+     "vs": "noah-launcher",
+     "games": 63,
+     "win": 70
     }
    ]
   },
@@ -3269,8 +3414,8 @@
    "nayuta-carry",
    "rosanna-counter",
    "sg-burst",
-   "scarlet-nuke",
-   "vesti-tu"
+   "noah-launcher",
+   "scarlet-nuke"
   ],
   "counteredBy": [
    "anis-star-system"
@@ -3305,14 +3450,14 @@
      "win": 83
     },
     {
+     "vs": "noah-launcher",
+     "games": 76,
+     "win": 63
+    },
+    {
      "vs": "scarlet-nuke",
      "games": 32,
      "win": 91
-    },
-    {
-     "vs": "vesti-tu",
-     "games": 63,
-     "win": 67
     }
    ],
    "vsArchBad": [
@@ -3379,7 +3524,7 @@
    "helm-carry",
    "moran-system",
    "nayuta-carry",
-   "vesti-tu"
+   "noah-launcher"
   ],
   "counteredBy": [],
   "priority": 2,
@@ -3412,9 +3557,9 @@
      "win": 85
     },
     {
-     "vs": "vesti-tu",
-     "games": 45,
-     "win": 87
+     "vs": "noah-launcher",
+     "games": 37,
+     "win": 76
     }
    ]
   },
