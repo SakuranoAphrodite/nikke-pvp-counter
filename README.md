@@ -134,7 +134,7 @@ python build/build.py --update
 ```
 
    nikke-deck 補進來的角色會標「新」，繁中名與出場日期取自 `synergy-raw.json`；兩邊都沒有繁中名的角色（例如剛公布、譯名表還沒更新的）可在 `build.py` 的 `NAME_FIX` 手動補，綽號在 `nicknames.json` 補。新角色的頭像上游沒有，執行 `python build/fetch_avatars.py` 會依 `characters.json` 記的 nikke-synergy 角色圖網址下載到 `avatars/`（排程也會跑這一步）。
-3. **更新出場日期（nikke-synergy）**：用瀏覽器打開 <https://nikke-synergy.com/index_en>，按 F12 打開 Console，把 `build/synergy_export.js` 整個貼進去執行，會下載 `synergy-raw.json`（網站前端已載入到瀏覽器裡的角色表與譯名表，不含技能文字與圖片）；放到 `build/data/` 後執行：
+3. **更新出場日期（nikke-synergy）**：用瀏覽器打開 <https://nikke-synergy.com/index_en>，按 F12 打開 Console，把 `build/synergy_export.js` 整個貼進去執行，會下載 `synergy-raw.json`（網站前端已載入到瀏覽器裡的角色表與譯名表，不含技能文字與圖片）；放到 `build/data/` 後執行下面的指令。不能下載的環境（例如請 Claude 用內建瀏覽器匯出）改用 `build/synergy_receive.py`：先啟動它（`.claude/launch.json` 的 `synergy-receiver`，只聽 localhost:8766），在 Console 設 `window.SYNERGY_RECEIVER = 'http://localhost:8766/save'` 再貼腳本，JSON 會直接寫進 `build/data/synergy-raw.json`。
 
 ```bash
 python build/build.py --merge

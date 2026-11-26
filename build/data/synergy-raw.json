@@ -1,12 +1,10 @@
 {
-"version": 380,
-"exported": "2026-11-06",
+"version": 401,
+"exported": "2026-11-26",
 "lang": "en",
-"count": 227,
-"missingTranslation": [
-"神紅蓮"
-],
-"translationKeys": 243,
+"count": 228,
+"missingTranslation": [],
+"translationKeys": 247,
 "rows": [
 {
 "id": 62,
@@ -909,31 +907,6 @@
 "zh": "拉普拉斯：究極英雄"
 },
 {
-"id": 109,
-"name": "モダニア",
-"weapon_type": "MG",
-"burst_type": "Ⅲ",
-"class_type": "火力",
-"company": "P",
-"code_type": "灼熱",
-"release_date": "2023-01-01~2023-01-19 / 2024-01-01~2024-01-18 / 2025-10-30~2025-11-20",
-"treasure_status": "未実装",
-"gacha_origin": "恒常",
-"is_free": false,
-"has_spare_body": false,
-"ammo": 300,
-"charge_multiplier": 0,
-"charge_time": 0,
-"reload_original": "2.30",
-"burst_cooltime": 2400,
-"normal_attack_multiplier": 7.71,
-"core_attack_multiplier": 200,
-"image_public_url": "https://images.nikke-synergy.com/character-images/images/0109.jpg",
-"en": "Modernia",
-"ko": "모더니아",
-"zh": "神罰"
-},
-{
 "id": 197,
 "name": "宝センチ",
 "weapon_type": "RL",
@@ -957,6 +930,31 @@
 "en": "Centi (Favorite Item)",
 "ko": "센티 (애장품)",
 "zh": "桑迪 (珍藏品)"
+},
+{
+"id": 109,
+"name": "モダニア",
+"weapon_type": "MG",
+"burst_type": "Ⅲ",
+"class_type": "火力",
+"company": "P",
+"code_type": "灼熱",
+"release_date": "2023-01-01~2023-01-19 / 2024-01-01~2024-01-18 / 2025-10-30~2025-11-20",
+"treasure_status": "未実装",
+"gacha_origin": "恒常",
+"is_free": false,
+"has_spare_body": false,
+"ammo": 300,
+"charge_multiplier": 0,
+"charge_time": 0,
+"reload_original": "2.30",
+"burst_cooltime": 2400,
+"normal_attack_multiplier": 7.71,
+"core_attack_multiplier": 200,
+"image_public_url": "https://images.nikke-synergy.com/character-images/images/0109.jpg",
+"en": "Modernia",
+"ko": "모더니아",
+"zh": "神罰"
 },
 {
 "id": 217,
@@ -2129,9 +2127,59 @@
 "normal_attack_multiplier": 107.57,
 "core_attack_multiplier": 200,
 "image_public_url": "https://images.nikke-synergy.com/character-images/images/0227.png",
-"en": null,
-"ko": null,
-"zh": null
+"en": "Scarlet: Goddeath",
+"ko": "홍련 : 신살",
+"zh": "紅蓮：弒神"
+},
+{
+"id": 191,
+"name": "ヘビスノ",
+"weapon_type": "SR",
+"burst_type": "Ⅲ",
+"class_type": "火力",
+"company": "P",
+"code_type": "水冷",
+"release_date": "2026-01-01~2026-01-22",
+"treasure_status": "未実装",
+"gacha_origin": "恒常",
+"is_free": false,
+"has_spare_body": false,
+"ammo": 6,
+"charge_multiplier": 250,
+"charge_time": 72,
+"reload_original": "2.00",
+"burst_cooltime": 2400,
+"normal_attack_multiplier": 69.04,
+"core_attack_multiplier": 200,
+"image_public_url": "https://images.nikke-synergy.com/character-images/images/0191.png",
+"en": "Snow White: Heavy Arms",
+"ko": "스노우 화이트 : 헤비암즈",
+"zh": "白雪公主：重型武裝"
+},
+{
+"id": 228,
+"name": "スカイ",
+"weapon_type": "SR",
+"burst_type": "Ⅰ",
+"class_type": "支援",
+"company": "E",
+"code_type": "鉄甲",
+"release_date": "2026-11-19~2026-12-03",
+"treasure_status": "未実装",
+"gacha_origin": "恒常",
+"is_free": false,
+"has_spare_body": false,
+"ammo": 6,
+"charge_multiplier": 250,
+"charge_time": 60,
+"reload_original": "2.17",
+"burst_cooltime": 2400,
+"normal_attack_multiplier": 70.08,
+"core_attack_multiplier": 200,
+"image_public_url": "https://images.nikke-synergy.com/character-images/images/0228.png",
+"en": "Sky",
+"ko": "스카이",
+"zh": "思凱"
 },
 {
 "id": 66,
@@ -2784,31 +2832,6 @@
 "zh": "萊伊"
 },
 {
-"id": 1,
-"name": "モラン",
-"weapon_type": "AR",
-"burst_type": "Ⅰ",
-"class_type": "防御",
-"company": "T",
-"code_type": "電撃",
-"release_date": "2024-01-25~2024-02-08",
-"treasure_status": "実装済",
-"gacha_origin": "恒常",
-"is_free": false,
-"has_spare_body": false,
-"ammo": 60,
-"charge_multiplier": 0,
-"charge_time": 0,
-"reload_original": "1.50",
-"burst_cooltime": 2400,
-"normal_attack_multiplier": 14.71,
-"core_attack_multiplier": 200,
-"image_public_url": "https://images.nikke-synergy.com/character-images/images/0001.jpg",
-"en": "Moran",
-"ko": "목단",
-"zh": "牡丹"
-},
-{
 "id": 34,
 "name": "鈴原サクラ",
 "weapon_type": "SMG",
@@ -2832,6 +2855,31 @@
 "en": "Sakura Suzuhara",
 "ko": "스즈하라 사쿠라",
 "zh": "鈴原櫻"
+},
+{
+"id": 1,
+"name": "モラン",
+"weapon_type": "AR",
+"burst_type": "Ⅰ",
+"class_type": "防御",
+"company": "T",
+"code_type": "電撃",
+"release_date": "2024-01-25~2024-02-08",
+"treasure_status": "実装済",
+"gacha_origin": "恒常",
+"is_free": false,
+"has_spare_body": false,
+"ammo": 60,
+"charge_multiplier": 0,
+"charge_time": 0,
+"reload_original": "1.50",
+"burst_cooltime": 2400,
+"normal_attack_multiplier": 14.71,
+"core_attack_multiplier": 200,
+"image_public_url": "https://images.nikke-synergy.com/character-images/images/0001.jpg",
+"en": "Moran",
+"ko": "목단",
+"zh": "牡丹"
 },
 {
 "id": 8,
@@ -5409,31 +5457,6 @@
 "zh": "迪塞爾：冬日甜心"
 },
 {
-"id": 191,
-"name": "ヘビスノ",
-"weapon_type": "SR",
-"burst_type": "Ⅲ",
-"class_type": "火力",
-"company": "P",
-"code_type": "水冷",
-"release_date": "2026-01-01~2026-01-22",
-"treasure_status": "未実装",
-"gacha_origin": "恒常",
-"is_free": false,
-"has_spare_body": false,
-"ammo": 6,
-"charge_multiplier": 250,
-"charge_time": 71,
-"reload_original": "2.00",
-"burst_cooltime": 2400,
-"normal_attack_multiplier": 69.04,
-"core_attack_multiplier": 200,
-"image_public_url": "https://images.nikke-synergy.com/character-images/images/0191.png",
-"en": "Snow White: Heavy Arms",
-"ko": "스노우 화이트 : 헤비암즈",
-"zh": "白雪公主：重型武裝"
-},
-{
 "id": 192,
 "name": "レーベル",
 "weapon_type": "AR",
@@ -5865,15 +5888,15 @@
 "ko": "라플라스 : 얼티밋 히어로",
 "zh": "拉普拉斯：究極英雄"
 },
-"モダニア": {
-"en": "Modernia",
-"ko": "모더니아",
-"zh": "神罰"
-},
 "宝センチ": {
 "en": "Centi (Favorite Item)",
 "ko": "센티 (애장품)",
 "zh": "桑迪 (珍藏品)"
+},
+"モダニア": {
+"en": "Modernia",
+"ko": "모더니아",
+"zh": "神罰"
 },
 "MECHマクス": {
 "en": "Maxwell: Ordinary Mechanic",
@@ -6105,6 +6128,21 @@
 "ko": "리버렐리오",
 "zh": "莉貝雷利奧"
 },
+"神紅蓮": {
+"en": "Scarlet: Goddeath",
+"ko": "홍련 : 신살",
+"zh": "紅蓮：弒神"
+},
+"ヘビスノ": {
+"en": "Snow White: Heavy Arms",
+"ko": "스노우 화이트 : 헤비암즈",
+"zh": "白雪公主：重型武裝"
+},
+"スカイ": {
+"en": "Sky",
+"ko": "스카이",
+"zh": "思凱"
+},
 "メイドアンカー": {
 "en": "Anchor: Innocent Maid",
 "ko": "앵커 : 이노센트 메이드",
@@ -6235,15 +6273,15 @@
 "ko": "라이",
 "zh": "萊伊"
 },
-"モラン": {
-"en": "Moran",
-"ko": "목단",
-"zh": "牡丹"
-},
 "鈴原サクラ": {
 "en": "Sakura Suzuhara",
 "ko": "스즈하라 사쿠라",
 "zh": "鈴原櫻"
+},
+"モラン": {
+"en": "Moran",
+"ko": "목단",
+"zh": "牡丹"
 },
 "ジャッカル": {
 "en": "Jackal",
@@ -6759,11 +6797,6 @@
 "en": "Diesel: Winter Sweets",
 "ko": "디젤 : 윈터 스위츠",
 "zh": "迪塞爾：冬日甜心"
-},
-"ヘビスノ": {
-"en": "Snow White: Heavy Arms",
-"ko": "스노우 화이트 : 헤비암즈",
-"zh": "白雪公主：重型武裝"
 },
 "レーベル": {
 "en": "Label",
