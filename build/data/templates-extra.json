@@ -288,5 +288,75 @@
    "zh-CN": "诺雅诺伊斯饼干灰姑娘。",
    "ja": "ノア／ノイズ／ビスケット／ルマニ／シンデレラ。"
   }
+ },
+ {
+  "id": "sanis-noah-stall",
+  "name": {
+   "en": "Anis: Sparkling Summer + Noah stall (3RL)",
+   "zh-TW": "夏日阿妮斯＋諾雅持久戰（3RL）",
+   "zh-CN": "夏日阿妮斯＋诺雅持久战",
+   "ja": "アニス：スパークリングサマー＋ノア 持久戦"
+  },
+  "archetype": "sanis-stall",
+  "mode": "both",
+  "required": [
+   "anis-sparkling-summer",
+   "noah"
+  ],
+  "flex": [
+   {
+    "slot": 1,
+    "options": [
+     "anis-star",
+     "noise",
+     "rapunzel",
+     "moran-treasure",
+     "moran"
+    ]
+   },
+   {
+    "slot": 2,
+    "options": [
+     "biscuit",
+     "privaty-treasure",
+     "privaty",
+     "bay-treasure",
+     "trina"
+    ]
+   },
+   {
+    "slot": 4,
+    "options": [
+     "maiden-ice-rose",
+     "neon-vision-eye",
+     "laplace",
+     "snow-white-heavy-arms",
+     "centi-treasure",
+     "centi"
+    ]
+   }
+  ],
+  "burstSlots": [
+   "II",
+   "I",
+   "II",
+   "III",
+   "III"
+  ],
+  "preferredSpeed": "3RL",
+  "counters": [
+   "noah-stall",
+   "moran-system"
+  ],
+  "counteredBy": [
+   "blanc-indom"
+  ],
+  "priority": 2,
+  "notes": {
+   "en": "Kept by this tool after upstream arena-planner dropped its sanis-stall template in 2026-11: Anis: Sparkling Summer + Noah teams have 475 Champion Arena matches at 75% (179 under the new rules), 444 of them with Anis: Star as the B1 battery and Biscuit / Maiden: Ice Rose in 350 each. SAnis hits 2 targets ignoring taunt and self-heals for ~10 s after burst; Noah's invincibility and Biscuit carry the team through the first enemy burst. Claims filtered by data: beats Moran wall (90 games, 82%), loses to Blanc indomitable (38 games, 24%); the old 'countered by Scarlet nuke' claim is contradicted (32 games, 84% win) and dropped.",
+   "zh-TW": "上游 arena-planner 2026-11 改版刪掉了夏日阿妮斯持久戰模板，本工具依 nikkeari 統計保留：夏日阿妮斯＋諾雅的隊伍在冠軍競技場 475 場勝率 75%（其中新規則賽季 179 場），444 場由超級巨星阿妮斯當 B1 電池，餅乾與梅登冰玫瑰各出現 350 場。夏日阿妮斯爆裂後約 10 秒雙目標輸出並自回血、無視嘲諷，靠諾雅無敵與餅乾撐過對方第一波再耗血；鏡像對局時刻意慢一階後開（見解法規則）。克制關係沿用舊模板但經實戰篩過：對牡丹坦牆 90 場勝率 82%、被布蘭兒不屈剋 38 場勝率 24%；舊模板寫的「被紅蓮豺狼核爆剋」實戰 32 場反而勝率 84%，不列；「克制諾雅餅乾持久戰」只有 4 場，未驗證。",
+   "zh-CN": "夏日阿妮斯＋诺雅持久战（本工具保留）。",
+   "ja": "アニス：スパークリングサマー＋ノア 持久戦（本ツールで維持）。"
+  }
  }
 ]

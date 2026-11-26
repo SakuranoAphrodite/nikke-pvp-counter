@@ -81,10 +81,10 @@
 | `build/build.py` | 建置腳本：`--update` 抓上游、nikke-deck、nikke.top 並合併角色庫後嵌進頁面；`--merge` 只用快取重新合併 |
 | `build/nikkedeck.py` | NIKKE DECK 的 `data.json`：下載、對應角色 id、產生 `deck-speed.json`、把上游沒收錄的 SSR 轉成本工具的角色格式 |
 | `build/synergy.py`、`build/synergy_export.js` | NIKKE Synergy 的角色表：瀏覽器 Console 匯出腳本，與把匯出檔對應到角色 id（出場日期、繁中譯名） |
-| `build/data/characters.json` | 213 名角色資料、繁中譯名、充能數值、PVP 階級、出場日期（上游 209 名＋nikke-deck 補的 4 名，補的角色有 `source` 欄位） |
+| `build/data/characters.json` | 213 名角色資料、繁中譯名、充能數值、PVP 階級、出場日期（上游 212 名＋nikke-deck 補的 1 名，補的角色有 `source` 欄位） |
 | `build/data/synergy-raw.json` | NIKKE Synergy 的角色表匯出檔（227 名，含珍藏版與 R／SR）與譯名表，由 `synergy_export.js` 在瀏覽器產生 |
-| `build/data/templates.json` | 上游的 23 個主流隊伍模板與互剋關係 |
-| `build/data/templates-extra.json` | 本工具補充的 2026 體系模板（超級巨星阿妮斯＋餅乾核心、娜由塔一閃、豺狼＋貝斯蒂不屈、諾雅諾伊斯餅乾灰姑娘），獨立嵌入，線上更新上游模板後仍會合併 |
+| `build/data/templates.json` | 上游的 21 個主流隊伍模板與互剋關係（2026-11 改版：新增諾雅火箭筒速攻、索達＋拉普拉斯究極英雄暈眩速攻等 5 個，刪掉愛麗絲主C／復活、牡丹＋紅蓮、拉毗小紅帽、夏日阿妮斯持久戰、貝斯蒂主C 等 7 個） |
+| `build/data/templates-extra.json` | 本工具補充的 2026 體系模板（超級巨星阿妮斯＋餅乾核心、娜由塔一閃、豺狼＋貝斯蒂不屈、諾雅諾伊斯餅乾灰姑娘、上游刪掉後本工具保留的夏日阿妮斯＋諾雅持久戰），獨立嵌入，線上更新上游模板後仍會合併 |
 | `build/data/templates-mined.json` | `build/mine_templates.py` 從 nikkeari 的 24,390 回合挖出的 24 個核心家族：場次、勝率、常見補位、站位、互剋（統計結果，非人工驗證） |
 | `build/data/arena-rounds-archive.json.gz` | nikkeari β31～β40（2026-06～10 的 beta 賽季）24,000 回合的封存。nikkeari 的 API 自 2026-11 起只回傳正規賽季（Season 1 起），舊賽季抓不回來了，`fetch_arena_stats.py` 每次都會把這份封存併進統計；沒有 raw 快取的新環境會從它還原出挖掘腳本要讀的 raw 檔 |
 | `build/data/community-teams.json` | 社群明確列出的新人／特殊競技場隊伍（JP wikiwiki、GameWith、Yahoo知恵袋、KR arca／dcinside／ruliweb、Gamemeca，2025-07～2026-10），含來源、日期、站位、速度、打得贏與輸給誰 |
@@ -97,7 +97,7 @@
 
 arena-stats.json 的每個隊伍另記錄「實際開爆裂的三位」的場次分布，直接對位會依你的排法（誰開 B2／B3）加權；贏點摘要的「開誰的爆裂」會比較同一隊改由另一位開 B2／B3 時的實戰結果，沒有資料時寫明。每張推薦卡、特殊競技場卡與我方隊伍判斷的最上方有「贏點」摘要：優勢來自哪裡（速度先手、克制、後手鏡像、同型隊實戰勝率）、軸怎麼開（誰開 B1／B2／B3、誰軸外、各自靠什麼）、實戰撐住的是哪幾位（相似隊裡含她的場次百分比）、哪些成員在相似隊裡很少出現因此未驗證。
 
-所有模板寫的克制／被克制關係，工具在使用前都會先拿實戰驗證：找「含我方體系核心角的隊」對上「含對方體系核心角的隊」的勝負（30 場以上才算），實戰相反的宣稱不採用並在判斷依據說明，五五波的不加分，支持的會附上場數。`build/audit_counters.py` 可離線列出所有與實戰相反的宣稱（2026-10-21：298 條可驗證的宣稱中有 44 條相反；2026-11-25 併入 Season 1 後：309 條中有 41 條相反）。
+所有模板寫的克制／被克制關係，工具在使用前都會先拿實戰驗證：找「含我方體系核心角的隊」對上「含對方體系核心角的隊」的勝負（30 場以上才算），實戰相反的宣稱不採用並在判斷依據說明，五五波的不加分，支持的會附上場數。`build/audit_counters.py` 可離線列出所有與實戰相反的宣稱（2026-10-21：298 條可驗證的宣稱中有 44 條相反；2026-11-25 併入 Season 1 後：309 條中有 41 條相反；2026-11-26 上游模板改版後：338 條中有 47 條相反，其中「諾雅火箭筒速攻」的核心角只有諾雅、統計上等同所有諾雅隊，它的四條宣稱全部與實戰相反）。
 
 模板分四層：上游模板、本工具補充、資料挖掘、社群隊伍；更新流程是 `fetch_arena_stats.py --refresh` → `mine_templates.py` → `community_templates.py` → `audit_counters.py` → `build.py`（`--refresh` 只重抓 API 還提供的正規賽季；β 賽季一律來自封存檔，不會被覆蓋）。這條流程有兩種免動手的跑法：
 

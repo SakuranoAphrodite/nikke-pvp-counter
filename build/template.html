@@ -633,20 +633,22 @@ const UNIT_TAGS = {
 };
 const ARCH_NAME = {
   'moran-system':'牡丹珍藏坦牆體系','blanc-indom':'布蘭兒不屈體系','noah-stall':'諾雅＋餅乾持久戰','scarlet-nuke':'紅蓮核爆隊',
-  'moran-scarlet':'牡丹＋紅蓮混合','alice-carry':'愛麗絲主C','sanis-stall':'夏日阿妮斯持久戰','mermaid-disrupt':'小美人魚暈眩干擾',
-  'helm-carry':'海倫珍藏主C','rosanna-counter':'羅珊娜驅散反制','rapi-rh':'拉毗小紅帽主C','vesti-tu':'貝斯蒂戰術升級主C',
-  'nayuta-carry':'娜由塔主C','alice-revive':'愛麗絲復活隊','cinderella-carry':'灰姑娘主C','cat-team':'貓隊（尼羅＋牡丹）',
-  'tactical-trio':'戰術三人組（爆裂前擊殺）','sg-burst':'霰彈集火隊','anis-star-system':'超級巨星阿妮斯體系','privaty-stun':'普麗瓦蒂暈眩鎖','share-wall':'豺狼＋貝伊分攤牆','nayuta-rush':'娜由塔一閃（2RL 速攻）'
+  'sanis-stall':'夏日阿妮斯＋諾雅持久戰','mermaid-disrupt':'小美人魚暈眩干擾',
+  'helm-carry':'海倫珍藏主C','rosanna-counter':'羅珊娜驅散反制',
+  'nayuta-carry':'娜由塔主C','cinderella-carry':'灰姑娘主C','cat-team':'貓隊（尼羅＋牡丹）',
+  'tactical-trio':'戰術三人組（爆裂前擊殺）','sg-burst':'霰彈集火隊','anis-star-system':'超級巨星阿妮斯體系','privaty-stun':'普麗瓦蒂暈眩鎖','share-wall':'豺狼＋貝伊分攤牆','nayuta-rush':'娜由塔一閃（2RL 速攻）',
+  'noah-launcher':'諾雅火箭筒速攻','soda-laplace':'索達＋拉普拉斯究極英雄暈眩速攻（2RL）'
 };
+// 上游 arena-planner 2026-11 改版刪掉的體系：alice-carry、alice-revive、moran-scarlet、rapi-rh、vesti-tu 在冠軍競技場資料裡幾乎沒有場次或只是「有某位角色」，一併移除；sanis-stall（夏日阿妮斯＋諾雅）仍是現役打法，改由 data/templates-extra.json 提供模板
 // 資料挖掘模板的體系名直接用模板名；其餘查表
 const archName=a=>ARCH_NAME[a]||((a.startsWith('mined-')||a.startsWith('community-'))?((TEMPLATES.find(t=>t.archetype===a)||{}).name||{})['zh-TW']||a:a);
 // 耗血持久型原型：慢一點也可以接受
-const STALL_ARCH = new Set(['noah-stall','moran-system','cat-team','share-wall','blanc-indom','sanis-stall','alice-revive','anis-star-system']);
+const STALL_ARCH = new Set(['noah-stall','moran-system','cat-team','share-wall','blanc-indom','sanis-stall','anis-star-system']);
 
 // 針對對方特徵的解法規則（繁中）。when(ctx) 回傳 true 時顯示。
 const RULES = [
   {id:'nochain', when:c=>!c.chain.valid, level:'good', title:'對方爆裂鏈不完整', text:c=>`對方缺 ${c.chain.missing.join('、')}，永遠開不了全爆裂。隨便一隊 3RL 以上的核爆隊先手就能打，不用想太多。`},
-  {id:'fast', when:c=>['2RL','5SG'].includes(c.speed.tier), level:'bad', title:c=>`對方很快（${c.speed.tier}）`, text:c=>`正面搶速很難。改用「扛第一波」的體系：諾雅全隊無敵、諾伊斯嘲諷＋最大 HP、牡丹珍藏坦牆、豺狼＋貝伊珍藏雙層分攤，或長髮公主復活隊；扛過第一波後對方爆裂進入冷卻，你再開全爆裂反打。`},
+  {id:'fast', when:c=>['2RL','5SG'].includes(c.speed.tier), level:'bad', title:c=>`對方很快（${c.speed.tier}）`, text:c=>`正面搶速很難。改用「扛第一波」的體系：諾雅全隊無敵、諾伊斯嘲諷＋最大 HP、牡丹珍藏坦牆，或豺狼＋貝伊珍藏雙層分攤；扛過第一波後對方爆裂進入冷卻，你再開全爆裂反打。`},
   {id:'slow', when:c=>['4RL','5RL'].includes(c.speed.tier), level:'good', title:c=>`對方很慢（${c.speed.tier}）`, text:c=>`直接帶 3RL 以上的核爆隊先手即可，紅蓮＋豺狼 2RL 幾乎必勝；注意對方有沒有復活或無敵角再決定要不要多帶一個輸出。`},
   {id:'scarlet', when:c=>c.has('scarlet','scarlet-black-shadow'), level:'bad', title:'對方有紅蓮系核爆', text:c=>`紅蓮爆裂是全體斬擊、無視護盾。解法：諾雅（爆裂時全隊無敵）或諾伊斯（嘲諷＋最大 HP）扛第一波、牡丹珍藏坦、布蘭兒不屈，或直接比她快一階。另外紅蓮 S2 會對高射速武器反擊，<b>不要帶 SG／SMG／MG</b> 去打紅蓮隊。`},
   {id:'jackal', when:c=>c.has('jackal'), level:'warn', title:'對方有豺狼', text:c=>`豺狼的連結會把受到的傷害分攤到全隊，而且連結對象被打時豺狼會回充。解法：羅珊娜（含珍藏）S1 驅散連結；用 RL／SR 低射速武器，少用 SG／SMG／MG 餵她充能。`},
@@ -1135,7 +1137,7 @@ const TOP_SPECIAL={
     while(x+m<=n){ ev.push({f:x+m,ch:g,src:pos,tg:topTargets(u,atk),w:'RL'}); T++; x+=c+l-topRed(topSpd(md,[T===1?10:20])); } return ev; },
   '177':(u,md,n,pos,atk)=>topGeneric(u,md,n,pos,atk).map(e=>({...e,ch:e.ch+7.15})),
   '181':(u,md,n,pos,atk)=>topGeneric(u,md,n,pos,atk).map(e=>({...e,tg:[[0,2],[1,1]]})),   // 長髮公主:聖域：火箭筒節奏同一般，但濺射命中 P1 兩下、P2 一下（nikke.top class nr）
-  '183':(u,md,n,pos)=>{ const h=u.rate*topQ(md), ev=[]; for(let b=0;b<=n;b+=u.int){ ev.push({f:b,ch:h*2,src:pos,tg:[[0,1],[1,1]],w:'AR'}); if(b+12<=n) ev.push({f:b+12,ch:h*2,src:pos,tg:[[0,1]],w:'AR'}); } return ev; },   // 紅蓮:神殺：每 42 幀兩段，第 0 幀 2 倍基礎充能打 P1＋P2、第 12 幀再 2 倍打 P1（nikke.top class fr；每階總量與通用模型相同，只差時間點）
+  '183':(u,md,n,pos)=>{ const h=u.rate*topQ(md), ev=[]; for(let b=0;b<=n;b+=u.int){ ev.push({f:b,ch:h*2,src:pos,tg:[[0,1],[1,1]],w:'AR'}); if(b+12<=n) ev.push({f:b+12,ch:h*2,src:pos,tg:[[0,1]],w:'AR'}); } return ev; },   // 紅蓮:弒神：每 42 幀兩段，第 0 幀 2 倍基礎充能打 P1＋P2、第 12 幀再 2 倍打 P1（nikke.top class fr；每階總量與通用模型相同，只差時間點）
 };
 function topEvents(id,md,n,pos,atk){ const u=TOP.units[id]; if(!u) return null; const fn=TOP_SPECIAL[u.top]||topGeneric; return fn(u,md,n,pos,atk); }
 const _simCache=new Map();
@@ -1332,8 +1334,8 @@ function detectArchetypesRaw(ids){
     if(!out[t.archetype]||out[t.archetype].score<score) out[t.archetype]={arch:t.archetype,tpl:t,score,flexHits};
   }
   let list=Object.values(out).sort((a,b)=>b.score-a.score);
-  // 只靠一位 B1 角成立的「體系」（牡丹坦牆、小美人魚干擾、羅珊娜反制）：隊伍已符合多人核心的模板時不算——牡丹珍藏當拉普拉斯隊的 B1 電池，不代表這是牡丹坦牆隊
-  if(list.some(a=>a.tpl.required.length>=2)) list=list.filter(a=>!(a.tpl.required.length===1&&byId[a.tpl.required[0]]&&byId[a.tpl.required[0]].burst==='I'));
+  // 只靠一位 B1／B2 角成立的「體系」（牡丹坦牆、小美人魚干擾、羅珊娜反制、諾雅火箭筒速攻）：隊伍已符合多人核心的模板時不算——牡丹珍藏當拉普拉斯隊的 B1 電池，不代表這是牡丹坦牆隊；上游 2026-11 的諾雅火箭筒速攻核心角只有諾雅，不加這條會把每一隊帶諾雅的持久隊都標成速攻
+  if(list.some(a=>a.tpl.required.length>=2)) list=list.filter(a=>!(a.tpl.required.length===1&&byId[a.tpl.required[0]]&&(byId[a.tpl.required[0]].burst==='I'||byId[a.tpl.required[0]].burst==='II')));
   return list;
 }
 /* 核心角都在、但「該開爆裂的核心角」不在軸內的模板：體系不成立，列出來提醒（例如桑迪排在特蕾娜前面搶了 B2） */

@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-02",
+ "updated": "2026-11-26",
  "_說明": "參考對局與資料。欄位：title 標題、url 連結、source 來源、kind 影片/攻略/討論/對局、enemy 對手體系 id（見 templates.json 的 archetype）、my 我方體系 id、units 對手關鍵角色 id（命中兩個以上就會顯示）、result win/loss（自己打過的對局才填）、note 一句話說明、date 日期。",
  "items": [
   {
@@ -70,7 +70,7 @@
    "title": "Prydwen：Meta Teams and Archetypes，2RL 紅蓮核爆的解法段落",
    "url": "https://www.prydwen.gg/nikke/guides/pvp-sp-arena-teams",
    "source": "Prydwen", "kind": "攻略",
-   "enemy": ["scarlet-nuke"], "my": ["noah-stall", "alice-carry", "blanc-indom"], "units": [],
+   "enemy": ["scarlet-nuke"], "my": ["noah-stall", "blanc-indom"], "units": [],
    "note": "諾伊斯擋第一波後諾雅開盾（2.5RL 全 RL 隊）；2RL 諾雅愛麗絲或布蘭兒不屈愛麗絲也能贏",
    "date": "2024"
   },
@@ -78,7 +78,7 @@
    "title": "Prydwen：Meta Teams and Archetypes，3RL 紅蓮豺狼的解法段落",
    "url": "https://www.prydwen.gg/nikke/guides/pvp-sp-arena-teams",
    "source": "Prydwen", "kind": "攻略",
-   "enemy": ["scarlet-nuke"], "my": ["rosanna-counter", "alice-revive"], "units": ["scarlet", "jackal"],
+   "enemy": ["scarlet-nuke"], "my": ["rosanna-counter"], "units": ["scarlet", "jackal"],
    "note": "羅珊娜 S1 升到 4 級驅散豺狼連結（諾伊斯 羅珊娜 夏日阿妮斯 餅乾 豺狼，九成勝率）；長髮公主復活愛麗絲的 Super-Alice 隊",
    "date": "2024"
   },
@@ -86,7 +86,7 @@
    "title": "Prydwen：Meta Teams and Archetypes，餅乾持久隊的解法段落",
    "url": "https://www.prydwen.gg/nikke/guides/pvp-sp-arena-teams",
    "source": "Prydwen", "kind": "攻略",
-   "enemy": ["noah-stall", "sanis-stall", "alice-carry"], "my": ["scarlet-nuke", "blanc-indom"], "units": ["biscuit"],
+   "enemy": ["noah-stall", "sanis-stall"], "my": ["scarlet-nuke", "blanc-indom"], "units": ["biscuit", "alice"],
    "note": "夏日阿妮斯、普麗瓦蒂、梅登都被紅蓮豺狼硬剋；愛麗絲版被 P1 防禦者＋餅乾擋下",
    "date": "2024"
   },
@@ -118,7 +118,7 @@
    "title": "Prydwen：Meta Teams and Archetypes，復活隊的解法段落",
    "url": "https://www.prydwen.gg/nikke/guides/pvp-sp-arena-teams",
    "source": "Prydwen", "kind": "攻略",
-   "enemy": ["alice-revive"], "my": ["scarlet-nuke", "noah-stall"], "units": ["rapunzel", "alice"],
+   "enemy": [], "my": ["scarlet-nuke", "noah-stall"], "units": ["rapunzel", "alice"],
    "note": "紅蓮先狙掉長髮公主就穩贏；對 AOE 核爆型復活隊用諾雅擋",
    "date": "2024"
   },
