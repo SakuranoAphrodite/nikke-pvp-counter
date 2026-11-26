@@ -1,6 +1,6 @@
 {
-"source": "nikke.top（NIKKE Arena Tools）前端資料",
-"fetched": "2026-11-06",
+"source": "nikke.top（NIKKE Arena Tools）前端資料，版本 V3.0.0",
+"fetched": "2026-11-26",
 "fps": 60,
 "keyPoints": [
 {
@@ -106,7 +106,7 @@
 "rate": 3.55,
 "mult": 4,
 "hpc": 1,
-"hint": 2,
+"hint": 1,
 "int": 60
 },
 "anis-sparkling-summer": {
@@ -187,7 +187,7 @@
 "rate": 3.45,
 "mult": 4,
 "hpc": 1,
-"hint": 2,
+"hint": 1,
 "int": 60
 },
 "soda-twinkling-bunny": {
@@ -223,7 +223,7 @@
 "rate": 1.4,
 "mult": 4,
 "hpc": 1,
-"hint": 2,
+"hint": 1,
 "int": 60
 },
 "d-killer-wife": {
@@ -241,7 +241,7 @@
 "rate": 1.4,
 "mult": 4,
 "hpc": 1,
-"hint": 2,
+"hint": 1,
 "int": 60
 },
 "dorothy": {
@@ -330,8 +330,8 @@
 "w": "RL",
 "rate": 1.5,
 "mult": 8,
-"hpc": 1,
-"hint": 2,
+"hpc": 2,
+"hint": 1,
 "int": 60
 },
 "maiden-ice-rose": {
@@ -340,7 +340,7 @@
 "rate": 1.82,
 "mult": 5,
 "hpc": 2,
-"hint": 2,
+"hint": 1,
 "int": 60
 },
 "mari": {
@@ -358,7 +358,7 @@
 "rate": 1.4,
 "mult": 4,
 "hpc": 1,
-"hint": 2,
+"hint": 1,
 "int": 60
 },
 "rapunzel": {
@@ -367,7 +367,7 @@
 "rate": 1.45,
 "mult": 4,
 "hpc": 1,
-"hint": 2,
+"hint": 1,
 "int": 60
 },
 "bready": {
@@ -403,7 +403,7 @@
 "rate": 1.4,
 "mult": 4,
 "hpc": 1,
-"hint": 2,
+"hint": 1,
 "int": 60
 },
 "rei-ayanami": {
@@ -421,7 +421,7 @@
 "rate": 1.4,
 "mult": 9,
 "hpc": 2,
-"hint": 3,
+"hint": 1,
 "int": 60
 },
 "2b": {
@@ -520,7 +520,7 @@
 "rate": 1.3,
 "mult": 9,
 "hpc": 2,
-"hint": 3,
+"hint": 1,
 "int": 60
 },
 "volume": {
@@ -538,7 +538,7 @@
 "rate": 1.45,
 "mult": 8,
 "hpc": 2,
-"hint": 2,
+"hint": 1,
 "int": 60
 },
 "laplace": {
@@ -547,7 +547,7 @@
 "rate": 1.45,
 "mult": 4,
 "hpc": 1,
-"hint": 2,
+"hint": 1,
 "int": 60
 },
 "marciana": {
@@ -592,7 +592,7 @@
 "rate": 1.4,
 "mult": 4,
 "hpc": 1,
-"hint": 2,
+"hint": 1,
 "int": 60
 },
 "diesel": {
@@ -664,7 +664,7 @@
 "rate": 3.25,
 "mult": 4,
 "hpc": 1,
-"hint": 2,
+"hint": 1,
 "int": 60
 },
 "maiden": {
@@ -763,7 +763,7 @@
 "rate": 1.4,
 "mult": 4,
 "hpc": 1,
-"hint": 2,
+"hint": 1,
 "int": 60
 },
 "bay": {
@@ -772,7 +772,7 @@
 "rate": 1.4,
 "mult": 4,
 "hpc": 1,
-"hint": 2,
+"hint": 1,
 "int": 60
 },
 "snow-white-innocent-days": {
@@ -799,7 +799,7 @@
 "rate": 3.55,
 "mult": 4,
 "hpc": 1,
-"hint": 2,
+"hint": 1,
 "int": 60
 },
 "d": {
@@ -1015,7 +1015,7 @@
 "rate": 1.4,
 "mult": 4,
 "hpc": 1,
-"hint": 2,
+"hint": 1,
 "int": 60
 },
 "trony": {
@@ -1060,7 +1060,7 @@
 "rate": 1.4,
 "mult": 4,
 "hpc": 1,
-"hint": 2,
+"hint": 1,
 "int": 60
 },
 "eunhwa": {
@@ -1096,7 +1096,7 @@
 "rate": 1.4,
 "mult": 4,
 "hpc": 1,
-"hint": 2,
+"hint": 1,
 "int": 60
 },
 "mary-bay-goddess": {
@@ -1213,7 +1213,7 @@
 "rate": 1.4,
 "mult": 4,
 "hpc": 1,
-"hint": 2,
+"hint": 1,
 "int": 60
 },
 "ether": {
@@ -1231,7 +1231,7 @@
 "rate": 3.6,
 "mult": 4,
 "hpc": 1,
-"hint": 2,
+"hint": 1,
 "int": 60
 },
 "rupee-winter-shopper": {
@@ -1258,7 +1258,7 @@
 "rate": 1.15,
 "mult": 4,
 "hpc": 1,
-"hint": 2,
+"hint": 1,
 "int": 60
 },
 "misato": {
@@ -1384,7 +1384,7 @@
 "rate": 1.4,
 "mult": 4,
 "hpc": 1,
-"hint": 2,
+"hint": 1,
 "int": 90
 },
 "guillotine-winter-slayer": {
@@ -1420,7 +1420,7 @@
 "rate": 1.4,
 "mult": 4,
 "hpc": 1,
-"hint": 2,
+"hint": 1,
 "int": 60
 },
 "little-mermaid": {
@@ -1456,7 +1456,7 @@
 "rate": 1.5,
 "mult": 4,
 "hpc": 1,
-"hint": 2,
+"hint": 1,
 "int": 60
 },
 "eve": {
@@ -1492,7 +1492,7 @@
 "rate": 1.4,
 "mult": 4,
 "hpc": 1,
-"hint": 2,
+"hint": 1,
 "int": 60
 },
 "emma-tactical-upgrade": {
@@ -1510,7 +1510,7 @@
 "rate": 0.65,
 "mult": 12,
 "hpc": 2,
-"hint": 3,
+"hint": 1,
 "int": 122
 },
 "eunhwa-tactical-upgrade": {
@@ -1564,7 +1564,7 @@
 "rate": 1.4,
 "mult": 4,
 "hpc": 1,
-"hint": 2,
+"hint": 1,
 "int": 60
 },
 "snow-white-heavy-arms": {
@@ -1609,7 +1609,7 @@
 "rate": 1.4,
 "mult": 4,
 "hpc": 1,
-"hint": 2,
+"hint": 1,
 "int": 60
 },
 "anis-star": {
@@ -1618,7 +1618,7 @@
 "rate": 1.4,
 "mult": 12,
 "hpc": 2,
-"hint": 3,
+"hint": 1,
 "int": 60
 },
 "neon-vision-eye": {
@@ -1627,7 +1627,7 @@
 "rate": 0.75,
 "mult": 4,
 "hpc": 1,
-"hint": 2,
+"hint": 1,
 "int": 60
 },
 "laplace-ultimate-hero": {
@@ -1636,7 +1636,7 @@
 "rate": 1.5,
 "mult": 4,
 "hpc": 1,
-"hint": 2,
+"hint": 1,
 "int": 60
 },
 "maxwell-ordinary-mechanic": {
@@ -1681,7 +1681,7 @@
 "rate": 1.4,
 "mult": 6,
 "hpc": 2,
-"hint": 2,
+"hint": 1,
 "int": 60
 },
 "marian-queen": {
@@ -1699,8 +1699,17 @@
 "rate": 1.7,
 "mult": 4,
 "hpc": 2,
-"hint": 2,
+"hint": 1,
 "int": 42
+},
+"guilty-mighty-bunny": {
+"top": "184",
+"w": "SR",
+"rate": 2.8,
+"mult": 1,
+"hpc": 1,
+"hint": 1,
+"int": 60
 },
 "centi-treasure": {
 "top": "015",
@@ -1708,7 +1717,7 @@
 "rate": 3.45,
 "mult": 4,
 "hpc": 1,
-"hint": 2,
+"hint": 1,
 "int": 60,
 "fromBase": true
 },
