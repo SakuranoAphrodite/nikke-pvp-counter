@@ -556,11 +556,13 @@ const DATA_RAW = 'https://raw.githubusercontent.com/SakuranoAphrodite/nikke-pvp-
 const UNIT_TAGS = {
   'scarlet':                ['AOE核爆','反擊高射速'],
   'scarlet-black-shadow':   ['AOE核爆'],
+  'scarlet-goddeath':       ['持續爆裂輸出','穿坦(被動,普攻穿透多人)','充能電池','不怕諾雅無敵(輸出分散10秒)'], // Prydwen：開爆裂後 10 秒普攻範圍+100%、ATK+120%，另附 3000% 單體斬擊打準星最近的目標；S1 常駐穿透，一發打到相鄰數人；普攻偶爾因換武器無視嘲諷打到 P5；充能量與聖蒂相當
   'maiden-ice-rose':        ['AOE核爆','充能電池'],
   'harran':                 ['AOE核爆'],
   'ada':                    ['AOE核爆'],
   '2b':                     ['AOE核爆'],
   'neon-vision-eye':        ['AOE核爆'],
+  'marian-queen':           ['AOE核爆','持續爆裂輸出','隨機穿刺,敵方受傷+5%(被動,每4秒)'], // Prydwen：爆裂全畫面 1346%（打不死牡丹珍藏），被諾雅無敵擋掉後靠普攻＋S2 繼續清場；S1 開場起每 4 秒對隨機敵人射 7 發暗物質之槍並掛受傷+5%；自身幾乎不產充能，要靠星星阿妮斯／海倫珍藏帶
   'liberalio':              ['爆裂主C','充能電池'],
   'ein':                    ['爆裂主C'],
   'emilia':                 ['持續爆裂輸出','充能電池','爆裂延遲3秒(躲諾雅無敵)','無視分攤與護盾'],
@@ -595,6 +597,7 @@ const UNIT_TAGS = {
   'biscuit':                ['防禦者免疫(被動)'],
   'blanc':                  ['不屈','敵方受傷+39%','共享護盾(被動)'],
   'rapunzel':               ['復活','治療'],
+  'rapunzel-sanctuary':     ['復活(3人以上倒地時全體,每場1次)','治療','增傷'], // Prydwen：B2 只在 3 人以上倒地時把倒地者全部拉起（96% HP）並大幅加攻防，只倒 1～2 人時只有全隊 ATK+35%；滿蓄普攻回全隊 3.9% HP；PVP 評價 B
   'anne-miracle-fairy':     ['復活','增傷','敵方治療−79%'],
   'mana':                   ['復活(被動)'],
   'little-mermaid':         ['暈眩(被動)','打斷爆裂鏈','全隊冷卻−7.48秒(被動)','充能+37%(被動)'],
@@ -662,6 +665,7 @@ const RULES = [
   {id:'moran', when:c=>c.has('moran-treasure','moran'), level:'warn', title:'對方有牡丹（減傷坦牆）', text:c=>`牡丹爆裂全隊減傷 35%＋全體嘲諷 10 秒（被動另有 4 秒嘲諷），${c.has('nero')?'再加尼羅的減傷疊加，接近全免傷，':''}單靠一波核爆打不死。解法：<b>布蘭兒隊</b>（爆裂讓敵方受傷 +39%）專剋減傷隊；霰彈集火在爆裂前打死關鍵角、戰術三人組、夏日阿妮斯雙目標無視嘲諷、愛麗絲單體穿坦。`},
   {id:'mermaid', when:c=>c.has('little-mermaid'), level:'warn', title:'對方有小美人魚', text:c=>`她的暈眩是被動（技能 2：開場對目標掛泡泡，她自己普攻命中 50 發後引爆，暈 3 秒），會打斷你的爆裂鏈，放 P1／P2 時專門用來暈你的諾雅或布蘭兒。時間點是第 196 幀（3.3 秒，約 2.6RL）：2RL 隊只有 B1（第 176 幀）趕得在她前面，B2 以後都在暈眩之後。解法：比她快（2RL）讓被點名的 B1 在她動作前開爆裂；用諾伊斯 P1 吸仇恨、把諾雅放 P2／P5；或牡丹持久體系抗干擾。她全隊每耗 400 發彈藥 +37% 充能，對方霰彈多時她很快。`},
   {id:'revive', when:c=>c.has('rapunzel','anne-miracle-fairy'), level:'warn', title:'對方有復活', text:c=>`一波打死主 C 會被拉起來。需要第二輪傷害，或把隊伍調整成持久戰；AOE 核爆比單體更能一次清掉輔助。`},
+  {id:'revive-all', when:c=>c.has('rapunzel-sanctuary'), level:'warn', title:'對方有聖域長髮公主（全體復活）', text:c=>`她的 B2 只在<b>3 人以上倒地</b>時才把倒地者全部拉起（96% HP，每場一次）並大幅加攻防，只倒 1～2 人時只是全隊攻擊 +35%。一波核爆清掉三人以上要留第二輪傷害，或先打死她；她在軸外、或三人倒地後充能不夠開 B2 就不會發動。`},
   {id:'rosanna', when:c=>c.has('rosanna','rosanna-treasure'), level:'warn', title:'對方有羅珊娜（驅散＋B1 核爆）', text:c=>{ const ros=c.ids.find(i=>['rosanna','rosanna-treasure'].includes(i)); const inCh=chainSet(c.ids).has(ros); const f=inCh?stageFrame(simTeam(c.ids,mode==='attack'?'defense':'attack',enemyMods,null),c.chain,ros):null;
     return `她的 S1 驅散固定在開場第 96 幀（1.6 秒，機槍第一波命中）發動、每場一次，只清你攻擊力最高 2 人身上「開場就有」的被動增益：豺狼連結、娜由塔不屈、貝伊分攤。布蘭兒的不屈要等 B2 才出現，驅散碰不到；真正的威脅是她的 B1 核爆（優先打攻擊手、2 人）${inCh?(f!==null?`，約在第 ${f} 幀（${simSec(f)} 秒）落地`:'，在對方充滿後 24 幀落地'):'，不過她目前在對方軸外，第一輪不會開'}。你的布蘭兒 B2 不屈比自家充滿晚 56 幀，充滿要比她早 32 幀（0.53 秒）以上，不屈才會先掛上；解隊評分會逐幀判斷誰先。牡丹珍藏坦牆體系可以克她。`; }},
   {id:'sg', when:c=>c.weaponCount('SG')>=2, level:'warn', title:'對方是霰彈集火隊', text:c=>`充能快，爆裂前就能把你的 P1 打死（2026-10-29 更新後不論攻守，霰彈第一發後都集中打 P1；更新前防守方的霰彈是打 P5）。解法：紅蓮 S2 反擊、尼羅反傷、諾雅無敵、布蘭兒不屈，或在 P1 放瑪奇瑪／餅乾＋防禦者這類無敵坦；脆皮不要放 P1。霰彈每發 10 次命中，也會大量餵你的豺狼充能。`},
