@@ -755,6 +755,14 @@
 "tpl": "noah-noise-biscuit-cinderella",
 "arch": "noah-stall",
 "kind": "counteredBy",
+"vs": "sanis-stall",
+"games": 4,
+"win": 50
+},
+{
+"tpl": "noah-noise-biscuit-cinderella",
+"arch": "noah-stall",
+"kind": "counteredBy",
 "vs": "rosanna-counter",
 "games": 110,
 "win": 85
@@ -766,6 +774,30 @@
 "vs": "tactical-trio",
 "games": 28,
 "win": 79
+},
+{
+"tpl": "sanis-noah-stall",
+"arch": "sanis-stall",
+"kind": "counters",
+"vs": "noah-stall",
+"games": 4,
+"win": 50
+},
+{
+"tpl": "sanis-noah-stall",
+"arch": "sanis-stall",
+"kind": "counters",
+"vs": "moran-system",
+"games": 90,
+"win": 82
+},
+{
+"tpl": "sanis-noah-stall",
+"arch": "sanis-stall",
+"kind": "counteredBy",
+"vs": "blanc-indom",
+"games": 38,
+"win": 24
 },
 {
 "tpl": "mined-0",
